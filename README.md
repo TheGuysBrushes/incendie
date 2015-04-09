@@ -1,6 +1,8 @@
 # incendie
 Automate de simulation d'incendie
 
+Semaine 1
+
 Mardi : réfléxion commune 
 
 Mercredi : Flo : génération et affichage matrice ; Ugo : Cahiers des charges et réflexion
