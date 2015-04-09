@@ -1,19 +1,19 @@
 #include "coordonnee.h"
 
 Coordonnee::Coordonnee(int _x, int _y)
-	:x(_x), y(_y)
+	:col(_x), row(_y)
 {
 
 }
 
 Coordonnee::Coordonnee(const Coordonnee& other)
-	:x(other.x), y(other.y)
+	:col(other.col), row(other.row)
 {
 
 }
 
 bool Coordonnee::operator==(const Coordonnee& other) const
 {
-	return (other.x==x && other.y==y);
+	return (other.col==col && other.row==row);
 }
 

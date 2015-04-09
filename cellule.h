@@ -17,6 +17,8 @@ Cellule(const Cellule& other);
 	void enflammer() { etat= 2; };
 	void blast() { etat= 3; };
 	
+// 	Cellule& operator=(Cellule cell);
+	
 };
 
 #endif // CELLULE_H

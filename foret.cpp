@@ -67,7 +67,7 @@ void Foret::enflammer(int x, int y)
 
 void Foret::enflammer(Coordonnee c)
 {
-	Cellule& tmp= matrice[c.y][c.x];
+	Cellule& tmp= matrice[c.row][c.col];
 	
 	if (tmp.getEtat()==1){
 		onFire.push_back(c);
@@ -103,7 +103,9 @@ void Foret::transition(Cellule& cell, int x, int y)
 		
 		list<Coordonnee> voisins= adjacents(Coordonnee(x, y));
 		for (list<Coordonnee>::const_iterator c(voisins.begin()); c!=voisins.end(); ++c){
-			enflammer(*c);
+			// verification que la cellule n'est pas enflammer
+			if(matrice[c->row][c->col].getEtat()==1)
+				enflammer(*c);
 		}
 		
 // 	}
@@ -127,8 +129,8 @@ bool Foret::NextMove()
 	
 		// TODO utiliser mapping
 		for (list<Coordonnee>::const_iterator cell(old.begin()); cell!=old.end(); ++cell){
-			int x= cell->x;
-			int y= cell->y;
+			int x= cell->col;
+			int y= cell->row;
 			transition(matrice[y][x], x, y);
 		}
 	}
@@ -148,8 +150,8 @@ vector< Cellule > Foret::operator[](int x)
 
 list< Coordonnee > Foret::adjacents(const Coordonnee& coord) const
 {
-	int x= coord.x;
-	int y= coord.y;
+	int x= coord.col;
+	int y= coord.row;
 	
 	list< Coordonnee > liste;
 	if (x<colonnes-1)
@@ -158,10 +160,8 @@ list< Coordonnee > Foret::adjacents(const Coordonnee& coord) const
 	if (x>0)
 		liste.push_back(Coordonnee(x-1, y));
 
-	if (y<lignes-1){
+	if (y<lignes-1)
 		liste.push_back(Coordonnee(x, y+1));
-// 		printw("y : %d  ;  ", y); refresh();
-	}
 	
 	if (y>0)
 		liste.push_back(Coordonnee(x, y-1));

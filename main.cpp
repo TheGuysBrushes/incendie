@@ -6,13 +6,12 @@
 using namespace std;
 
 // Classe terminal temporaire, juste pour affichage en ncurses
-// AutomateFeu inutilisée. Projet en mode KDE-Terminal
 
 int main(int argc, char** argv)
 {
 //     QCoreApplication app(argc, argv);
 //     AutomateFeu foo;
-		Terminal scr(50, 40);
+		Terminal scr(45, 40);
 		
 		scr.afficheForet();
 
