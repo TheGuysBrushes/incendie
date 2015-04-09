@@ -159,8 +159,10 @@ list< Coordonnee > Foret::adjacents(const Coordonnee& coord) const
 	if (x>0)
 		liste.push_back(Coordonnee(x-1, y));
 
-	if (y<lignes-1)
+	if (y<lignes-1){
 		liste.push_back(Coordonnee(x, y+1));
+// 		printw("y : %d  ;  ", y); refresh();
+	}
 	
 	if (y>0)
 		liste.push_back(Coordonnee(x, y-1));
