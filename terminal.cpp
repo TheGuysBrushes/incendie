@@ -78,7 +78,7 @@ void Terminal::afficheCase(Cellule cell)
 void Terminal::afficheLigne(int num_ligne)
 {
 	int largeur= foret.largeur();
-	vector<Cellule> ligne= foret.matrice[num_ligne];
+	vector<Cellule> ligne= foret[num_ligne];
 	
 	
 	if (num_ligne < 10)

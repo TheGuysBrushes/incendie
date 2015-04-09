@@ -3,7 +3,10 @@
 #define MAXI 1000 
 
 #include <vector>
+#include <list>
 #include <iostream>
+
+#include "coordonnee.h"
 #include "cellule.h"
 
 class Foret
@@ -11,22 +14,33 @@ class Foret
 private:
 	int lignes;
 	int colonnes;
-	
-public: // temporaire
-	std::vector<std::vector<Cellule> > matrice;
+	std::vector<std::vector< Cellule> > matrice;
+	std::list<Coordonnee>	onFire;
 	
 public:
 	Foret(int n_lignes, int n_colonnes);
-	int largeur(){ return colonnes;};
-	int hauteur(){ return lignes;};
 	
 	void initialisation(float probabilite);
 	
-	void transition(Cellule cell);
 	
+// 	Modification des éléments
+	void enflammer(int x, int y);
+	void enflammer(Coordonnee c);
+	void enflammer(Cellule& cell, int x, int y); // pour ne pas faire 2 fois l'acces à la cellule ?
+	
+	void eteindre(int x, int y);
+	
+// 	Avancee du temps
+	// voir transition avec d'autres parametres
+	void transition(Cellule& cell, int x, int y);
 	bool NextMove();
 	
-// 	operator[] ;
+// 	Acces aux elements
+	int largeur(){ return colonnes;};
+	int hauteur(){ return lignes;};
+	std::vector<Cellule> operator[](int x);
+	
+	std::list< Coordonnee > adjacents(const Coordonnee& coord) const;
 };
 
 #endif // FORET_H

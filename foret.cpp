@@ -1,6 +1,7 @@
 #include "foret.h"
 
 #include <cstdlib>
+#include <ctime>
 #include <curses.h> // temp
 // #include <bits/stl_algo.h>
 // #include <bits/algorithmfwd.h>
@@ -10,7 +11,7 @@ using namespace std;
 Foret::Foret(int n_lignes, int n_colonnes)
 	: lignes(n_lignes), colonnes(n_colonnes)
 {
-	initialisation(0.55);
+	initialisation(0.65);
 }
 
 /**
@@ -19,6 +20,7 @@ Foret::Foret(int n_lignes, int n_colonnes)
  */
 void Foret::initialisation(float probabilite)
 {
+	srand(std::time(0));
 	if (probabilite>1){
 		probabilite=0.6;
 		cout << "MIS A DEFAUT"<< endl;
