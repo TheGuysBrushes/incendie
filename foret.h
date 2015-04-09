@@ -22,6 +22,10 @@ public:
 	
 	void initialisation(float probabilite);
 	
+	// 	Acces aux elements
+	int largeur(){ return colonnes;};
+	int hauteur(){ return lignes;};
+	std::vector<Cellule> operator[](int x) {return matrice[x]; };
 	
 // 	Modification des éléments
 	void enflammer(int x, int y);
@@ -30,17 +34,14 @@ public:
 	
 	void eteindre(int x, int y);
 	
+	
+	std::list< Coordonnee > adjacents(const Coordonnee& coord) const;
+	
 // 	Avancee du temps
 	// voir transition avec d'autres parametres
 	void transition(Cellule& cell, int x, int y);
 	bool NextMove();
-	
-// 	Acces aux elements
-	int largeur(){ return colonnes;};
-	int hauteur(){ return lignes;};
-	std::vector<Cellule> operator[](int x);
-	
-	std::list< Coordonnee > adjacents(const Coordonnee& coord) const;
+
 };
 
 #endif // FORET_H

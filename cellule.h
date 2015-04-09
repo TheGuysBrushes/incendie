@@ -8,6 +8,7 @@ private:
 	int etat;
 	
 public:
+
 Cellule(int etat_init);
 Cellule(const Cellule& other);
 

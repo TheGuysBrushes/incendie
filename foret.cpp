@@ -53,6 +53,11 @@ void Foret::initialisation(float probabilite)
 
 
 // ###################################
+//	Acces aux elements
+// ################################### 
+
+
+// ###################################
 // 	Modification des éléments
 // ###################################
 void Foret::enflammer(int x, int y)
@@ -91,15 +96,36 @@ void Foret::eteindre(int x, int y)
 
 
 
+list< Coordonnee > Foret::adjacents(const Coordonnee& coord) const
+{
+	int x= coord.col;
+	int y= coord.row;
+	
+	list< Coordonnee > liste;
+	if (x<colonnes-1)
+		liste.push_back(Coordonnee(x+1, y));
+	
+	if (x>0)
+		liste.push_back(Coordonnee(x-1, y));
+	
+	if (y<lignes-1)
+		liste.push_back(Coordonnee(x, y+1));
+	
+	if (y>0)
+		liste.push_back(Coordonnee(x, y-1));
+	
+	return liste;
+}
+
+
+
 // ###################################
 //	Avancee du temps
 // ################################### 
 void Foret::transition(Cellule& cell, int x, int y)
 {
 // 	printw("Transition %d, %d ; ", x, y); refresh();
-// 	if (cell.isOnFire()) {
 		cell.blast();
-// 			return true;
 		
 		list<Coordonnee> voisins= adjacents(Coordonnee(x, y));
 		for (list<Coordonnee>::const_iterator c(voisins.begin()); c!=voisins.end(); ++c){
@@ -107,10 +133,7 @@ void Foret::transition(Cellule& cell, int x, int y)
 			if(matrice[c->row][c->col].getEtat()==1)
 				enflammer(*c);
 		}
-		
-// 	}
-	
-// 		return false;
+
 }
 
 
@@ -138,33 +161,3 @@ bool Foret::NextMove()
 	return modif;
 }
 
-
-// ###################################
-//	Acces aux elements
-// ################################### 
-vector< Cellule > Foret::operator[](int x)
-{
-	return matrice[x];
-}
-
-
-list< Coordonnee > Foret::adjacents(const Coordonnee& coord) const
-{
-	int x= coord.col;
-	int y= coord.row;
-	
-	list< Coordonnee > liste;
-	if (x<colonnes-1)
-		liste.push_back(Coordonnee(x+1, y));
-	
-	if (x>0)
-		liste.push_back(Coordonnee(x-1, y));
-
-	if (y<lignes-1)
-		liste.push_back(Coordonnee(x, y+1));
-	
-	if (y>0)
-		liste.push_back(Coordonnee(x, y-1));
-	
-	return liste;
-}
