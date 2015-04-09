@@ -14,7 +14,7 @@ add_definitions(-Wall)
 # set( CMAKE_INCLUDE_PATH "/usr/include")
 # set( CMAKE_LIBRARY_PATH "/usr/lib/i386-linux-gnu/libncurses.so")
 
-set(AutomateFeu_SRCS coordonnee.cpp terminal.cpp main.cpp)
+set(AutomateFeu_SRCS arbre.cpp coordonnee.cpp terminal.cpp main.cpp)
 qt4_automoc(${AutomateFeu_SRCS})
 add_executable(AutomateFeu cellule.cpp foret.cpp ${AutomateFeu_SRCS})
 target_link_libraries(AutomateFeu ${QT_QTCORE_LIBRARY})

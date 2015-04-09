@@ -59,10 +59,10 @@ void Terminal::afficheContour(int largeur)
 
 // affiche une case vide, dans sa couleur
 
-void Terminal::afficheCase(Cellule cell)
+void Terminal::afficheCase(Cellule* cell)
 {
 
-	int couleur_cell= cell.getEtat();
+	int couleur_cell= cell->getEtat();
 	if (couleur_cell){
 		// 		printw("| ");
 		attron(COLOR_PAIR(couleur_cell));
@@ -78,7 +78,7 @@ void Terminal::afficheCase(Cellule cell)
 void Terminal::afficheLigne(int num_ligne)
 {
 	int largeur= foret.largeur();
-	vector<Cellule> ligne= foret[num_ligne];
+	vector<Cellule*> ligne= foret[num_ligne];
 	
 	
 	if (num_ligne < 10)

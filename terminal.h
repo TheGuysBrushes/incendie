@@ -21,7 +21,7 @@ public:
 	void end();
 	void afficheContour(int largeur);
 	
-	void afficheCase(Cellule cell);
+	void afficheCase(Cellule* cell);
 	void afficheLigne(int num_ligne);
 	void afficheForet();
 	
