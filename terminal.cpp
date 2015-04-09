@@ -108,7 +108,7 @@ void Terminal::afficheForet()
 void Terminal::next()
 {
 	foret.NextMove();
-	usleep(200000);
+	usleep(50000);
 	
 	clear();
 	afficheForet();
@@ -118,7 +118,7 @@ void Terminal::run()
 {
 	// tant que la foret est modifiee
 	while (foret.NextMove()) {
-		usleep(200000);
+		usleep(50000);
 		
 		clear();
 		afficheForet();

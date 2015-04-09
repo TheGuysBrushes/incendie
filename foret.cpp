@@ -57,7 +57,7 @@ void Foret::initialisation(float probabilite)
 // ###################################
 void Foret::enflammer(int x, int y)
 {
-	Cellule& tmp= matrice[x][y];
+	Cellule& tmp= matrice[y][x];
 	
 	if (tmp.getEtat()==1){
 		onFire.push_back(Coordonnee(x, y));
@@ -67,7 +67,7 @@ void Foret::enflammer(int x, int y)
 
 void Foret::enflammer(Coordonnee c)
 {
-	Cellule& tmp= matrice[c.x][c.y];
+	Cellule& tmp= matrice[c.y][c.x];
 	
 	if (tmp.getEtat()==1){
 		onFire.push_back(c);
@@ -85,7 +85,7 @@ void Foret::enflammer(Cellule& cell, int x, int y)
 
 void Foret::eteindre(int x, int y)
 {
-	matrice[x][y].blast();
+	matrice[y][x].blast();
 // 	onFire.remove_if<Cellule>();
 }
 
@@ -129,13 +129,12 @@ bool Foret::NextMove()
 		for (list<Coordonnee>::const_iterator cell(old.begin()); cell!=old.end(); ++cell){
 			int x= cell->x;
 			int y= cell->y;
-			transition(matrice[x][y], x, y);
+			transition(matrice[y][x], x, y);
 		}
 	}
 	
 	return modif;
 }
-
 
 
 // ###################################
