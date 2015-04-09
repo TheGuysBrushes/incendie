@@ -1,5 +1,5 @@
 #include <QCoreApplication>
-#include "AutomateFeu.h"
+
 
 #include "terminal.h"
 
