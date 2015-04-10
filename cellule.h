@@ -8,6 +8,7 @@ private:
 	int pv;
 	float coefficient;
 public:
+
       // Constructors
       Cellule(int etat_init, int base_pv, float coef);
       Cellule(const Cellule& other);
@@ -23,6 +24,7 @@ public:
       
       // Other methods
       bool isOnFire() { return etat==2; };
+
 	
       void enflammer() { etat= 2; };
       void blast() { etat= 3; };

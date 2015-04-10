@@ -27,7 +27,10 @@ public:
 	// 	Acces aux elements
 	int largeur(){ return colonnes;};
 	int hauteur(){ return lignes;};
+
 	std::vector< Cellule > operator[](int ligne) { return matrice[ligne]; };
+
+
 	
 // 	Modification des éléments
 	void enflammer(int row, int col);

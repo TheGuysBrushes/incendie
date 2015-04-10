@@ -102,14 +102,12 @@ void Foret::eteindre(int x, int y)
 // 	onFire.remove_if<Cellule>();
 }
 
-
 list< Coordonnee > Foret::adjacents(const Coordonnee& coord) const
 {
 	int x= coord.col;
 	int y= coord.row;
 	
 	list< Coordonnee > liste;
-	
 	if (x<colonnes-1)
 		liste.push_back(Coordonnee(x+1, y));
 	
@@ -133,20 +131,15 @@ list< Coordonnee > Foret::adjacents(const Coordonnee& coord) const
 void Foret::transition(Cellule& cell, int row, int col)
 {
 // 	printw("Transition %d, %d ; ", x, y); refresh();
-// 	Arbre a= dynamic_cast <Arbre&>(cell);
-	
-// 	dynamic_cast <Arbre&>(cell).blast();
-	cell.blast();
-	
-// 	list<Coordonnee> voisins= adjacents(dynamic_cast <Arbre&>(cell).getPos());
-	list<Coordonnee> voisins= adjacents(Coordonnee(row, col));
-	
-	for (list<Coordonnee>::const_iterator c(voisins.begin()); c!=voisins.end(); ++c){
-		// verification que la cellule n'est pas enflammer
-		if(matrice[c->row][c->col].getEtat()==1)
-			enflammer(*c);
-	}
 
+		cell.blast();
+		
+		list<Coordonnee> voisins= adjacents(Coordonnee(row, col));
+		for (list<Coordonnee>::const_iterator c(voisins.begin()); c!=voisins.end(); ++c){
+			// verification que la cellule n'est pas enflammer
+			if(matrice[c->row][c->col].getEtat()==1)
+				enflammer(*c);
+		}
 }
 
 
