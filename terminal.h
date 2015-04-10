@@ -15,13 +15,13 @@ private:
 	Foret foret;
 	
 public:
-	Terminal(int hauteur, int largeur);
+	Terminal(int hauteur, int largeur, float proba= 0.60);
 		
 	
 	void end();
 	void afficheContour(int largeur);
 	
-	void afficheCase(Cellule* cell);
+	void afficheCase(const Cellule& cell);
 	void afficheLigne(int num_ligne);
 	void afficheForet();
 	

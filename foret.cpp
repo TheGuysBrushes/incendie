@@ -8,10 +8,10 @@
 
 using namespace std;
 
-Foret::Foret(int n_lignes, int n_colonnes)
+Foret::Foret(int n_lignes, int n_colonnes, float proba)
 	: lignes(n_lignes), colonnes(n_colonnes)
 {
-	initialisation(0.65);
+	initialisation(proba);
 }
 
 /**
@@ -78,7 +78,7 @@ void Foret::enflammer(int row, int col)
 	}
 }
 
-void Foret::enflammer(Coordonnee c)
+void Foret::enflammer(const Coordonnee& c)
 {
 	Cellule& tmp= matrice[c.row][c.col];
 	
@@ -102,7 +102,7 @@ void Foret::eteindre(int x, int y)
 // 	onFire.remove_if<Cellule>();
 }
 
-list< Coordonnee > Foret::adjacents(const Coordonnee& coord) const
+std::list< Coordonnee > Foret::adjacents(const Coordonnee& coord) const
 {
 	int x= coord.col;
 	int y= coord.row;

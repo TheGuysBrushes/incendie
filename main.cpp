@@ -11,7 +11,7 @@ int main(int argc, char** argv)
 {
 //     QCoreApplication app(argc, argv);
 //     AutomateFeu foo;
-		Terminal scr(45, 40);
+		Terminal scr(45, 40, 0.80);
 		
 		scr.afficheForet();
 

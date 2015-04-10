@@ -20,7 +20,7 @@ private:
 	std::list<Coordonnee>	onFire;
 	
 public:
-	Foret(int n_lignes, int n_colonnes);
+	Foret(int n_lignes, int n_colonnes, float proba=0.60);
 	
 	void initialisation(float probabilite);
 	
@@ -34,13 +34,13 @@ public:
 	
 // 	Modification des éléments
 	void enflammer(int row, int col);
-	void enflammer(Coordonnee c);
+	void enflammer(const Coordonnee& c);
 	void enflammer(Cellule& cell, int x, int y); // pour ne pas faire 2 fois l'acces à la cellule ?
 	
 	void eteindre(int x, int y);
 	
 	
-	std::list< Coordonnee > adjacents(const Coordonnee& coord) const;
+	list< Coordonnee > adjacents(const Coordonnee& coord) const;
 	
 // 	Avancee du temps
 	// voir transition avec d'autres parametres

@@ -2,8 +2,8 @@
 
 using namespace std;
 
-Terminal::Terminal(int hauteur, int largeur)
-	:foret(hauteur, largeur)
+Terminal::Terminal(int hauteur, int largeur, float proba)
+	:foret(hauteur, largeur, proba)
 {
 // 	foret.initialisation(0.55);
 	// lance le mode curses et le mode keypad pour les touches clavier
@@ -59,7 +59,7 @@ void Terminal::afficheContour(int largeur)
 
 // affiche une case vide, dans sa couleur
 
-void Terminal::afficheCase(Cellule cell)
+void Terminal::afficheCase(const Cellule& cell)
 {
 
 	int couleur_cell= cell.getEtat();
@@ -108,7 +108,7 @@ void Terminal::afficheForet()
 void Terminal::next()
 {
 	foret.NextMove();
-	usleep(250000);
+	usleep(50000);
 	
 	clear();
 	afficheForet();
@@ -118,7 +118,7 @@ void Terminal::run()
 {
 	// tant que la foret est modifiee
 	while (foret.NextMove()) {
-		usleep(250000);
+		usleep(50000);
 		
 		clear();
 		afficheForet();

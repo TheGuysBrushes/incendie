@@ -14,9 +14,9 @@ public:
       Cellule(const Cellule& other);
       
       // Getters and setters
-      const int getEtat(){return etat;};
-      const int getPv(){return pv;};
-      const float getCoeff(){return coefficient;};
+      int getEtat() const {return etat;};
+			int getPv() const {return pv;};
+			float getCoeff() const {return coefficient;};
       
       void setEtat(int x);
       void setPv(int y);
