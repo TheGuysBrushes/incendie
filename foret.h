@@ -9,13 +9,14 @@
 #include "coordonnee.h"
 #include "cellule.h"
 #include "arbre.h"
+#include "Essence.h"
 
 class Foret
 {
 private:
 	int lignes;
 	int colonnes;
-	std::vector<std::vector< Cellule* > > matrice;
+	std::vector<std::vector< Cellule > > matrice;
 	std::list<Coordonnee>	onFire;
 	
 public:
@@ -26,12 +27,15 @@ public:
 	// 	Acces aux elements
 	int largeur(){ return colonnes;};
 	int hauteur(){ return lignes;};
-	std::vector< Cellule* > operator[](int ligne) { return matrice[ligne]; };
+
+	std::vector< Cellule > operator[](int ligne) { return matrice[ligne]; };
+
+
 	
 // 	Modification des éléments
 	void enflammer(int row, int col);
 	void enflammer(Coordonnee c);
-	void enflammer(Cellule* cell, int x, int y); // pour ne pas faire 2 fois l'acces à la cellule ?
+	void enflammer(Cellule& cell, int x, int y); // pour ne pas faire 2 fois l'acces à la cellule ?
 	
 	void eteindre(int x, int y);
 	
@@ -40,7 +44,7 @@ public:
 	
 // 	Avancee du temps
 	// voir transition avec d'autres parametres
-	void transition(Cellule& cell);
+	void transition(Cellule& cell, int row, int col);
 	bool NextMove();
 
 };
