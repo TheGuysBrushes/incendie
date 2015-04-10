@@ -1,18 +1,20 @@
 #include "cellule.h"
 
-Cellule::Cellule(int etat_init)
-	:etat(etat_init)
-{
-
-}
+// Constructeur
+Cellule::Cellule(int etat_init, int base_pv, float coef)
+	:etat(etat_init),pv(base_pv),coefficient(coef){}
 
 Cellule::Cellule(const Cellule& other)
-	:etat(other.etat)
-{
+	:etat(other.etat), pv(other.pv),coefficient(other.coefficient){}
 
+// Setters
+void Cellule::setEtat(int x){
+  this->etat = x;
+}
+void Cellule::setPv(int y){
+  this->pv = y;
 }
 
-int Cellule::getEtat()
-{
-	return etat;
+void Cellule::setCoeff(float z){
+  this->coefficient = z;
 }
