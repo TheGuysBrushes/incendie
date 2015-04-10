@@ -28,7 +28,7 @@ public:
 	int largeur(){ return colonnes;};
 	int hauteur(){ return lignes;};
 
-	std::vector< Cellule > operator[](int ligne) { return matrice[ligne]; };
+	std::vector< Cellule >* operator[](int ligne) { return &(matrice[ligne]); };
 
 
 	

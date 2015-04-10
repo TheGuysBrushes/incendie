@@ -13,9 +13,10 @@ class Terminal
 
 private:
 	Foret foret;
+	long temps;
 	
 public:
-	Terminal(int hauteur, int largeur, float proba= 0.60);
+	Terminal(int hauteur, int largeur, float proba= 0.60, long nTemps= 150000);
 		
 	
 	void end();

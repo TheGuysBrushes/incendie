@@ -2,10 +2,9 @@
 
 using namespace std;
 
-Terminal::Terminal(int hauteur, int largeur, float proba)
-	:foret(hauteur, largeur, proba)
+Terminal::Terminal(int hauteur, int largeur, float proba, long nTemps)
+	:foret(hauteur, largeur, proba), temps(nTemps)
 {
-// 	foret.initialisation(0.55);
 	// lance le mode curses et le mode keypad pour les touches clavier
 	initscr();
 // 	keypad(stdscr, 1);
@@ -78,7 +77,7 @@ void Terminal::afficheCase(const Cellule& cell)
 void Terminal::afficheLigne(int num_ligne)
 {
 	int largeur= foret.largeur();
-	vector<Cellule> ligne= foret[num_ligne];
+	vector<Cellule>* ligne= foret[num_ligne];
 	
 	
 	if (num_ligne < 10)
@@ -88,7 +87,7 @@ void Terminal::afficheLigne(int num_ligne)
 	// verifie si il y un joueur sur la case, l'affiche si oui
 	for(int j=0; j<largeur; ++j){
 		// on verifie si il y a un joueur sur la case
-		afficheCase(ligne[j]);
+		afficheCase((*ligne)[j]);
 	}
 	printw("||\n");
 }
@@ -108,7 +107,7 @@ void Terminal::afficheForet()
 void Terminal::next()
 {
 	foret.NextMove();
-	usleep(50000);
+	usleep(temps);
 	
 	clear();
 	afficheForet();
@@ -118,7 +117,7 @@ void Terminal::run()
 {
 	// tant que la foret est modifiee
 	while (foret.NextMove()) {
-		usleep(50000);
+		usleep(temps);
 		
 		clear();
 		afficheForet();
