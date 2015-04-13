@@ -10,7 +10,7 @@ private:
 public:
 
       // Constructors
-      Cellule(int etat_init, int base_pv, float coef);
+      Cellule(int etat_init, int base_pv=0, float coef=0.0);
       Cellule(const Cellule& other);
       
       // Getters and setters
@@ -24,7 +24,6 @@ public:
       
       // Other methods
       bool isOnFire() { return etat==2; };
-
 	
       void enflammer() { etat= 2; };
       void blast() { etat= 3; };

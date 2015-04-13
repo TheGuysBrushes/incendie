@@ -2,8 +2,9 @@
 #define ARBRE_H
 
 #include "Essence.h"
+#include "cellule.h"
 
-class Arbre 
+class Arbre: public Cellule
 {
 private:
  

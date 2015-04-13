@@ -51,17 +51,17 @@ void Terminal::afficheContour(int largeur)
 	printw("| ");
 	for(j=0; j<largeur; j++)
 		if (j < 10)
-			printw("%d=", j);
-		else 	printw("%d", j);
+			printw("==", j);
+		else 	printw("--", j);
 		printw("||\n");
 }
 
 // affiche une case vide, dans sa couleur
 
-void Terminal::afficheCase(const Cellule& cell)
+void Terminal::afficheCase(const Cellule* cell)
 {
 
-	int couleur_cell= cell.getEtat();
+	int couleur_cell= cell->getEtat();
 	if (couleur_cell){
 		// 		printw("| ");
 		attron(COLOR_PAIR(couleur_cell));
@@ -77,7 +77,7 @@ void Terminal::afficheCase(const Cellule& cell)
 void Terminal::afficheLigne(int num_ligne)
 {
 	int largeur= foret.largeur();
-	vector<Cellule>* ligne= foret[num_ligne];
+	vector< Cellule* >* ligne= foret[num_ligne];
 	
 	
 	if (num_ligne < 10)
@@ -87,7 +87,7 @@ void Terminal::afficheLigne(int num_ligne)
 	// verifie si il y un joueur sur la case, l'affiche si oui
 	for(int j=0; j<largeur; ++j){
 		// on verifie si il y a un joueur sur la case
-		afficheCase((*ligne)[j]);
+		afficheCase( (*ligne)[j] );
 	}
 	printw("||\n");
 }

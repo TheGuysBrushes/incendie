@@ -22,7 +22,7 @@ public:
 	void end();
 	void afficheContour(int largeur);
 	
-	void afficheCase(const Cellule& cell);
+	void afficheCase(const Cellule* cell);
 	void afficheLigne(int num_ligne);
 	void afficheForet();
 	

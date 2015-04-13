@@ -27,7 +27,7 @@ void Foret::initialisation(float probabilite)
 	}
 	
 	for (int i= 0; i< lignes; ++i){
-		std::vector< Cellule > tmp;
+		std::vector< Cellule* > tmp;
 		for (int j= 0; j< colonnes; ++j){
 			
 			int test= rand()%MAXI;
@@ -35,14 +35,15 @@ void Foret::initialisation(float probabilite)
 			
 // 			Cellule cell= new Cellule(0);
 // 			if (test>seuil){
-// // 				Arbre* ab= new Arbre(*cell, Coordonnee(i, j));
-// 				Cellule cell= new Cellule(1);
+// 				Arbre* ab= new Arbre(*cell, Coordonnee(i, j));
+// 				Arbre ab= new Arbre(*cell, Coordonnee(i, j));
+// // 				Cellule cell= new Cellule(1);
 // 				tmp.push_back(cell);
 // // 				delete(cell);
 // // 				tmp.push_back(dynamic_cast <Cellule*>(ab)); //dynamic_cast <Cellule*>(ab)
 // 			}
 // 			else
-				tmp.push_back(Cellule(test>seuil,50,0.5));
+				tmp.push_back( new Cellule(test>seuil,50,0.5));
 				// 			matrice[i].push_back(Cellule(0));
 		}
 		matrice.push_back(tmp);
@@ -70,35 +71,35 @@ void Foret::initialisation(float probabilite)
 // ###################################
 void Foret::enflammer(int row, int col)
 {
-	Cellule& tmp= matrice[row][col];
+	Cellule* tmp= matrice[row][col];
 	
-	if (tmp.getEtat()==1){
+	if (tmp->getEtat()==1){
 		onFire.push_back(Coordonnee(col, row));
-		tmp.enflammer();
+		tmp->enflammer();
 	}
 }
 
 void Foret::enflammer(const Coordonnee& c)
 {
-	Cellule& tmp= matrice[c.row][c.col];
+	Cellule* tmp= matrice[c.row][c.col];
 	
-	if (tmp.getEtat()==1){
+	if (tmp->getEtat()==1){
 		onFire.push_back(c);
-		tmp.enflammer();
+		tmp->enflammer();
 	}
 }
 
 
-void Foret::enflammer(Cellule& cell, int x, int y)
+void Foret::enflammer(Cellule* cell, int x, int y)
 {
-	cell.enflammer();
+	cell->enflammer();
 	onFire.push_back(Coordonnee(x, y));
 }
 
 
 void Foret::eteindre(int x, int y)
 {
-	matrice[y][x].blast();
+	matrice[y][x]->blast();
 // 	onFire.remove_if<Cellule>();
 }
 
@@ -137,7 +138,7 @@ void Foret::transition(Cellule& cell, int row, int col)
 		list<Coordonnee> voisins= adjacents(Coordonnee(row, col));
 		for (list<Coordonnee>::const_iterator c(voisins.begin()); c!=voisins.end(); ++c){
 			// verification que la cellule n'est pas enflammer
-			if(matrice[c->row][c->col].getEtat()==1)
+			if(matrice[c->row][c->col]->getEtat()==1)
 				enflammer(*c);
 		}
 }
@@ -161,7 +162,7 @@ bool Foret::NextMove()
 			int x= cell->col;
 			int y= cell->row;
 // 			try{
-				transition(matrice[y][x], x, y );
+				transition(*matrice[y][x], x, y );
 // 			}
 // 			catch (exception e){
 // 				printw("erreur lors appel transition"); refresh();
