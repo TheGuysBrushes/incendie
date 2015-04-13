@@ -3,30 +3,27 @@
 
 class Cellule
 {
-private:
+	
+protected:
 	int etat;
-	int pv;
-	float coefficient;
+	
 public:
 
       // Constructors
-      Cellule(int etat_init, int base_pv=0, float coef=0.0);
+      Cellule(int etat_init=0);
       Cellule(const Cellule& other);
       
       // Getters and setters
-      int getEtat() const {return etat;};
-			int getPv() const {return pv;};
-			float getCoeff() const {return coefficient;};
+      virtual int getEtat() const {return 0;};
       
       void setEtat(int x);
-      void setPv(int y);
-      void setCoeff(float z);
       
       // Other methods
-      bool isOnFire() { return etat==2; };
-	
-      void enflammer() { etat= 2; };
-      void blast() { etat= 3; };
+			virtual bool isOnFire() { return etat==2; };
+			
+// 			virtual void enflammer() { etat= 2; };
+// 			virtual void blast() { etat= 3; };
+
 	
 // 	Cellule& operator=(Cellule cell);
 	

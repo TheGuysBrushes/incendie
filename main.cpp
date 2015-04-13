@@ -11,7 +11,8 @@ int main(int argc, char** argv)
 {
 //     QCoreApplication app(argc, argv);
 //     AutomateFeu foo;
-		Terminal scr(51, 110, 0.650, 200);
+	// mettre dernier para à 1 si on veut mettre 2 fois plus de cellules hztl
+		Terminal scr(52, 220, 0.650, 10000, 1);
 		
 		scr.afficheForet();
 

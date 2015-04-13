@@ -2,8 +2,8 @@
 
 using namespace std;
 
-Terminal::Terminal(int hauteur, int largeur, float proba, long nTemps)
-	:foret(hauteur, largeur, proba), temps(nTemps)
+Terminal::Terminal(int hauteur, int largeur, float proba, long int nTemps, bool t)
+	:foret(hauteur, largeur, proba), temps(nTemps), b_taille(t)
 {
 	// lance le mode curses et le mode keypad pour les touches clavier
 	initscr();
@@ -51,8 +51,12 @@ void Terminal::afficheContour(int largeur)
 	printw("| ");
 	for(j=0; j<largeur; j++)
 		if (j < 10)
-			printw("==", j);
-		else 	printw("--", j);
+			if (b_taille) printw("=", j);
+			else printw("==", j);
+		else 
+			if (b_taille) printw("-", j);
+			else printw("--", j);
+			
 		printw("||\n");
 }
 
@@ -66,11 +70,14 @@ void Terminal::afficheCase(const Cellule* cell)
 		// 		printw("| ");
 		attron(COLOR_PAIR(couleur_cell));
 		//mvprintw(ligne*2+1, colonne*4+3, "X");
-		printw("  ");
+		if (b_taille) printw(" ");
+		else printw("  ");
 		attroff(COLOR_PAIR(couleur_cell));
 		// 		printw(" ");
 	}
-	else printw("  ", couleur_cell);// 1 espaces
+	else if (b_taille) printw(" ", couleur_cell);
+		else printw("  ", couleur_cell);// 1 espaces
+			
 }
 
 // ecrit une ligne de cases avec son numéro; utilise les fonctions affiche_case et affiche_joueur

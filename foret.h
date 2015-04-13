@@ -35,7 +35,7 @@ public:
 // 	Modification des éléments
 	void enflammer(int row, int col);
 	void enflammer(const Coordonnee& c);
-	void enflammer(Cellule* cell, int x, int y); // pour ne pas faire 2 fois l'acces à la cellule ?
+	void enflammer(Arbre* ab, int x, int y); // pour ne pas faire 2 fois l'acces à la cellule ?
 	
 	void eteindre(int x, int y);
 	
@@ -44,7 +44,7 @@ public:
 	
 // 	Avancee du temps
 	// voir transition avec d'autres parametres
-	void transition(Cellule& cell, int row, int col);
+	void transition(Cellule* cell, int row, int col);
 	bool NextMove();
 
 };

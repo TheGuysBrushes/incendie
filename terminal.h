@@ -14,9 +14,10 @@ class Terminal
 private:
 	Foret foret;
 	long temps;
+	char b_taille; // si vrai, divise la taille hztl d'une case par 2
 	
 public:
-	Terminal(int hauteur, int largeur, float proba= 0.60, long nTemps= 150000);
+	Terminal(int hauteur, int largeur, float proba= 0.60, long nTemps= 150000, bool t=0);
 		
 	
 	void end();
