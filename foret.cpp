@@ -6,6 +6,17 @@
 // #include <bits/stl_algo.h>
 // #include <bits/algorithmfwd.h>
 
+// -- A mettre dans le readme ?
+
+// un arbre hérite de cellule
+// - les cellules/arbres sont stockés par pointeurs dans le vecteur de vecteurs
+// - la cellule ne contient qu'un état, si c'est un arbre (dynamic_cast) il a des attributs spécifiques
+// - faire une sous-classe de arbre : arbre en cendres ? ou alors sous-classe de cellule ou seulement arbre dans état brulé (3) : plus simpe
+
+// TODO	1 : utiliser les coordonnées des arbres dans les méthodes plutôt que de les passer en arguments
+// 			2 : revérifier les arguments des méthodes et les algorithmes pour prendre en compte les modif
+// 			3 : faire des accesseurs et setters plus propres et explicites, supprimer attributs protected ?
+
 using namespace std;
 
 Foret::Foret(int n_lignes, int n_colonnes, float proba)
