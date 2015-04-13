@@ -17,7 +17,7 @@ private:
 	int lignes;
 	int colonnes;
 	std::vector<std::vector< Cellule* > > matrice;
-	std::list<Coordonnee>	onFire;
+	std::list< Arbre* >	onFire;
 	
 public:
 	Foret(int n_lignes, int n_colonnes, float proba=0.60);
@@ -30,21 +30,21 @@ public:
 
 	std::vector< Cellule* >* operator[](int ligne) { return &(matrice[ligne]); };
 
-
 	
 // 	Modification des éléments
 	void enflammer(int row, int col);
-	void enflammer(const Coordonnee& c);
-	void enflammer(Arbre* ab, int x, int y); // pour ne pas faire 2 fois l'acces à la cellule ?
+	void enflammer(Arbre* ab); // pour ne pas faire 2 fois l'acces à la cellule ?
 	
-	void eteindre(int x, int y);
+	void eteindre(int x, int y); // a verifier si utile
+	void eteindre(Arbre* ab);	// TODO
 	
 	
-	list< Coordonnee > adjacents(const Coordonnee& coord) const;
+// 	list< Arbre* > adjacents(const Coordonnee& coord) const;
+	list< Arbre* > adjacents(const Arbre* coord) const;
 	
 // 	Avancee du temps
 	// voir transition avec d'autres parametres
-	void transition(Cellule* cell, int row, int col);
+	void transition(Arbre* cell);
 	bool NextMove();
 
 };

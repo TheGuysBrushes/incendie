@@ -15,10 +15,11 @@ private:
 	float coefficient;
 	
 public:
-	Arbre(int col, int row, int base_pv = 0, float coef = 0.0);
-	Arbre(Cellule* cell, int col, int row, int base_pv = 0, float coef = 0.0);
+	Arbre(int row, int col, int base_pv = 0, float coef = 0.0);
+	Arbre(Cellule* cell, int col, int row, int base_pv = 0, float coef = 0.0); // attention
   Arbre(const Arbre& other);
   virtual ~Arbre();
+	
   virtual Arbre& operator=(const Arbre& other);
 	
 // 	getters
@@ -31,8 +32,8 @@ public:
 	void setPv(int y);
 	void setCoeff(float z);
 	
-	virtual void enflammer() { etat= 2; };
-	virtual void blast() { etat= 3; };
+	void enflammer() { etat= 2; };
+	void blast() { etat= 3; };
 	
 };
 

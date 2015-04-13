@@ -1,5 +1,4 @@
-#include <QCoreApplication>
-
+// #include <QCoreApplication>
 
 #include "terminal.h"
 
@@ -7,12 +6,15 @@ using namespace std;
 
 // Classe terminal temporaire, juste pour affichage en ncurses
 
+/**
+ * @author Ugo et Florian
+ */
 int main(int argc, char** argv)
 {
 //     QCoreApplication app(argc, argv);
 //     AutomateFeu foo;
-	// mettre dernier para à 1 si on veut mettre 2 fois plus de cellules hztl
-		Terminal scr(52, 220, 0.650, 10000, 1);
+	// mettre dernier para à 1 si on veut mettre 2 fois plus de cellules hztl (1600/900_Konsole: maxL:110/220 H: 52)
+		Terminal scr(35, 80, 0.600, 50000, 0);
 		
 		scr.afficheForet();
 

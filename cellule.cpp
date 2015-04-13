@@ -9,5 +9,5 @@ Cellule::Cellule(const Cellule& other)
 
 // Setters
 void Cellule::setEtat(int x){
-  this->etat = x;
+  etat = x;
 }

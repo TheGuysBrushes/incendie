@@ -9,23 +9,19 @@ protected:
 	
 public:
 
-      // Constructors
-      Cellule(int etat_init=0);
-      Cellule(const Cellule& other);
-      
-      // Getters and setters
-      virtual int getEtat() const {return 0;};
-      
-      void setEtat(int x);
-      
-      // Other methods
-			virtual bool isOnFire() { return etat==2; };
-			
-// 			virtual void enflammer() { etat= 2; };
-// 			virtual void blast() { etat= 3; };
-
+	// Constructors
+	Cellule(int etat_init=0);
+	Cellule(const Cellule& other);
 	
 // 	Cellule& operator=(Cellule cell);
+	
+		// Getters and setters
+		virtual int getEtat() const { return 0; };
+		
+		void setEtat(int x);
+		
+		// Other methods
+		virtual bool isOnFire() { return etat==2; };
 	
 };
 

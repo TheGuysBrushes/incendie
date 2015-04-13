@@ -1,12 +1,12 @@
 #include "arbre.h"
 
-Arbre::Arbre(int col, int row, int base_pv, float coef)
+Arbre::Arbre(int row, int col, int base_pv, float coef)
 	: Cellule(1), pos(col, row), pv(base_pv), coefficient(coef)
 {
 
 }
 
-
+// attention risque de créer des incohérences
 Arbre::Arbre(Cellule* cell, int col, int row, int base_pv, float coef)
 : Cellule (*cell), pos(col, row), pv(base_pv), coefficient(coef)
 {
