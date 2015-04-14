@@ -14,11 +14,13 @@ private:
 	
 private:
 	int pv;
+	int age;
+	float humidite;
 	float coefficient;
 	
 public:
-	Arbre(int col, int row, const Essence* _essence, int base_pv = 0, float coef = 0.0);
-	Arbre(Cellule* cell, int col, int row, const Essence* _essence, int base_pv = 0, float coef = 0.0); // attention
+	Arbre(int col, int row, const Essence* _essence, int base_pv = 0,int a=0,float h=0.2, float coef = 0.0);
+	Arbre(Cellule* cell, int col, int row, const Essence* _essence, int base_pv = 0,int a=0,float h=0.2, float coef = 0.0); // attention
 	Arbre(const Arbre& other);
 	virtual ~Arbre();
 	
@@ -28,12 +30,15 @@ public:
 	virtual int getEtat() const	{ return etat;};
 	int getPv() const 	{ return pv;};
 	float getCoeff() const 	{ return coefficient;};
-	const Coordonnee& getPos() const		{ return pos; };
+	const Coordonnee& getPos() const { return pos; };
+	const Essence* getEssence() const {return essence;};
 	
 // 	setters
 	void setPv(int y);
 	void setCoeff(float z);
 	
+	// Other Methods
+	void initialise();
 	void enflammer() { etat= 2; };
 	void blast() { etat= 3; };
 	
