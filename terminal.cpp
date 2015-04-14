@@ -64,7 +64,6 @@ void Terminal::afficheContour(int largeur)
 
 void Terminal::afficheCase(const Cellule* cell)
 {
-	
 	int etat_cell= cell->getEtat();
 	if (etat_cell==1){
 		int couleur_arbre= dynamic_cast < const Arbre* >(cell)->getEssence()->getType();
@@ -73,7 +72,7 @@ void Terminal::afficheCase(const Cellule* cell)
 		}else{
 			couleur_arbre = 1;
 		}
-			
+
 		// 		printw("| ");
 		attron(COLOR_PAIR(couleur_arbre ));
 		//mvprintw(ligne*2+1, colonne*4+3, "X");
