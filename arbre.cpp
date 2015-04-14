@@ -13,6 +13,7 @@ Arbre::Arbre(Cellule* cell, int col, int row, const Essence* _essence, int base_
 // 	delete(cell);
 }
 
+
 Arbre::Arbre(const Arbre& other)
 : Cellule(1) , pos(other.pos), pv(other.getPv()), coefficient(other.getCoeff())
 {
