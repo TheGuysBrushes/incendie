@@ -17,7 +17,7 @@ private:
 	int lignes;
 	int colonnes;
 	
-	std::vector<Essence> tabEss;
+	std::vector< Essence > tabEss;
 	std::vector<std::vector< Cellule* > > matrice;
 	std::list< Arbre* >	onFire;
 	

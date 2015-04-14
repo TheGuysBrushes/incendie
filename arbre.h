@@ -4,19 +4,21 @@
 #include "Essence.h"
 #include "cellule.h"
 #include "coordonnee.h"
+#include "Essence.h"
 
 class Arbre: public Cellule
 {
 private:
 	Coordonnee pos;
+	Essence* essence;
 	
 private:
 	int pv;
 	float coefficient;
 	
 public:
-	Arbre(int col, int row, int base_pv = 0, float coef = 0.0);
-	Arbre(Cellule* cell, int col, int row, int base_pv = 0, float coef = 0.0); // attention
+	Arbre(int col, int row, const Essence* _essence, int base_pv = 0, float coef = 0.0);
+	Arbre(Cellule* cell, int col, int row, const Essence* _essence, int base_pv = 0, float coef = 0.0); // attention
 	Arbre(const Arbre& other);
 	virtual ~Arbre();
 	
