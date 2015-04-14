@@ -1,6 +1,6 @@
 #include "arbre.h"
 
-Arbre::Arbre(int row, int col, int base_pv, float coef)
+Arbre::Arbre(int col, int row, int base_pv, float coef)
 	: Cellule(1), pos(col, row), pv(base_pv), coefficient(coef)
 {
 
@@ -26,7 +26,8 @@ Arbre::~Arbre()
 
 Arbre& Arbre::operator=(const Arbre& other)
 {
-return *this;
+	*this= Arbre(other);
+	return *this;
 }
 
 

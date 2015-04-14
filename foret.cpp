@@ -56,7 +56,7 @@ void Foret::initialisation(float probabilite)
 			// si le nombre est supérieur au seuil, c'est un arbre
 			// TODO définir des palier par types d'arbres/essences ... ?
 			if (test>seuil){
-				Arbre* ab= new Arbre(i, j, 50, 0.5);
+				Arbre* ab= new Arbre(j, i, 50, 0.5);
 				tmp.push_back(ab);
 			}
 			else	// sinon c'est une cellule "vide"

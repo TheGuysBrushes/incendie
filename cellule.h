@@ -13,7 +13,7 @@ public:
 	Cellule(int etat_init=0);
 	Cellule(const Cellule& other);
 	
-// 	Cellule& operator=(Cellule cell);
+	Cellule& operator=(Cellule cell);
 	
 		// Getters and setters
 		virtual int getEtat() const { return 0; };
