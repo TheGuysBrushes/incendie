@@ -10,7 +10,7 @@ class Arbre: public Cellule
 {
 private:
 	Coordonnee pos;
-	Essence* essence;
+	const Essence* essence;
 	
 private:
 	int pv;

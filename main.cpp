@@ -16,7 +16,7 @@ int main(int argc, char** argv)
 	// mettre dernier para à 1 si on veut mettre 2 fois plus de cellules hztl (1600/900_Konsole: maxL:110/220 H: 52)
 	
 	int hauteur=	45;
-	int largeur=	100;
+	int largeur=	50;
 	float proba=	0.650;
 	long vitesse=	15000;
 	bool small=		false;

@@ -1,7 +1,7 @@
 #include "arbre.h"
 
 Arbre::Arbre(int col, int row, const Essence* _essence, int base_pv, float coef)
-	: Cellule(1), pos(col, row), pv(base_pv), coefficient(coef)
+	: Cellule(1), pos(col, row),essence(_essence), pv(base_pv), coefficient(coef)
 {
 
 }
