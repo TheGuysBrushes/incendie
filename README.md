@@ -17,3 +17,5 @@ Lundi : Flo : - les cellules/arbres sont stockés par pointeurs dans le vecteur 
               - Nettoyage du code et commentaire.
               
         Ugo : Implémentation de la notion d'essence.
+        
+ Mardi : Intégration de la notion d'essence dans une forêt (Gestion moteur et graphique).
