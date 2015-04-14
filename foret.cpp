@@ -1,5 +1,7 @@
 #include "foret.h"
 
+#include <fstream>
+
 #include <cstdlib>
 #include <ctime>
 #include <curses.h> // temp
@@ -106,7 +108,7 @@ void Foret::enflammer(int row, int col)
  * Enflamme un arbre
  * @author Florian
  * @param ab arbre à enflammer
- * TODO vérifier qu'il n'est pas déja enflamme ? : vérification plus coûteuse que de faire plusieurs calcul de transmission MAIS risque poser soucis de PV
+ * TODO vérifier qu'il n'est pas déja enflamme (dans onFire) ? : vérification plus coûteuse que de faire plusieurs calcul de transmission MAIS risque poser soucis de PV
  */
 void Foret::enflammer(Arbre* ab)
 {
