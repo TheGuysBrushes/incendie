@@ -22,8 +22,8 @@ Terminal::Terminal(int hauteur, int largeur, float proba, long int nTemps, bool 
 	init_pair(1, COLOR_BLACK, COLOR_GREEN);
 	init_pair(2, COLOR_BLACK, COLOR_RED);
 	init_pair(3, COLOR_BLACK, COLOR_WHITE);
-// 	init_pair(4, COLOR_BLACK, COLOR_YELLOW);
-// 	init_pair(5, COLOR_BLACK, COLOR_CYAN);
+ 	init_pair(4, COLOR_BLACK, COLOR_YELLOW);
+ 	init_pair(5, COLOR_BLACK, COLOR_CYAN);
 	
 }
 
@@ -64,19 +64,38 @@ void Terminal::afficheContour(int largeur)
 
 void Terminal::afficheCase(const Cellule* cell)
 {
-
-	int couleur_cell= cell->getEtat();
-	if (couleur_cell){
+	
+	int etat_cell= cell->getEtat();
+	if (etat_cell==1){
+		int couleur_arbre= dynamic_cast < const Arbre* >(cell)->getEssence()->getType();
+		if(couleur_arbre == 0){
+			couleur_arbre = 5;
+		}else{
+			couleur_arbre = 1;
+		}
+			
 		// 		printw("| ");
-		attron(COLOR_PAIR(couleur_cell));
+		attron(COLOR_PAIR(couleur_arbre ));
 		//mvprintw(ligne*2+1, colonne*4+3, "X");
 		if (b_taille) printw(" ");
 		else printw("  ");
-		attroff(COLOR_PAIR(couleur_cell));
+		attroff(COLOR_PAIR(couleur_arbre));
 		// 		printw(" ");
 	}
-	else if (b_taille) printw(" ", couleur_cell);
-		else printw("  ", couleur_cell);// 1 espaces
+	else if (etat_cell==2){
+		attron(COLOR_PAIR(2));
+		if (b_taille) printw(" ");
+		else printw("  ");
+		attroff(COLOR_PAIR(2));
+	}
+	else if (etat_cell==3){
+		attron(COLOR_PAIR(3));
+		if (b_taille) printw(" ");
+		else printw("  ");
+		attroff(COLOR_PAIR(3));
+	}
+	else if (b_taille) printw(" ");
+		else printw("  "  );// 1 espaces
 			
 }
 
