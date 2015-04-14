@@ -2,32 +2,39 @@
 #define ESSENCE_H
 
 #include <string>
-
-using namespace std;
+#include <sstream>
 
 class Essence
 {
 private:
-  string name;
-  int masse_V;
-  bool type; // représente le type de l'essence : 0 pour résineux, 1 pour feuillu
-  
+	std::string name;
+	int masse_V;
+	float hauteur;
+	float diametre;
+	bool type; // représente le type de l'essence : 0 pour résineux, 1 pour feuillu
+	
 public:
-  // Constructors
-  Essence(string nom, int masse, bool t);
-  Essence(const Essence& other);
-  // Getters and setters
-  const string getName(){return name;};
-  const int getMasse(){return masse_V;};
-  const bool getType(){return type;};
-  
-  void setName(string x);
-  void setMasse(int x);
-  void setType(bool t);
-  // Operators
-  virtual Essence& operator=(const Essence& other);
-  // Others Methods
-  
+	// Constructors
+	Essence(std::string nom, int masse,float h, float d, bool t);
+	Essence(const Essence& other);
+	// Getters and setters
+	std::string getName() const {return name;};
+	int getMasse() const {return masse_V;};
+	float getHauteur() const {return hauteur;};
+	float getDiametre() const {return diametre;};
+	bool getType() const {return type;};
+	
+	void setName(std::string x);
+	void setMasse(int x);
+	void setType(bool t);
+	void setHauteur(float h);
+	void setDiametre(float d);
+	// Operators
+	virtual Essence& operator=(const Essence& other);
+	// Others Methods
+	std::string afficheEssence() const;
+	
 };
 
 #endif // ESSENCE_H
+

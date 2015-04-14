@@ -31,6 +31,21 @@ Foret::Foret(int n_lignes, int n_colonnes, float proba)
 	initialisation(proba);
 }
 
+
+/**
+ * Découpe une chaine de caractères en sous-chaine et place chaque élément dans un vecteur de string
+ * @param str : Chaine à découper
+ * @author Ugo
+ */
+vector< string >* Foret::explode(const string& str)
+{
+	istringstream split(str);
+	vector<string> *tokens = new vector<string>;
+	for(string each;getline(split, each, ' '); tokens->push_back(each));
+		 return   tokens;
+}
+
+
 /**
  * Initialise la matrice
  * @param probabilite chance qu'a un arbre d'etre place sur chaque case
@@ -38,6 +53,33 @@ Foret::Foret(int n_lignes, int n_colonnes, float proba)
  */
 void Foret::initialisation(float probabilite)
 {
+	// Initialisation du vecteur d'essence
+	
+	ifstream f ( "essence_data.txt");
+	cout << "fichier ouvert?" <<endl;
+	
+	if(f){
+		string line;
+		
+		while(getline(f,line)){
+			vector<string>* tokens = explode(line);
+			string name = tokens->at(0);
+			int masse = atoi(tokens->at(1).c_str());
+			float h = strtof(tokens->at(2).c_str(),NULL);
+			float d = strtof(tokens->at(3).c_str(),NULL);
+			bool t = atoi(tokens->at(4).c_str());
+			tabEss.push_back(Essence(name,masse,h,d,t));
+			
+		}
+		
+		for(vector<Essence>::const_iterator i(tabEss.begin()); i!=tabEss.end(); ++i){
+			cout << i->afficheEssence() << endl;
+		}
+		
+	}
+	else cout << "non" <<endl;
+	
+	
 	srand(std::time(0));
 	if (probabilite>1){
 		probabilite=0.6;
@@ -62,7 +104,7 @@ void Foret::initialisation(float probabilite)
 				tmp.push_back(ab);
 			}
 			else	// sinon c'est une cellule "vide"
-				tmp.push_back( new Cellule(0));
+				tmp.push_back( new Cellule(0) );
 		}
 		
 		// ajout de la ligne dans la matrice
@@ -206,7 +248,7 @@ bool Foret::NextMove()
 		
 		list< Arbre* > old= onFire;
 		onFire.clear();
-	
+		
 		// TODO utiliser mapping
 		for (list< Arbre* >::iterator ab(old.begin()); ab!=old.end(); ++ab){
 			transition(*ab);

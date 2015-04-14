@@ -16,6 +16,8 @@ class Foret
 private:
 	int lignes;
 	int colonnes;
+	
+	std::vector<Essence> tabEss;
 	std::vector<std::vector< Cellule* > > matrice;
 	std::list< Arbre* >	onFire;
 	
@@ -39,8 +41,11 @@ public:
 	void eteindre(Arbre* ab);	// TODO
 	
 	
+	// Fonction nécessaire pour l'initialisation des essences d'arbres
+	std::vector< std::string >* explode(const std::string& str);	
+	
 // 	list< Arbre* > adjacents(const Coordonnee& coord) const;
-	list< Arbre* > adjacents(const Arbre* coord) const;
+	std::list< Arbre* > adjacents(const Arbre* coord) const;
 	
 // 	Avancee du temps
 	// voir transition avec d'autres parametres
