@@ -20,7 +20,8 @@ private:
 	
 public:
 	Arbre(int col, int row, const Essence* _essence,int a=0,float h=0.2);
-	Arbre(Cellule* cell, int col, int row, const Essence* _essence, int a=0,float h=0.2); // attention
+	Arbre(Cellule* cell, int col, int row, const Essence* _essence, int a=0,float h=0.2);
+ // attention
 	Arbre(const Arbre& other);
 	virtual ~Arbre();
 	
