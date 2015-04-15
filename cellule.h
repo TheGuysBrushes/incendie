@@ -5,7 +5,7 @@ class Cellule
 {
 	
 protected:
-	int etat;
+	int etat; // utilie dans arbre
 	
 public:
 

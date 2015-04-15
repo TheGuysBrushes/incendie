@@ -43,15 +43,15 @@ Arbre::~Arbre()
 void Arbre::initialise()
 {
 	// Initialisation des points de vie de l'arbre
-	int rayon = this->essence->getDiametre() / 2;
-	int hauteur = this->essence->getHauteur();
-	int points = 4/3*M_PI*rayon*rayon*hauteur*this->essence->getMasse()/100;
+	int rayon = essence->getDiametre() / 2;
+	int hauteur = essence->getHauteur();
+	int points = 4/3*(M_PI* (rayon*rayon)*hauteur* (essence->getMasse()/100) );
 	// Les données des essences sont décrites pour un arbre de 50 ans à 12% d'humidité
 	pv = points * age/50;
 	pv *= (1+humidite);
 	
 	// L'initialisation du coefficient sera faite plus tard puisqu'il dépend des paramètres extérieurs à l'arbre 
 	// Humidité ambiante, force du vent etc
-	this->coefficient = 0.5;
+	coefficient = 0.5;
 	
 }
