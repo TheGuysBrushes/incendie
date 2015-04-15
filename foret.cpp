@@ -111,9 +111,9 @@ void Foret::initialisation(float probabilite)
 			if (test>seuil){
 				// TODO Gérer l'apparition de bosquet, i.e, probabilité augmentée qu'un arbre soit de la même essence que ses voisins
 				// Parcourir les voisins et générer le tableau de proba pondéré
-				int probaEss[essences.size()];
-				for(int i=0;i<essences.size();++i){
-					probaEss[i] = 1;
+				unsigned int probaEss[essences.size()];
+				for(unsigned int k=0;k<essences.size();++k){
+					probaEss[k] = 1;
 				}
 				
 				// Sélectionner une essence dans le tableau de proba pondéré
