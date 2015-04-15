@@ -24,8 +24,9 @@ private:
 public:
 	Foret(int n_lignes, int n_colonnes, float proba=0.60);
 	
-	
 	bool loadEssences(const std::string& fileName);
+	void createRandomMatrice(); // TODO
+	
 	void initialisation(float probabilite);
 	
 	// 	Acces aux elements
@@ -39,12 +40,8 @@ public:
 	void enflammer(int row, int col);
 	void enflammer(Arbre* ab); // pour ne pas faire 2 fois l'acces à la cellule ?
 	
-	void eteindre(int x, int y); // a verifier si utile
+// 	void eteindre(int x, int y); // a verifier si utile
 	void eteindre(Arbre* ab);	// TODO
-	
-	
-	// Fonction nécessaire pour l'initialisation des essences d'arbres
-	std::vector< std::string >* explode(const std::string& str);	
 	
 // 	list< Arbre* > adjacents(const Coordonnee& coord) const;
 	std::list< Arbre* > adjacents(const Arbre* coord) const;

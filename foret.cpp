@@ -34,10 +34,11 @@ Foret::Foret(int n_lignes, int n_colonnes, float proba)
 
 /**
  * Découpe une chaine de caractères en sous-chaine et place chaque élément dans un vecteur de string
+ * 	nécessaire pour l'initialisation des essences d'arbres
  * @param str : Chaine à découper
  * @author Ugo
  */
-vector< string >* Foret::explode(const string& str)
+vector< string >* explode(const string& str)
 {
 	istringstream split(str);
 	vector<string> *tokens = new vector<string>;
