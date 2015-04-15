@@ -17,10 +17,10 @@
 
 //	DID : 1	: utiliser les coordonnées des arbres dans les méthodes plutôt que de les passer en arguments
 // 			+ code nettoyé (commentaires ...)
-//	TODO	2	: EN COURS ; revérifier les arguments des méthodes et les algorithmes pour prendre en compte les modif
+//	TODO	2	: EN COURS	; revérifier les arguments des méthodes et les algorithmes pour prendre en compte les modif
 //			3	: faire des accesseurs et setters plus propres et explicites, supprimer attributs protected ?
-// 		4	: Prise en compte des PV
-// 		5	: EN PARTIE ; Gérer arbres adjacents diagonaux ET avec plus de 1 de distance, creer classe ? (Arbre+distance)
+// 		4	: EN COURS	; Prise en compte des PV
+// 		5	: EN PARTIE	; Gérer arbres adjacents diagonaux ET avec plus de 1 de distance, creer classe ? (Arbre+distance)
 // 		6	: Prise en compte coefs
 
 using namespace std;
@@ -118,7 +118,7 @@ void Foret::randomMatrice(float probabilite)
 				
 				
 				// Constructeur d'arbre a été modifié mais ça ne change pas la signature de la création ci-dessous
-				Arbre* ab= new Arbre(j, i, &(essences[ess]), 50, 50);
+				Arbre* ab= new Arbre(j, i, &(essences[ess]), 50, 10);
 				tmp.push_back(ab);
 			}
 			else	// sinon c'est une cellule "vide"

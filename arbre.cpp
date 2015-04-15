@@ -14,6 +14,7 @@ Arbre::Arbre(Cellule* cell, int col, int row, const Essence* _essence, int _age,
 : Cellule (*cell), pos(col, row),age(age),humidite(humidite)
 {
 	initialise();
+// 	delete(cell);
 }
 
 
@@ -28,7 +29,7 @@ void Arbre::initialise()
 	
 	// Les données des essences sont décrites pour un arbre de 50 ans à 12% d'humidité
 	pv = points * age/50.0;
-	pv *= humidite/100.0;
+	pv *= 1+ humidite/100.0;
 	std::cout << " pv : "<< pv;
 	
 	// L'initialisation du coefficient sera faite plus tard puisqu'il dépend des paramètres extérieurs à l'arbre 
@@ -65,7 +66,7 @@ Arbre::~Arbre()
 
 bool Arbre::brule()
 {
-	pv-= 15; // TODO : celon coef, paramètres ... (15 est arbitraire)
+	pv-= 45; // TODO : celon coef, paramètres ... (45 est arbitraire)
 	if (pv<=0){
 		blast();
 		return false;
