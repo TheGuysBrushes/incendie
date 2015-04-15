@@ -7,6 +7,7 @@
 class Essence
 {
 private:
+	unsigned int indice;
 	std::string name;
 	unsigned int masse_V;
 	float hauteur;
@@ -15,7 +16,7 @@ private:
 	
 public:
 	// Constructors
-	Essence(std::string nom, int masse,float h, float d, bool t);
+	Essence(unsigned int i,std::string nom, int masse,float h, float d, bool t);
 	Essence(const Essence& other);
 	// Getters and setters
 	std::string getName() const {return name;};
@@ -23,6 +24,7 @@ public:
 	float getHauteur() const {return hauteur;};
 	float getDiametre() const {return diametre;};
 	bool getType() const {return type;};
+	unsigned int getIndice() const {return indice;};
 	
 	void setName(std::string x);
 	void setMasse(int x);

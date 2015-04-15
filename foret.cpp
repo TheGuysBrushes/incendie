@@ -60,7 +60,7 @@ bool Foret::loadEssences(const string& fileName)
 	if(f){
 		string line;
 		cout <<"oui"<< endl;
-	
+		int indice = 0;
 		while(getline(f,line)){
 			vector<string>* tokens = explode(line);
 			string name = tokens->at(0);
@@ -68,8 +68,8 @@ bool Foret::loadEssences(const string& fileName)
 			float h = strtof(tokens->at(2).c_str(),NULL);
 			float d = strtof(tokens->at(3).c_str(),NULL);
 			bool t = atoi(tokens->at(4).c_str());
-			essences.push_back(Essence(name,masse,h,d,t));
-			
+			essences.push_back(Essence(indice,name,masse,h,d,t));
+			indice +=1;
 		}
 		
 		for(vector<Essence>::const_iterator i(essences.begin()); i!=essences.end(); ++i){
@@ -123,19 +123,35 @@ void Foret::randomMatrice(float probabilite)
 			// si le nombre est supérieur au seuil, c'est un arbre
 			if (test>seuil){
 				// TODO Gérer l'apparition de bosquet, i.e, probabilité augmentée qu'un arbre soit de la même essence que ses voisins
-				// Parcourir les voisins et générer le tableau de proba pondéré
+				
+				// Initialisation du tableau de pondération
 				unsigned int probaEss[essences.size()];
 				for(unsigned int k=0;k<essences.size();++k){
 					probaEss[k] = 1;
 				}
+				// Récupération des voisins
+				list<Arbre*> voisins = adjacents(j,i);
+				// Pondération du tableau
+				for (list< Arbre* >::iterator a(voisins.begin()); a!=voisins.end(); ++a){
+					probaEss[(*a)->getEssence()->getIndice()] += 1;					
+				}
 				
+				unsigned int index_max = 0;
+				for(unsigned int l=0;l<essences.size();++l)
+					index_max += probaEss[l];
+				
+				unsigned int index = rand()%index_max;
+				unsigned int ess = 0;
+				while(index > probaEss[ess] && ess < essences.size()){
+					index -= probaEss[ess];
+					++ess;
+				}
+				cout << "indice de l'essence choisie : " << ess << endl;
 				// Sélectionner une essence dans le tableau de proba pondéré
-				int ess = rand()%2;
-				
-				
-				
+				//int ess = rand()%2;
+								
 				// Constructeur d'arbre a été modifié mais ça ne change pas la signature de la création ci-dessous
-				Arbre* ab= new Arbre(j, i, &(essences[ess]), 50, 10);
+				Arbre* ab= new Arbre(j, i, &(essences.at(ess)), 50, 10);
 // 				tmp.push_back(ab);
 				delete(matrice[i][j]);
 				matrice[i][j]= ab;
@@ -219,10 +235,12 @@ void Foret::enflammer(Arbre* ab)
  * @author Florian
  * @param ab arbre dont on veut connaître les voisins
  */
-std::list< Arbre* > Foret::adjacents(const Arbre* ab) const
+std::list< Arbre* > Foret::adjacents(int _col, int _row) const
 {
-	int col= ab->getPos().col;
-	int row= ab->getPos().row;
+// 	int col= ab->getPos().col;
+// 	int row= ab->getPos().row;
+	int col = _col;
+	int row = _row;
 	
 	list< Arbre* > liste;
 	
@@ -315,8 +333,9 @@ std::list< Arbre* > Foret::adjacents(const Arbre* ab) const
 void Foret::transition(Arbre* ab)
 {
 // 	ab->blast();
-	
-	list< Arbre* > voisins= adjacents(ab);
+	int col = ab->getPos().col;
+	int row = ab->getPos().row;
+	list< Arbre* > voisins= adjacents(col,row);
 	for (list< Arbre* >::iterator a(voisins.begin()); a!=voisins.end(); ++a){
 		enflammer( (*a) );
 	}
