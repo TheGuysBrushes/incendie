@@ -98,11 +98,12 @@ void Foret::initialisation(float probabilite)
 			int seuil= MAXI*(1-probabilite);
 			
 			// si le nombre est supérieur au seuil, c'est un arbre
-			// TODO définir des palier par types d'arbres/essences ... ?
 			if (test>seuil){
-				// On sélectionne une essence aléatoirement
 				// TODO Gérer l'apparition de bosquet, i.e, probabilité augmentée qu'un arbre soit de la même essence que ses voisins
 				int ess = rand()%2;
+				
+				
+				
 				// Constructeur d'arbre a été modifié mais ça ne change pas la signature de la création ci-dessous
 				Arbre* ab= new Arbre(j, i, &(tabEss[ess]), 50, 0.5);
 				tmp.push_back(ab);
