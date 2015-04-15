@@ -46,21 +46,16 @@ vector< string >* Foret::explode(const string& str)
 }
 
 
-/**
- * Initialise les différentes essences et la matrice de l'automate
- * @param probabilite chance qu'a un arbre d'etre place sur chaque case
- * @author Ugo and Florian
- */
-void Foret::initialisation(float probabilite)
+bool Foret::loadEssences(const string& fileName)
 {
 	// Initialisation du vecteur d'essence
-	
-	ifstream f ( "../essence_data.txt");
+	ifstream f (fileName.c_str());
 	cout << "fichier ouvert?" <<endl;
-	
+
 	if(f){
 		string line;
-		
+		cout <<"oui"<< endl;
+	
 		while(getline(f,line)){
 			vector<string>* tokens = explode(line);
 			string name = tokens->at(0);
@@ -68,17 +63,32 @@ void Foret::initialisation(float probabilite)
 			float h = strtof(tokens->at(2).c_str(),NULL);
 			float d = strtof(tokens->at(3).c_str(),NULL);
 			bool t = atoi(tokens->at(4).c_str());
-			tabEss.push_back(Essence(name,masse,h,d,t));
+			essences.push_back(Essence(name,masse,h,d,t));
 			
 		}
 		
-		for(vector<Essence>::const_iterator i(tabEss.begin()); i!=tabEss.end(); ++i){
+		for(vector<Essence>::const_iterator i(essences.begin()); i!=essences.end(); ++i){
 			cout << i->afficheEssence() << endl;
 		}
 		
+		return true;
 	}
-	else cout << "non" <<endl;
+	else {
+		cout << "non" <<endl;
+		return false;
+	}
+}
+				
+
+/**
+ * Initialise les différentes essences et la matrice de l'automate
+ * @param probabilite chance qu'a un arbre d'etre place sur chaque case
+ * @author Ugo and Florian
+ */
+void Foret::initialisation(float probabilite)
+{
 	
+	loadEssences("../essence_data.txt");
 	
 	srand(std::time(0));
 	if (probabilite>1){
@@ -105,7 +115,7 @@ void Foret::initialisation(float probabilite)
 				
 				
 				// Constructeur d'arbre a été modifié mais ça ne change pas la signature de la création ci-dessous
-				Arbre* ab= new Arbre(j, i, &(tabEss[ess]), 50, 0.5);
+				Arbre* ab= new Arbre(j, i, &(essences[ess]), 50, 0.5);
 				tmp.push_back(ab);
 			}
 			else	// sinon c'est une cellule "vide"

@@ -37,10 +37,14 @@ void Essence::setDiametre(float d)
 // Others Methods
 string Essence::afficheEssence() const
 {
-	
 	ostringstream s;
-	s <<  "Essence nom :" << name << " ; masse " << masse_V << 
-	" ; hauteur : " << hauteur << " ; diametre : " << diametre << " ; type " << type;
+	
+	string s_type("Epineux");
+	if (type)
+		s_type= "Feuillu";
+	
+	s <<  "nom :" << name << " ; type " << s_type <<
+	" ; masse " << masse_V << " ; hauteur : " << hauteur << " ; diametre : " << diametre;
 	return s.str();
 }
 

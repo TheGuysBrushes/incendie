@@ -17,13 +17,15 @@ private:
 	int lignes;
 	int colonnes;
 	
-	std::vector< Essence > tabEss;
+	std::vector< Essence > essences;
 	std::vector<std::vector< Cellule* > > matrice;
 	std::list< Arbre* >	onFire;
 	
 public:
 	Foret(int n_lignes, int n_colonnes, float proba=0.60);
 	
+	
+	bool loadEssences(const std::string& fileName);
 	void initialisation(float probabilite);
 	
 	// 	Acces aux elements
