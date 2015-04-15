@@ -14,31 +14,31 @@ Arbre::Arbre(Cellule* cell, int col, int row, const Essence* _essence, int a, fl
 }
 
 
-Arbre::Arbre(const Arbre& other)
-: Cellule(1) , pos(other.pos), pv(other.pv),age(other.age),humidite(other.humidite), coefficient(other.coefficient)
-{
-
-}
+// Arbre::Arbre(const Arbre& other)
+// : Cellule(1) , pos(other.pos), pv(other.pv),age(other.age),humidite(other.humidite), coefficient(other.coefficient)
+// {
+// 
+// }
 
 Arbre::~Arbre()
 {
 
 }
 
-Arbre& Arbre::operator=(const Arbre& other)
-{
-	*this= Arbre(other);
-	return *this;
-}
+// Arbre& Arbre::operator=(const Arbre& other)
+// {
+// 	*this= Arbre(other);
+// 	return *this;
+// }
 
 
-void Arbre::setPv(int y){
-	pv = y;
-}
-
-void Arbre::setCoeff(float z){
-	coefficient = z;
-}
+// void Arbre::setPv(int y){
+// 	pv = y;
+// }
+// 
+// void Arbre::setCoeff(float z){
+// 	coefficient = z;
+// }
 
 void Arbre::initialise()
 {

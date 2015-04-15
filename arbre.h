@@ -22,10 +22,10 @@ public:
 	Arbre(int col, int row, const Essence* _essence,int a=0,float h=0.2);
 	Arbre(Cellule* cell, int col, int row, const Essence* _essence, int a=0,float h=0.2);
  // attention
-	Arbre(const Arbre& other);
+// 	Arbre(const Arbre& other);
 	virtual ~Arbre();
 	
-	virtual Arbre& operator=(const Arbre& other);
+// 	virtual Arbre& operator=(const Arbre& other);
 	
 // 	getters
 	virtual int getEtat() const	{ return etat;};
@@ -35,8 +35,8 @@ public:
 	const Essence* getEssence() const {return essence;};
 	
 // 	setters
-	void setPv(int y);
-	void setCoeff(float z);
+// 	void setPv(int y);
+// 	void setCoeff(float z);
 	
 	// Other Methods
 	void initialise();
