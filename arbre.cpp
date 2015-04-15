@@ -1,14 +1,14 @@
 #include "arbre.h"
 #include <math.h>
-Arbre::Arbre(int col, int row, const Essence* _essence, int base_pv, int a, float h, float coef)
-	: Cellule(1), pos(col, row),essence(_essence), pv(base_pv),age(a),humidite(h), coefficient(coef)
-{
+Arbre::Arbre(int col, int row, const Essence* _essence, int a, float h)
+	: Cellule(1), pos(col, row),essence(_essence),age(a),humidite(h)
+{	
 	initialise();
 }
 
 // attention risque de créer des incohérences
-Arbre::Arbre(Cellule* cell, int col, int row, const Essence* _essence, int base_pv, int a, float h, float coef)
-: Cellule (*cell), pos(col, row), pv(base_pv),age(a),humidite(h), coefficient(coef)
+Arbre::Arbre(Cellule* cell, int col, int row, const Essence* _essence, int a, float h)
+: Cellule (*cell), pos(col, row),age(a),humidite(h)
 {
 	initialise();
 }
@@ -16,7 +16,7 @@ Arbre::Arbre(Cellule* cell, int col, int row, const Essence* _essence, int base_
 Arbre::Arbre(const Arbre& other)
 : Cellule(1) , pos(other.pos), pv(other.pv),age(other.age),humidite(other.humidite), coefficient(other.coefficient)
 {
-	initialise();
+
 }
 
 Arbre::~Arbre()
