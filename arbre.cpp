@@ -13,6 +13,7 @@ Arbre::Arbre(Cellule* cell, int col, int row, const Essence* _essence, int a, fl
 	initialise();
 }
 
+
 Arbre::Arbre(const Arbre& other)
 : Cellule(1) , pos(other.pos), pv(other.pv),age(other.age),humidite(other.humidite), coefficient(other.coefficient)
 {

@@ -20,7 +20,7 @@
 //	TODO	2	: EN COURS ; revérifier les arguments des méthodes et les algorithmes pour prendre en compte les modif
 //			3	: faire des accesseurs et setters plus propres et explicites, supprimer attributs protected ?
 // 		4	: Prise en compte des PV
-// 		5	: Gérer arbres adjacents diagonaux ET avec plus de 1 de distance, creer classe ? (Arbre+distance)
+// 		5	: EN PARTIE ; Gérer arbres adjacents diagonaux ET avec plus de 1 de distance, creer classe ? (Arbre+distance)
 // 		6	: Prise en compte coefs
 
 using namespace std;
@@ -181,37 +181,78 @@ std::list< Arbre* > Foret::adjacents(const Arbre* ab) const
 	
 	list< Arbre* > liste;
 	
-	if (col<colonnes-1) {
-		Cellule* cell= matrice[row][col+1];
-		// verification que la cellule est un arbre, qui n'est pas enflammee
-		if (cell->getEtat()==1)
-			liste.push_back( dynamic_cast < Arbre* >(cell) );
-// 		liste.push_back(Coordonnee(x+1, y));
+// On cherche à vérifier les cases autour de la cellule dans un carré de taille donné (ici 3x3)
+	/// (Si on veut vérifier dans un carré de taille 5, alors vérifier avec (col>=2) / (row>=2) et (col< colonnes-2) / (row< ligne-2))
+	
+	// on prend la taille de la case, sans adjacents supposé
+	int larg= 1;	int haut= 1;
+	
+	// on initialise la premiere case à vérifier à partir des coordonnées de l'arbre
+	int posRow= row;	int posCol= col;
+	
+	// si il y a des cases à gauche, on place la premiere cellule sur la gauche directe
+	if (col>=1){
+		posCol= col-1;
+		++larg;
 	}
-		
-	if (col>0) {
-		Cellule* cell= matrice[row][col-1];
-		// verification que la cellule est un arbre, qui n'est pas enflammee
-		if (cell->getEtat()==1)
-			liste.push_back( dynamic_cast < Arbre* >(cell) );
-// 		liste.push_back(Coordonnee(x-1, y));
+	// si il des cases à droite, la hauteur du carré est augmenté	
+		/// (si il y a des cases à gauche et à droite, la hauteur est 3)
+	if (col<colonnes-1)
+		++larg;
+	
+	// si il y a des cases au dessus, on place la premiere cellule au dessus direct
+	if (row>=1) {
+		posRow= row-1;
+		++haut;
+	}
+	// si il des cases en dessous, la hauteur du carré est augmenté
+		/// (si il y a des cases au dessus et en dessous, il y a 3 cellules de largeur)
+	if(row <lignes-1 )
+		++haut;
+
+	int posRowMax= posRow + haut;
+	int posColMax= posCol + larg;
+	
+	// on ajoute dans les arbres adjacents dans un carré de haut par larg autour de "ab"
+			//(ont vérifie "ab" lui-même, mais il est en feu... donc non ajouté dans les adjacents)
+	for (int i= posRow; i<posRowMax; ++i){
+		for (int j= posCol; j<posColMax; ++j){
+			
+			Cellule* cell= matrice[i][j];
+			// verification que la cellule est un arbre, qui n'est pas enflammee
+			if (cell->getEtat()==1)
+				liste.push_back( dynamic_cast < Arbre* >(cell) );
+			
+		}
 	}
 	
-	if (row<lignes-1) {
-		Cellule* cell= matrice[row+1][col];
-		// verification que la cellule est un arbre, qui n'est pas enflammee
-		if (cell->getEtat()==1)
-			liste.push_back( dynamic_cast < Arbre* >(cell) );
-// 		liste.push_back(Coordonnee(x, y+1));
-	}
-
-	if (row>0) {
-		Cellule* cell= matrice[row-1][col];
-		// verification que la cellule est un arbre, qui n'est pas enflammee
-		if (cell->getEtat()==1)
-			liste.push_back( dynamic_cast < Arbre* >(cell) );
-// 		liste.push_back(Coordonnee(x, y-1));
-	}
+// 	if (col<colonnes-1) {
+// 		Cellule* cell= matrice[row][col+1];
+// 		// verification que la cellule est un arbre, qui n'est pas enflammee
+// 		if (cell->getEtat()==1)
+// 			liste.push_back( dynamic_cast < Arbre* >(cell) );
+// 	}
+// 		
+// 	if (col>0) {
+// 		Cellule* cell= matrice[row][col-1];
+// 		// verification que la cellule est un arbre, qui n'est pas enflammee
+// 		if (cell->getEtat()==1)
+// 			liste.push_back( dynamic_cast < Arbre* >(cell) );
+// 	}
+// 	
+// 	if (row<lignes-1) {
+// 		Cellule* cell= matrice[row+1][col];
+// 		// verification que la cellule est un arbre, qui n'est pas enflammee
+// 		if (cell->getEtat()==1)
+// 			liste.push_back( dynamic_cast < Arbre* >(cell) );
+// 	}
+// 
+// 	if (row>0) {
+// 		Cellule* cell= matrice[row-1][col];
+// 		// verification que la cellule est un arbre, qui n'est pas enflammee
+// 		if (cell->getEtat()==1)
+// 			liste.push_back( dynamic_cast < Arbre* >(cell) );
+// 	}
 
 	return liste;
 }
