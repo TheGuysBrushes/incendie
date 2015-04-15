@@ -8,7 +8,7 @@ class Essence
 {
 private:
 	std::string name;
-	int masse_V;
+	unsigned int masse_V;
 	float hauteur;
 	float diametre;
 	bool type; // représente le type de l'essence : 0 pour résineux, 1 pour feuillu

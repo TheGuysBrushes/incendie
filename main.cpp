@@ -17,8 +17,8 @@ int main(int argc, char** argv)
 	
 	int hauteur=	45;
 	int largeur=	50;
-	float proba=	0.550;
-	long vitesse=	150000;
+	float proba=	0.450;
+	long vitesse=	15000;
 	bool small=		false;
 	
 	

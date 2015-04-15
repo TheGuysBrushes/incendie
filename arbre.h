@@ -19,29 +19,40 @@ private:
 	float coefficient;
 	
 public:
-	Arbre(int col, int row, const Essence* _essence,int a=0,float h=0.2);
-	Arbre(Cellule* cell, int col, int row, const Essence* _essence, int a=0,float h=0.2);
- // attention
-// 	Arbre(const Arbre& other);
+	Arbre(int col, int row, const Essence* _essence, int _age = 0, unsigned int _humidite = 20);
+	Arbre(Cellule* cell, int col, int row, const Essence* _essence, int _age = 0, unsigned int _humidite = 20);
+	
+	void initialise();
+ 
+// 	Arbre(const Arbre& other); // attention
 	virtual ~Arbre();
 	
 // 	virtual Arbre& operator=(const Arbre& other);
 	
-// 	getters
+	
+// GETTERS
+	// explicites
 	virtual int getEtat() const	{ return etat;};
 	int getPv() const 	{ return pv;};
 	float getCoeff() const 	{ return coefficient;};
 	const Coordonnee& getPos() const { return pos; };
 	const Essence* getEssence() const {return essence;};
 	
-// 	setters
+	// implicites
+	virtual bool isOnFire() { return etat==2; };
+	
+	
+// SETTERS
+	// explicites
 // 	void setPv(int y);
 // 	void setCoeff(float z);
 	
-	// Other Methods
-	void initialise();
+	// implicites
 	void enflammer() { etat= 2; };
 	void blast() { etat= 3; };
+	
+	// Other Methods
+	bool brule();
 	
 };
 

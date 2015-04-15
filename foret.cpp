@@ -47,6 +47,10 @@ vector< string >* explode(const string& str)
 }
 
 
+// ###################################
+//	Initialisations
+// ################################### 
+
 bool Foret::loadEssences(const string& fileName)
 {
 	// Initialisation du vecteur d'essence
@@ -78,19 +82,10 @@ bool Foret::loadEssences(const string& fileName)
 		cout << "non" <<endl;
 		return false;
 	}
-}
-				
+}				
 
-/**
- * Initialise les différentes essences et la matrice de l'automate
- * @param probabilite chance qu'a un arbre d'etre place sur chaque case
- * @author Ugo and Florian
- */
-void Foret::initialisation(float probabilite)
+void Foret::randomMatrice(float probabilite)
 {
-	
-	loadEssences("../essence_data.txt");
-	
 	srand(std::time(0));
 	if (probabilite>1){
 		probabilite=0.6;
@@ -123,7 +118,7 @@ void Foret::initialisation(float probabilite)
 				
 				
 				// Constructeur d'arbre a été modifié mais ça ne change pas la signature de la création ci-dessous
-				Arbre* ab= new Arbre(j, i, &(essences[ess]), 50, 0.5);
+				Arbre* ab= new Arbre(j, i, &(essences[ess]), 50, 50);
 				tmp.push_back(ab);
 			}
 			else	// sinon c'est une cellule "vide"
@@ -133,6 +128,18 @@ void Foret::initialisation(float probabilite)
 		// ajout de la ligne dans la matrice
 		matrice.push_back(tmp);
 	}
+}
+
+
+/**
+ * Initialise les différentes essences et la matrice de l'automate
+ * @param probabilite chance qu'a un arbre d'etre place sur chaque case
+ * @author Ugo and Florian
+ */
+void Foret::initialisation(float proba)
+{
+	loadEssences("../essence_data.txt");
+	randomMatrice(proba);
 	
 // DEPARTS D'INCENDIES
 	enflammer(lignes/2, colonnes/2);
@@ -288,13 +295,16 @@ std::list< Arbre* > Foret::adjacents(const Arbre* ab) const
  */
 void Foret::transition(Arbre* ab)
 {
-// 	printw("Transition %d, %d ; ", x, y); refresh();
-		ab->blast();
-		
-		list< Arbre* > voisins= adjacents(ab);/*adjacents(Coordonnee(row, col));*/
-		for (list< Arbre* >::iterator a(voisins.begin()); a!=voisins.end(); ++a){
-			enflammer( (*a) );
-		}
+// 	ab->blast();
+	
+	list< Arbre* > voisins= adjacents(ab);
+	for (list< Arbre* >::iterator a(voisins.begin()); a!=voisins.end(); ++a){
+		enflammer( (*a) );
+	}
+	
+	if ( ab->brule() )
+		onFire.push_back(ab);
+
 }
 
 /**

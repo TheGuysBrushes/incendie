@@ -21,7 +21,6 @@ public:
 		void setEtat(int x);
 		
 		// Other methods
-		virtual bool isOnFire() { return etat==2; };
 	
 };
 

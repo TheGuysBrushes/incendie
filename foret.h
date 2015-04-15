@@ -24,10 +24,12 @@ private:
 public:
 	Foret(int n_lignes, int n_colonnes, float proba=0.60);
 	
-	bool loadEssences(const std::string& fileName);
-	void createRandomMatrice(); // TODO
 	
-	void initialisation(float probabilite);
+// Initialisations
+	void randomMatrice(float probabilite); // TODO
+	bool loadEssences(const std::string& fileName);
+	
+	void initialisation(float proba);
 	
 	// 	Acces aux elements
 	int largeur(){ return colonnes;};
@@ -38,7 +40,7 @@ public:
 	
 // 	Modification des éléments
 	void enflammer(int row, int col);
-	void enflammer(Arbre* ab); // pour ne pas faire 2 fois l'acces à la cellule ?
+	void enflammer(Arbre* ab);
 	
 // 	void eteindre(int x, int y); // a verifier si utile
 	void eteindre(Arbre* ab);	// TODO
