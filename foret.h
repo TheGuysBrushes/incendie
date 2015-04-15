@@ -26,6 +26,7 @@ public:
 	
 	
 // Initialisations
+	void initEmpty();
 	void randomMatrice(float probabilite); // TODO
 	bool loadEssences(const std::string& fileName);
 	

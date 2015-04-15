@@ -83,6 +83,20 @@ bool Foret::loadEssences(const string& fileName)
 		return false;
 	}
 }				
+void Foret::initEmpty()
+{
+		for (int i= 0; i< lignes; ++i){
+			// création d'une nouvelle "ligne de la matrice"
+			std::vector< Cellule* > tmp;
+		
+			for (int j= 0; j< colonnes; ++j){
+				tmp.push_back( new Cellule(0) );
+			}
+		
+			// ajout de la ligne dans la matrice
+			matrice.push_back(tmp);
+		}
+}
 
 void Foret::randomMatrice(float probabilite)
 {
@@ -92,9 +106,12 @@ void Foret::randomMatrice(float probabilite)
 		cout << "MIS A DEFAUT"<< endl;
 	}
 	
+	// Initialisation de l'ensemble des cellules à vide
+	initEmpty();
+	
 	for (int i= 0; i< lignes; ++i){
 		// création d'une nouvelle "ligne de la matrice"
-		std::vector< Cellule* > tmp;
+// 		std::vector< Cellule* > tmp= *matrice[i];
 		
 		for (int j= 0; j< colonnes; ++j){
 			
@@ -119,14 +136,16 @@ void Foret::randomMatrice(float probabilite)
 				
 				// Constructeur d'arbre a été modifié mais ça ne change pas la signature de la création ci-dessous
 				Arbre* ab= new Arbre(j, i, &(essences[ess]), 50, 10);
-				tmp.push_back(ab);
+// 				tmp.push_back(ab);
+				delete(matrice[i][j]);
+				matrice[i][j]= ab;
 			}
-			else	// sinon c'est une cellule "vide"
-				tmp.push_back( new Cellule(0) );
+// 			else	// sinon c'est une cellule "vide"
+// 				tmp.push_back( new Cellule(0) );
 		}
 		
 		// ajout de la ligne dans la matrice
-		matrice.push_back(tmp);
+// 		matrice.push_back(tmp);
 	}
 }
 
