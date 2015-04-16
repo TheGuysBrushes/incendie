@@ -255,22 +255,39 @@ std::list< Arbre* > Foret::adjacents(int _col, int _row, int _distance) const
 	// on initialise la premiere case à vérifier à partir des coordonnées de l'arbre
 	int posRow= row;	int posCol= col;
 	
-	// si il y a des cases à gauche, on place la premiere cellule sur la gauche directe
+	// si il y a N cases à gauche, on place la premiere cellule sur la gauche
 	if (col>=distance){
 		posCol= col-distance;
-		larg+=distance;
+		larg += distance;
 	}
-	// si il des cases à droite, la hauteur du carré est augmenté	
+	else  // sinon, on place la premiere au bord de la matrice
+	{
+		posCol= 0;
+		larg += col;
+	}
+	
+	// si il y a N cases à droite, la hauteur du carré est augmenté	de N
 	if (col<colonnes-distance)
-		larg+=distance;
-	// si il y a des cases au dessus, on place la premiere cellule au dessus direct
+		larg += distance;
+	else // sinon on l'augmente du nombre de cases à droite (nbTotal-pos_cell)
+		larg += (colonnes-1)-col;
+	
+	// si il y a N cases au dessus, on place la premiere cellule au dessus direct
 	if (row>=distance) {
 		posRow= row-distance;
-		haut+=distance;
+		haut += distance;
 	}
-	// si il des cases en dessous, la hauteur du carré est augmenté
+	else // sinon, on place la premiere au bord de la matrice
+	{
+		posRow= 0;
+		haut += row;
+	}
+	
+	// si il y a N cases en dessous, la hauteur du carré est augmenté de N
 	if(row <lignes-distance )
-		haut+=distance;
+		haut += distance;
+	else // sinon on l'augmente du nombre de cases en dessous (nbTotal-pos_cell)
+		haut += (lignes-1)-row;
 
 	int posRowMax= posRow + haut;
 	int posColMax= posCol + larg;
