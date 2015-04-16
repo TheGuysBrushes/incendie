@@ -90,12 +90,12 @@ bool Foret::loadEssences(const string& fileName)
 			bool t = atoi(tokens->at(4).c_str());
 			essences.push_back(Essence(indice,name,masse,h,d,t));
 			indice +=1;
+			delete(tokens);
 		}
 		
 		for(vector<Essence>::const_iterator i(essences.begin()); i!=essences.end(); ++i){
 			cout << i->afficheEssence() << endl;
 		}
-		
 		return true;
 	}
 	else {
@@ -131,7 +131,7 @@ void Foret::randomMatrice(float probabilite)
 	initEmpty();
 	
 	for (int i= 0; i< lignes; ++i){
-		
+		cout << "indices des essences choisies : ";
 		for (int j= 0; j< colonnes; ++j){
 			
 			// un nombre est choisi aléatoirement entre 0 et MAXI-1 compris, cela défini notre précision,
@@ -142,13 +142,14 @@ void Foret::randomMatrice(float probabilite)
 			// si le nombre est supérieur au seuil, c'est un arbre
 			if (test>seuil){				
 				unsigned ess = essence_aleatoire(j,i);
-				cout << "indice de l'essence choisie : " << ess << endl;
+				cout << ess << " ; ";
 
 				Arbre* ab= new Arbre(j, i, &(essences.at(ess)), 20, 10);
 				delete(matrice[i][j]);
 				matrice[i][j]= ab;
 			}
 		}
+		cout << endl;
 	}
 }
 
