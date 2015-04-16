@@ -164,7 +164,7 @@ unsigned Foret::essence_aleatoire(int _j, int _i){
 				// Récupération des voisins
 				list<Arbre*> voisins = adjacents(j,i,2);
 				// Pondération du tableau
-				for (list< Arbre* >::iterator a(voisins.begin()); a!=voisins.end(); ++a){
+				for (list< Arbre* >::const_iterator a(voisins.begin()); a!=voisins.end(); ++a){
 					probaEss[(*a)->getEssence()->getIndice()] += 4;
 				}
 				

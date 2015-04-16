@@ -19,7 +19,7 @@ int main(int argc, char** argv)
 	int largeur=	50;
 	float proba=	0.450;
 	long vitesse=	20000;
-	bool small=		true;
+	bool small=		false;
 	
 	if (argc>1)
 		hauteur= atoi(argv[1]);
