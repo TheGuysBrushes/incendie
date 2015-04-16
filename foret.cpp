@@ -240,8 +240,6 @@ void Foret::enflammer(Arbre* ab)
  */
 std::list< Arbre* > Foret::adjacents(int _col, int _row) const
 {
-// 	int col= ab->getPos().col;
-// 	int row= ab->getPos().row;
 	int col = _col;
 	int row = _row;
 	
@@ -324,6 +322,15 @@ std::list< Arbre* > Foret::adjacents(int _col, int _row) const
 }
 
 
+std::list< Arbre* > Foret::adjacents(const Arbre* ab) const
+{
+	int col= ab->getPos().col;
+	int row= ab->getPos().row;
+	return adjacents(col, row);
+}
+
+
+
 // ###################################
 //	Avancee du temps
 // ################################### 
@@ -335,10 +342,7 @@ std::list< Arbre* > Foret::adjacents(int _col, int _row) const
  */
 void Foret::transition(Arbre* ab)
 {
-// 	ab->blast();
-	int col = ab->getPos().col;
-	int row = ab->getPos().row;
-	list< Arbre* > voisins= adjacents(col,row);
+	list< Arbre* > voisins= adjacents(ab);
 	for (list< Arbre* >::iterator a(voisins.begin()); a!=voisins.end(); ++a){
 		enflammer( (*a) );
 	}

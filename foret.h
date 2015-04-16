@@ -46,7 +46,7 @@ public:
 // 	void eteindre(int x, int y); // a verifier si utile
 	void eteindre(Arbre* ab);	// TODO
 	
-// 	list< Arbre* > adjacents(const Coordonnee& coord) const;
+	std::list< Arbre* > adjacents(const Arbre* ab) const;
 	std::list< Arbre* > adjacents(int _col, int _row) const;
 	
 // 	Avancee du temps
