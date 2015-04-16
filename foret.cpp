@@ -169,7 +169,7 @@ void Foret::randomMatrice(float probabilite)
 			
 			// si le nombre est supérieur au seuil, c'est un arbre
 			if (test>seuil){				
-				unsigned ess = randomEssence(j,i, 2);
+				unsigned ess = essenceRandom(j,i, 2);
 				cout << ess << " ; ";
 
 				Arbre* ab= new Arbre(j, i, &(essences.at(ess)), 20, 10);
