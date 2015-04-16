@@ -1,0 +1,63 @@
+################################
+#			foret.cpp			#
+#			adjacents()			#
+################################
+// 	if (col<colonnes-1) {
+// 		Cellule* cell= matrice[row][col+1];
+// 		// verification que la cellule est un arbre, qui n'est pas enflammee
+// 		if (cell->getEtat()==1)
+// 			liste.push_back( dynamic_cast < Arbre* >(cell) );
+// 	}
+// 		
+// 	if (col>0) {
+// 		Cellule* cell= matrice[row][col-1];
+// 		// verification que la cellule est un arbre, qui n'est pas enflammee
+// 		if (cell->getEtat()==1)
+// 			liste.push_back( dynamic_cast < Arbre* >(cell) );
+// 	}
+// 	
+// 	if (row<lignes-1) {
+// 		Cellule* cell= matrice[row+1][col];
+// 		// verification que la cellule est un arbre, qui n'est pas enflammee
+// 		if (cell->getEtat()==1)
+// 			liste.push_back( dynamic_cast < Arbre* >(cell) );
+// 	}
+// 
+// 	if (row>0) {
+// 		Cellule* cell= matrice[row-1][col];
+// 		// verification que la cellule est un arbre, qui n'est pas enflammee
+// 		if (cell->getEtat()==1)
+// 			liste.push_back( dynamic_cast < Arbre* >(cell) );
+// 	}
+
+################################
+#			foret.cpp			#
+#			NextMove()			#
+################################
+après bool modif = false;
+// 		for_each<Cellule>(matrice[i].begin(), matrice[i].end(), transition);
+
+################################
+#			foret.h				#
+#			public:				#
+################################
+// 	void eteindre(Arbre* ab);	// TODO
+// void eteindre(int row, int col)
+
+################################
+#			foret.cpp			#
+#			eteindre();			#
+################################
+// void Foret::eteindre(int row, int col)
+// {
+// 	dynamic_cast < Arbre* >(matrice[row][col])->blast();
+// // 	onFire.remove_if<Cellule>();
+// }
+
+################################
+#			foret.cpp			#
+#			randomMatrice()		#
+################################
+après	for (int i= 0; i< lignes; ++i){
+		// création d'une nouvelle "ligne de la matrice"
+// 		std::vector< Cellule* > tmp= *matrice[i];
