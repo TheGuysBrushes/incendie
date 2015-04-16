@@ -20,42 +20,34 @@ private:
 	std::vector< Essence > essences;
 	std::vector<std::vector< Cellule* > > matrice;
 	std::list< Arbre* >	onFire;
+	unsigned int essence_aleatoire(int _j, int _i);
 	
 public:
+	// Constructeur et destructeur
 	Foret(int n_lignes, int n_colonnes, float proba=0.60);
-	
 	virtual ~Foret();
 	
-	
-// Initialisations
+	// Initialisations
 	void initEmpty();
 	void randomMatrice(float probabilite); // TODO
 	bool loadEssences(const std::string& fileName);
-	
 	void initialisation(float proba);
 	
-	// 	Acces aux elements
+	// 	Getters and Setters
 	int largeur(){ return colonnes;};
 	int hauteur(){ return lignes;};
-
 	std::vector< Cellule* >* operator[](int ligne) { return &(matrice[ligne]); };
 
-	
-// 	Modification des éléments
+	// Autres méthodes
 	void enflammer(int row, int col);
 	void enflammer(Arbre* ab);
-	
-// 	void eteindre(int x, int y); // a verifier si utile
-	void eteindre(Arbre* ab);	// TODO
-	
 	std::list< Arbre* > adjacents(int _col, int _row, int _distance) const;
 	std::list< Arbre* > adjacents(const Arbre * ab, int _distance) const;
 	
-// 	Avancee du temps
+	// 	Avancee du temps
 	// voir transition avec d'autres parametres
 	void transition(Arbre* cell);
 	bool NextMove();
-
 };
 
 #endif // FORET_H

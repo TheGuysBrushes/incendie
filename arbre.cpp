@@ -11,7 +11,6 @@ Arbre::Arbre(int col, int row, const Essence* _essence, unsigned _age, unsigned 
 	initialise();
 }
 
-// attention risque de créer des incohérences
 Arbre::Arbre(Cellule* cell, int col, int row, const Essence* _essence, unsigned _age, unsigned _humidite)
 : Cellule (*cell), pos(col, row),age(age),humidite(humidite)
 {
@@ -20,6 +19,30 @@ Arbre::Arbre(Cellule* cell, int col, int row, const Essence* _essence, unsigned 
 }
 
 
+Arbre::~Arbre()
+{
+}
+
+/**
+ * Retire un nombre de points de vie à l'arbre
+ * @author Florian
+ * TODO Prendre en compte paramètres pour le nombre de points à enlever * 
+ */
+bool Arbre::brule()
+{
+	pv-= 45;
+	if (pv<=0){
+		blast();
+		return false;
+	}
+	else return true;
+}
+
+/**
+ * Initialise les points de vie de l'arbre en fonction des caractères de son essence
+ * et de ses propriétés discrètes
+ * @author Ugo Florian
+ */
 void Arbre::initialise()
 {
 	// Initialisation des points de vie de l'arbre
@@ -38,40 +61,4 @@ void Arbre::initialise()
 	// Humidité ambiante, force du vent etc
 // 	coefficient = 0.5;
 	
-}
-
-// Arbre::Arbre(const Arbre& other)
-// : Cellule(1) , pos(other.pos), pv(other.pv),age(other.age),humidite(other.humidite), coefficient(other.coefficient)
-// {
-// 
-// }
-
-Arbre::~Arbre()
-{
-
-}
-
-// Arbre& Arbre::operator=(const Arbre& other)
-// {
-// 	*this= Arbre(other);
-// 	return *this;
-// }
-
-
-// void Arbre::setPv(int y){
-// 	pv = y;
-// }
-// 
-// void Arbre::setCoeff(float z){
-// 	coefficient = z;
-// }
-
-bool Arbre::brule()
-{
-	pv-= 45; // TODO : celon coef, paramètres ... (45 est arbitraire)
-	if (pv<=0){
-		blast();
-		return false;
-	}
-	else return true;
 }

@@ -102,7 +102,8 @@ bool Foret::loadEssences(const string& fileName)
 		cout << "non" <<endl;
 		return false;
 	}
-}				
+}
+
 void Foret::initEmpty()
 {
 		for (int i= 0; i< lignes; ++i){
@@ -130,21 +131,31 @@ void Foret::randomMatrice(float probabilite)
 	initEmpty();
 	
 	for (int i= 0; i< lignes; ++i){
-		// création d'une nouvelle "ligne de la matrice"
-// 		std::vector< Cellule* > tmp= *matrice[i];
 		
 		for (int j= 0; j< colonnes; ++j){
 			
 			// un nombre est choisi aléatoirement entre 0 et MAXI-1 compris, cela défini notre précision,
 			int test= rand()%MAXI;
-			// on défini un nombre minimum, le nombre sera supérieur ou inférieur au seuil
+			// on définit un nombre minimum, le nombre sera supérieur ou inférieur au seuil
 			int seuil= MAXI*(1-probabilite);
 			
 			// si le nombre est supérieur au seuil, c'est un arbre
-			if (test>seuil){
-				// TODO Gérer l'apparition de bosquet, i.e, probabilité augmentée qu'un arbre soit de la même essence que ses voisins
-				
-				// Initialisation du tableau de pondération
+			if (test>seuil){				
+				unsigned ess = essence_aleatoire(j,i);
+				cout << "indice de l'essence choisie : " << ess << endl;
+
+				Arbre* ab= new Arbre(j, i, &(essences.at(ess)), 20, 10);
+				delete(matrice[i][j]);
+				matrice[i][j]= ab;
+			}
+		}
+	}
+}
+
+unsigned Foret::essence_aleatoire(int _j, int _i){
+	int i = _i;
+	int j = _j;
+	// Initialisation du tableau de pondération
 				unsigned int probaEss[essences.size()];
 				for(unsigned int k=0;k<essences.size();++k){
 					probaEss[k] = 1;
@@ -162,33 +173,17 @@ void Foret::randomMatrice(float probabilite)
 				
 				unsigned int index = rand()%index_max;
 				unsigned int ess = 0;
-				while(index > probaEss[ess] && ess < essences.size()){
+				while(index >= probaEss[ess] && ess < essences.size()){
 					index -= probaEss[ess];
 					++ess;
 				}
-				cout << "indice de l'essence choisie : " << ess << endl;
-				// Sélectionner une essence dans le tableau de proba pondéré
-				//int ess = rand()%2;
-								
-				// Constructeur d'arbre a été modifié mais ça ne change pas la signature de la création ci-dessous
-				Arbre* ab= new Arbre(j, i, &(essences.at(ess)), 20, 10);
-// 				tmp.push_back(ab);
-				delete(matrice[i][j]);
-				matrice[i][j]= ab;
-			}
-// 			else	// sinon c'est une cellule "vide"
-// 				tmp.push_back( new Cellule(0) );
-		}
-		
-		// ajout de la ligne dans la matrice
-// 		matrice.push_back(tmp);
-	}
+		return ess;
 }
 
 
 /**
  * Initialise les différentes essences et la matrice de l'automate
- * @param probabilite chance qu'a un arbre d'etre place sur chaque case
+ * @param probabilite chance qu'a un arbre d'être placé sur chaque case
  * @author Ugo and Florian
  */
 void Foret::initialisation(float proba)
@@ -196,7 +191,7 @@ void Foret::initialisation(float proba)
 	loadEssences("../essence_data.txt");
 	randomMatrice(proba);
 	
-// DEPARTS D'INCENDIES
+	// DEPARTS D'INCENDIES
 	enflammer(lignes/2, colonnes/2);
 	enflammer(lignes/2+1, colonnes/2);
 	enflammer(lignes/2, colonnes/2 +1);
@@ -205,17 +200,11 @@ void Foret::initialisation(float proba)
 	enflammer(lignes/2+1, 1);
 }
 
-
-// ###################################
-//	Acces aux elements
-// ################################### 
-
-
 // ###################################
 // 	Modification des éléments
 // ###################################
 /**
- * Enflamme une cellule, SI elle existe, selon sa position dans la matrice
+ * Enflamme une cellule si elle existe, selon sa position dans la matrice
  * @author Florian
  * @param row ligne où est la cellule 
  * @param col colonne où est la cellule
@@ -235,7 +224,8 @@ void Foret::enflammer(int row, int col)
  * Enflamme un arbre
  * @author Florian
  * @param ab arbre à enflammer
- * TODO vérifier qu'il n'est pas déja enflamme (dans onFire) ? : vérification plus coûteuse que de faire plusieurs calcul de transmission MAIS risque poser soucis de PV
+ * TODO vérifier qu'il n'est pas déja enflammé (dans onFire) ? : 
+ * vérification plus coûteuse que de faire plusieurs calcul de transmission MAIS risque poser soucis de PV
  */
 void Foret::enflammer(Arbre* ab)
 {
@@ -243,17 +233,12 @@ void Foret::enflammer(Arbre* ab)
 	onFire.push_back(ab);
 }
 
-
-// void Foret::eteindre(int row, int col)
-// {
-// 	dynamic_cast < Arbre* >(matrice[row][col])->blast();
-// // 	onFire.remove_if<Cellule>();
-// }
-
 /**
- * Retourne les arbres qui sont proches d'un arbre donné
- * @author Florian
- * @param ab arbre dont on veut connaître les voisins
+ * Retourne les arbres qui sont proches d'une cellule donnée
+ * @author Ugo Florian
+ * @param _col indice de la colonne de la cellule
+ * @param _row indice de la ligne de la cellule
+ * @param _distance distance sur laquelle s'effectue la recherche de voisins
  */
 std::list< Arbre* > Foret::adjacents(int _col, int _row, int _distance) const
 {
@@ -262,10 +247,7 @@ std::list< Arbre* > Foret::adjacents(int _col, int _row, int _distance) const
 	int distance = _distance;
 	
 	list< Arbre* > liste;
-	
-// On cherche à vérifier les cases autour de la cellule dans un carré de taille donné (ici 3x3)
-	/// (Si on veut vérifier dans un carré de taille 5, alors vérifier avec (col>=2) / (row>=2) et (col< colonnes-2) / (row< ligne-2))
-	
+
 	// on prend la taille de la case, sans adjacents supposé
 	int larg= 1;	int haut= 1;
 	
@@ -278,84 +260,47 @@ std::list< Arbre* > Foret::adjacents(int _col, int _row, int _distance) const
 		++larg;
 	}
 	// si il des cases à droite, la hauteur du carré est augmenté	
-		/// (si il y a des cases à gauche et à droite, la hauteur est 3)
 	if (col<colonnes-distance)
-		++larg;
-	
+		++larg;	
 	// si il y a des cases au dessus, on place la premiere cellule au dessus direct
 	if (row>=distance) {
 		posRow= row-distance;
 		++haut;
 	}
 	// si il des cases en dessous, la hauteur du carré est augmenté
-		/// (si il y a des cases au dessus et en dessous, il y a 3 cellules de largeur)
 	if(row <lignes-distance )
 		++haut;
 
 	int posRowMax= posRow + haut;
 	int posColMax= posCol + larg;
 	
-	// on ajoute dans les arbres adjacents dans un carré de haut par larg autour de "ab"
-			//(ont vérifie "ab" lui-même, mais il est en feu... donc non ajouté dans les adjacents)
+	// on ajoute les arbres adjacents dans un carré de haut par larg autour de la cellule
+			//(on vérifie la cellule elle-même, mais elle vide pour le moment)
 	for (int i= posRow; i<posRowMax; ++i){
+		
 		for (int j= posCol; j<posColMax; ++j){
 			
 			Cellule* cell= matrice[i][j];
 			// verification que la cellule est un arbre, qui n'est pas enflammee
 			if (cell->getEtat()==1)
 				liste.push_back( dynamic_cast < Arbre* >(cell) );
-			
 		}
 	}
-	
-// 	if (col<colonnes-1) {
-// 		Cellule* cell= matrice[row][col+1];
-// 		// verification que la cellule est un arbre, qui n'est pas enflammee
-// 		if (cell->getEtat()==1)
-// 			liste.push_back( dynamic_cast < Arbre* >(cell) );
-// 	}
-// 		
-// 	if (col>0) {
-// 		Cellule* cell= matrice[row][col-1];
-// 		// verification que la cellule est un arbre, qui n'est pas enflammee
-// 		if (cell->getEtat()==1)
-// 			liste.push_back( dynamic_cast < Arbre* >(cell) );
-// 	}
-// 	
-// 	if (row<lignes-1) {
-// 		Cellule* cell= matrice[row+1][col];
-// 		// verification que la cellule est un arbre, qui n'est pas enflammee
-// 		if (cell->getEtat()==1)
-// 			liste.push_back( dynamic_cast < Arbre* >(cell) );
-// 	}
-// 
-// 	if (row>0) {
-// 		Cellule* cell= matrice[row-1][col];
-// 		// verification que la cellule est un arbre, qui n'est pas enflammee
-// 		if (cell->getEtat()==1)
-// 			liste.push_back( dynamic_cast < Arbre* >(cell) );
-// 	}
-
 	return liste;
 }
 
 
 std::list< Arbre* > Foret::adjacents(const Arbre * ab, int _distance) const
 {
-	
-	int col= ab->getPos().col;
-	int row= ab->getPos().row;
-	return adjacents(col, row, _distance);
+	return adjacents(ab->getPos().col,ab->getPos().row, _distance);
 }
 
-
-
 // ###################################
-//	Avancee du temps
+// #		Avancée du temps		  #
 // ################################### 
 
 /**
- * applique une transition de l'etat t à l'etat t+1 d'un arbre
+ * Applique une transition de l'état t à l'état t+1 d'un arbre
  * @author Florian et Ugo
  * @param ab
  */
@@ -368,7 +313,6 @@ void Foret::transition(Arbre* ab)
 	
 	if ( ab->brule() )
 		onFire.push_back(ab);
-
 }
 
 /**
@@ -379,20 +323,15 @@ bool Foret::NextMove()
 {
 	bool modif= false;
 	
-// 		for_each<Cellule>(matrice[i].begin(), matrice[i].end(), transition);
-	
 	if (!onFire.empty()){
-		modif= true;
-		
+		modif= true;		
 		list< Arbre* > old= onFire;
-		onFire.clear();
-		
+		onFire.clear();		
 		// TODO utiliser mapping
 		for (list< Arbre* >::iterator ab(old.begin()); ab!=old.end(); ++ab){
 			transition(*ab);
 		}
-	}
-	
+	}	
 	return modif;
 }
 

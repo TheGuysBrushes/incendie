@@ -12,12 +12,13 @@ private:
 	unsigned int masse_V;
 	float hauteur;
 	float diametre;
-	bool type; // représente le type de l'essence : 0 pour résineux, 1 pour feuillu
+	bool type; // 0 pour résineux, 1 pour feuillu
 	
 public:
 	// Constructors
 	Essence(unsigned int i,std::string nom, int masse,float h, float d, bool t);
 	Essence(const Essence& other);
+	
 	// Getters and setters
 	std::string getName() const {return name;};
 	int getMasse() const {return masse_V;};
@@ -31,9 +32,11 @@ public:
 	void setType(bool t);
 	void setHauteur(float h);
 	void setDiametre(float d);
-	// Operators
+	
+	// Operateurs
 	virtual Essence& operator=(const Essence& other);
-	// Others Methods
+	
+	// Autres méthodes
 	std::string afficheEssence() const;
 	
 };

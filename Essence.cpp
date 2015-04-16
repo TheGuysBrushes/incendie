@@ -34,7 +34,7 @@ void Essence::setDiametre(float d)
 	diametre = d;
 }
 
-// Others Methods
+// Autres méthodes
 string Essence::afficheEssence() const
 {
 	ostringstream s;
