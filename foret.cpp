@@ -142,7 +142,10 @@ void Foret::randomMatrice(float probabilite)
 				
 				unsigned int index = rand()%index_max;
 				unsigned int ess = 0;
-				while(index > probaEss[ess] && ess < essences.size()){
+				while(index > probaEss[ess] && ess < essences.size()
+					
+					
+				){
 					index -= probaEss[ess];
 					++ess;
 				}
@@ -151,7 +154,7 @@ void Foret::randomMatrice(float probabilite)
 				//int ess = rand()%2;
 								
 				// Constructeur d'arbre a été modifié mais ça ne change pas la signature de la création ci-dessous
-				Arbre* ab= new Arbre(j, i, &(essences.at(ess)), 50, 10);
+				Arbre* ab= new Arbre(j, i, &(essences.at(ess)), 20, 10);
 // 				tmp.push_back(ab);
 				delete(matrice[i][j]);
 				matrice[i][j]= ab;
