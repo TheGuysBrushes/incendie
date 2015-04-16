@@ -150,10 +150,10 @@ void Foret::randomMatrice(float probabilite)
 					probaEss[k] = 1;
 				}
 				// Récupération des voisins
-				list<Arbre*> voisins = adjacents(j,i);
+				list<Arbre*> voisins = adjacents(j,i,2);
 				// Pondération du tableau
 				for (list< Arbre* >::iterator a(voisins.begin()); a!=voisins.end(); ++a){
-					probaEss[(*a)->getEssence()->getIndice()] += 1;					
+					probaEss[(*a)->getEssence()->getIndice()] += 4;
 				}
 				
 				unsigned int index_max = 0;
@@ -162,10 +162,7 @@ void Foret::randomMatrice(float probabilite)
 				
 				unsigned int index = rand()%index_max;
 				unsigned int ess = 0;
-				while(index > probaEss[ess] && ess < essences.size()
-					
-					
-				){
+				while(index > probaEss[ess] && ess < essences.size()){
 					index -= probaEss[ess];
 					++ess;
 				}
@@ -258,10 +255,11 @@ void Foret::enflammer(Arbre* ab)
  * @author Florian
  * @param ab arbre dont on veut connaître les voisins
  */
-std::list< Arbre* > Foret::adjacents(int _col, int _row) const
+std::list< Arbre* > Foret::adjacents(int _col, int _row, int _distance) const
 {
 	int col = _col;
 	int row = _row;
+	int distance = _distance;
 	
 	list< Arbre* > liste;
 	
@@ -275,23 +273,23 @@ std::list< Arbre* > Foret::adjacents(int _col, int _row) const
 	int posRow= row;	int posCol= col;
 	
 	// si il y a des cases à gauche, on place la premiere cellule sur la gauche directe
-	if (col>=1){
-		posCol= col-1;
+	if (col>=distance){
+		posCol= col-distance;
 		++larg;
 	}
 	// si il des cases à droite, la hauteur du carré est augmenté	
 		/// (si il y a des cases à gauche et à droite, la hauteur est 3)
-	if (col<colonnes-1)
+	if (col<colonnes-distance)
 		++larg;
 	
 	// si il y a des cases au dessus, on place la premiere cellule au dessus direct
-	if (row>=1) {
-		posRow= row-1;
+	if (row>=distance) {
+		posRow= row-distance;
 		++haut;
 	}
 	// si il des cases en dessous, la hauteur du carré est augmenté
 		/// (si il y a des cases au dessus et en dessous, il y a 3 cellules de largeur)
-	if(row <lignes-1 )
+	if(row <lignes-distance )
 		++haut;
 
 	int posRowMax= posRow + haut;
@@ -342,11 +340,12 @@ std::list< Arbre* > Foret::adjacents(int _col, int _row) const
 }
 
 
-std::list< Arbre* > Foret::adjacents(const Arbre* ab) const
+std::list< Arbre* > Foret::adjacents(const Arbre * ab, int _distance) const
 {
+	
 	int col= ab->getPos().col;
 	int row= ab->getPos().row;
-	return adjacents(col, row);
+	return adjacents(col, row, _distance);
 }
 
 
@@ -362,7 +361,7 @@ std::list< Arbre* > Foret::adjacents(const Arbre* ab) const
  */
 void Foret::transition(Arbre* ab)
 {
-	list< Arbre* > voisins= adjacents(ab);
+	list< Arbre* > voisins= adjacents(ab,1);
 	for (list< Arbre* >::iterator a(voisins.begin()); a!=voisins.end(); ++a){
 		enflammer( (*a) );
 	}

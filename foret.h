@@ -29,7 +29,7 @@ public:
 	
 // Initialisations
 	void initEmpty();
-	void randomMatrice(float probabilite);
+	void randomMatrice(float probabilite); // TODO
 	bool loadEssences(const std::string& fileName);
 	
 	void initialisation(float proba);
@@ -48,8 +48,8 @@ public:
 // 	void eteindre(int x, int y); // a verifier si utile
 	void eteindre(Arbre* ab);	// TODO
 	
-	std::list< Arbre* > adjacents(const Arbre* ab) const;
-	std::list< Arbre* > adjacents(int _col, int _row) const;
+	std::list< Arbre* > adjacents(int _col, int _row, int _distance) const;
+	std::list< Arbre* > adjacents(const Arbre * ab, int _distance) const;
 	
 // 	Avancee du temps
 	// voir transition avec d'autres parametres
