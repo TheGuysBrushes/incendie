@@ -32,7 +32,7 @@ void Arbre::initialise()
 	// Les données des essences sont décrites pour un arbre de 50 ans à 12% d'humidité
 	pv = points * age/50.0;
 	pv *= 1+ humidite/100.0;
-	cout << " pv : "<< pv << endl;
+// 	cout << " pv : "<< pv << endl;
 	
 	// L'initialisation du coefficient sera faite plus tard puisqu'il dépend des paramètres extérieurs à l'arbre 
 	// Humidité ambiante, force du vent etc

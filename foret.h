@@ -24,10 +24,12 @@ private:
 public:
 	Foret(int n_lignes, int n_colonnes, float proba=0.60);
 	
+	virtual ~Foret();
+	
 	
 // Initialisations
 	void initEmpty();
-	void randomMatrice(float probabilite); // TODO
+	void randomMatrice(float probabilite);
 	bool loadEssences(const std::string& fileName);
 	
 	void initialisation(float proba);

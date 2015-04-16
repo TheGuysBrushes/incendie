@@ -25,12 +25,32 @@
 
 using namespace std;
 
+
+// ###################################
+//		Constructeurs et destructeur
+// ################################### 
+
 Foret::Foret(int n_lignes, int n_colonnes, float proba)
 	: lignes(n_lignes), colonnes(n_colonnes)
 {
 	initialisation(proba);
 }
 
+Foret::~Foret()
+{
+	for (int i= 0; i< lignes; ++i){
+		for (vector< Cellule* >::iterator j( matrice[i].begin() ); j!=matrice[i].end(); ++j){
+			delete *j;
+		}
+	}
+	
+	onFire.clear();
+}
+
+
+// ###################################
+//		Fonctions Utiles
+// ################################### 
 
 /**
  * Découpe une chaine de caractères en sous-chaine et place chaque élément dans un vecteur de string
@@ -48,7 +68,7 @@ vector< string >* explode(const string& str)
 
 
 // ###################################
-//	Initialisations
+//		Initialisations
 // ################################### 
 
 bool Foret::loadEssences(const string& fileName)
