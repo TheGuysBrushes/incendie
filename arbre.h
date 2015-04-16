@@ -19,8 +19,8 @@ private:
 	float coefficient;
 	
 public:
-	Arbre(int col, int row, const Essence* _essence, int _age = 0, unsigned int _humidite = 20);
-	Arbre(Cellule* cell, int col, int row, const Essence* _essence, int _age = 0, unsigned int _humidite = 20);
+	Arbre(int col, int row, const Essence* _essence, unsigned _age = 0, unsigned _humidite = 20);
+	Arbre(Cellule* cell, int col, int row, const Essence* _essence, unsigned _age = 0, unsigned _humidite = 20);
 	
 	void initialise();
  
