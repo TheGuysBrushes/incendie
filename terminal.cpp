@@ -69,6 +69,7 @@ void Terminal::afficheCase(const Cellule* cell)
 	if (etat_cell==1){
 		unsigned int color;
 		unsigned int indice= dynamic_cast < const Arbre* >(cell)->getEssence()->getIndice();
+		
 		if(indice == 0){
 			color = 1;
 		}else{
