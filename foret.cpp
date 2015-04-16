@@ -75,7 +75,7 @@ bool Foret::loadEssences(const string& fileName)
 {
 	// Initialisation du vecteur d'essence
 	ifstream f (fileName.c_str());
-	cout << "fichier ouvert?" <<endl;
+	cout<< "fichier ouvert?" <<endl;
 
 	if(f){
 		string line;
@@ -165,7 +165,7 @@ unsigned Foret::essence_aleatoire(int _j, int _i){
 				list<Arbre*> voisins = adjacents(j,i,2);
 				// Pondération du tableau
 				for (list< Arbre* >::const_iterator a(voisins.begin()); a!=voisins.end(); ++a){
-					probaEss[(*a)->getEssence()->getIndice()] += 4;
+					probaEss[(*a)->getEssence()->getIndice()] += 3;
 				}
 				
 				unsigned index_max = 0;
@@ -258,19 +258,19 @@ std::list< Arbre* > Foret::adjacents(int _col, int _row, int _distance) const
 	// si il y a des cases à gauche, on place la premiere cellule sur la gauche directe
 	if (col>=distance){
 		posCol= col-distance;
-		++larg;
+		larg+=distance;
 	}
 	// si il des cases à droite, la hauteur du carré est augmenté	
 	if (col<colonnes-distance)
-		++larg;	
+		larg+=distance;
 	// si il y a des cases au dessus, on place la premiere cellule au dessus direct
 	if (row>=distance) {
 		posRow= row-distance;
-		++haut;
+		haut+=distance;
 	}
 	// si il des cases en dessous, la hauteur du carré est augmenté
 	if(row <lignes-distance )
-		++haut;
+		haut+=distance;
 
 	int posRowMax= posRow + haut;
 	int posColMax= posCol + larg;

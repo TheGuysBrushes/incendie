@@ -15,10 +15,10 @@ int main(int argc, char** argv)
 //     AutomateFeu foo;
 	// mettre dernier para à 1 si on veut mettre 2 fois plus de cellules hztl (1600/900_Konsole: maxL:110/220 H: 52)
 	
-	int hauteur=	25;
-	int largeur=	50;
+	int hauteur=	40;
+	int largeur=	100;
 	float proba=	0.450;
-	long vitesse=	20000;
+	long vitesse=	200000;
 	bool small=		false;
 	
 	if (argc>1)
