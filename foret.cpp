@@ -66,6 +66,34 @@ vector< string >* explode(const string& str)
 		 return   tokens;
 }
 
+unsigned Foret::essenceRandom(int _j, int _i, unsigned distOthers){
+	int i = _i;
+	int j = _j;
+	// Initialisation du tableau de pondération
+	unsigned probaEss[essences.size()];
+	for(unsigned k=0;k<essences.size();++k){
+		probaEss[k] = 1;
+	}
+	// Récupération des voisins
+	list<Arbre*> voisins = adjacents(j, i, distOthers);
+	// Pondération du tableau
+	for (list< Arbre* >::const_iterator a(voisins.begin()); a!=voisins.end(); ++a){
+		probaEss[(*a)->getEssence()->getIndice()] += 3;
+	}
+	
+	unsigned index_max = 0;
+	for(unsigned l=0;l<essences.size();++l)
+		index_max += probaEss[l];
+	
+	unsigned index = rand()%index_max;
+	unsigned ess = 0;
+	while(index >= probaEss[ess] && ess < essences.size()){
+		index -= probaEss[ess];
+		++ess;
+	}
+	return ess;
+}
+
 
 // ###################################
 //		Initialisations
@@ -141,7 +169,7 @@ void Foret::randomMatrice(float probabilite)
 			
 			// si le nombre est supérieur au seuil, c'est un arbre
 			if (test>seuil){				
-				unsigned ess = essence_aleatoire(j,i);
+				unsigned ess = randomEssence(j,i, 2);
 				cout << ess << " ; ";
 
 				Arbre* ab= new Arbre(j, i, &(essences.at(ess)), 20, 10);
@@ -151,34 +179,6 @@ void Foret::randomMatrice(float probabilite)
 		}
 		cout << endl;
 	}
-}
-
-unsigned Foret::essence_aleatoire(int _j, int _i){
-	int i = _i;
-	int j = _j;
-	// Initialisation du tableau de pondération
-				unsigned probaEss[essences.size()];
-				for(unsigned k=0;k<essences.size();++k){
-					probaEss[k] = 1;
-				}
-				// Récupération des voisins
-				list<Arbre*> voisins = adjacents(j,i,2);
-				// Pondération du tableau
-				for (list< Arbre* >::const_iterator a(voisins.begin()); a!=voisins.end(); ++a){
-					probaEss[(*a)->getEssence()->getIndice()] += 3;
-				}
-				
-				unsigned index_max = 0;
-				for(unsigned l=0;l<essences.size();++l)
-					index_max += probaEss[l];
-				
-				unsigned index = rand()%index_max;
-				unsigned ess = 0;
-				while(index >= probaEss[ess] && ess < essences.size()){
-					index -= probaEss[ess];
-					++ess;
-				}
-		return ess;
 }
 
 

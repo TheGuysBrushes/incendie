@@ -20,7 +20,10 @@ private:
 	std::vector< Essence > essences;
 	std::vector<std::vector< Cellule* > > matrice;
 	std::list< Arbre* >	onFire;
-	unsigned essence_aleatoire(int _j, int _i);
+	
+	// METHODES
+private:
+	unsigned essenceRandom(int _j, int _i, unsigned distOthers);
 	
 public:
 	// Constructeur et destructeur
