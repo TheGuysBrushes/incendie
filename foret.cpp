@@ -157,8 +157,8 @@ unsigned Foret::essence_aleatoire(int _j, int _i){
 	int i = _i;
 	int j = _j;
 	// Initialisation du tableau de pondération
-				unsigned int probaEss[essences.size()];
-				for(unsigned int k=0;k<essences.size();++k){
+				unsigned probaEss[essences.size()];
+				for(unsigned k=0;k<essences.size();++k){
 					probaEss[k] = 1;
 				}
 				// Récupération des voisins
@@ -168,12 +168,12 @@ unsigned Foret::essence_aleatoire(int _j, int _i){
 					probaEss[(*a)->getEssence()->getIndice()] += 4;
 				}
 				
-				unsigned int index_max = 0;
-				for(unsigned int l=0;l<essences.size();++l)
+				unsigned index_max = 0;
+				for(unsigned l=0;l<essences.size();++l)
 					index_max += probaEss[l];
 				
-				unsigned int index = rand()%index_max;
-				unsigned int ess = 0;
+				unsigned index = rand()%index_max;
+				unsigned ess = 0;
 				while(index >= probaEss[ess] && ess < essences.size()){
 					index -= probaEss[ess];
 					++ess;

@@ -21,7 +21,6 @@ int main(int argc, char** argv)
 	long vitesse=	20000;
 	bool small=		true;
 	
-	
 	if (argc>1)
 		hauteur= atoi(argv[1]);
 	if (argc>2)
