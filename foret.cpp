@@ -204,8 +204,15 @@ void Foret::randomMatrice(float probabilite)
 				// on choisit une essence aléatoirement pour cet arbre
 				unsigned ess = essenceRandom(j,i, 2);
 				cout << ess << " ; ";
-
-				Arbre* ab= new Arbre(j, i, &(essences.at(ess)), 20, 10);
+				
+				/*
+				 *  Sélection aléatoire d'un age et d'un taux d'humidité
+				 *  L'âge est choisi entre 20 et 100
+				 *  Le taux d'humidité entre 20 et 80
+				 */
+				int age = rand()%80 + 20;
+				int hum = rand()%60 + 20;
+				Arbre* ab= new Arbre(j, i, &(essences.at(ess)), age, hum);
 				delete(matrice[i][j]); // suppression ancienne cellule
 				matrice[i][j]= ab;
 			}

@@ -30,7 +30,15 @@ Arbre::~Arbre()
  */
 bool Arbre::brule()
 {
-	pv-= 45;
+	// On va déterminer le nombre de points de vie à enlever en fonction des paramètres :
+	// - de l'essence
+	// - des caractères discrets de l'arbre
+	// - extérieurs --> TODO
+	int decrementation = 50;
+	
+	
+	pv-= decrementation;
+	// Si l'arbre n'a plus de points de vie, il passe à l'état cendre
 	if (pv<=0){
 		blast();
 		return false;
@@ -54,8 +62,8 @@ void Arbre::initialise()
 	
 	// Les données des essences sont décrites pour un arbre de 50 ans à 12% d'humidité
 	pv = points * age/50.0;
-	pv *= 1+ humidite/100.0;
-// 	cout << " pv : "<< pv << endl;
+	pv *= 1+ (humidite-12)/100.0;
+ 	cout << " pv : "<< pv << endl;
 	
 	// L'initialisation du coefficient sera faite plus tard puisqu'il dépend des paramètres extérieurs à l'arbre 
 	// Humidité ambiante, force du vent etc
