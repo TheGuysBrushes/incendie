@@ -213,7 +213,13 @@ void Foret::randomMatrice(float probabilite)
 				cout << ess << " ; ";
 				#endif
 				
-				Arbre* ab= new Arbre(j, i, &(essences.at(ess)), 20, 10);
+				/*
+				 * On choisit aléatoirement l'âge et l'humidité de l'arbre qui va être créé
+				 * Age [20;100[
+				 * Humidité [20;80[ 
+				 */
+				
+				Arbre* ab= new Arbre(j, i, &(essences.at(ess)), rand()%80+20,rand()%60+20 );
 				delete(matrice[i][j]); // suppression ancienne cellule
 				matrice[i][j]= ab;
 			}
