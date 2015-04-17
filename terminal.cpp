@@ -32,7 +32,7 @@ void Terminal::end()
 {
 	refresh();
 	getch();
-	
+
 	printw("\n Vous allez quitter la partie");
 	refresh();
 	getch();
