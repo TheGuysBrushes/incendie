@@ -24,17 +24,19 @@ public:
 	virtual ~Arbre();	
 		
 	// Getters 
-	virtual int getEtat() const	{ return etat;};
-	int getPv() const 	{ return pv;};
-	float getCoeff() const 	{ return coefficient;};
-	const Coordonnee& getPos() const { return pos; };
-	const Essence* getEssence() const {return essence;};
+	virtual int getEtat() const	{ return etat; };
+	int getPv() const		{ return pv;};
+	float getCoeff() const	{ return coefficient; };
+	const Coordonnee& getPos()		const { return pos; };
+	const Essence* getEssence()	const { return essence; };
 
 	// Autres méthodes
 	bool brule();
 	void initialise();
+	
 	// Méthodes constantes
 	virtual bool isOnFire() { return etat==2; };
+	
 	void enflammer() { etat= 2; };
 	void blast() { etat= 3; };
 };

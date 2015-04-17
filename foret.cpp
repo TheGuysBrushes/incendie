@@ -15,13 +15,16 @@
 // - la cellule ne contient qu'un état, si c'est un arbre (dynamic_cast) il a des attributs spécifiques
 // - faire une sous-classe de arbre : arbre en cendres ? ou alors sous-classe de cellule ou seulement arbre dans état brulé (3) : plus simpe
 
+/* TODO	*/
 //	DID : 1	: utiliser les coordonnées des arbres dans les méthodes plutôt que de les passer en arguments
 // 			+ code nettoyé (commentaires ...)
-//	TODO	2	: EN COURS	; revérifier les arguments des méthodes et les algorithmes pour prendre en compte les modif
-//			3	: faire des accesseurs et setters plus propres et explicites, supprimer attributs protected ?
-// 		4	: EN COURS	; Prise en compte des PV
-// 		5	: EN PARTIE	; Gérer arbres adjacents diagonaux ET avec plus de 1 de distance, creer classe ? (Arbre+distance)
+//	DID	2	: revérifier les arguments des méthodes et les algorithmes pour prendre en compte les modif
+//	DID	3	: faire des accesseurs et setters plus propres et explicites, supprimer attributs protected ?
+// DID	4	: Prise en compte des PV
+// DID	5	: Gérer arbres adjacents diagonaux ET avec plus de 1 de distance
+//			5 bis	: reduire la transmission selon la distance ?, creer classe ? (Arbre+distance)
 // 		6	: Prise en compte coefs
+//			7	: Ajout des vents
 
 using namespace std;
 
@@ -69,11 +72,13 @@ vector< string >* explode(const string& str)
 unsigned Foret::essenceRandom(int _j, int _i, unsigned distOthers){
 	int i = _i;
 	int j = _j;
+	
 	// Initialisation du tableau de pondération
 	unsigned probaEss[essences.size()];
 	for(unsigned k=0;k<essences.size();++k){
 		probaEss[k] = 1;
 	}
+	
 	// Récupération des voisins
 	list<Arbre*> voisins = adjacents(j, i, distOthers);
 	// Pondération du tableau
@@ -99,6 +104,13 @@ unsigned Foret::essenceRandom(int _j, int _i, unsigned distOthers){
 //		Initialisations
 // ################################### 
 
+
+/**
+ * Charge des essences dans le tableau d'essences à partir d'un fichier texte
+ * 	Format des lignes : "Nom" "masse volumique (kg/m³)" "diametre moyen dans R" "hauteur moyenne"  "type (0/1)"
+ * @param fileName nom du fichier qui contient les essences
+ * @author Ugo
+ */
 bool Foret::loadEssences(const string& fileName)
 {
 	// Initialisation du vecteur d'essence
@@ -132,6 +144,10 @@ bool Foret::loadEssences(const string& fileName)
 	}
 }
 
+/**
+ * initialise une matrice avec des cellules (vierge)
+ * @author Ugo and Florian
+ */
 void Foret::initEmpty()
 {
 		for (int i= 0; i< lignes; ++i){
@@ -147,6 +163,12 @@ void Foret::initEmpty()
 		}
 }
 
+
+/**
+ * Initialise une matrice vide puis ajoute des arbre dans la Foret
+ * @param probabilite chance qu'a un arbre d'être placé sur chaque case
+ * @author Florian and Ugo
+ */
 void Foret::randomMatrice(float probabilite)
 {
 	srand(std::time(0));
@@ -168,12 +190,13 @@ void Foret::randomMatrice(float probabilite)
 			int seuil= MAXI*(1-probabilite);
 			
 			// si le nombre est supérieur au seuil, c'est un arbre
-			if (test>seuil){				
+			if (test>seuil){
+				// on choisit une essence aléatoirement pour cet arbre
 				unsigned ess = essenceRandom(j,i, 2);
 				cout << ess << " ; ";
 
 				Arbre* ab= new Arbre(j, i, &(essences.at(ess)), 20, 10);
-				delete(matrice[i][j]);
+				delete(matrice[i][j]); // suppression ancienne cellule
 				matrice[i][j]= ab;
 			}
 		}
@@ -184,7 +207,7 @@ void Foret::randomMatrice(float probabilite)
 
 /**
  * Initialise les différentes essences et la matrice de l'automate
- * @param probabilite chance qu'a un arbre d'être placé sur chaque case
+ * @param proba chance qu'un arbre soit placé sur chaque case
  * @author Ugo and Florian
  */
 void Foret::initialisation(float proba)
@@ -215,7 +238,7 @@ void Foret::enflammer(int row, int col)
 	Cellule* tmp= matrice[row][col];
 	
 	if (tmp->getEtat()==1){
-		// TODO refaire propre
+		// TODO refaire propre (2 dynamic_cast)
 		onFire.push_back(dynamic_cast < Arbre* >(tmp));
 		dynamic_cast < Arbre* >(tmp)->enflammer();
 	}
