@@ -1,4 +1,5 @@
 #include "vent.h"
+#include <cmath>
 
 using namespace std;
 
@@ -69,6 +70,12 @@ std::string Vent::toString() const
 	os << "(Force Nord : "<< NS<< " Force Est : "<< EW << ")";
 	return os.str();
 }
+
+int Vent::getSpeed() const
+{
+	return sqrt( (NS*NS) + (EW*EW) ) *50.0;
+}
+
 
 // ####################
 // 	AUTRES CLASSES

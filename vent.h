@@ -31,6 +31,7 @@ public:
 	
 	std::string toString() const;
 	
+	int getSpeed() const;
 // 	std::ostringstream os;
 	
 };
