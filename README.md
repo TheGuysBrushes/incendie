@@ -27,4 +27,5 @@ Lundi : Flo : - les cellules/arbres sont stockés par pointeurs dans le vecteur 
  
  Jeudi : Sélection aléatoire essence avec notion de bosquet. Nettoyage du code, debugage, tests mémoires ( concluant).
  
- Vendredi :
+ Vendredi : Ugo : Transmission liée à l'humidité, réflexion sur modification système pv. 
+              Florian  : Recherches survent + creation de la classe et des opérations sur les vecteurs de vents
