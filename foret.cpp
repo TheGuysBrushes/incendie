@@ -215,7 +215,7 @@ void Foret::randomMatrice(float probabilite)
 				 * Humidité [20;70[ 
 				 */
 				
-				Arbre* ab= new Arbre(j, i, &(essences.at(ess)), rand()%80+20,rand()%50+20 );
+				Arbre* ab= new Arbre(j, i, &(essences.at(ess)), rand()%80+20,rand()%10+90 );
 				delete(matrice[i][j]); // suppression ancienne cellule
 				matrice[i][j]= ab;
 			}
@@ -265,8 +265,10 @@ void Foret::enflammer(int row, int col)
 	
 	if (tmp->getEtat()==1){
 		// TODO refaire propre (2 dynamic_cast)
-		onFire.push_back(dynamic_cast < Arbre* >(tmp));
-		dynamic_cast < Arbre* >(tmp)->enflammer();
+		Arbre * _tmp = dynamic_cast<Arbre *>(tmp);
+		onFire.push_back(_tmp);
+		_tmp->enflammer();
+
 	}
 }
 
@@ -375,7 +377,8 @@ void Foret::transition(Arbre* ab)
 {
 	list< Arbre* > voisins= adjacents(ab,1);
 	for (list< Arbre* >::iterator a(voisins.begin()); a!=voisins.end(); ++a){
-		enflammer( (*a) );
+		if(ab->getHumidite() < 50)
+			enflammer( (*a) );
 	}
 	
 	if ( ab->brule() )

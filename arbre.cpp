@@ -46,11 +46,13 @@ bool Arbre::brule()
 	// On va déterminer le nombre de points de vie à enlever en fonction des paramètres :
 	// - des caractères discrets de l'arbre
 	// - extérieurs --> TODO
-	int decrementation = 100;
-	
-	
-	
+	int decrementation =100* (1/humidite);
+	if(essence->getType() == 0){
+		// On considère qu'un épineux brule plus vite qu'un feuillu
+		decrementation *= 1.20;
+	}
 	pv-= decrementation;
+	humidite *= 0.9;
 	// Si l'arbre n'a plus de points de vie, il passe à l'état cendre
 	if (pv<=0){
 		blast();

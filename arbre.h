@@ -27,6 +27,7 @@ public:
 	virtual int getEtat() const	{ return etat; };
 	int getPv() const		{ return pv;};
 	float getCoeff() const	{ return coefficient; };
+	float getHumidite() const 	{ return humidite; };
 	const Coordonnee& getPos()		const { return pos; };
 	const Essence* getEssence()	const { return essence; };
 
