@@ -1,7 +1,8 @@
 #include "foret.h"
 
-#include <fstream>
+#define DEBUG_FILE 0
 
+#include <fstream>
 #include <cstdlib>
 #include <ctime>
 #include <curses.h> // temp
@@ -115,11 +116,16 @@ bool Foret::loadEssences(const string& fileName)
 {
 	// Initialisation du vecteur d'essence
 	ifstream f (fileName.c_str());
+#if DEBUG_FILE==1
 	cout<< "fichier ouvert?" <<endl;
-
+#endif
 	if(f){
 		string line;
+		
+	#if DEBUG_FILE==1
 		cout <<"oui"<< endl;
+	#endif
+		
 		int indice = 0;
 		while(getline(f,line)){
 			vector<string>* tokens = explode(line);
@@ -133,13 +139,17 @@ bool Foret::loadEssences(const string& fileName)
 			delete(tokens);
 		}
 		
+		#if DEBUG_FILE==1
 		for(vector<Essence>::const_iterator i(essences.begin()); i!=essences.end(); ++i){
 			cout << i->afficheEssence() << endl;
 		}
+		#endif
 		return true;
 	}
 	else {
+	#if DEBUG_FILE==1
 		cout << "non" <<endl;
+	#endif
 		return false;
 	}
 }
