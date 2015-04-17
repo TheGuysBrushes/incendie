@@ -1,13 +1,16 @@
 #include "foret.h"
 
-#define DEBUG_FILE 0
-
 #include <fstream>
 #include <cstdlib>
 #include <ctime>
+
 #include <curses.h> // temp
 // #include <bits/stl_algo.h>
 // #include <bits/algorithmfwd.h>
+
+#define DEBUG_FILE 0
+#define DEBUG_ESSENCE 0
+
 
 // -- A mettre dans le readme ?
 
@@ -35,7 +38,7 @@ using namespace std;
 // ################################### 
 
 Foret::Foret(int n_lignes, int n_colonnes, float proba)
-	: lignes(n_lignes), colonnes(n_colonnes)
+: lignes(n_lignes), colonnes(n_colonnes)
 {
 	initialisation(proba);
 }
@@ -67,7 +70,7 @@ vector< string >* explode(const string& str)
 	istringstream split(str);
 	vector<string> *tokens = new vector<string>;
 	for(string each;getline(split, each, ' '); tokens->push_back(each));
-		 return   tokens;
+	return   tokens;
 }
 
 unsigned Foret::essenceRandom(int _j, int _i, unsigned distOthers){
@@ -116,15 +119,15 @@ bool Foret::loadEssences(const string& fileName)
 {
 	// Initialisation du vecteur d'essence
 	ifstream f (fileName.c_str());
-#if DEBUG_FILE==1
+	#if DEBUG_FILE==1
 	cout<< "fichier ouvert?" <<endl;
-#endif
+	#endif
 	if(f){
 		string line;
 		
-	#if DEBUG_FILE==1
+		#if DEBUG_FILE==1
 		cout <<"oui"<< endl;
-	#endif
+		#endif
 		
 		int indice = 0;
 		while(getline(f,line)){
@@ -147,9 +150,9 @@ bool Foret::loadEssences(const string& fileName)
 		return true;
 	}
 	else {
-	#if DEBUG_FILE==1
+		#if DEBUG_FILE==1
 		cout << "non" <<endl;
-	#endif
+		#endif
 		return false;
 	}
 }
@@ -160,17 +163,17 @@ bool Foret::loadEssences(const string& fileName)
  */
 void Foret::initEmpty()
 {
-		for (int i= 0; i< lignes; ++i){
-			// création d'une nouvelle "ligne de la matrice"
-			std::vector< Cellule* > tmp;
+	for (int i= 0; i< lignes; ++i){
+		// création d'une nouvelle "ligne de la matrice"
+		std::vector< Cellule* > tmp;
 		
-			for (int j= 0; j< colonnes; ++j){
-				tmp.push_back( new Cellule(0) );
-			}
-		
-			// ajout de la ligne dans la matrice
-			matrice.push_back(tmp);
+		for (int j= 0; j< colonnes; ++j){
+			tmp.push_back( new Cellule(0) );
 		}
+		
+		// ajout de la ligne dans la matrice
+		matrice.push_back(tmp);
+	}
 }
 
 
@@ -191,7 +194,10 @@ void Foret::randomMatrice(float probabilite)
 	initEmpty();
 	
 	for (int i= 0; i< lignes; ++i){
-		cout << "indices des essences choisies : ";
+		#if DEBUG_ESSENCE==1
+		cout << endl<< "indices des essences choisies : ";
+		#endif
+		
 		for (int j= 0; j< colonnes; ++j){
 			
 			// un nombre est choisi aléatoirement entre 0 et MAXI-1 compris, cela défini notre précision,
@@ -203,21 +209,15 @@ void Foret::randomMatrice(float probabilite)
 			if (test>seuil){
 				// on choisit une essence aléatoirement pour cet arbre
 				unsigned ess = essenceRandom(j,i, 2);
+				#if DEBUG_ESSENCE==1
 				cout << ess << " ; ";
+				#endif
 				
-				/*
-				 *  Sélection aléatoire d'un age et d'un taux d'humidité
-				 *  L'âge est choisi entre 20 et 100
-				 *  Le taux d'humidité entre 20 et 80
-				 */
-				int age = rand()%80 + 20;
-				int hum = rand()%60 + 20;
-				Arbre* ab= new Arbre(j, i, &(essences.at(ess)), age, hum);
+				Arbre* ab= new Arbre(j, i, &(essences.at(ess)), 20, 10);
 				delete(matrice[i][j]); // suppression ancienne cellule
 				matrice[i][j]= ab;
 			}
 		}
-		cout << endl;
 	}
 }
 
@@ -288,7 +288,7 @@ std::list< Arbre* > Foret::adjacents(int _col, int _row, int _distance) const
 	int distance = _distance;
 	
 	list< Arbre* > liste;
-
+	
 	// on prend la taille de la case, sans adjacents supposé
 	int larg= 1;	int haut= 1;
 	
@@ -313,11 +313,11 @@ std::list< Arbre* > Foret::adjacents(int _col, int _row, int _distance) const
 		larg += (colonnes-1)-col;
 	
 	// si il y a N cases au dessus, on place la premiere cellule au dessus direct
-	if (row>=distance) {
-		posRow= row-distance;
-		haut += distance;
-	}
-	else // sinon, on place la premiere au bord de la matrice
+		if (row>=distance) {
+			posRow= row-distance;
+			haut += distance;
+		}
+		else // sinon, on place la premiere au bord de la matrice
 	{
 		posRow= 0;
 		haut += row;
@@ -328,12 +328,12 @@ std::list< Arbre* > Foret::adjacents(int _col, int _row, int _distance) const
 		haut += distance;
 	else // sinon on l'augmente du nombre de cases en dessous (nbTotal-pos_cell)
 		haut += (lignes-1)-row;
-
+	
 	int posRowMax= posRow + haut;
 	int posColMax= posCol + larg;
 	
 	// on ajoute les arbres adjacents dans un carré de haut par larg autour de la cellule
-			//(on vérifie la cellule elle-même, mais elle vide pour le moment)
+	//(on vérifie la cellule elle-même, mais elle vide pour le moment)
 	for (int i= posRow; i<posRowMax; ++i){
 		
 		for (int j= posCol; j<posColMax; ++j){
