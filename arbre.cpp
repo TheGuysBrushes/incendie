@@ -1,9 +1,20 @@
 #include "arbre.h"
 
-#define DEBUG_PV 0
+#define DEBUG_PV 1
 
 #include <cmath>
 #include <iostream>
+
+/*
+ * On considère pour la gestion de l'embrasement d'un arbre
+ * et pour sa combustion le système suivant :
+ * Le taux d'humidité de l'arbre diminue au fil de sa combustion
+ * Plus ce taux est faible, plus l'arbre perd de points de vie par tour
+ * De plus, des paramètres extérieurs pourront ralentir cette perte ( pluie, humidité ambiante, canadarage, etc ^^)
+ * 
+ * On considère de plus qu'un arbre en feu ne génère pas de flamme tant que son humidité n'est pas inférieure à 50%
+ * Par conséquent, un arbre emflammera son voisin uniquement à cette condition
+ */
 
 using namespace std;
 
@@ -33,10 +44,10 @@ Arbre::~Arbre()
 bool Arbre::brule()
 {
 	// On va déterminer le nombre de points de vie à enlever en fonction des paramètres :
-	// - de l'essence
 	// - des caractères discrets de l'arbre
 	// - extérieurs --> TODO
-	int decrementation = 50;
+	int decrementation = 100;
+	
 	
 	
 	pv-= decrementation;
@@ -55,6 +66,17 @@ bool Arbre::brule()
  */
 void Arbre::initialise()
 {
+	/*
+	 * Nous avons décidé d'établir le rayon et la hauteur de l'arbre en fonction de son âge
+	 * et de l'âge de maturité de son essence, en simulant des variations de croissance
+	 * par l'utilisation de tranche d'âge où la croissance varie. Par défaut, nous utiliserons
+	 * trois tranches :
+	 * [0;1/4 age maturité[
+	 * [1/4;3/4 age maturité[
+	 * [3/4; age maturité [
+	 * 
+	 * Si un arbre est plus vieux que son âge de maturité, il possèdera les caractères
+	 */
 	// Initialisation des points de vie de l'arbre
 	float rayon = essence->getDiametre() / 2.0;
 	float	hauteur = essence->getHauteur();
@@ -62,9 +84,9 @@ void Arbre::initialise()
 	float masseV= essence->getMasse()/1000.0;
 	unsigned points = (unsigned) ( 4.0/3.0* (M_PI* (rayon*rayon)*hauteur) * masseV );
 	
-	// Les données des essences sont décrites pour un arbre de 50 ans à 12% d'humidité
+	// Les données des essences sont décrites pour un arbre de 50 ans à 20% d'humidité
 	pv = points * age/50.0;
-	pv *= 1+ (humidite-12)/100.0;
+	pv *= 1  + (humidite-12)/100.0;
 	
 	#if DEBUG_PV==1
 	cout << " pv : "<< pv << endl;

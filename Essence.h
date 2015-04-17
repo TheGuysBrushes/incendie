@@ -12,11 +12,12 @@ private:
 	unsigned masse_V;
 	float hauteur;
 	float diametre;
+	unsigned ageMaturite;
 	bool type; // 0 pour résineux, 1 pour feuillu
 	
 public:
 	// Constructors
-	Essence(unsigned i,std::string nom, int masse,float h, float d, bool t);
+	Essence(unsigned i,std::string nom, int masse,float h, float d,unsigned age, bool t);
 	Essence(const Essence& other);
 	
 	// Getters and setters

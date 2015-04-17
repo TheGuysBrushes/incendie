@@ -2,10 +2,13 @@
 
 using namespace std;
 // Constructors
-Essence::Essence(unsigned i, string nom, int masse, float h, float d, bool t):indice(i),name(nom),masse_V(masse),hauteur(h),diametre(d),type(t){
+Essence::Essence(unsigned int i, string nom, int masse, float h, float d, unsigned int age, bool t):
+indice(i),name(nom),masse_V(masse),hauteur(h),diametre(d),ageMaturite(age),type(t){
 }
 
-Essence::Essence(const Essence& other):indice(other.indice),name(other.name),masse_V(other.masse_V),hauteur(other.hauteur),diametre(other.diametre),type(other.type){
+Essence::Essence(const Essence& other):
+indice(other.indice),name(other.name),masse_V(other.masse_V),hauteur(other.hauteur),diametre(other.diametre),
+ageMaturite(other.ageMaturite),type(other.type){
 }
 
 Essence& Essence::operator=(const Essence& other)

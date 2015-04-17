@@ -9,7 +9,7 @@
 // #include <bits/algorithmfwd.h>
 
 #define DEBUG_FILE 0
-#define DEBUG_ESSENCE 0
+#define DEBUG_ESSENCE 1  
 
 
 // -- A mettre dans le readme ?
@@ -131,13 +131,9 @@ bool Foret::loadEssences(const string& fileName)
 		
 		int indice = 0;
 		while(getline(f,line)){
-			vector<string>* tokens = explode(line);
-			string name = tokens->at(0);
-			int masse = atoi(tokens->at(1).c_str());
-			float h = strtof(tokens->at(2).c_str(),NULL);
-			float d = strtof(tokens->at(3).c_str(),NULL);
-			bool t = atoi(tokens->at(4).c_str());
-			essences.push_back(Essence(indice,name,masse,h,d,t));
+			vector<string>* tokens = explode(line);			
+			essences.push_back(Essence(indice,tokens->at(0),atoi(tokens->at(1).c_str()),strtof(tokens->at(2).c_str(),NULL),
+									   strtof(tokens->at(3).c_str(),NULL),atoi(tokens->at(4).c_str()),atoi(tokens->at(5).c_str())));
 			indice +=1;
 			delete(tokens);
 		}
@@ -216,15 +212,22 @@ void Foret::randomMatrice(float probabilite)
 				/*
 				 * On choisit aléatoirement l'âge et l'humidité de l'arbre qui va être créé
 				 * Age [20;100[
-				 * Humidité [20;80[ 
+				 * Humidité [20;70[ 
 				 */
 				
-				Arbre* ab= new Arbre(j, i, &(essences.at(ess)), rand()%80+20,rand()%60+20 );
+				Arbre* ab= new Arbre(j, i, &(essences.at(ess)), rand()%80+20,rand()%50+20 );
 				delete(matrice[i][j]); // suppression ancienne cellule
 				matrice[i][j]= ab;
 			}
 		}
 	}
+		
+	#if DEBUG_ESSENCE==1
+	cout << "max : "<< endl;  
+	Arbre dummy1(-1, -1, &(essences[3]), 99, 69 );
+	cout << "min : "<< endl;  
+	Arbre dummy2(-1, -1, &(essences[2]), 20, 20 );
+	#endif
 }
 
 
