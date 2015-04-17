@@ -18,7 +18,6 @@ private:
 	
 public:
 	Terminal(int hauteur, int largeur, float proba= 0.60, long nTemps= 150000, bool t=0);
-		
 	
 	void end();
 	void afficheContour(int largeur);
