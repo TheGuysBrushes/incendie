@@ -44,8 +44,8 @@ public:
 	// Autres méthodes
 	void enflammer(int row, int col);
 	void enflammer(Arbre* ab);
-	std::list< Arbre* > adjacents(int _col, int _row, int _distance) const;
-	std::list< Arbre* > adjacents(const Arbre * ab, int _distance) const;
+	std::list< Arbre* > adjacents(int col, int row, int distance) const;
+	std::list< Arbre* > adjacents(const Arbre * ab, int distance) const;
 	
 	// 	Avancee du temps
 	// voir transition avec d'autres parametres

@@ -30,6 +30,11 @@
 // 		6	: Prise en compte coefs
 //			7	: Ajout des vents
 
+//			8	: Implementation de Qt
+// 		9	: Debut d'interface de configuration (taille, vitesse ...)
+
+//			10	: Jeux d'essais
+
 using namespace std;
 
 
@@ -86,8 +91,9 @@ unsigned Foret::essenceRandom(int _j, int _i, unsigned distOthers){
 	// Récupération des voisins
 	list<Arbre*> voisins = adjacents(j, i, distOthers);
 	// Pondération du tableau
+	unsigned densite= 3;	// plus le parametre est élevé, plus les chances que les arbres soit les mêmes que leurs voisins est forte (formation bosquets)
 	for (list< Arbre* >::const_iterator a(voisins.begin()); a!=voisins.end(); ++a){
-		probaEss[(*a)->getEssence()->getIndice()] += 3;
+		probaEss[(*a)->getEssence()->getIndice()] += densite;
 	}
 	
 	unsigned index_max = 0;
@@ -204,7 +210,8 @@ void Foret::randomMatrice(float probabilite)
 			// si le nombre est supérieur au seuil, c'est un arbre
 			if (test>seuil){
 				// on choisit une essence aléatoirement pour cet arbre
-				unsigned ess = essenceRandom(j,i, 2);
+				unsigned distVoisins= 2;
+				unsigned ess = essenceRandom(j,i, distVoisins);
 				#if DEBUG_ESSENCE==1
 				cout << ess << " ; ";
 				#endif
@@ -288,16 +295,12 @@ void Foret::enflammer(Arbre* ab)
 /**
  * Retourne les arbres qui sont proches d'une cellule donnée
  * @author Ugo Florian
- * @param _col indice de la colonne de la cellule
- * @param _row indice de la ligne de la cellule
- * @param _distance distance sur laquelle s'effectue la recherche de voisins
+ * @param col indice de la colonne de la cellule
+ * @param row indice de la ligne de la cellule
+ * @param distance distance sur laquelle s'effectue la recherche de voisins
  */
-std::list< Arbre* > Foret::adjacents(int _col, int _row, int _distance) const
+std::list< Arbre* > Foret::adjacents(int col, int row, int distance) const
 {
-	int col = _col;
-	int row = _row;
-	int distance = _distance;
-	
 	list< Arbre* > liste;
 	
 	// on prend la taille de la case, sans adjacents supposé
@@ -359,9 +362,9 @@ std::list< Arbre* > Foret::adjacents(int _col, int _row, int _distance) const
 }
 
 
-std::list< Arbre* > Foret::adjacents(const Arbre * ab, int _distance) const
+std::list< Arbre* > Foret::adjacents(const Arbre * ab, int distance) const
 {
-	return adjacents(ab->getPos().col,ab->getPos().row, _distance);
+	return adjacents(ab->getPos().col,ab->getPos().row, distance);
 }
 
 // ###################################
@@ -375,7 +378,8 @@ std::list< Arbre* > Foret::adjacents(const Arbre * ab, int _distance) const
  */
 void Foret::transition(Arbre* ab)
 {
-	list< Arbre* > voisins= adjacents(ab,1);
+	unsigned distAdj= 1; // distance à laquelle les voisins seront enflammes ; TODO dist 1= contact, dist 2= diagonaux, dist 3 =
+	list< Arbre* > voisins= adjacents(ab, distAdj);
 	for (list< Arbre* >::iterator a(voisins.begin()); a!=voisins.end(); ++a){
 		if(ab->getHumidite() < 50)
 			enflammer( (*a) );
