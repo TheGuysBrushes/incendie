@@ -6,7 +6,7 @@
 #include "Essence.h"
 #include "cellule.h"
 #include "coordonnee.h"
-#include "Essence.h"
+
 
 class Arbre: public Cellule
 {
