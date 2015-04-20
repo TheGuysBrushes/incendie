@@ -19,7 +19,7 @@
 // - la cellule ne contient qu'un état, si c'est un arbre (dynamic_cast) il a des attributs spécifiques
 // - faire une sous-classe de arbre : arbre en cendres ? ou alors sous-classe de cellule ou seulement arbre dans état brulé (3) : plus simpe
 
-/* TODO	*/
+/* TODO Taches	*/
 //	DID : 1	: utiliser les coordonnées des arbres dans les méthodes plutôt que de les passer en arguments
 // 			+ code nettoyé (commentaires ...)
 //	DID	2	: revérifier les arguments des méthodes et les algorithmes pour prendre en compte les modif
@@ -27,10 +27,10 @@
 // DID	4	: Prise en compte des PV
 // DID	5	: Gérer arbres adjacents diagonaux ET avec plus de 1 de distance
 //			5 bis	: reduire la transmission selon la distance ?, creer classe ? (Arbre+distance)
-// 		6	: Prise en compte coefs
+// 		6	: EN COURS	; Prise en compte coefs
 //			7	: Ajout des vents
 
-//			8	: Implementation de Qt
+//			8	: EN COURS	; Implementation de Qt
 // 		9	: Debut d'interface de configuration (taille, vitesse ...)
 
 //			10	: Jeux d'essais
@@ -67,8 +67,9 @@ Foret::~Foret()
 /**
  * Découpe une chaine de caractères en sous-chaine et place chaque élément dans un vecteur de string
  * 	nécessaire pour l'initialisation des essences d'arbres
- * @param str : Chaine à découper
  * @author Ugo
+ * @param str : Chaine à découper
+ * @return vecteur des mots séparés par des espaces // TODO TRIM ? + remplacer "_" par des espaces
  */
 vector< string >* explode(const string& str)
 {
@@ -118,8 +119,9 @@ unsigned Foret::essenceRandom(int _j, int _i, unsigned distOthers){
 /**
  * Charge des essences dans le tableau d'essences à partir d'un fichier texte
  * 	Format des lignes : "Nom" "masse volumique (kg/m³)" "diametre moyen dans R" "hauteur moyenne"  "type (0/1)"
- * @param fileName nom du fichier qui contient les essences
  * @author Ugo
+ * @param fileName nom du fichier qui contient les essences
+ * @return vrai si le fichier a été ouvert, faux sinon
  */
 bool Foret::loadEssences(const string& fileName)
 {
@@ -181,8 +183,8 @@ void Foret::initEmpty()
 
 /**
  * Initialise une matrice vide puis ajoute des arbre dans la Foret
- * @param probabilite chance qu'a un arbre d'être placé sur chaque case
  * @author Florian and Ugo
+ * @param probabilite chance qu'a un arbre d'être placé sur chaque case
  */
 void Foret::randomMatrice(float probabilite)
 {
@@ -240,8 +242,8 @@ void Foret::randomMatrice(float probabilite)
 
 /**
  * Initialise les différentes essences et la matrice de l'automate
- * @param proba chance qu'un arbre soit placé sur chaque case
  * @author Ugo and Florian
+ * @param proba chance qu'un arbre soit placé sur chaque case
  */
 void Foret::initialisation(float proba)
 {
@@ -294,13 +296,15 @@ void Foret::enflammer(Arbre* ab)
 
 /**
  * Retourne les arbres qui sont proches d'une cellule donnée
- * @author Ugo Florian
+ * @author Florian and Ugo
  * @param col indice de la colonne de la cellule
  * @param row indice de la ligne de la cellule
  * @param distance distance sur laquelle s'effectue la recherche de voisins
+ * @return list de pointeurs sur arbres // TODO ajout attribut distance ?
  */
 std::list< Arbre* > Foret::adjacents(int col, int row, int distance) const
 {
+//	Voir les images pour modif ? calcul transmission selon distance (1.4/distance) -0.4 ? : transmission proportionnelle inverse à distance de 0 à 3.33
 	list< Arbre* > liste;
 	
 	// on prend la taille de la case, sans adjacents supposé
@@ -361,7 +365,13 @@ std::list< Arbre* > Foret::adjacents(int col, int row, int distance) const
 	return liste;
 }
 
-
+/**
+ * Retourne les arbres qui sont proches d'une cellule donnée, appelle adjacents(int, int)
+ * @author Florian and Ugo
+ * @param ab arbre dont on veut connaître les voisins
+ * @param distance distance sur laquelle s'effectue la recherche de voisins
+ * @return list de pointeurs sur arbres
+ */
 std::list< Arbre* > Foret::adjacents(const Arbre * ab, int distance) const
 {
 	return adjacents(ab->getPos().col,ab->getPos().row, distance);
@@ -392,6 +402,7 @@ void Foret::transition(Arbre* ab)
 /**
  * passe de t à t+1 tous les arbres à l'aide de la liste d'arbres en feu
  * @author Florian et Ugo
+ * @return vrai si il y eu des changements, faux sinon
  */
 bool Foret::NextMove()
 {
@@ -401,7 +412,7 @@ bool Foret::NextMove()
 		modif= true;		
 		list< Arbre* > old= onFire;
 		onFire.clear();		
-		// TODO utiliser mapping
+		// TODO utiliser mapping ?
 		for (list< Arbre* >::iterator ab(old.begin()); ab!=old.end(); ++ab){
 			transition(*ab);
 		}

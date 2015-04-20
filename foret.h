@@ -32,7 +32,7 @@ public:
 	
 	// Initialisations
 	void initEmpty();
-	void randomMatrice(float probabilite); // TODO
+	void randomMatrice(float probabilite);
 	bool loadEssences(const std::string& fileName);
 	void initialisation(float proba);
 	
