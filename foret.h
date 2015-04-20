@@ -1,15 +1,18 @@
 #ifndef FORET_H
 #define FORET_H
-#define MAXI 1000 
 
 #include <vector>
 #include <list>
 #include <iostream>
 
+#include "debug.h"
+
 #include "coordonnee.h"
 #include "cellule.h"
 #include "arbre.h"
 #include "Essence.h"
+
+#define MAXI 1000 
 
 class Foret
 {

@@ -3,13 +3,11 @@
 #include <fstream>
 #include <cstdlib>
 #include <ctime>
-
-#include <curses.h> // temp
 // #include <bits/stl_algo.h>
 // #include <bits/algorithmfwd.h>
 
-#define DEBUG_FILE 0
-#define DEBUG_ESSENCE 1  
+#include <curses.h> // temp
+
 
 
 // -- A mettre dans le readme ?
@@ -191,7 +189,7 @@ void Foret::randomMatrice(float probabilite)
 	srand(std::time(0));
 	if (probabilite>1){
 		probabilite=0.6;
-		cout << "MIS A DEFAUT"<< endl;
+		std::cout << "MIS A DEFAUT"<< endl;
 	}
 	
 	// Initialisation de l'ensemble des cellules à vide

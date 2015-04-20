@@ -1,9 +1,13 @@
 #ifndef VENT_H
 #define VENT_H
 
-#include "coordonnee.h"
 #include <string>
 #include <sstream>
+
+#include "debug.h"
+
+#include "coordonnee.h"
+
 
 class Vent
 {

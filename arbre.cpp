@@ -1,7 +1,5 @@
 #include "arbre.h"
 
-#define DEBUG_PV 1
-
 #include <cmath>
 #include <iostream>
 

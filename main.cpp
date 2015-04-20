@@ -1,7 +1,12 @@
 // #include <QCoreApplication>
 
+#include "debug.h"
+
 #include "terminal.h"
+
+#if DEBUG_VENT==1
 #include "vent.h"
+#endif
 
 using namespace std;
 
@@ -42,11 +47,13 @@ int main(int argc, char** argv)
 	printw("Pierre a un petit kiki");
 	scr.end();
 	
+#if DEBUG_VENT==1
 	Vent mistralGagnant(2.0, 1.0);
 	Vent v1(2.0, 0.0);
 	Vent v3= v1;
 	
 	cout << v3.toString() << "vitesse : "<< v3.getSpeed();
+#endif
 	
 //     return app.exec();
 }

@@ -1,6 +1,8 @@
 #ifndef ARBRE_H
 #define ARBRE_H
 
+#include "debug.h"
+
 #include "Essence.h"
 #include "cellule.h"
 #include "coordonnee.h"
