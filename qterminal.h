@@ -12,6 +12,7 @@
 
 class Qterminal: public QWidget
 {
+Q_OBJECT
 private:
 	QImage* buffer;
 	QColor* color;

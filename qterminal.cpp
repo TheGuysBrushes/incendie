@@ -81,3 +81,8 @@ void Qterminal::resizeEvent(QResizeEvent* event)
     QPainter paint(this->buffer);
 	dessine_grille(paint);
 }
+
+Qterminal::~Qterminal()
+{
+
+}
