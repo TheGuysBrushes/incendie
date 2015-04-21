@@ -38,7 +38,7 @@ void FireWidget::fill_buffer(QPainter& paint)
 				
 			}else if((*ligne)[j]->getEtat() == 1){
 				// Il faut ici vérifier l'essence de l'arbre pour lui attribuer une variante de vert
-				unsigned int indice= dynamic_cast < const Arbre* >((*ligne)[j])->getEssence()->getIndice();
+				unsigned indice= dynamic_cast < const Arbre* >((*ligne)[j])->getEssence()->getIndice();
 				switch(indice){
 					case 0:
 						this->color->setRgb(1,100,0,255);

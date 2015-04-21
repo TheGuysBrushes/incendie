@@ -7,7 +7,6 @@
 
 class FireScreen : public QMainWindow
 {
-
 private:
 	FireWidget* fwidget;
 public:
