@@ -57,4 +57,7 @@ FireScreen::FireScreen()
    
 }
 
-
+FireScreen::~FireScreen()
+{
+	delete(fwidget);
+}

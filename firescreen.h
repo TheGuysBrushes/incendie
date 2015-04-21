@@ -11,6 +11,7 @@ private:
 	FireWidget* fwidget;
 public:
 	FireScreen();
+	virtual ~FireScreen();
 };
 
 #endif // FIRESCREEN_H

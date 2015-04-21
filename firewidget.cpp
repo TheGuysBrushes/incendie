@@ -7,16 +7,16 @@ using namespace std;
 FireWidget::FireWidget(int _hauteur, int _largeur, float _proba, long int _temps)
 :foret(_hauteur,_largeur,_proba),temps(_temps){
 	setAttribute(Qt::WA_PaintOutsidePaintEvent);
-	this->buffer = new QImage();
-	this->color = new QColor(Qt::black);
-	
+	buffer = new QImage();
+	color = new QColor(Qt::black);
 	
 }
 
 // Destructeur
 FireWidget::~FireWidget()
 {
-
+	delete(buffer);
+	delete(color);
 }
 
 //Autres méthodes
@@ -65,7 +65,7 @@ void FireWidget::fill_buffer(QPainter& paint)
 			}else if(cell->getEtat() == 1){
 				// Il faut ici vérifier l'essence de l'arbre pour lui attribuer une variante de vert
 				unsigned indice= dynamic_cast < const Arbre* >(cell)->getEssence()->getIndice();
-				setColor(indice);	
+				setColor(indice);
 				
 			}else if(cell->getEtat() == 2){
 				this->color->setNamedColor("red");	
@@ -87,7 +87,7 @@ void FireWidget::fill_buffer(QPainter& paint)
 void FireWidget::paintEvent(QPaintEvent* event)
 {
 	QPainter paint(this);
-	paint.drawImage(QPoint(0,0),*(this->buffer));
+	paint.drawImage(0, 0, *buffer);
 }
 
 void FireWidget::resizeEvent(QResizeEvent* event)
