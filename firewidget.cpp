@@ -10,6 +10,7 @@ FireWidget::FireWidget(int _hauteur, int _largeur, float _proba, long int _temps
 	buffer = new QImage();
 	color = new QColor(Qt::black);
 	
+	setMinimumSize(600,600);
 }
 
 // Destructeur
@@ -42,12 +43,15 @@ void FireWidget::setColor(int colorIndice)
 }
 
 
-
 // Dessine la matrice dans le buffer
-void FireWidget::fill_buffer(QPainter& paint)
+void FireWidget::fill_buffer()
 {
+	
+	buffer->fill(Qt::white);
 	int cell_larg = width() / this->foret.largeur();
 	int cell_haut = height() / this->foret.hauteur();
+	
+	QPainter paint(this->buffer);
 	
 	int current_largeur= 0;
 	for(int i=0; i<this->foret.largeur(); ++i){
@@ -92,30 +96,21 @@ void FireWidget::paintEvent(QPaintEvent* event)
 
 void FireWidget::resizeEvent(QResizeEvent* event)
 {
-	if(this->buffer->isNull()){
-      // Redimensionnement manuel
-      setMinimumSize(600,600);
-      buffer = new QImage(600,600,QImage::Format_ARGB32); 
-      buffer->fill(1);
-    }
-    else{
-      // Vérifier le redimensionnement de la QImage
-      buffer = new QImage(event->size().width(),event->size().height(),QImage::Format_ARGB32);
-      buffer->fill(1);
-    }
-    
-    QPainter paint(this->buffer);
-	fill_buffer(paint);
+	if (!buffer->isNull()){
+		delete(buffer);
+	}
+	buffer = new QImage(event->size().width(), event->size().height(),QImage::Format_ARGB32);
+	buffer->fill(Qt::white);
+	fill_buffer();
 }
 
 void FireWidget::next()
 {
+	// pas suivant
 	foret.NextMove();
-	buffer->fill(1);
 	
-	QPainter peintre(this);
-	
-	fill_buffer(peintre);
-// 	update();
+	// mise à jour de l'image puis affichage à l'écran
+	fill_buffer();
+	update();
 }
 

@@ -24,7 +24,7 @@ public:
 	
 	// Autres méthodes
 	void setColor(int colorIndice);
-	void fill_buffer(QPainter& paint);
+	void fill_buffer();
 
 protected:
 // 	void mousePressEvent(QMouseEvent *event);
