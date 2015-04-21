@@ -1,9 +1,9 @@
-// #include <QCoreApplication>
-
 #include "debug.h"
 
-#include "terminal.h"
-#include "vent.h"
+// #include "terminal.h"
+// #include "vent.h"
+#include <QtGui/QApplication>
+#include "firescreen.h"
 
 using namespace std;
 
@@ -14,10 +14,9 @@ using namespace std;
  */
 int main(int argc, char** argv)
 {
-//     QCoreApplication app(argc, argv);
-//     AutomateFeu foo;
+	/*
+	 *  Main pour ncurses
 	// mettre dernier para à 1 si on veut mettre 2 fois plus de cellules hztl (1600/900_Konsole: maxL:110/220 H: 52)
-	
 	int hauteur=	30;
 	int largeur=	50;
 	float proba=	0.55;
@@ -50,6 +49,9 @@ int main(int argc, char** argv)
 	Vent v3= v1;
 	
 	cout << v3.toString() << "vitesse : "<< v3.getSpeed();
-	
-//     return app.exec();
+	*/
+	QApplication app(argc, argv);
+    FireScreen foo;
+    foo.show();
+    return app.exec();
 }
