@@ -29,3 +29,7 @@ Lundi : Flo : - les cellules/arbres sont stockés par pointeurs dans le vecteur 
  
  Vendredi : Ugo : Transmission liée à l'humidité, réflexion sur modification système pv. 
               Florian  : Recherches survent + creation de la classe et des opérations sur les vecteurs de vents
+
+Semaine 3 :
+
+  Lundi-Mardi : Mise en place de l'interface Qt.
