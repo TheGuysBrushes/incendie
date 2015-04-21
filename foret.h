@@ -29,6 +29,8 @@ private:
 	// METHODES
 private:
 	unsigned essenceRandom(int _j, int _i, unsigned distOthers);
+	void allumer(int row, int col);
+	void allumer(Arbre* ab);
 	
 public:
 	// Constructeur et destructeur
