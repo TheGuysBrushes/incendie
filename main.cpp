@@ -1,8 +1,9 @@
-#include <QApplication>
+// #include <QCoreApplication>
 
-//#include "terminal.h"
+#include "debug.h"
+
+#include "terminal.h"
 #include "vent.h"
-#include "qwindow.h"
 
 using namespace std;
 
@@ -13,14 +14,15 @@ using namespace std;
  */
 int main(int argc, char** argv)
 {
-	//     QCoreApplication app(argc, argv);
-	//     AutomateFeu foo;
+//     QCoreApplication app(argc, argv);
+//     AutomateFeu foo;
 	// mettre dernier para à 1 si on veut mettre 2 fois plus de cellules hztl (1600/900_Konsole: maxL:110/220 H: 52)
 	
 	int hauteur=	30;
 	int largeur=	50;
 	float proba=	0.55;
 	long vitesse=	20000;
+	float coef_brulure= 0.1;
 	bool small=		false;
 	
 	if (argc>1)
@@ -34,26 +36,20 @@ int main(int argc, char** argv)
 	if (argc>5)
 		small= atoi(argv[5]);
 	
-	QApplication app(argc, argv);
-	Qwindow foo(hauteur, largeur, proba, vitesse);
-	foo.show();
-	return app.exec();
+	Terminal scr(hauteur, largeur, proba, vitesse, coef_brulure ,small);
 	
-	/*
-	 *	Terminal scr(hauteur, largeur, proba, vitesse, small);
-	 *	
-	 *	scr.afficheForet();
-	 * 
-	 *	scr.run();
-	 *	
-	 *	printw("Pierre a un petit kiki");
-	 *	scr.end();
-	 *	
-	 *	Vent mistralGagnant(2.0, 1.0);
-	 *	Vent v1(2.0, 0.0);
-	 *	Vent v3= v1;
-	 *	
-	 *	cout << v3.toString() << "vitesse : "<< v3.getSpeed();
-	 */
-	//     return app.exec();
+	scr.afficheForet();
+
+	scr.run();
+	
+	printw("Pierre a un petit kiki");
+	scr.end();
+	
+	Vent mistralGagnant(2.0, 1.0);
+	Vent v1(2.0, 0.0);
+	Vent v3= v1;
+	
+	cout << v3.toString() << "vitesse : "<< v3.getSpeed();
+	
+//     return app.exec();
 }

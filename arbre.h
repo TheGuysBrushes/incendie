@@ -34,7 +34,7 @@ public:
 	const Essence* getEssence()	const { return essence; };
 
 	// Autres méthodes
-	bool brule();
+	bool brule(float coef= 1.0);
 	void initialise();
 	
 	// Méthodes constantes

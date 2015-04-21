@@ -40,11 +40,12 @@ using namespace std;
 //		Constructeurs et destructeur
 // ################################### 
 
-Foret::Foret(int n_lignes, int n_colonnes, float proba)
-: lignes(n_lignes), colonnes(n_colonnes)
+Foret::Foret(int n_lignes, int n_colonnes, float proba, float coefFire)
+: lignes(n_lignes), colonnes(n_colonnes), burningCoef(coefFire)
 {
 	initialisation(proba);
 }
+
 
 Foret::~Foret()
 {
@@ -404,7 +405,7 @@ void Foret::transition(Arbre* ab)
 			enflammer( (*a) );
 	}
 	
-	if ( ab->brule() )
+	if ( ab->brule(burningCoef) )
 		onFire.push_back(ab);
 }
 
