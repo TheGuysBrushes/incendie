@@ -3,7 +3,6 @@
 
 #include <QtGui/QWidget>
 #include <QtGui/QImage>
-#include <QtCore/QPoint>
 #include <QtGui/QPainter>
 #include <QtGui/QColor>
 #include <vector>
@@ -15,7 +14,7 @@ class Qterminal: public QWidget
 private:
 	QImage* buffer;
 	QColor* color;
-	Foret* foret;
+	Foret foret;
 	long temps;
 
 public:
