@@ -30,26 +30,28 @@ FireScreen::FireScreen()
    QPushButton* reset_btn = new QPushButton("Reset ! Be careful");
    // Ajouter la scrollbar horizontale
    
-   // Touches d'améliorations visuelles
-//    titre->setStyleSheet();
-   // Ajout des éléments dans les conteneurs
-   grid_lay1->addWidget(trans_p2p,0,0);
-   grid_lay1->addWidget(next_btn,1,0);
-   
-   grid_lay2->addWidget(trans_con,0,0);
-   grid_lay2->addWidget(play_btn,1,0);
-   grid_lay2->addWidget(pause_btn,1,1);
-   
-   vert_lay1->addWidget(titre);
-   vert_lay1->addWidget(ww1);
-   vert_lay1->addWidget(ww2);
-   vert_lay1->addWidget(reset_btn);
-   vert_lay1->addStretch(2);
+	// Touches d'améliorations visuelles
+	titre->setStyleSheet("color : darkblue; font : bold italic 20px;");
+
+	// Ajout des éléments dans les conteneurs
+	grid_lay1->addWidget(trans_p2p,0,0);
+	grid_lay1->addWidget(next_btn,1,0);
 	
-   this->fwidget = new FireWidget(40,40,0.6,150000);
-   lay->addWidget(fwidget);
-   lay->addWidget(ww);;
-   setCentralWidget(w);
+	grid_lay2->addWidget(trans_con,0,0);
+	grid_lay2->addWidget(play_btn,1,0);
+	grid_lay2->addWidget(pause_btn,1,1);
+   
+	vert_lay1->addWidget(titre);
+	vert_lay1->addWidget(ww1);
+	vert_lay1->addWidget(ww2);
+	vert_lay1->addWidget(reset_btn);
+	vert_lay1->addStretch(2);
+	vert_lay1->setAlignment(titre,Qt::AlignHCenter);
+	
+	this->fwidget = new FireWidget(100,100,0.6,150000);
+	lay->addWidget(fwidget);
+	lay->addWidget(ww);;
+	setCentralWidget(w);
 	
 	connect(next_btn, SIGNAL(clicked()), fwidget, SLOT(next()) );
    
