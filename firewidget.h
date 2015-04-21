@@ -24,7 +24,8 @@ public:
 	
 	// Autres méthodes
 	void setColor(int colorIndice);
-	void fill_buffer();
+	void drawForest();
+	void drawFire();
 
 protected:
 // 	void mousePressEvent(QMouseEvent *event);
