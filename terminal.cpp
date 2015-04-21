@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Terminal::Terminal(int hauteur, int largeur, float proba, long int nTemps, bool t)
+Terminal::Terminal(int hauteur, int largeur, float proba, long int nTemps/*, coef_brulure */, bool t)
 	:foret(hauteur, largeur, proba), temps(nTemps), b_taille(t)
 {
 	// lance le mode curses et le mode keypad pour les touches clavier
@@ -12,9 +12,9 @@ Terminal::Terminal(int hauteur, int largeur, float proba, long int nTemps, bool 
 	// initialise le mode couleur de la fenetre si disponible
 	if(!has_colors())
 	{	
-	printw("Your terminal does not support color\n");
-	endwin();
-	exit(1);
+		printw("Your terminal does not support color\n");
+		endwin();
+		exit(1);
 	}
 	start_color();
 	
