@@ -7,14 +7,11 @@
 
 class Qwindow : public QMainWindow
 {
+Q_OBJECT
 private:
 	Qterminal* terminal;
-	
-protected:
-	virtual void resizeEvent(QResizeEvent* e);
-
 public:
-	Qwindow(int _hauteur, int _largeur, float _proba, long _temps);
+	Qwindow();
 	virtual ~Qwindow();
 };
 

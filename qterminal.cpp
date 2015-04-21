@@ -2,9 +2,8 @@
 #include <QtGui/qevent.h>
 using namespace std;
 // Constructeur
-Qterminal::Qterminal(int _hauteur, int _largeur, float _proba, long int _temps){
-	this->temps = _temps;
-		this->foret = new Foret(_hauteur, _largeur, _proba);
+Qterminal::Qterminal(int _hauteur, int _largeur, float _proba, long _temps)
+:foret(_hauteur, _largeur, _proba),temps(_temps){
 		this->buffer= new QImage();
 		this->color = new QColor(Qt::black);
 }
@@ -12,14 +11,19 @@ Qterminal::Qterminal(int _hauteur, int _largeur, float _proba, long int _temps){
 
 void Qterminal::dessine_grille(QPainter& paint)
 {
-	int _width = width() / this->foret->hauteur();
-    int _height = height() / this->foret->hauteur();
+	int cell_larg = width() / this->foret.largeur();
+    int cell_haut = height() / this->foret.hauteur();
 	
-	for(int i = 0; i<= this->foret->largeur() ; ++i){
-		vector< Cellule* >* ligne= foret->operator[](i);
-		for( int j = 0; j <= this->foret->hauteur() ; ++j){
-				
-			// Selon l'état de la cellule où nous nous trouvons, on met à jour la couleur nécessaire
+    
+    for(int i=0;i<this->foret.largeur();i++){
+		// On ne passe pas la hauteur de la grille mais le nombre de colonne*taille de colonne pour
+		// éviter la petite zone en bas de grille
+		vector< Cellule* >* ligne= foret.operator[](i);
+// 		paint.drawLine(i*cell_larg,0,i*cell_larg,cell_haut*foret.hauteur());
+		
+		for(int j=0;j<this->foret.hauteur();j++){
+			cout << (*ligne)[j]->getEtat() << endl;
+			
 			if((*ligne)[j]->getEtat() == 0){
 				this->color->setNamedColor("black");
 				
@@ -43,7 +47,6 @@ void Qterminal::dessine_grille(QPainter& paint)
 						this->color->setRgb(46,139,87,255);
 						break;								
 				}
-				
 			}else if((*ligne)[j]->getEtat() == 2){
 				this->color->setNamedColor("red");	
 				
@@ -51,10 +54,10 @@ void Qterminal::dessine_grille(QPainter& paint)
 				this->color->setNamedColor("gray");
 			}
 			
-			paint.fillRect(i*_width,j*_height,_width,_height,*(this->color));
 			
+			paint.fillRect(i*cell_larg,j*cell_haut,cell_larg,cell_haut,*(this->color));
 		}
-	}	
+    }
 }
 
 
@@ -68,8 +71,8 @@ void Qterminal::resizeEvent(QResizeEvent* event)
 {
 	if(this->buffer->isNull()){
       // Redimensionnement manuel
-      this->setMinimumSize(600,600);
-      this->buffer = new QImage(600,600,QImage::Format_ARGB32); 
+      this->setMinimumSize(800,600);
+      this->buffer = new QImage(800,600,QImage::Format_ARGB32); 
       this->buffer->fill(1);
     }
     else{
