@@ -10,6 +10,7 @@
 #include "foret.h"
 
 class FireWidget : public QWidget {
+Q_OBJECT
 private:
 	QImage* buffer;
 	QColor* color;
@@ -22,7 +23,8 @@ public:
 	virtual ~FireWidget();
 	
 	// Autres méthodes
-	void fill_buffer(QPainter &paint);
+	void setColor(int colorIndice);
+	void fill_buffer(QPainter& paint);
 
 protected:
 // 	void mousePressEvent(QMouseEvent *event);
@@ -30,6 +32,9 @@ protected:
 // 	void mouseReleaseEvent(QMouseEvent *event);
 	void resizeEvent(QResizeEvent * event);
 	void paintEvent(QPaintEvent* event);
+	
+public slots:
+	void next();
 };
 
 #endif // FIREWIDGET_H
