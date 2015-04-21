@@ -270,12 +270,18 @@ void Foret::enflammer(int row, int col)
 {
 	Cellule* tmp= matrice[row][col];
 	
-	if (tmp->getEtat()==1){
+	int etat= tmp->getEtat();
+	
+	if (etat==1){
 		// TODO refaire propre (2 dynamic_cast)
-		Arbre * _tmp = dynamic_cast<Arbre *>(tmp);
-		onFire.push_back(_tmp);
-		_tmp->enflammer();
-
+		Arbre * ab = dynamic_cast<Arbre *>(tmp);
+		onFire.push_back(ab);
+		ab->enflammer();
+	}
+	else
+	if (etat==2){
+// 		Arbre * ab = dynamic_cast<Arbre *>(tmp);
+// 		ab->brule(); TODO verifier si lorsque l'arbre est ajouté plusieurs fois dans la liste des adjacents, il commence à brûler, brule plus fort/vite ?
 	}
 }
 
@@ -288,8 +294,13 @@ void Foret::enflammer(int row, int col)
  */
 void Foret::enflammer(Arbre* ab)
 {
-	ab->enflammer();
-	onFire.push_back(ab);
+// 	if (ab->getEtat==2){
+// 		/9/ 		ab->brule(); TODO verifier si lorsque l'arbre est ajouté plusieurs fois dans la liste des adjacents, il commence à brûler, brule plus fort/vite ?
+// 	}
+// 	else {
+		ab->enflammer();
+		onFire.push_back(ab);
+// 	}
 }
 
 /**
