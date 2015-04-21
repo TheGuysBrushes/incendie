@@ -35,6 +35,7 @@ protected:
 	
 public slots:
 	void next();
+	void transition(long x);
 };
 
 #endif // FIREWIDGET_H

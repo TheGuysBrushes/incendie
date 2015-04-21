@@ -6,7 +6,7 @@
 #include <QtGui/QLabel>
 #include <QtGui/QPushButton>
 
-FireScreen::FireScreen()
+FireScreen::FireScreen():play(false),delai(500)
 {
 	// Conteneur général
    QWidget* w = new QWidget(this);
@@ -49,13 +49,16 @@ FireScreen::FireScreen()
 	vert_lay1->addWidget(reset_btn);
 	vert_lay1->addStretch(2);
 	vert_lay1->setAlignment(titre,Qt::AlignHCenter);
+	ww->setFixedWidth(300);
 	
 	this->fwidget = new FireWidget(100,100,0.6,150000);
 	lay->addWidget(fwidget);
 	lay->addWidget(ww);;
 	setCentralWidget(w);
 	
-	connect(next_btn, SIGNAL(clicked()), fwidget, SLOT(next()) );
+	QObject::connect(next_btn, SIGNAL(clicked()), fwidget, SLOT(next()) );
+	QObject::connect(play_btn, SIGNAL(clicked(bool)), this, SLOT(active_trans(bool )));
+	QObject::connect(pause_btn, SIGNAL(clicked(bool)), this, SLOT(stop_trans(bool)));
    
 }
 
@@ -63,3 +66,17 @@ FireScreen::~FireScreen()
 {
 	delete(fwidget);
 }
+
+/* *** Slots ***/
+
+void FireScreen::active_trans(bool x)
+{
+	play = true;
+	// Mise à jour du délai via valeur de la scrollbar	
+}
+
+void FireScreen::stop_trans(bool x)
+{
+	play = false;
+}
+
