@@ -32,7 +32,9 @@ FireScreen::FireScreen()
    
 	// Touches d'améliorations visuelles
 	titre->setStyleSheet("color : darkblue; font : bold italic 20px;");
-
+	trans_con->setStyleSheet("text-decoration : underline; color : darkblue ; font : italic 14px");
+	trans_p2p->setStyleSheet("text-decoration : underline; color : darkblue ; font : italic 14px");
+	
 	// Ajout des éléments dans les conteneurs
 	grid_lay1->addWidget(trans_p2p,0,0);
 	grid_lay1->addWidget(next_btn,1,0);
