@@ -20,6 +20,8 @@ private:
 	int lignes;
 	int colonnes;
 	
+	float burningCoef;
+	
 	std::vector< Essence > essences;
 	std::vector<std::vector< Cellule* > > matrice;
 	std::list< Arbre* >	onFire;
@@ -30,7 +32,7 @@ private:
 	
 public:
 	// Constructeur et destructeur
-	Foret(int n_lignes, int n_colonnes, float proba=0.60);
+	Foret(int n_lignes, int n_colonnes, float proba=0.60, float coefFire=1.0);
 	virtual ~Foret();
 	
 	// Initialisations

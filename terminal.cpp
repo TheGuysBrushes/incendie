@@ -2,8 +2,8 @@
 
 using namespace std;
 
-Terminal::Terminal(int hauteur, int largeur, float proba, long int nTemps/*, coef_brulure */, bool t)
-	:foret(hauteur, largeur, proba), temps(nTemps), b_taille(t)
+Terminal::Terminal(int hauteur, int largeur, float proba, long int nTemps, float coef_brulure , bool t)
+	:foret(hauteur, largeur, proba, coef_brulure), temps(nTemps), b_taille(t)
 {
 	// lance le mode curses et le mode keypad pour les touches clavier
 	initscr();

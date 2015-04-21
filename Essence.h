@@ -22,17 +22,17 @@ public:
 	
 	// Getters and setters
 	std::string getName() const {return name;};
-	int getMasse() const {return masse_V;};
-	float getHauteur() const {return hauteur;};
-	float getDiametre() const {return diametre;};
-	bool getType() const {return type;};
-	unsigned getIndice() const {return indice;};
+	int	getMasse() const {return masse_V;};
+	float	getHauteur() const {return hauteur;};
+	float	getDiametre() const {return diametre;};
+	bool	getType() const {return type;};
+	unsigned	getIndice() const {return indice;};
 	
-	void setName(std::string x);
-	void setMasse(int x);
-	void setType(bool t);
-	void setHauteur(float h);
-	void setDiametre(float d);
+	void	setName(std::string x);
+	void	setMasse(int x);
+	void	setType(bool t);
+	void	setHauteur(float h);
+	void	setDiametre(float d);
 	
 	// Operateurs
 	virtual Essence& operator=(const Essence& other);
