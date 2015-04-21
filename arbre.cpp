@@ -26,7 +26,8 @@ Arbre::Arbre(Cellule* cell, int col, int row, const Essence* _essence, unsigned 
 : Cellule (*cell), pos(col, row),age(age),humidite(humidite)
 {
 	initialise();
-// 	delete(cell);
+	// suppression ancienne cellule 
+	delete(cell); // TODO delete this comment
 }
 
 
@@ -34,41 +35,6 @@ Arbre::~Arbre()
 {
 }
 
-/**
- * Retire un nombre de points de vie à l'arbre
- * @author Florian
- * TODO Prendre en compte paramètres pour le nombre de points à enlever * 
- */
-bool Arbre::brule(float coef)
-{
-	// On va déterminer le nombre de points de vie à enlever en fonction des paramètres :
-	// - des caractères discrets de l'arbre
-	// - extérieurs --> TODO
-	int decrementation = 100.0*coef;
-#if DEBUG_DECRE
-// 	cout << coef<< ",decre init: "<< decrementation << "|";
-	cout << "type  : " << essence->getType();
-#endif
-	decrementation *= 1.0/( (float)humidite );
-	if(essence->getType() == 0){
-		// On considère qu'un épineux brule plus vite qu'un feuillu
-		decrementation *= 1.20;
-		#if DEBUG_DECRE
-// 		cout << "epin: "<< decrementation << "-"<< endl;
-		#endif	
-	}
-#if DEBUG_DECRE
-// 	cout << ",fin: "<< decrementation << "||";
-#endif
-	pv-= decrementation;
-	humidite *= 0.9;
-	// Si l'arbre n'a plus de points de vie, il passe à l'état cendre
-	if (pv<=0){
-		blast();
-		return false;
-	}
-	else return true;
-}
 
 /**
  * Initialise les points de vie de l'arbre en fonction des caractères de son essence
@@ -104,6 +70,57 @@ void Arbre::initialise()
 	#endif
 	// L'initialisation du coefficient sera faite plus tard puisqu'il dépend des paramètres extérieurs à l'arbre 
 	// Humidité ambiante, force du vent etc
-// 	coefficient = 0.5;
+	// 	coefficient = 0.5;
 	
+	seuil= 50.0; // TODO changer seuil par défaut, mettre dans tableau d'essence?
+}
+
+// ###############
+// 	Actions
+// ###############
+
+void Arbre::enflammer(float coef)
+{
+	if (humidite<seuil)
+		etat= 2;
+	else humidite -= 5.0*coef;
+}
+
+
+/**
+ * Retire un nombre de points de vie à l'arbre
+ * @author Florian
+ * TODO Prendre en compte paramètres pour le nombre de points à enlever * 
+ */
+bool Arbre::brule(float coef)
+{
+	// On va déterminer le nombre de points de vie à enlever en fonction des paramètres :
+	// - des caractères discrets de l'arbre
+	// - extérieurs --> TODO
+	int decrementation = 100.0*coef;
+	#if DEBUG_DECRE
+// 	cout << coef<< ",decre init: "<< decrementation << "|";
+	cout << "type  : " << essence->getType();
+	#endif
+	
+	decrementation *= 1.0/( (float)humidite );
+	if(essence->getType() == 0){
+		// On considère qu'un épineux brule plus vite qu'un feuillu
+		decrementation *= 1.20;
+		#if DEBUG_DECRE
+		cout << "epin: "<< decrementation << "-"<< endl;
+		#endif	
+	}
+	#if DEBUG_DECRE
+// 	cout << ",fin: "<< decrementation << "||";
+	#endif
+	
+	pv-= decrementation;
+	humidite *= 0.9;
+	// Si l'arbre n'a plus de points de vie, il passe à l'état cendre
+	if (pv<=0){
+		blast();
+		return false;
+	}
+	else return true;
 }

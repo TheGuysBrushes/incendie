@@ -14,10 +14,12 @@ private:
 	Coordonnee pos;
 	const Essence* essence;
 	
-	int pv;
-	int age;
 	float humidite;
 	float coefficient;
+	int age;
+	
+	int seuil;	// à partir de essence
+	int pv;	// calculés lors de la création
 	
 public:
 	// Constructeurs et destructeur
@@ -26,22 +28,23 @@ public:
 	virtual ~Arbre();	
 		
 	// Getters 
-	virtual int getEtat() const	{ return etat; };
-	int getPv() const		{ return pv;};
-	float getCoeff() const	{ return coefficient; };
-	float getHumidite() const 	{ return humidite; };
-	const Coordonnee& getPos()		const { return pos; };
-	const Essence* getEssence()	const { return essence; };
+	virtual int getEtat()	const	{ return etat; };
+	int getPv()	const					{ return pv;};
+	float	getCoeff()	const			{ return coefficient; };
+	float getHumidite()	const		{ return humidite; };
+	const Coordonnee& getPos()		const	{ return pos; };
+	const Essence* getEssence()	const	{ return essence; };
 
 	// Autres méthodes
-	bool brule(float coef= 1.0);
+	void enflammer	(float coef=1.0);
+	bool brule		(float coef=1.0);
 	void initialise();
 	
 	// Méthodes constantes
-	virtual bool isOnFire() { return etat==2; };
+	virtual bool isOnFire()	const	{ return etat==2; };
 	
-	void enflammer() { etat= 2; };
-	void blast() { etat= 3; };
+	void burn()		{ etat= 2;	};
+	void blast()	{ etat= 3;	};
 };
 
 #endif // ARBRE_H

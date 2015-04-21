@@ -114,7 +114,6 @@ unsigned Foret::essenceRandom(int _j, int _i, unsigned distOthers){
 //		Initialisations
 // ################################### 
 
-
 /**
  * Charge des essences dans le tableau d'essences à partir d'un fichier texte
  * 	Format des lignes : "Nom" "masse volumique (kg/m³)" "diametre moyen dans R" "hauteur moyenne"  "type (0/1)"
@@ -224,7 +223,7 @@ void Foret::randomMatrice(float probabilite)
 				 */
 				
 				Arbre* ab= new Arbre(j, i, &(essences.at(ess)), rand()%80+20,rand()%10+90 );
-				delete(matrice[i][j]); // suppression ancienne cellule
+// 				delete(matrice[i][j]); // suppression ancienne cellule TODO delete this comment
 				matrice[i][j]= ab;
 			}
 		}
@@ -250,22 +249,44 @@ void Foret::initialisation(float proba)
 	randomMatrice(proba);
 	
 	// DEPARTS D'INCENDIES
-	enflammer(lignes/2, colonnes/2);
-	enflammer(lignes/2+1, colonnes/2);
-	enflammer(lignes/2, colonnes/2 +1);
+	allumer(lignes/2, colonnes/2);
+	allumer(lignes/2+1, colonnes/2);
+	allumer(lignes/2, colonnes/2 +1);
 	
-	enflammer(lignes/2+1, 0);
-	enflammer(lignes/2+1, 1);
+	allumer(lignes/2+1, 0);
+	allumer(lignes/2+1, 1);
 }
 
 // ###################################
 // 	Modification des éléments
 // ###################################
+
+void Foret::allumer(int row, int col)
+{
+	Cellule* tmp= matrice[row][col];
+	
+	int etat= tmp->getEtat();
+	
+	if (etat==1){
+		// TODO refaire propre (2 dynamic_cast)
+		Arbre * ab = dynamic_cast<Arbre *>(tmp);
+		allumer(ab);
+	}
+}
+
+void Foret::allumer(Arbre* ab)
+{
+	ab->burn();
+	onFire.push_back(ab);
+}
+
+
 /**
  * Enflamme une cellule si elle existe, selon sa position dans la matrice
  * @author Florian
  * @param row ligne où est la cellule 
  * @param col colonne où est la cellule
+ * @deprecated
  */
 void Foret::enflammer(int row, int col)
 {
@@ -276,14 +297,9 @@ void Foret::enflammer(int row, int col)
 	if (etat==1){
 		// TODO refaire propre (2 dynamic_cast)
 		Arbre * ab = dynamic_cast<Arbre *>(tmp);
-		onFire.push_back(ab);
-		ab->enflammer();
+		enflammer(ab);
 	}
-	else
-	if (etat==2){
-// 		Arbre * ab = dynamic_cast<Arbre *>(tmp);
-// 		ab->brule(); TODO verifier si lorsque l'arbre est ajouté plusieurs fois dans la liste des adjacents, il commence à brûler, brule plus fort/vite ?
-	}
+// 	else if (etat==2){}
 }
 
 /**
@@ -296,11 +312,11 @@ void Foret::enflammer(int row, int col)
 void Foret::enflammer(Arbre* ab)
 {
 // 	if (ab->getEtat==2){
-// 		/9/ 		ab->brule(); TODO verifier si lorsque l'arbre est ajouté plusieurs fois dans la liste des adjacents, il commence à brûler, brule plus fort/vite ?
+// // 		ab->brule(); TODO verifier si lorsque l'arbre est ajouté plusieurs fois dans la liste des adjacents, il commence à brûler, brule plus fort/vite ?
 // 	}
 // 	else {
-		ab->enflammer();
-		onFire.push_back(ab);
+	ab->enflammer(burningCoef);
+	onFire.push_back(ab);
 // 	}
 }
 
@@ -401,8 +417,7 @@ void Foret::transition(Arbre* ab)
 	unsigned distAdj= 1; // distance à laquelle les voisins seront enflammes ; TODO dist 1= contact, dist 2= diagonaux, dist 3 =
 	list< Arbre* > voisins= adjacents(ab, distAdj);
 	for (list< Arbre* >::iterator a(voisins.begin()); a!=voisins.end(); ++a){
-		if(ab->getHumidite() < 50)
-			enflammer( (*a) );
+		enflammer( (*a) );
 	}
 	
 	if ( ab->brule(burningCoef) )
