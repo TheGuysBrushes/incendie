@@ -27,6 +27,7 @@ public:
 public slots:
 	void active_trans(bool x);
 	void stop_trans(bool x);
+
 signals:
 	void trans_continue(long );
 };

@@ -7,8 +7,6 @@
 
 using namespace std;
 
-// Classe terminal temporaire, juste pour affichage en ncurses
-
 /**
  * @author Ugo et Florian
  */

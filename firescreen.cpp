@@ -8,6 +8,10 @@
 
 FireScreen::FireScreen():play(false),delai(500)
 {
+// AFFICHEUR DE FORET
+	this->fwidget = new FireWidget(100,100,0.6,150000);
+	
+// BOUTONS
 	// Conteneur général
    QWidget* w = new QWidget(this);
    
@@ -51,14 +55,18 @@ FireScreen::FireScreen():play(false),delai(500)
 	vert_lay1->setAlignment(titre,Qt::AlignHCenter);
 	ww->setFixedWidth(300);
 	
-	this->fwidget = new FireWidget(100,100,0.6,150000);
+// PLACEMENT DES ELEMENTSS
 	lay->addWidget(fwidget);
 	lay->addWidget(ww);;
 	setCentralWidget(w);
 	
+// CONNEXION DES BOUTONS AUX FONCTIONS
 	QObject::connect(next_btn, SIGNAL(clicked()), fwidget, SLOT(next()) );
-	QObject::connect(play_btn, SIGNAL(clicked(bool)), this, SLOT(active_trans(bool )));
-	QObject::connect(pause_btn, SIGNAL(clicked(bool)), this, SLOT(stop_trans(bool)));
+	QObject::connect( play_btn,	SIGNAL(clicked()), fwidget, SLOT(run()) );
+	QObject::connect( pause_btn,	SIGNAL(clicked()), fwidget, SLOT(pause()) );
+	
+// 	QObject::connect(play_btn, SIGNAL(clicked(bool)), this, SLOT(active_trans(bool )));
+// 	QObject::connect(pause_btn, SIGNAL(clicked(bool)), this, SLOT(stop_trans(bool)));
    
 }
 
@@ -67,7 +75,7 @@ FireScreen::~FireScreen()
 	delete(fwidget);
 }
 
-/* *** Slots ***/
+/***	Slots	***/
 
 void FireScreen::active_trans(bool x)
 {
