@@ -241,10 +241,14 @@ void FireWidget::mousePressEvent(QMouseEvent* event)
 	int colonne= event->x()/tailleCell;
 	int ligne= event->y()/tailleCell;
 	
-// 	Arbre* ab= dynamic_cast< Arbre* >(foret[ligne][colonne]);
-// 	foret.allumer(ab);
+	vector< Cellule* >* line= foret[ligne];
+	Cellule* cell= (*line)[colonne];	
+	if (cell->getEtat()==1){
+		Arbre* ab= dynamic_cast< Arbre* >(cell);
+		foret.allumer(ab);
+	}	
+	// 	Arbre* ab= dynamic_cast< Arbre* >((*line)[colonne]);
 }
-
 
 
 
