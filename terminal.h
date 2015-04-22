@@ -29,6 +29,8 @@ public:
 	void next();
 	void run();
 	
+	int main_terminal(int argc, char** argv);
+	
 };
 
 #endif // TERMINAL_H

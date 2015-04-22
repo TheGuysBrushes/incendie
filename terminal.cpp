@@ -152,3 +152,35 @@ void Terminal::run()
 	}
 }
 
+
+int Terminal::main_terminal(int argc, char** argv)
+{
+	//  Main pour ncurses
+	// 	// mettre dernier para à 1 si on veut mettre 2 fois plus de cellules hztl (1600/900_Konsole: maxL:110/220 H: 52)
+	int hauteur=	100;
+	int largeur=	100;
+	float proba=	0.40;
+	long vitesse=	20000;
+	float coef_brulure= 1.0;
+	bool small= 0;
+
+	if (argc>1)
+		hauteur= atoi(argv[1]);
+	if (argc>2)
+		largeur= atoi(argv[2]);
+	if (argc>3)
+		proba= atof(argv[3]);
+	if (argc>4)
+		vitesse= atoi(argv[4]);
+	if (argc>5)
+		small= atoi(argv[5]);
+	
+	Terminal scr(hauteur, largeur, proba, vitesse, coef_brulure ,small);
+	
+	scr.afficheForet();
+
+	scr.run();
+	
+	printw("Pierre a un petit kiki");
+	scr.end();
+}

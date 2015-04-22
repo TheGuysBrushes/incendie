@@ -274,7 +274,6 @@ void Foret::allumer(int row, int col)
 	int etat= tmp->getEtat();
 	
 	if (etat==1){
-		// TODO refaire propre (2 dynamic_cast)
 		Arbre * ab = dynamic_cast<Arbre *>(tmp);
 		allumer(ab);
 	}
@@ -301,7 +300,6 @@ void Foret::enflammer(int row, int col)
 	int etat= tmp->getEtat();
 	
 	if (etat==1){
-		// TODO refaire propre (2 dynamic_cast)
 		Arbre * ab = dynamic_cast<Arbre *>(tmp);
 		enflammer(ab);
 	}
@@ -312,8 +310,6 @@ void Foret::enflammer(int row, int col)
  * Enflamme un arbre
  * @author Florian
  * @param ab arbre à enflammer
- * TODO vérifier qu'il n'est pas déja enflammé (dans onFire) ? : 
- * vérification plus coûteuse que de faire plusieurs calcul de transmission MAIS risque poser soucis de PV
  */
 void Foret::enflammer(Arbre* ab)
 {
@@ -399,7 +395,7 @@ std::list< Arbre* > Foret::adjacents(int col, int row, int distance) const
 
 /**
  * Retourne les arbres qui sont proches d'une cellule donnée, appelle adjacents(int, int)
- * @author Florian and Ugo
+ * @author Florian
  * @param ab arbre dont on veut connaître les voisins
  * @param distance distance sur laquelle s'effectue la recherche de voisins
  * @return list de pointeurs sur arbres
@@ -409,9 +405,9 @@ std::list< Arbre* > Foret::adjacents(const Arbre * ab, int distance) const
 	return adjacents(ab->getPos().col,ab->getPos().row, distance);
 }
 
-// ###################################
+// #############################
 // #		Avancée du temps		  #
-// ################################### 
+// ############################# 
 
 /**
  * Applique une transition de l'état t à l'état t+1 d'un arbre
