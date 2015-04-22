@@ -84,7 +84,7 @@ void Arbre::enflammer(float coef)
 {
 	if (humidite<seuil)
 		etat= 2;
-	else humidite -= 5.0*coef;
+	else humidite -= 10.0*coef;
 }
 
 

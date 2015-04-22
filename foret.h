@@ -29,8 +29,6 @@ private:
 	// METHODES
 private:
 	unsigned essenceRandom(int _j, int _i, unsigned distOthers);
-	void allumer(int row, int col);
-	void allumer(Arbre* ab);
 	
 public:
 	// Constructeur et destructeur
@@ -49,6 +47,8 @@ public:
 	std::vector< Cellule* >* operator[](int ligne) { return &(matrice[ligne]); };
 
 	// Autres méthodes
+	void allumer(int row, int col);
+	void allumer(Arbre* ab);
 	void enflammer(int row, int col);
 	void enflammer(Arbre* ab);
 	std::list< Arbre* > adjacents(int col, int row, int distance) const;
