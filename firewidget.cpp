@@ -193,6 +193,31 @@ void FireWidget::drawFire()
 //     }
 // }
 
+
+bool FireWidget::allumerFeu(int ligne, int colonne)
+{
+#if DEBUG_ALLUME
+	cout << "allumer cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
+#endif
+	
+	if(ligne>=0 && ligne < foret.hauteur()){
+		vector< Cellule* >* line= foret[ligne];
+		
+		if (colonne>=0 && colonne < foret.largeur()){
+			Cellule* cell= (*line)[colonne];	
+		
+			if (cell->getEtat()==1){
+				Arbre* ab= dynamic_cast< Arbre* >(cell);
+				foret.allumer(ab);
+				drawFire();
+				update();
+			}
+			
+		}
+	}
+}
+
+
 // #############
 // 	Events
 // #############
@@ -234,24 +259,25 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 	// 	update(); // deja fais apres l'appel à resizeEvent ?
 }
 
-void FireWidget::mouseMoveEvent(QMouseEvent* event)
+void FireWidget::mousePressEvent(QMouseEvent* event)
 {
-	QWidget::mousePressEvent(event);
+	QWidget::mousePressEvent(event); // TODO verifier si à supprimmer
 	
 	int colonne= event->y()/tailleCell;
 	int ligne= event->x()/tailleCell;
 	
-	cout << "allumer cellule : (l,c)"<< ligne<< " : "<< colonne << endl; 
+	allumerFeu(ligne, colonne);
+}
+
+
+void FireWidget::mouseMoveEvent(QMouseEvent* event)
+{
+	QWidget::mouseMoveEvent(event);	// TODO verifier si à supprimmer
 	
-	vector< Cellule* >* line= foret[ligne];
-	Cellule* cell= (*line)[colonne];	
-	if (cell->getEtat()==1){
-		Arbre* ab= dynamic_cast< Arbre* >(cell);
-		foret.allumer(ab);
-		drawFire();
-		update();
-	}	
-	// 	Arbre* ab= dynamic_cast< Arbre* >((*line)[colonne]);
+	int colonne= event->y()/tailleCell;
+	int ligne= event->x()/tailleCell;
+	
+	allumerFeu(ligne, colonne);
 }
 
 

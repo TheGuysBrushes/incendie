@@ -39,9 +39,11 @@ public:
 // 	void drawForest(void(*pDraw)(int, int, const Cellule*) );
 // 	void drawForest(void* drawCell(int, int, const Cellule*));
 // 	void drawForest(std::function<void(void)> drawCell );
+	
+	bool allumerFeu(int ligne, int colonne);
 
 protected:
-// 	void mousePressEvent(QMouseEvent *event);
+	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
 // 	void mouseReleaseEvent(QMouseEvent *event);
 	void resizeEvent(QResizeEvent * event);
