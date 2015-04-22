@@ -72,17 +72,23 @@ void FireWidget::drawForest()
 				// Il faut ici vérifier l'essence de l'arbre pour lui attribuer une variante de vert
 				unsigned indice= dynamic_cast < const Arbre* >(cell)->getEssence()->getIndice();
 				setColor(indice);
+				#if DEBUG_TMATRICE
 				cout <<"draw cell ; ";
+				#endif
 				paint.fillRect(current_largeur, current_hauteur, tailleCell, tailleCell, *(color));
 			}
 			
 			// Incrémentations des positions des cellules
 			current_hauteur += tailleCell;
 		}
+		#if DEBUG_TMATRICE
 		cout << endl;
+		#endif
 		current_largeur += tailleCell;
 	}
+	#if DEBUG_TMATRICE
 	cout <<"fin draw cellules ; ";
+	#endif	
 }
 
 /**
@@ -92,7 +98,10 @@ void FireWidget::drawForest()
  */
 void FireWidget::drawFire()
 {
+	#if DEBUG_TMATRICE
 	cout <<"draw fire "<< endl;
+	#endif
+	
 	QPainter paint(this->buffer);
 	
 	int current_largeur= 0;
@@ -104,7 +113,7 @@ void FireWidget::drawFire()
 		int current_hauteur= 0;
 		for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
 			Cellule* cell= *j;
-			
+
 			if(cell->getEtat() == 2){
 				this->color->setNamedColor("red");
 				paint.fillRect(current_largeur, current_hauteur, tailleCell, tailleCell, *(color));
@@ -112,9 +121,12 @@ void FireWidget::drawFire()
 			}else if(cell->getEtat() ==3){
 				this->color->setNamedColor("gray");
 				paint.fillRect(current_largeur, current_hauteur, tailleCell, tailleCell, *(color));
-			}			
+			}
+
+			#if DEBUG_TMATRICE
 			cout <<"draw arbre feu ; ";
-			
+			#endif
+
 			// Incrémentations des positions des cellules
 			current_hauteur += tailleCell;
 		}
@@ -192,26 +204,32 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 		delete(buffer);
 	}
 	
-	int tailleCote= min(event->size().width(), event->size().height());
+	// Modifié : Si tu veux faire comme ça pour maintenir des cellules carrés ok
+	// Mais on prend le max pour tailleCote
+	int tailleCote= max(event->size().width(), event->size().height());
 	#if DEBUG_TMATRICE
-	cout << "tH: "<< event->size().width()<< " tL "<< event->size().height()<< " ; min donne taille coté : " << tailleCote<< endl;
+	cout << "tH: "<< event->size().width()<< " tL "<< event->size().height()<< " ; max donne taille coté : " << tailleCote<< endl;
 	#endif
 	
-// 	resize(tailleCote,tailleCote);
+	// 	resize(tailleCote,tailleCote);
 	
 	float nbMax = max(foret.largeur(), foret.hauteur());
 	
 	tailleCell = tailleCote /	nbMax;
-	
+
 	buffer = new QImage(tailleCote,tailleCote, QImage::Format_ARGB32);
 	buffer->fill(Qt::white);
 // 	void(*pDraw)(int, int, const Cellule*);
 // 	pDraw= drawVariable;
 	drawForest();
+	#if DEBUG_TMATRICE
 	cout <<"test2" <<  endl;
+	#endif
 	drawFire();
+	#if DEBUG_TMATRICE
 	cout <<"test3" <<  endl;
-// 	update(); // deja fais apres l'appel à resizeEvent ?
+	#endif
+	// 	update(); // deja fais apres l'appel à resizeEvent ?
 }
 
 void FireWidget::next()
