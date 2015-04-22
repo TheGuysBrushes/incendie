@@ -31,7 +31,7 @@ public:
 	virtual ~FireScreen();
 	
 public slots:
-	void start_timer(bool b);
+	void start_timer(bool);
 	void compteur();
 signals:
 	void trans_continue(long );

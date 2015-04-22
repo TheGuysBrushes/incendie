@@ -68,12 +68,12 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
 	setCentralWidget(w);
 	
 // CONNEXION DES BOUTONS AUX FONCTIONS
-	QObject::connect(next_btn, SIGNAL(clicked()), fwidget, SLOT(next()) );
-	QObject::connect(timer, SIGNAL(timeout()),fwidget, SLOT(next()) );
-	QObject::connect(play_btn, SIGNAL(clicked(bool)), this, SLOT(start_timer(bool)) );
-	QObject::connect(pause_btn, SIGNAL(clicked(bool)), timer, SLOT(stop()) );
-	QObject::connect(timer, SIGNAL(timeout()),this, SLOT(compteur()) );
-	QObject::connect(next_btn, SIGNAL(clicked(bool)), this, SLOT(compteur()) );
+	QObject::connect(next_btn,		SIGNAL(clicked()), fwidget,	SLOT(next()) );
+	QObject::connect(timer,			SIGNAL(timeout()),fwidget, 	SLOT(next()) );
+	QObject::connect(play_btn,		SIGNAL(clicked(bool)), this,	SLOT(start_timer(bool)) );
+	QObject::connect(pause_btn,	SIGNAL(clicked(bool)), timer,	SLOT(stop()) );
+	QObject::connect(timer, 		SIGNAL(timeout()), this,		SLOT(compteur()) );
+	QObject::connect(next_btn, 	SIGNAL(clicked(bool)), this,	SLOT(compteur()) );
 
    
 }

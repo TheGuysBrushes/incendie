@@ -14,7 +14,7 @@ int main(int argc, char** argv)
 	int hauteur=	100;
 	int largeur=	100;
 	float proba=	0.40;
-	long vitesse=	20000;
+	long vitesse=	500;
 	float coef_brulure= 1.0;
 
 // 	Vent mistralGagnant(2.0, 1.0);

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'firescreen.h'
 **
-** Created: Wed Apr 22 12:30:42 2015
+** Created: Wed Apr 22 14:23:21 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -34,14 +34,14 @@ static const uint qt_meta_data_FireScreen[] = {
       12,   11,   11,   11, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      35,   33,   11,   11, 0x0a,
-      53,   11,   11,   11, 0x0a,
+      33,   11,   11,   11, 0x0a,
+      51,   11,   11,   11, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_FireScreen[] = {
-    "FireScreen\0\0trans_continue(long)\0b\0"
+    "FireScreen\0\0trans_continue(long)\0"
     "start_timer(bool)\0compteur()\0"
 };
 
