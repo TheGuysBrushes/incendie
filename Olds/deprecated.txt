@@ -1,3 +1,44 @@
+
+################################
+#			foret.cpp			#
+#			explode()			#
+#	avec const char*			#
+
+vector< const char* >& explode(const string& str)
+{
+	istringstream split(str);
+	vector< const char* >* tokens = new vector<const char*>;
+	
+	for(string each; getline(split, each, ' '); tokens->push_back(each.c_str()) );
+	
+	#if DEBUG_FILE
+	for (vector<const char*>::const_iterator i(tokens->begin()); i!= tokens->end(); ++i){
+		cout << *i<< " - ";
+	}
+	cout << endl;
+	#endif
+
+	return   *tokens;
+}
+
+################################
+#		loadEssences()			#
+#	const char* et atof		#
+			vector<const char*>& tokens = explode(line);	
+			essences.push_back( Essence(indice,
+												tokens[0], atoi(tokens[1]/*.c_str()*/),
+												atof(tokens[2]/*, NULL*/),
+												atoi(tokens[3]/*.c_str()*/),
+												atoi(tokens[4]/*.c_str()*/),
+												atoi(tokens[5]/*.c_str()*/)			)		);
+			#if DEBUG_FILE
+			cout << "diam : " << atof(tokens[2]/*.c_str()*//*, NULL*/)<< endl;
+			#endif
+
+################################			
+################################
+		
+
 ################################
 #			foret.cpp			#
 #			adjacents()			#
@@ -53,11 +94,3 @@ après bool modif = false;
 // 	dynamic_cast < Arbre* >(matrice[row][col])->blast();
 // // 	onFire.remove_if<Cellule>();
 // }
-
-################################
-#			foret.cpp			#
-#			randomMatrice()		#
-################################
-après	for (int i= 0; i< lignes; ++i){
-		// création d'une nouvelle "ligne de la matrice"
-// 		std::vector< Cellule* > tmp= *matrice[i];

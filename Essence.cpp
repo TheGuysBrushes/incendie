@@ -2,7 +2,7 @@
 
 using namespace std;
 // Constructors
-Essence::Essence(unsigned int i, string nom, int masse, float h, float d, unsigned int age, bool t):
+Essence::Essence(unsigned int i, string nom, int masse, float d, float h, unsigned int age, bool t):
 indice(i),name(nom),masse_V(masse),hauteur(h),diametre(d),ageMaturite(age),type(t){
 }
 
@@ -38,7 +38,7 @@ void Essence::setDiametre(float d)
 }
 
 // Autres méthodes
-string Essence::afficheEssence() const
+string Essence::toString() const
 {
 	ostringstream s;
 	

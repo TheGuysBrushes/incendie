@@ -60,6 +60,9 @@ public:
 	// voir transition avec d'autres parametres
 	void transition(Arbre* cell);
 	bool NextMove();
+	
+	// Affichage attributs
+	void showEssences() const;
 };
 
 #endif // FORET_H

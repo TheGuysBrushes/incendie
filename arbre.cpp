@@ -56,8 +56,18 @@ void Arbre::initialise()
 	 * Si un arbre est plus vieux que son âge de maturité, il possèdera les caractères
 	 */
 	// Initialisation des points de vie de l'arbre
+	#if DEBUG_PV==1
+	cout << "Essence :  "<< essence->toString()<< endl ;
+	#endif
+	
 	float rayon = essence->getDiametre() / 2.0;
+	#if DEBUG_PV==1
+	cout << "ray : "<< rayon ;
+	#endif
 	float	hauteur = essence->getHauteur();
+	#if DEBUG_PV==1
+	cout << " haut : "<< hauteur ;
+	#endif
 	
 	float masseV= essence->getMasse()/1000.0;
 	unsigned points = (unsigned) ( 4.0/3.0* (M_PI* (rayon*rayon)*hauteur) * masseV );

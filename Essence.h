@@ -17,7 +17,7 @@ private:
 	
 public:
 	// Constructors
-	Essence(unsigned i,std::string nom, int masse,float h, float d,unsigned age, bool t);
+	Essence(unsigned i,std::string nom, int masse, float d, float h, unsigned age, bool t);
 	Essence(const Essence& other);
 	
 	// Getters and setters
@@ -38,7 +38,7 @@ public:
 	virtual Essence& operator=(const Essence& other);
 	
 	// Autres méthodes
-	std::string afficheEssence() const;
+	std::string toString() const;
 	
 };
 
