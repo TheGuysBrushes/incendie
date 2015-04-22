@@ -234,18 +234,22 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 	// 	update(); // deja fais apres l'appel à resizeEvent ?
 }
 
-void FireWidget::mousePressEvent(QMouseEvent* event)
+void FireWidget::mouseMoveEvent(QMouseEvent* event)
 {
 	QWidget::mousePressEvent(event);
 	
-	int colonne= event->x()/tailleCell;
-	int ligne= event->y()/tailleCell;
+	int colonne= event->y()/tailleCell;
+	int ligne= event->x()/tailleCell;
+	
+	cout << "allumer cellule : (l,c)"<< ligne<< " : "<< colonne << endl; 
 	
 	vector< Cellule* >* line= foret[ligne];
 	Cellule* cell= (*line)[colonne];	
 	if (cell->getEtat()==1){
 		Arbre* ab= dynamic_cast< Arbre* >(cell);
 		foret.allumer(ab);
+		drawFire();
+		update();
 	}	
 	// 	Arbre* ab= dynamic_cast< Arbre* >((*line)[colonne]);
 }
