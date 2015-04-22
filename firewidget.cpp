@@ -88,8 +88,9 @@ void FireWidget::drawForest()
 		#endif
 		current_largeur += tailleCell;
 	}
+	
 	#if DEBUG_TMATRICE
-	cout <<"fin draw cellules ; ";
+	cout <<"fin draw forest ; "<< endl;
 	#endif	
 }
 
@@ -137,6 +138,10 @@ void FireWidget::drawFire()
 		#endif
 		current_largeur += tailleCell;
 	}
+	
+	#if DEBUG_TMATRICE
+	cout <<"fin draw fire" <<  endl;
+	#endif
 }
 
 /**
@@ -249,13 +254,7 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 // 	void(*pDraw)(int, int, const Cellule*);
 // 	pDraw= drawVariable;
 	drawForest();
-	#if DEBUG_TMATRICE
-	cout <<"test2" <<  endl;
-	#endif
 	drawFire();
-	#if DEBUG_TMATRICE
-	cout <<"test3" <<  endl;
-	#endif
 	// 	update(); // deja fais apres l'appel à resizeEvent ?
 }
 
