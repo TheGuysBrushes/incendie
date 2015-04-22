@@ -217,9 +217,11 @@ bool FireWidget::allumerFeu(int ligne, int colonne)
 				drawFire();
 				update();
 			}
-			
+			return true;
 		}
 	}
+	// cas d'erreur par défaut
+	return false;
 }
 
 

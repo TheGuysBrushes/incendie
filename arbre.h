@@ -14,9 +14,9 @@ private:
 	Coordonnee pos;
 	const Essence* essence;
 	
+	int age;
 	float humidite;
 	float coefficient;
-	int age;
 	
 	int seuil;	// à partir de essence
 	int pv;	// calculés lors de la création
