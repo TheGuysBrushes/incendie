@@ -3,6 +3,7 @@
 
 #include <QtGui/QMainWindow>
 #include <QtCore/QTimer>
+#include <QtGui/QLabel>
 
 #include "firewidget.h"
 /*	TODO :
@@ -19,6 +20,8 @@ class FireScreen : public QMainWindow
 Q_OBJECT
 private:
 	FireWidget* fwidget;
+	QLabel* cpt_debug;
+	int nb_tour;
 	QTimer* timer;
 	long delai;
 public:
@@ -29,6 +32,7 @@ public:
 	
 public slots:
 	void start_timer(bool b);
+	void compteur();
 signals:
 	void trans_continue(long );
 };

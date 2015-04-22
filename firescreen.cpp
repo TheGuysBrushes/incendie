@@ -5,6 +5,7 @@
 #include <QtGui/QGridLayout>
 #include <QtGui/QLabel>
 #include <QtGui/QPushButton>
+#include <QtCore/QString>
 
 FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float coef_brulure/*, QWidget* parent, Qt::WindowFlags flags*/)
 :	/*QMainWindow(parent, flags),*/	delai(nTemps)
@@ -12,7 +13,7 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
 // AFFICHEUR DE FORET
 	fwidget= new FireWidget(hauteur, largeur, proba, coef_brulure);
 	timer = new QTimer();
-	
+	nb_tour = 0;
 // BOUTONS
 	// Conteneur général
    QWidget* w = new QWidget(this);
@@ -34,6 +35,7 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
    QPushButton* play_btn = new QPushButton("Play");
    QPushButton* pause_btn = new QPushButton("Pause");
    QPushButton* reset_btn = new QPushButton("Reset ! Be careful");
+   QLabel* cpt_debug = new QLabel("0");
    // Ajouter la scrollbar horizontale
    
 	// Touches d'améliorations visuelles
@@ -53,6 +55,8 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
 	vert_lay1->addWidget(ww1);
 	vert_lay1->addWidget(ww2);
 	vert_lay1->addWidget(reset_btn);
+	vert_lay1->addWidget(cpt_debug);
+	
 	vert_lay1->addStretch(2);
 	vert_lay1->setAlignment(titre,Qt::AlignHCenter);
 	ww->setMaximumWidth(300);
@@ -68,6 +72,8 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
 	QObject::connect(timer, SIGNAL(timeout()),fwidget, SLOT(next()) );
 	QObject::connect(play_btn, SIGNAL(clicked(bool)), this, SLOT(start_timer(bool)) );
 	QObject::connect(pause_btn, SIGNAL(clicked(bool)), timer, SLOT(stop()) );
+	QObject::connect(timer, SIGNAL(timeout()),this, SLOT(compteur()) );
+	QObject::connect(next_btn, SIGNAL(clicked(bool)), this, SLOT(compteur()) );
 
    
 }
@@ -81,6 +87,12 @@ FireScreen::~FireScreen()
 void FireScreen::start_timer(bool b)
 {
 	timer->start(delai);
+}
+
+void FireScreen::compteur()
+{
+	nb_tour += 1;
+
 }
 
 
