@@ -63,10 +63,22 @@ void Arbre::initialise()
 	float rayon = essence->getDiametre() / 2.0;
 	float	hauteur = essence->getHauteur();
 	float masseV= essence->getMasse()/1000.0;
-	unsigned points = (unsigned) ( 4.0/3.0* (M_PI* (rayon*rayon)*hauteur) * masseV );
+	
+// 	int ageMatur= essence->getAgeMaturite();
+// 	unsigned points;
+// 	if (age>= ageMatur)
+// 		points= ageMatur /* *croissance/an ?*/;
+// 	else {
+// 		// points avant maturité :
+// 		unsigned pointsJ= ageMatur /* *croissance/an ?*/;
+// 		points= pointsJ + (age-ageMatur) /* *croissance/an ?*/;
+// 	}
+	
+	unsigned points = (unsigned) ( (M_PI* (rayon*rayon)*hauteur) * masseV );
 	
 	// Les données des essences sont décrites pour un arbre de 50 ans à 20% d'humidité
-	pv = points * (1 + age/50.0);
+
+	pv = points *(1 +( 50 + (age/*-ageMatur*/ ) )/50.0);
 	pv *= 1  + (humidite-12)/100.0;
 	
 	#if DEBUG_PV==1

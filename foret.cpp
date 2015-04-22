@@ -217,6 +217,12 @@ void Foret::randomMatrice(float probabilite)
 	// Initialisation de l'ensemble des cellules à vide
 	initEmpty();
 	
+	
+	// Arbres placés aléatoirement
+	int hMin= 20;
+	int ecartAgeMax= 80;
+	int ecartHMax= 50;
+	
 	for (int i= 0; i< lignes; ++i){
 		#if DEBUG_ESSENCE==1
 		cout << endl<< "indices des essences choisies : ";
@@ -240,11 +246,13 @@ void Foret::randomMatrice(float probabilite)
 				
 				/*
 				 * On choisit aléatoirement l'âge et l'humidité de l'arbre qui va être créé
-				 * Age [20;100[
+				 * Age [maturite;100[
 				 * Humidité [20;70[ 
 				 */
 				
-				Arbre* ab= new Arbre(matrice[i][j], j, i, &(essences[ess]), rand()%80+20,rand()%70+20 );
+				const Essence* pEss= &(essences[ess]);
+				// pour l'instant, on considere que tous les arbres ont atteint leur maturite
+				Arbre* ab= new Arbre(matrice[i][j], j,i, pEss, rand()%ecartAgeMax +pEss->getAgeMaturite(),rand()%ecartHMax +hMin );
 // 				delete(matrice[i][j]); // suppression ancienne cellule TODO delete this comment apres valgrind
 				matrice[i][j]= ab;	// TODO verifier si on peut supprimer cette ligne en faisant l'operation dans le constructeur de Arbre
 			}
@@ -252,11 +260,21 @@ void Foret::randomMatrice(float probabilite)
 	}
 		
 	#if DEBUG_PV
+	const Essence* pEssMax= &(essences[4]);
+	const Essence* pEssMin= &(essences[2]);
+	
 	cout << endl<<  "====================================="<< endl;
-	cout << "MAXIMUM : "<< endl << "\t";
-	Arbre dummy1(-1, -1, &(essences[4]), 99, 69 );
-	cout << "MINUMUM : "<< endl << "\t";
-	Arbre dummy2(-1, -1, &(essences[0]), 20, 20 );
+	int age= ecartAgeMax +pEssMax->getAgeMaturite();
+	
+	cout << "MAXIMUM : "<< endl;
+	cout << "\t Age : "<< age<< ", Humidité : "<< hMin +ecartHMax<< ", ";;
+	Arbre dummy1(-1, -1, pEssMax, age, ecartHMax +hMin );
+	
+	age= pEssMin->getAgeMaturite();
+	
+	cout << "MINUMUM : "<< endl;
+	cout << "\t Age : "<< age<< ", Humidité : "<< hMin<< ", ";
+	Arbre dummy2(-1, -1, pEssMin, pEssMin->getAgeMaturite(), hMin );
 	#endif
 }
 
