@@ -228,7 +228,7 @@ void Foret::randomMatrice(float probabilite)
 				 * Humidité [20;70[ 
 				 */
 				
-				Arbre* ab= new Arbre(matrice[i][j], j, i, &(essences[ess]), rand()%80+20,rand()%10+90 );
+				Arbre* ab= new Arbre(matrice[i][j], j, i, &(essences[ess]), rand()%80+20,rand()%70+20 );
 // 				delete(matrice[i][j]); // suppression ancienne cellule TODO delete this comment
 				matrice[i][j]= ab;	// TODO verifier si on peut supprmier cette ligne en faisant l'operation dans le constructeur de Arbre
 			}
@@ -274,7 +274,6 @@ void Foret::allumer(int row, int col)
 	int etat= tmp->getEtat();
 	
 	if (etat==1){
-		// TODO refaire propre (2 dynamic_cast)
 		Arbre * ab = dynamic_cast<Arbre *>(tmp);
 		allumer(ab);
 	}
@@ -301,7 +300,6 @@ void Foret::enflammer(int row, int col)
 	int etat= tmp->getEtat();
 	
 	if (etat==1){
-		// TODO refaire propre (2 dynamic_cast)
 		Arbre * ab = dynamic_cast<Arbre *>(tmp);
 		enflammer(ab);
 	}
@@ -312,8 +310,6 @@ void Foret::enflammer(int row, int col)
  * Enflamme un arbre
  * @author Florian
  * @param ab arbre à enflammer
- * TODO vérifier qu'il n'est pas déja enflammé (dans onFire) ? : 
- * vérification plus coûteuse que de faire plusieurs calcul de transmission MAIS risque poser soucis de PV
  */
 void Foret::enflammer(Arbre* ab)
 {
@@ -322,7 +318,8 @@ void Foret::enflammer(Arbre* ab)
 // 	}
 // 	else {
 	ab->enflammer(burningCoef);
-	onFire.push_back(ab);
+	if (ab->isOnFire())
+		onFire.push_back(ab);
 // 	}
 }
 
@@ -399,7 +396,7 @@ std::list< Arbre* > Foret::adjacents(int col, int row, int distance) const
 
 /**
  * Retourne les arbres qui sont proches d'une cellule donnée, appelle adjacents(int, int)
- * @author Florian and Ugo
+ * @author Florian
  * @param ab arbre dont on veut connaître les voisins
  * @param distance distance sur laquelle s'effectue la recherche de voisins
  * @return list de pointeurs sur arbres
@@ -409,9 +406,9 @@ std::list< Arbre* > Foret::adjacents(const Arbre * ab, int distance) const
 	return adjacents(ab->getPos().col,ab->getPos().row, distance);
 }
 
-// ###################################
+// #############################
 // #		Avancée du temps		  #
-// ################################### 
+// ############################# 
 
 /**
  * Applique une transition de l'état t à l'état t+1 d'un arbre
