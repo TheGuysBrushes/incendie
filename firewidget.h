@@ -18,15 +18,14 @@ private:
 // 	std::function<void> test;
 	QImage* buffer;
 	QColor* color;
-	int cell_larg;
-	int cell_haut;
+	int tailleCell;
 	
 	long temps;
 	bool running;
 	
 public:
 	// Constructeur et desctructeur
-	FireWidget(int _hauteur, int _largeur, float _proba = 0.60, long _temps=150000);
+	FireWidget(int hauteur, int largeur, float proba = 0.60, long tempsInterval=150000, float coef_brulure=1.0);
 	virtual ~FireWidget();
 	
 	// Autres méthodes

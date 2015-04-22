@@ -6,10 +6,11 @@
 #include <QtGui/QLabel>
 #include <QtGui/QPushButton>
 
-FireScreen::FireScreen():play(false),delai(500)
+FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float coef_brulure/*, QWidget* parent, Qt::WindowFlags flags*/)
+:	/*QMainWindow(parent, flags),*/		play(false), delai(500)
 {
 // AFFICHEUR DE FORET
-	this->fwidget = new FireWidget(100,100,0.6,150000);
+	fwidget= new FireWidget(hauteur, largeur, proba, nTemps, coef_brulure);
 	
 // BOUTONS
 	// Conteneur général

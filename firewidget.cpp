@@ -4,8 +4,8 @@
 using namespace std;
 
 // Constructeur
-FireWidget::FireWidget(int _hauteur, int _largeur, float _proba, long int _temps)
-	: foret(_hauteur,_largeur,_proba), temps(_temps), running(false)
+FireWidget::FireWidget(int hauteur, int largeur, float proba, long tempsInterval, float coef_brulure)
+	: foret(hauteur,largeur,proba,coef_brulure), temps(tempsInterval), running(false)
 {
 	buffer = new QImage();
 	color = new QColor(Qt::black);
@@ -66,20 +66,23 @@ void FireWidget::drawForest()
 			
 			if( cell->getEtat() == 0){
 				this->color->setNamedColor("black");
-				paint.fillRect(current_largeur, current_hauteur, cell_larg, cell_haut, *(color));
+				paint.fillRect(current_largeur, current_hauteur, tailleCell, tailleCell, *(color));
 			}
 			else if(cell->getEtat() == 1){
 				// Il faut ici vérifier l'essence de l'arbre pour lui attribuer une variante de vert
 				unsigned indice= dynamic_cast < const Arbre* >(cell)->getEssence()->getIndice();
 				setColor(indice);
-				paint.fillRect(current_largeur, current_hauteur, cell_larg, cell_haut, *(color));
+				cout <<"draw cell ; ";
+				paint.fillRect(current_largeur, current_hauteur, tailleCell, tailleCell, *(color));
 			}
 			
 			// Incrémentations des positions des cellules
-			current_hauteur += cell_haut;
+			current_hauteur += tailleCell;
 		}
-		current_largeur += cell_larg;
+		cout << endl;
+		current_largeur += tailleCell;
 	}
+	cout <<"fin draw cellules ; ";
 }
 
 /**
@@ -89,6 +92,7 @@ void FireWidget::drawForest()
  */
 void FireWidget::drawFire()
 {
+	cout <<"draw fire "<< endl;
 	QPainter paint(this->buffer);
 	
 	int current_largeur= 0;
@@ -103,19 +107,19 @@ void FireWidget::drawFire()
 			
 			if(cell->getEtat() == 2){
 				this->color->setNamedColor("red");
-				paint.fillRect(current_largeur, current_hauteur, cell_larg, cell_haut, *(color));
+				paint.fillRect(current_largeur, current_hauteur, tailleCell, tailleCell, *(color));
 				
 			}else if(cell->getEtat() ==3){
 				this->color->setNamedColor("gray");
-				paint.fillRect(current_largeur, current_hauteur, cell_larg, cell_haut, *(color));
+				paint.fillRect(current_largeur, current_hauteur, tailleCell, tailleCell, *(color));
 			}			
-			
-			// 			paint.fillRect(current_largeur, current_hauteur, cell_larg, cell_haut, *(color));
+			cout <<"draw arbre feu ; ";
 			
 			// Incrémentations des positions des cellules
-			current_hauteur += cell_haut;
+			current_hauteur += tailleCell;
 		}
-		current_largeur += cell_larg;
+		cout << endl;
+		current_largeur += tailleCell;
 	}
 }
 
@@ -195,15 +199,18 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 	
 // 	resize(tailleCote,tailleCote);
 	
-	cell_larg = event->size().width() /	(float)this->foret.largeur();
-	cell_haut = event->size().height() /	(float)this->foret.hauteur();
+	float nbMax = max(foret.largeur(), foret.hauteur());
+	
+	tailleCell = tailleCote /	nbMax;
 	
 	buffer = new QImage(tailleCote,tailleCote, QImage::Format_ARGB32);
 	buffer->fill(Qt::white);
 // 	void(*pDraw)(int, int, const Cellule*);
 // 	pDraw= drawVariable;
 	drawForest();
+	cout <<"test2" <<  endl;
 	drawFire();
+	cout <<"test3" <<  endl;
 // 	update(); // deja fais apres l'appel à resizeEvent ?
 }
 

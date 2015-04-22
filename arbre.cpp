@@ -23,11 +23,12 @@ Arbre::Arbre(int col, int row, const Essence* _essence, unsigned _age, unsigned 
 }
 
 Arbre::Arbre(Cellule* cell, int col, int row, const Essence* _essence, unsigned _age, unsigned _humidite)
-: Cellule (*cell), pos(col, row),age(age),humidite(humidite)
+	: Cellule(1), pos(col, row),essence(_essence),age(_age),humidite(_humidite)
 {
 	initialise();
 	// suppression ancienne cellule 
 	delete(cell); // TODO delete this comment
+// 	cell= this;	// TODO verifier si on peut faire cela : remplace l'ancienne cellule par le nouvel arbrre
 }
 
 
@@ -72,7 +73,7 @@ void Arbre::initialise()
 	// Humidité ambiante, force du vent etc
 	// 	coefficient = 0.5;
 	
-	seuil= 50.0; // TODO changer seuil par défaut, mettre dans tableau d'essence?
+	seuil= 30.0; // TODO changer seuil par défaut, mettre dans tableau d'essence?
 }
 
 // ###############

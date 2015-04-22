@@ -78,20 +78,26 @@ vector< string >* explode(const string& str)
 	return   tokens;
 }
 
-unsigned Foret::essenceRandom(int _j, int _i, unsigned distOthers){
-	int i = _i;
-	int j = _j;
-	
+/**
+ * Choisi une essence pseudo aléatoirement, en prennant en compte les arbre autour d'une position
+ * @author Ugo
+ * @param j colonne de la position du futur arbre
+ * @param i ligne de la position du futur arbre
+ * @param distOthers distance à laquelle on doit prendre en compte les arbres avoisinants
+ * @return indice, dans le tableau d'essence, de l'essence "tirée"
+ */
+unsigned Foret::essenceRandom(int j, int i, unsigned distOthers){
+
 	// Initialisation du tableau de pondération
 	unsigned probaEss[essences.size()];
-	for(unsigned k=0;k<essences.size();++k){
+	for(unsigned k=0; k<essences.size(); ++k){
 		probaEss[k] = 1;
 	}
 	
 	// Récupération des voisins
 	list<Arbre*> voisins = adjacents(j, i, distOthers);
 	// Pondération du tableau
-	unsigned densite= 3;	// plus le parametre est élevé, plus les chances que les arbres soit les mêmes que leurs voisins est forte (formation bosquets)
+	unsigned densite= 5;	// plus le parametre est élevé, plus les chances que les arbres soit les mêmes que leurs voisins est forte (formation bosquets)
 	for (list< Arbre* >::const_iterator a(voisins.begin()); a!=voisins.end(); ++a){
 		probaEss[(*a)->getEssence()->getIndice()] += densite;
 	}
@@ -222,9 +228,9 @@ void Foret::randomMatrice(float probabilite)
 				 * Humidité [20;70[ 
 				 */
 				
-				Arbre* ab= new Arbre(j, i, &(essences.at(ess)), rand()%80+20,rand()%10+90 );
+				Arbre* ab= new Arbre(matrice[i][j], j, i, &(essences[ess]), rand()%80+20,rand()%10+90 );
 // 				delete(matrice[i][j]); // suppression ancienne cellule TODO delete this comment
-				matrice[i][j]= ab;
+				matrice[i][j]= ab;	// TODO verifier si on peut supprmier cette ligne en faisant l'operation dans le constructeur de Arbre
 			}
 		}
 	}
