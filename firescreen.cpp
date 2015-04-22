@@ -7,10 +7,10 @@
 #include <QtGui/QPushButton>
 
 FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float coef_brulure/*, QWidget* parent, Qt::WindowFlags flags*/)
-:	/*QMainWindow(parent, flags),*/		play(false), delai(500)
+:	/*QMainWindow(parent, flags),*/	delai(nTemps)
 {
 // AFFICHEUR DE FORET
-	fwidget= new FireWidget(hauteur, largeur, proba, nTemps, coef_brulure);
+	fwidget= new FireWidget(hauteur, largeur, proba, coef_brulure);
 	timer = new QTimer();
 	
 // BOUTONS

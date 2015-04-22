@@ -20,7 +20,6 @@ Q_OBJECT
 private:
 	FireWidget* fwidget;
 	QTimer* timer;
-	bool play;
 	long delai;
 public:
 	FireScreen(int hauteur, int largeur, float proba, long nTemps, float coef_brulure=1.0/*, QWidget* parent = 0, Qt::WindowFlags flags = 0*/);

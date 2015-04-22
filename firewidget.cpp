@@ -4,8 +4,8 @@
 using namespace std;
 
 // Constructeur
-FireWidget::FireWidget(int hauteur, int largeur, float proba, long tempsInterval, float coef_brulure)
-	: foret(hauteur,largeur,proba,coef_brulure), temps(tempsInterval), running(false)
+FireWidget::FireWidget(int hauteur, int largeur, float proba, float coef_brulure)
+	: foret(hauteur,largeur,proba,coef_brulure)
 {
 	buffer = new QImage();
 	color = new QColor(Qt::black);
@@ -241,20 +241,3 @@ void FireWidget::next()
 	drawFire();
 	update();
 }
-
-void FireWidget::run()
-{
-	running= true;
-	// tant que la foret est modifiee
-	while (foret.NextMove() && running) {
-		drawFire();
-		update();
-		usleep(temps);
-	}
-}
-
-void FireWidget::pause()
-{
-	running= false;
-}
-
