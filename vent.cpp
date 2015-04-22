@@ -13,10 +13,7 @@ Vent::Vent(const Vent& other)
 {
 }
 
-Vent::~Vent()
-{
-
-}
+// Vent::~Vent(){}
 
 
 // ####################

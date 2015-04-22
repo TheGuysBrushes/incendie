@@ -19,7 +19,7 @@ private:
 public:
 	Vent(float NordSud, float EstOuest);
 	Vent(const Vent& other);
-	virtual ~Vent();
+// 	virtual ~Vent();
 	
 	void setNS(float val);
 	void setEW(float val);

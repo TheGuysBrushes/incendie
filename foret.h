@@ -11,6 +11,7 @@
 #include "cellule.h"
 #include "arbre.h"
 #include "Essence.h"
+#include "vent.h"
 
 #define MAXI 1000 
 
@@ -20,8 +21,9 @@ private:
 	int lignes;
 	int colonnes;
 	
-	float burningCoef;
+	float burningCoef; // ralenti la progression du feu, fixé au lancement, peut être modifié? 
 	
+	Vent wind;
 	std::vector< Essence > essences;
 	std::vector<std::vector< Cellule* > > matrice;
 	std::list< Arbre* >	onFire;
