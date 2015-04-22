@@ -6,6 +6,11 @@
 #include <QtGui/QLabel>
 #include <QtGui/QPushButton>
 #include <QtCore/QString>
+/*		BUG 
+ *  - Lorsque le clic est enfoncé et que l'on sort du cadre du widget, Arrêt brutal 
+ * 
+ * 
+ */
 
 FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float coef_brulure/*, QWidget* parent, Qt::WindowFlags flags*/)
 :	/*QMainWindow(parent, flags),*/	delai(nTemps)
@@ -26,6 +31,8 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
    QWidget* ww2 = new QWidget(ww);
    QGridLayout* grid_lay1 = new QGridLayout(ww1);
    QGridLayout* grid_lay2 = new QGridLayout(ww2);   
+   QWidget* www = new QWidget(ww2);
+   QHBoxLayout* h_lay1 = new QHBoxLayout(www);
    
    // Element du panneau de direction de l'automate
    QLabel* titre = new QLabel("Automate cellulaire");
@@ -35,32 +42,38 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
    QPushButton* play_btn = new QPushButton("Play");
    QPushButton* pause_btn = new QPushButton("Pause");
    QPushButton* reset_btn = new QPushButton("Reset ! Be careful");
-   QLabel* cpt_debug = new QLabel("0");
+   QLabel* tour_lbl = new QLabel("Nombre de tours :");
+   cpt_debug = new QLabel();
    // Ajouter la scrollbar horizontale
    
 	// Touches d'améliorations visuelles
 	titre->setStyleSheet("color : darkblue; font : bold italic 20px;");
 	trans_con->setStyleSheet("text-decoration : underline; color : darkblue ; font : italic 14px");
 	trans_p2p->setStyleSheet("text-decoration : underline; color : darkblue ; font : italic 14px");
+	tour_lbl->setStyleSheet("QLabel {  color : darkblue; }");
+	cpt_debug->setStyleSheet("QLabel { color : darkblue; }");
 	
 	// Ajout des éléments dans les conteneurs
-	grid_lay1->addWidget(trans_p2p,0,0);
-	grid_lay1->addWidget(next_btn,1,0);
+	grid_lay1->addWidget(next_btn,0,0);
 	
-	grid_lay2->addWidget(trans_con,0,0);
-	grid_lay2->addWidget(play_btn,1,0);
-	grid_lay2->addWidget(pause_btn,1,1);
+	grid_lay2->addWidget(play_btn,0,0);
+	grid_lay2->addWidget(pause_btn,0,1);
+	
+	h_lay1->addWidget(tour_lbl);
+	h_lay1->addWidget(cpt_debug);
    
 	vert_lay1->addWidget(titre);
+	vert_lay1->addWidget(trans_p2p);
 	vert_lay1->addWidget(ww1);
+	vert_lay1->addWidget(trans_con);
 	vert_lay1->addWidget(ww2);
+	vert_lay1->addWidget(www);
 	vert_lay1->addWidget(reset_btn);
-	vert_lay1->addWidget(cpt_debug);
 	
 	vert_lay1->addStretch(2);
 	vert_lay1->setAlignment(titre,Qt::AlignHCenter);
-	ww->setMaximumWidth(300);
-	ww->setMinimumWidth(300);
+	ww->setMaximumWidth(250);
+	ww->setMinimumWidth(250);
 	
 // PLACEMENT DES ELEMENTSS
 	lay->addWidget(fwidget);
@@ -92,7 +105,7 @@ void FireScreen::start_timer(bool b)
 void FireScreen::compteur()
 {
 	nb_tour += 1;
-
+	cpt_debug->setText(QString::number(nb_tour));
 }
 
 
