@@ -11,6 +11,8 @@ FireWidget::FireWidget(int hauteur, int largeur, float proba, float coef_brulure
 	color = new QColor(Qt::black);
 	
 	setMinimumSize(600,600);
+	
+	probaMatriceReset= proba;
 }
 
 // Destructeur
@@ -20,10 +22,10 @@ FireWidget::~FireWidget()
 	delete(color);
 }
 
-void FireWidget::newForet(int hauteur, int largeur, float proba, float coef_brulure)
-{
-	
-}
+// void FireWidget::newForet(int hauteur, int largeur, float proba, float coef_brulure)
+// {
+// 	
+// }
 
 
 //Autres méthodes
@@ -291,19 +293,35 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 
 
 
-void FireWidget::next()
+bool FireWidget::next()
 {
 	// pas suivant
-	foret->NextMove();
+	if (!foret->NextMove())
+		return false;
 	
 	// mise à jour de l'image puis affichage à l'écran
 	drawFire();
 	update();
+	
+	return true; // cas par défaut, il y a eu un changement
 }
 
+/**
+ * reinitialise la foret
+ * @author Florian et un petit peu Ugo :p
+ * BUG ne remet pas à zero le compteur ...
+ */
 void FireWidget::restart()
 {
-	foret->initEmpty();
+	Foret* OldForet= foret;
+	foret = new Foret(*OldForet, probaMatriceReset);
+	delete(OldForet);
+	// il faudrait en plus vider la matrice de feu ...
+// 	foret->randomMatrice(probaMatriceReset); 
+	// plante
+// 	foret->initialisation(probaMatriceReset);
+	drawForest();
+	drawFire();
 	update();
 }
 

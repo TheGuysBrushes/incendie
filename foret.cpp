@@ -24,8 +24,8 @@
 // 		6	: EN COURS	; Prise en compte coefs
 //			7	: Ajout des vents
 
-//			8	: EN COURS	; Implementation de Qt
-// 		9	: Debut d'interface de configuration (taille, vitesse ...)
+//	DID	8	: Implementation de Qt
+// NOW	9	: Debut d'interface de configuration (taille, vitesse ...)
 
 //			10	: Jeux d'essais
 
@@ -38,6 +38,12 @@ using namespace std;
 
 Foret::Foret(int n_lignes, int n_colonnes, float proba, float coefFire)
 : lignes(n_lignes), colonnes(n_colonnes), burningCoef(coefFire), wind(0.0,0.0)
+{
+	initialisation(proba);
+}
+
+Foret::Foret(Foret& other, float proba)
+ : lignes(other.lignes), colonnes(other.colonnes), burningCoef(other.burningCoef), wind(0.0,0.0)
 {
 	initialisation(proba);
 }

@@ -23,6 +23,8 @@ private:
 	long temps;
 	bool running;
 	
+	float probaMatriceReset; // TODO temp
+	
 public:
 	// Constructeur et desctructeur
 	FireWidget(int hauteur, int largeur, float proba = 0.60, float coef_brulure=1.0);
@@ -44,6 +46,7 @@ public:
 	
 	bool allumerFeu(int ligne, int colonne);
 	
+	bool next();
 
 protected:
 	void mousePressEvent(QMouseEvent *event);
@@ -53,7 +56,6 @@ protected:
 	void paintEvent(QPaintEvent* event);
 	
 public slots:
-	void next();
 	void restart();
 	
 // 	void transition(long x);

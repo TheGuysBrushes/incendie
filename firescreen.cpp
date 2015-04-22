@@ -93,16 +93,19 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
 	
 // CONNEXION DES BOUTONS AUX FONCTIONS
 	QObject::connect(next_btn,		SIGNAL(clicked()), fwidget,	SLOT(next()) );
-	QObject::connect(timer,			SIGNAL(timeout()),fwidget, 	SLOT(next()) );
+// 	QObject::connect(timer,			SIGNAL(timeout()), fwidget, 	SLOT(next()) ); // IMPROVEIT vraiment util d'utiliser signal->slot ?
 	QObject::connect(play_btn,		SIGNAL(clicked(bool)), this,	SLOT(start_timer(bool)) );
 	QObject::connect(pause_btn,	SIGNAL(clicked(bool)), this, SLOT(stop_timer(bool)) );
 	QObject::connect(timer, 		SIGNAL(timeout()), this,		SLOT(compteur()) );
 	QObject::connect(next_btn, 	SIGNAL(clicked(bool)), this,	SLOT(compteur()) );
-	
+
+	/// @author Florian
+	QObject::connect(reset_btn, SIGNAL(clicked()), fwidget, SLOT(restart()) );
+		
 	// Tests pour RAZ de la matrice
 // 	QObject::connect(reset_btn, SIGNAL(clicked()), this, SLOT(raz_matrice()) );
 // 	QObject::connect(this, SIGNAL(ask_restart()), fwidget, SLOT(restart()));
-	QObject::connect(slider, SIGNAL(valueChanged(int)), this, SLOT(set_delai(int )));   
+	QObject::connect(slider, SIGNAL(valueChanged(int)), this, SLOT(set_delai(int )));
 }
 
 FireScreen::~FireScreen()
@@ -135,8 +138,12 @@ void FireScreen::set_delai(int x)
 
 void FireScreen::compteur()
 {
-	nb_tour += 1;
-	cpt_lbl->setText(QString::number(nb_tour));
+	// IMPROVEIT tour suivant fait dans le compteur pour l'instant
+	if (fwidget->next()){
+		nb_tour += 1;
+		cpt_lbl->setText(QString::number(nb_tour));
+	}
+	else timer->stop();
 }
 
 

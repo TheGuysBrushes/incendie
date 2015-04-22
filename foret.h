@@ -35,6 +35,7 @@ private:
 public:
 	// Constructeur et destructeur
 	Foret(int n_lignes, int n_colonnes, float proba=0.60, float coefFire=1.0);
+	Foret(Foret& other, float proba=0.60);
 	virtual ~Foret();
 	
 	// Initialisations

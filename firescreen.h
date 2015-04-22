@@ -27,8 +27,9 @@ private:
 	QPushButton* pause_btn;
 	QPushButton* play_btn;
 	QPushButton* next_btn;
-	int nb_tour;
+	
 	QTimer* timer;
+	int nb_tour;
 	long delai;
 public:
 	FireScreen(int hauteur, int largeur, float proba, long nTemps, float coef_brulure=1.0/*, QWidget* parent = 0, Qt::WindowFlags flags = 0*/);
