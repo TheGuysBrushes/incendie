@@ -163,9 +163,6 @@ bool Foret::loadEssences(const string& fileName)
 												atoi(tokens[3].c_str()),
 												atoi(tokens[4].c_str()),
 												atoi(tokens[5].c_str())			) );
-			#if DEBUG_FILE
-			cout << "atof : diam : " << x<< endl;
-			#endif
 			
 			indice +=1;
 // 			delete(tokens);
@@ -248,17 +245,18 @@ void Foret::randomMatrice(float probabilite)
 				 */
 				
 				Arbre* ab= new Arbre(matrice[i][j], j, i, &(essences[ess]), rand()%80+20,rand()%70+20 );
-// 				delete(matrice[i][j]); // suppression ancienne cellule TODO delete this comment
+// 				delete(matrice[i][j]); // suppression ancienne cellule TODO delete this comment apres valgrind
 				matrice[i][j]= ab;	// TODO verifier si on peut supprimer cette ligne en faisant l'operation dans le constructeur de Arbre
 			}
 		}
 	}
 		
 	#if DEBUG_PV
-	cout << "max : "<< endl;
-	Arbre dummy1(-1, -1, &(essences[3]), 99, 69 );
-	cout << "min : "<< endl;
-	Arbre dummy2(-1, -1, &(essences[2]), 20, 20 );
+	cout << endl<<  "====================================="<< endl;
+	cout << "MAXIMUM : "<< endl << "\t";
+	Arbre dummy1(-1, -1, &(essences[4]), 99, 69 );
+	cout << "MINUMUM : "<< endl << "\t";
+	Arbre dummy2(-1, -1, &(essences[0]), 20, 20 );
 	#endif
 }
 
@@ -471,7 +469,7 @@ bool Foret::NextMove()
 // ######################### 
 void Foret::showEssences() const
 {
-	cout << "| Nom\t\t||"<< " indice\t||"<< " masseV\t||"<< " diam\t||"<< " haut\t||"<< " type\t||"<< " humidité\t|"<< endl;
+	cout << "| Nom\t\t||"<< " indice\t||"<< " masseV\t||"<< " diam\t||"<< " haut\t||"<< " type\t||"<< " ageM\t|"<< endl;
 	cout << "-------------------------------------------------------------------------------"<< endl;
 	
 	for(vector<Essence>::const_iterator i(essences.begin()); i!=essences.end(); ++i){
@@ -485,6 +483,6 @@ void Foret::showEssences() const
 		i->getDiametre()	<< "\t| "<< 
 		i->getHauteur()		<< "\t| "<<
 		i->getType() 		<< "\t|"<<
-		" ?? \t|"<< endl;
+		i->getAgeMaturite()	<< "\t|"<< endl;
 	}
 }

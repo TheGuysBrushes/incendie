@@ -27,7 +27,7 @@ Arbre::Arbre(Cellule* cell, int col, int row, const Essence* _essence, unsigned 
 {
 	initialise();
 	// suppression ancienne cellule 
-	delete(cell); // TODO delete this comment
+	delete(cell); // TODO delete this comment apres valgrind
 // 	cell= this;	// TODO verifier si on peut faire cela : remplace l'ancienne cellule par le nouvel arbrre
 }
 
@@ -66,7 +66,7 @@ void Arbre::initialise()
 	unsigned points = (unsigned) ( 4.0/3.0* (M_PI* (rayon*rayon)*hauteur) * masseV );
 	
 	// Les données des essences sont décrites pour un arbre de 50 ans à 20% d'humidité
-	pv = points * age/50.0;
+	pv = points * (1 + age/50.0);
 	pv *= 1  + (humidite-12)/100.0;
 	
 	#if DEBUG_PV==1

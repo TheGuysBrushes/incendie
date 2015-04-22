@@ -27,6 +27,7 @@ public:
 	float	getDiametre()	const {return diametre;};
 	bool	getType()		const {return type;};
 	unsigned	getIndice()	const {return indice;};
+	unsigned	getAgeMaturite()	const {return ageMaturite;};
 	
 	void	setName(std::string x);
 	void	setMasse(int x);
