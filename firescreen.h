@@ -2,6 +2,7 @@
 #define FIRESCREEN_H
 
 #include <QtGui/QMainWindow>
+#include <QtCore/QTimer>
 
 #include "firewidget.h"
 /*	TODO :
@@ -18,6 +19,7 @@ class FireScreen : public QMainWindow
 Q_OBJECT
 private:
 	FireWidget* fwidget;
+	QTimer* timer;
 	bool play;
 	long delai;
 public:
@@ -27,9 +29,7 @@ public:
 	virtual ~FireScreen();
 	
 public slots:
-	void active_trans(bool x);
-	void stop_trans(bool x);
-
+	void start_timer(bool b);
 signals:
 	void trans_continue(long );
 };

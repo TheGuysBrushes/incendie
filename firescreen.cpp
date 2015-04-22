@@ -11,6 +11,7 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
 {
 // AFFICHEUR DE FORET
 	fwidget= new FireWidget(hauteur, largeur, proba, nTemps, coef_brulure);
+	timer = new QTimer();
 	
 // BOUTONS
 	// Conteneur général
@@ -65,10 +66,11 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
 // CONNEXION DES BOUTONS AUX FONCTIONS
 	QObject::connect(next_btn, SIGNAL(clicked()), fwidget, SLOT(next()) );
 	QObject::connect( play_btn,	SIGNAL(clicked()), fwidget, SLOT(run()) );
-	QObject::connect( pause_btn,	SIGNAL(clicked()), fwidget, SLOT(pause()) );
-	
-// 	QObject::connect(play_btn, SIGNAL(clicked(bool)), this, SLOT(active_trans(bool )));
-// 	QObject::connect(pause_btn, SIGNAL(clicked(bool)), this, SLOT(stop_trans(bool)));
+	QObject::connect( pause_btn, SIGNAL(clicked()), fwidget, SLOT(pause()) );
+	QObject::connect(timer, SIGNAL(timeout()),fwidget, SLOT(next()) );
+	QObject::connect(play_btn, SIGNAL(clicked(bool)), this, SLOT(start_timer(bool)) );
+	QObject::connect(pause_btn, SIGNAL(clicked(bool)), timer, SLOT(stop()) );
+
    
 }
 
@@ -79,14 +81,5 @@ FireScreen::~FireScreen()
 
 /***	Slots	***/
 
-void FireScreen::active_trans(bool x)
-{
-	play = true;
-	// Mise à jour du délai via valeur de la scrollbar	
-}
 
-void FireScreen::stop_trans(bool x)
-{
-	play = false;
-}
 

@@ -130,7 +130,9 @@ void FireWidget::drawFire()
 			// Incrémentations des positions des cellules
 			current_hauteur += tailleCell;
 		}
+		#if DEBUG_TMATRICE
 		cout << endl;
+		#endif
 		current_largeur += tailleCell;
 	}
 }

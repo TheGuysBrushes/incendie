@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'firescreen.h'
 **
-** Created: Tue Apr 21 22:07:36 2015
+** Created: Wed Apr 22 11:32:28 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_FireScreen[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       1,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -33,16 +33,11 @@ static const uint qt_meta_data_FireScreen[] = {
  // signals: signature, parameters, type, tag, flags
       12,   11,   11,   11, 0x05,
 
- // slots: signature, parameters, type, tag, flags
-      35,   33,   11,   11, 0x0a,
-      54,   33,   11,   11, 0x0a,
-
        0        // eod
 };
 
 static const char qt_meta_stringdata_FireScreen[] = {
-    "FireScreen\0\0trans_continue(long)\0x\0"
-    "active_trans(bool)\0stop_trans(bool)\0"
+    "FireScreen\0\0trans_continue(long)\0"
 };
 
 void FireScreen::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -52,8 +47,6 @@ void FireScreen::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         FireScreen *_t = static_cast<FireScreen *>(_o);
         switch (_id) {
         case 0: _t->trans_continue((*reinterpret_cast< long(*)>(_a[1]))); break;
-        case 1: _t->active_trans((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 2: _t->stop_trans((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -91,9 +84,9 @@ int FireScreen::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 1)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 1;
     }
     return _id;
 }
