@@ -254,10 +254,10 @@ void Foret::randomMatrice(float probabilite)
 		}
 	}
 		
-	#if DEBUG_ESSENCE==1
-	cout << "max : "<< endl;  
+	#if DEBUG_PV
+	cout << "max : "<< endl;
 	Arbre dummy1(-1, -1, &(essences[3]), 99, 69 );
-	cout << "min : "<< endl;  
+	cout << "min : "<< endl;
 	Arbre dummy2(-1, -1, &(essences[2]), 20, 20 );
 	#endif
 }

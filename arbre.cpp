@@ -56,19 +56,12 @@ void Arbre::initialise()
 	 * Si un arbre est plus vieux que son âge de maturité, il possèdera les caractères
 	 */
 	// Initialisation des points de vie de l'arbre
-	#if DEBUG_PV==1
+	#if DEBUG_PV
 	cout << "Essence :  "<< essence->toString()<< endl ;
 	#endif
 	
 	float rayon = essence->getDiametre() / 2.0;
-	#if DEBUG_PV==1
-	cout << "ray : "<< rayon ;
-	#endif
 	float	hauteur = essence->getHauteur();
-	#if DEBUG_PV==1
-	cout << " haut : "<< hauteur ;
-	#endif
-	
 	float masseV= essence->getMasse()/1000.0;
 	unsigned points = (unsigned) ( 4.0/3.0* (M_PI* (rayon*rayon)*hauteur) * masseV );
 	
@@ -77,7 +70,7 @@ void Arbre::initialise()
 	pv *= 1  + (humidite-12)/100.0;
 	
 	#if DEBUG_PV==1
-	cout << " pv : "<< pv << endl;
+	cout << " => pv : "<< pv << endl;
 	#endif
 	// L'initialisation du coefficient sera faite plus tard puisqu'il dépend des paramètres extérieurs à l'arbre 
 	// Humidité ambiante, force du vent etc
@@ -110,7 +103,7 @@ bool Arbre::brule(float coef)
 	// - extérieurs --> TODO
 	int decrementation = 100.0*coef;
 	#if DEBUG_DECRE
-// 	cout << coef<< ",decre init: "<< decrementation << "|";
+	cout << coef<< ",decre init: "<< decrementation << "|";
 	cout << "type  : " << essence->getType();
 	#endif
 	
@@ -123,7 +116,7 @@ bool Arbre::brule(float coef)
 		#endif	
 	}
 	#if DEBUG_DECRE
-// 	cout << ",fin: "<< decrementation << "||";
+	cout << ",fin: "<< decrementation << "||";
 	#endif
 	
 	pv-= decrementation;
