@@ -228,7 +228,7 @@ void Foret::randomMatrice(float probabilite)
 				 * Humidité [20;70[ 
 				 */
 				
-				Arbre* ab= new Arbre(matrice[i][j], j, i, &(essences[ess]), rand()%80+20,rand()%10+90 );
+				Arbre* ab= new Arbre(matrice[i][j], j, i, &(essences[ess]), rand()%80+20,rand()%70+20 );
 // 				delete(matrice[i][j]); // suppression ancienne cellule TODO delete this comment
 				matrice[i][j]= ab;	// TODO verifier si on peut supprmier cette ligne en faisant l'operation dans le constructeur de Arbre
 			}
@@ -318,7 +318,8 @@ void Foret::enflammer(Arbre* ab)
 // 	}
 // 	else {
 	ab->enflammer(burningCoef);
-	onFire.push_back(ab);
+	if (ab->isOnFire())
+		onFire.push_back(ab);
 // 	}
 }
 

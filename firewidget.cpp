@@ -70,8 +70,10 @@ void FireWidget::drawForest()
 			}
 			else if(cell->getEtat() == 1){
 				// Il faut ici vérifier l'essence de l'arbre pour lui attribuer une variante de vert
-				unsigned indice= dynamic_cast < const Arbre* >(cell)->getEssence()->getIndice();
-				setColor(indice);
+				Arbre* ab= dynamic_cast < Arbre* >(cell);
+				unsigned indice= ab->getEssence()->getIndice();
+// 				int brulure= ab->getEssence()->get;
+				setColor(indice );
 				#if DEBUG_TMATRICE
 				cout <<"draw cell ; ";
 				#endif
