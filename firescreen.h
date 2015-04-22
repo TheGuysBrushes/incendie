@@ -4,6 +4,7 @@
 #include <QtGui/QMainWindow>
 #include <QtCore/QTimer>
 #include <QtGui/QLabel>
+#include <QtGui/QPushButton>
 
 #include "firewidget.h"
 /*	TODO :
@@ -23,6 +24,9 @@ private:
 	FireWidget* fwidget;
 	QLabel* cpt_lbl;
 	QLabel* delai_lbl;
+	QPushButton* pause_btn;
+	QPushButton* play_btn;
+	QPushButton* next_btn;
 	int nb_tour;
 	QTimer* timer;
 	long delai;
@@ -34,6 +38,7 @@ public:
 	
 public slots:
 	void start_timer(bool);
+	void stop_timer(bool);
 	void compteur();
 	void set_delai(int x );
 

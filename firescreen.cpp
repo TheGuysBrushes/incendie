@@ -39,9 +39,9 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
 	QLabel* titre = new QLabel("Automate cellulaire");
 	QLabel* trans_p2p = new QLabel("Transmission pas-a-pas : ");
 	QLabel* trans_con = new QLabel("Transmission continue : ");
-	QPushButton* next_btn = new QPushButton("Next");
-	QPushButton* play_btn = new QPushButton("Play");
-	QPushButton* pause_btn = new QPushButton("Pause");
+	next_btn = new QPushButton("Next");
+	play_btn = new QPushButton("Play");
+	pause_btn = new QPushButton("Pause");
 	QPushButton* reset_btn = new QPushButton("Reset ! Be careful");
 	QLabel* tour_lbl = new QLabel("Nombre de tours :");
 	cpt_lbl = new QLabel();
@@ -51,13 +51,16 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
 	slider->setMinimum(1);
 	slider->setMaximum(2000);
 	slider->setValue(500);
-	// Touches d'améliorations visuelles
+	
+	// Touches d'améliorations visuelles et d'initialisation de propriétés
 	titre->setStyleSheet("color : darkblue; font : bold italic 20px;");
 	trans_con->setStyleSheet("text-decoration : underline; color : darkblue ; font : italic 14px");
 	trans_p2p->setStyleSheet("text-decoration : underline; color : darkblue ; font : italic 14px");
 	tour_lbl->setStyleSheet("QLabel {  color : darkblue; }");
 	cpt_lbl->setStyleSheet("QLabel { color : darkblue; }");
 	delai_lbl->setStyleSheet("QLabel { color : darkblue; }");
+	
+	pause_btn->setDisabled(true);
 	
 	// Ajout des éléments dans les conteneurs
 	grid_lay1->addWidget(next_btn,0,0);
@@ -92,15 +95,14 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
 	QObject::connect(next_btn,		SIGNAL(clicked()), fwidget,	SLOT(next()) );
 	QObject::connect(timer,			SIGNAL(timeout()),fwidget, 	SLOT(next()) );
 	QObject::connect(play_btn,		SIGNAL(clicked(bool)), this,	SLOT(start_timer(bool)) );
-	QObject::connect(pause_btn,	SIGNAL(clicked(bool)), timer,	SLOT(stop()) );
+	QObject::connect(pause_btn,	SIGNAL(clicked(bool)), this, SLOT(stop_timer(bool)) );
 	QObject::connect(timer, 		SIGNAL(timeout()), this,		SLOT(compteur()) );
 	QObject::connect(next_btn, 	SIGNAL(clicked(bool)), this,	SLOT(compteur()) );
 	
 	// Tests pour RAZ de la matrice
 // 	QObject::connect(reset_btn, SIGNAL(clicked()), this, SLOT(raz_matrice()) );
 // 	QObject::connect(this, SIGNAL(ask_restart()), fwidget, SLOT(restart()));
-	QObject::connect(slider, SIGNAL(valueChanged(int)), this, SLOT(set_delai(int )));
-   
+	QObject::connect(slider, SIGNAL(valueChanged(int)), this, SLOT(set_delai(int )));   
 }
 
 FireScreen::~FireScreen()
@@ -112,6 +114,17 @@ FireScreen::~FireScreen()
 void FireScreen::start_timer(bool b)
 {
 	timer->start(delai);
+	pause_btn->setEnabled(true);
+	play_btn->setEnabled(false);
+	next_btn->setEnabled(false);
+}
+
+void FireScreen::stop_timer(bool )
+{
+	timer->stop();
+	pause_btn->setEnabled(false);
+	next_btn->setEnabled(true);
+	play_btn->setEnabled(true);
 }
 
 void FireScreen::set_delai(int x)
