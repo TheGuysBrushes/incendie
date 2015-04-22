@@ -6,10 +6,6 @@
 // #include <bits/stl_algo.h>
 // #include <bits/algorithmfwd.h>
 
-#include <curses.h> // temp
-
-
-
 // -- A mettre dans le readme ?
 
 // un arbre hérite de cellule
