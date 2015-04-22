@@ -204,9 +204,7 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 		delete(buffer);
 	}
 	
-	// Modifié : Si tu veux faire comme ça pour maintenir des cellules carrés ok
-	// Mais on prend le max pour tailleCote
-	int tailleCote= max(event->size().width(), event->size().height());
+	int tailleCote= min(event->size().width(), event->size().height());
 	#if DEBUG_TMATRICE
 	cout << "tH: "<< event->size().width()<< " tL "<< event->size().height()<< " ; max donne taille coté : " << tailleCote<< endl;
 	#endif

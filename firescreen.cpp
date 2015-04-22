@@ -54,7 +54,8 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
 	vert_lay1->addWidget(reset_btn);
 	vert_lay1->addStretch(2);
 	vert_lay1->setAlignment(titre,Qt::AlignHCenter);
-	ww->setFixedWidth(300);
+	ww->setMaximumWidth(300);
+	ww->setMinimumWidth(300);
 	
 // PLACEMENT DES ELEMENTSS
 	lay->addWidget(fwidget);
