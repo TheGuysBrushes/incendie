@@ -234,6 +234,22 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 	// 	update(); // deja fais apres l'appel à resizeEvent ?
 }
 
+void FireWidget::mousePressEvent(QMouseEvent* event)
+{
+	QWidget::mousePressEvent(event);
+	
+	int colonne= event->x()/tailleCell;
+	int ligne= event->y()/tailleCell;
+	
+// 	Arbre* ab= dynamic_cast< Arbre* >(foret[ligne][colonne]);
+// 	foret.allumer(ab);
+}
+
+
+
+
+
+
 void FireWidget::next()
 {
 	// pas suivant

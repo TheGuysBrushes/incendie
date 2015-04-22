@@ -20,13 +20,15 @@ private:
 	QColor* color;
 	int tailleCell;
 	
+	long temps;
+	bool running;
 	
 public:
 	// Constructeur et desctructeur
-	FireWidget(int hauteur, int largeur, float proba = 0.60,float coef_brulure=1.0);
+	FireWidget(int hauteur, int largeur, float proba = 0.60, float coef_brulure=1.0);
 	virtual ~FireWidget();
 	
-	// Setters
+	// Autres méthodes
 	void setColor(int colorIndice);
 	
 // AFFICHAGES
@@ -39,11 +41,18 @@ public:
 // 	void drawForest(std::function<void(void)> drawCell );
 
 protected:
+	void mousePressEvent(QMouseEvent *event);
+// 	void mouseMoveEvent(QMouseEvent *event);
+// 	void mouseReleaseEvent(QMouseEvent *event);
 	void resizeEvent(QResizeEvent * event);
 	void paintEvent(QPaintEvent* event);
 	
 public slots:
 	void next();
+	void run();
+	void pause();
+	
+// 	void transition(long x);
 };
 
 #endif // FIREWIDGET_H
