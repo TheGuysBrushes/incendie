@@ -70,12 +70,23 @@ Foret::~Foret()
  * @param str : Chaine à découper
  * @return vecteur des mots séparés par des espaces // TODO TRIM ? + remplacer "_" par des espaces
  */
-vector< string >* explode(const string& str)
+// TODO voir si il faut utiliser référence ou pointeur
+vector< string >& explode(const string& str)
 {
 	istringstream split(str);
-	vector<string> *tokens = new vector<string>;
-	for(string each;getline(split, each, ' '); tokens->push_back(each));
-	return   tokens;
+	vector< string >* tokens = new vector<string>;
+	
+	for(string each; getline(split, each, ' '); tokens->push_back(each.c_str()) );
+	
+	#if DEBUG_FILE
+	cout << "vecteur : \t";
+	for (vector<string>::const_iterator i(tokens->begin()); i!= tokens->end(); ++i){
+		cout << *i<< "|";
+	}
+	cout << endl;
+	#endif
+
+	return   *tokens;
 }
 
 /**
@@ -143,17 +154,29 @@ bool Foret::loadEssences(const string& fileName)
 		
 		int indice = 0;
 		while(getline(f,line)){
-			vector<string>* tokens = explode(line);			
-			essences.push_back(Essence(indice,tokens->at(0),atoi(tokens->at(1).c_str()),strtof(tokens->at(2).c_str(),NULL),
-									   strtof(tokens->at(3).c_str(),NULL),atoi(tokens->at(4).c_str()),atoi(tokens->at(5).c_str())));
+			#if DEBUG_FILE
+			cout << endl<< "ligne : \t"<< line<< endl;
+			#endif
+			
+			vector<string>& tokens = explode(line);	
+			// conversion du diametre en float
+			float x; istringstream(tokens[2])>> x;
+			essences.push_back( Essence(indice,
+												tokens[0], atoi(tokens[1].c_str()),
+												x,
+												atoi(tokens[3].c_str()),
+												atoi(tokens[4].c_str()),
+												atoi(tokens[5].c_str())			) );
+			#if DEBUG_FILE
+			cout << "atof : diam : " << x<< endl;
+			#endif
+			
 			indice +=1;
-			delete(tokens);
+// 			delete(tokens);
 		}
 		
 		#if DEBUG_FILE==1
-		for(vector<Essence>::const_iterator i(essences.begin()); i!=essences.end(); ++i){
-			cout << i->afficheEssence() << endl;
-		}
+		showEssences();
 		#endif
 		return true;
 	}
@@ -230,7 +253,7 @@ void Foret::randomMatrice(float probabilite)
 				
 				Arbre* ab= new Arbre(matrice[i][j], j, i, &(essences[ess]), rand()%80+20,rand()%70+20 );
 // 				delete(matrice[i][j]); // suppression ancienne cellule TODO delete this comment
-				matrice[i][j]= ab;	// TODO verifier si on peut supprmier cette ligne en faisant l'operation dans le constructeur de Arbre
+				matrice[i][j]= ab;	// TODO verifier si on peut supprimer cette ligne en faisant l'operation dans le constructeur de Arbre
 			}
 		}
 	}
@@ -409,7 +432,6 @@ std::list< Arbre* > Foret::adjacents(const Arbre * ab, int distance) const
 // #############################
 // #		Avancée du temps		  #
 // ############################# 
-
 /**
  * Applique une transition de l'état t à l'état t+1 d'un arbre
  * @author Florian et Ugo
@@ -448,3 +470,25 @@ bool Foret::NextMove()
 	return modif;
 }
 
+// #########################
+// #	Affichage attributs	#
+// ######################### 
+void Foret::showEssences() const
+{
+	cout << "| Nom\t\t||"<< " indice\t||"<< " masseV\t||"<< " diam\t||"<< " haut\t||"<< " type\t||"<< " humidité\t|"<< endl;
+	cout << "-------------------------------------------------------------------------------"<< endl;
+	
+	for(vector<Essence>::const_iterator i(essences.begin()); i!=essences.end(); ++i){
+		string nom= i->getName();
+		if (nom.size()<=9)
+			nom+="\t";
+		
+		cout << "| "<< nom<< "\t| "<< 
+		i->getIndice()		<< "\t| "<<
+		i->getMasse()		<< "\t| "<<
+		i->getDiametre()	<< "\t| "<< 
+		i->getHauteur()		<< "\t| "<<
+		i->getType() 		<< "\t|"<<
+		" ?? \t|"<< endl;
+	}
+}
