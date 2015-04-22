@@ -14,7 +14,7 @@
 class FireWidget : public QWidget {
 Q_OBJECT
 private:
-	Foret foret;
+	Foret* foret;
 // 	std::function<void> test;
 	QImage* buffer;
 	QColor* color;
@@ -27,6 +27,8 @@ public:
 	// Constructeur et desctructeur
 	FireWidget(int hauteur, int largeur, float proba = 0.60, float coef_brulure=1.0);
 	virtual ~FireWidget();
+	
+	void newForet(int _hauteur, int _largeur, float _proba = 0.60, float _coef_brulure=1.0);
 	
 	// Autres méthodes
 	void setColor(int colorIndice);
@@ -41,6 +43,7 @@ public:
 // 	void drawForest(std::function<void(void)> drawCell );
 	
 	bool allumerFeu(int ligne, int colonne);
+	
 
 protected:
 	void mousePressEvent(QMouseEvent *event);

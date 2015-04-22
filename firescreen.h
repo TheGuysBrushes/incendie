@@ -11,7 +11,8 @@
  * 				- AlertDialog au démarrage du programme
  * 		- RAZ de la matrice :
  * 				- AlertDialog puis création nouvelle forêt
- * 	
+ * 
+ * 	 DONE : 
  * 		- Gestion du temps continu  
  * 
  */
@@ -33,6 +34,7 @@ public:
 public slots:
 	void start_timer(bool);
 	void compteur();
+	void raz_matrice();
 signals:
 	void trans_continue(long );
 };

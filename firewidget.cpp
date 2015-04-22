@@ -5,8 +5,8 @@ using namespace std;
 
 // Constructeur
 FireWidget::FireWidget(int hauteur, int largeur, float proba, float coef_brulure)
-	: foret(hauteur,largeur,proba,coef_brulure)
 {
+	foret = new Foret(hauteur,largeur,proba,coef_brulure);
 	buffer = new QImage();
 	color = new QColor(Qt::black);
 	
@@ -19,6 +19,12 @@ FireWidget::~FireWidget()
 	delete(buffer);
 	delete(color);
 }
+
+void FireWidget::newForet(int hauteur, int largeur, float proba, float coef_brulure)
+{
+	
+}
+
 
 //Autres méthodes
 void FireWidget::setColor(int colorIndice)
@@ -55,10 +61,10 @@ void FireWidget::drawForest()
 	QPainter paint(this->buffer);
 	
 	int current_largeur= 0;
-	for(int i=0; i<this->foret.largeur(); ++i){
+	for(int i=0; i<this->foret->largeur(); ++i){
 		// On ne passe pas la hauteur de la grille mais le nombre de colonne*taille de colonne pour
 		// éviter la petite zone en bas de grille
-		vector< Cellule* >* ligne= foret[i];
+		vector< Cellule* >* ligne= foret->operator[](i);
 		
 		int current_hauteur= 0;
 		for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
@@ -108,10 +114,10 @@ void FireWidget::drawFire()
 	QPainter paint(this->buffer);
 	
 	int current_largeur= 0;
-	for(int i=0; i<this->foret.largeur(); ++i){
+	for(int i=0; i<this->foret->largeur(); ++i){
 		// On ne passe pas la hauteur de la grille mais le nombre de colonne*taille de colonne pour
 		// éviter la petite zone en bas de grille
-		vector< Cellule* >* ligne= foret[i];
+		vector< Cellule* >* ligne= foret->operator[](i);
 		
 		int current_hauteur= 0;
 		for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
@@ -205,15 +211,15 @@ bool FireWidget::allumerFeu(int ligne, int colonne)
 	cout << "allumer cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
 #endif
 	
-	if(ligne>=0 && ligne < foret.hauteur()){
-		vector< Cellule* >* line= foret[ligne];
+	if(ligne>=0 && ligne < foret->hauteur()){
+		vector< Cellule* >* line= foret->operator[](ligne);
 		
-		if (colonne>=0 && colonne < foret.largeur()){
+		if (colonne>=0 && colonne < foret->largeur()){
 			Cellule* cell= (*line)[colonne];	
 		
 			if (cell->getEtat()==1){
 				Arbre* ab= dynamic_cast< Arbre* >(cell);
-				foret.allumer(ab);
+				foret->allumer(ab);
 				drawFire();
 				update();
 			}
@@ -247,7 +253,7 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 	
 	// 	resize(tailleCote,tailleCote);
 	
-	float nbMax = max(foret.largeur(), foret.hauteur());
+	float nbMax = max(foret->largeur(), foret->hauteur());
 	
 	tailleCell = tailleCote /	nbMax;
 
@@ -288,7 +294,7 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 void FireWidget::next()
 {
 	// pas suivant
-	foret.NextMove();
+	foret->NextMove();
 	
 	// mise à jour de l'image puis affichage à l'écran
 	drawFire();

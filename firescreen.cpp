@@ -87,6 +87,7 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
 	QObject::connect(pause_btn,	SIGNAL(clicked(bool)), timer,	SLOT(stop()) );
 	QObject::connect(timer, 		SIGNAL(timeout()), this,		SLOT(compteur()) );
 	QObject::connect(next_btn, 	SIGNAL(clicked(bool)), this,	SLOT(compteur()) );
+	QObject::connect(reset_btn, SIGNAL(clicked(bool)), this, SLOT(raz_matrice()) );
 
    
 }
@@ -108,5 +109,8 @@ void FireScreen::compteur()
 	cpt_debug->setText(QString::number(nb_tour));
 }
 
+void FireScreen::raz_matrice()
+{
+}
 
 
