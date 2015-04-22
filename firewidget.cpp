@@ -300,3 +300,10 @@ void FireWidget::next()
 	drawFire();
 	update();
 }
+
+void FireWidget::restart()
+{
+	foret->initEmpty();
+	update();
+}
+

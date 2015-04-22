@@ -21,7 +21,8 @@ class FireScreen : public QMainWindow
 Q_OBJECT
 private:
 	FireWidget* fwidget;
-	QLabel* cpt_debug;
+	QLabel* cpt_lbl;
+	QLabel* delai_lbl;
 	int nb_tour;
 	QTimer* timer;
 	long delai;
@@ -34,9 +35,12 @@ public:
 public slots:
 	void start_timer(bool);
 	void compteur();
-	void raz_matrice();
+	void set_delai(int x );
+
 signals:
 	void trans_continue(long );
+	void ask_restart();
+
 };
 
 #endif // FIRESCREEN_H

@@ -54,8 +54,7 @@ protected:
 	
 public slots:
 	void next();
-	void run();
-	void pause();
+	void restart();
 	
 // 	void transition(long x);
 };

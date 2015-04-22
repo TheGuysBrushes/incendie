@@ -13,7 +13,7 @@ int main(int argc, char** argv)
 {
 	int hauteur=	100;
 	int largeur=	100;
-	float proba=	0.40;
+	float proba=	1;
 	long vitesse=	500;
 	float coef_brulure= 1.0;
 
