@@ -23,7 +23,7 @@ Lundi : Flo : - les cellules/arbres sont stockés par pointeurs dans le vecteur 
  Mardi : Intégration de la notion d'essence dans une forêt (Gestion moteur et graphique). Gestion couleurs != abres
          Cellule adjacentes en diagonale
  
- [h1]Mercredi :[/h1] Calcul et prise en compte des points de vie en fonction des paramètres de l'essence et des caractères discrets de l'arbre.
+ <h1>Mercredi :</h1>Calcul et prise en compte des points de vie en fonction des paramètres de l'essence et des caractères discrets de l'arbre.
  
  Jeudi : Sélection aléatoire essence avec notion de bosquet. Nettoyage du code, debugage, tests mémoires ( concluant).
  
