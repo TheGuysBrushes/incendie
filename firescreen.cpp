@@ -58,16 +58,16 @@ FireScreen::~FireScreen()
 	delete(fwidget);
 }
 
-void FireScreen::initialiseParametres(int hauteur, int largeur, float proba, long nTemps, float coef_brulure/*, QWidget* parent, Qt::WindowFlags flags*/)
+void FireScreen::initialiseParametres(int hauteur, int largeur, float proba, float coef_brulure/*, QWidget* parent, Qt::WindowFlags flags*/)
 {
 	fwidget= new FireWidget(hauteur, largeur, proba, coef_brulure);
 	timer = new QTimer();
-
+	int interTempsInit= 200;
 	
-// BOUTONS
+	// BOUTONS
 	// Conteneur général
 	QWidget* w = new QWidget(this);
-   
+	
 	// Sous-conteneurs
 	QHBoxLayout* lay = new QHBoxLayout(w);
 	QWidget* ww = new QWidget(w);
@@ -78,11 +78,12 @@ void FireScreen::initialiseParametres(int hauteur, int largeur, float proba, lon
 	QGridLayout* grid_lay2 = new QGridLayout(ww2);   
 	QWidget* www = new QWidget(ww2);
 	QHBoxLayout* h_lay1 = new QHBoxLayout(www);
-   
+	
 	// Element du panneau de direction de l'automate
 	QLabel* titre = new QLabel("Automate cellulaire");
 	QLabel* trans_p2p = new QLabel("Transmission pas-a-pas : ");
 	QLabel* trans_con = new QLabel("Transmission continue : ");
+	
 	next_btn = new QPushButton("Next");
 	play_btn = new QPushButton("Play");
 	pause_btn = new QPushButton("Pause");
@@ -90,13 +91,12 @@ void FireScreen::initialiseParametres(int hauteur, int largeur, float proba, lon
 	QLabel* tour_lbl = new QLabel("Nombre de tours :");
 	cpt_lbl = new QLabel();
 	
-	int val_init= nTemps;
-	delai_lbl = new QLabel(QString::number(val_init));
+	delai_lbl = new QLabel(QString::number(interTempsInit));
 	// Ajouter la scrollbar horizontale
 	QSlider* slider = new QSlider(Qt::Horizontal,0);
 	slider->setMinimum(10);
 	slider->setMaximum(500);
-	slider->setValue(val_init);
+	slider->setValue(interTempsInit);
 	
 	// Touches d'améliorations visuelles et d'initialisation de propriétés
 	titre->setStyleSheet("color : darkblue; font : bold italic 20px;");
@@ -118,7 +118,7 @@ void FireScreen::initialiseParametres(int hauteur, int largeur, float proba, lon
 	
 	h_lay1->addWidget(tour_lbl);
 	h_lay1->addWidget(cpt_lbl);
-   
+	
 	vert_lay1->addWidget(titre);
 	vert_lay1->addWidget(trans_p2p);
 	vert_lay1->addWidget(ww1);
@@ -132,27 +132,27 @@ void FireScreen::initialiseParametres(int hauteur, int largeur, float proba, lon
 	ww->setMaximumWidth(250);
 	ww->setMinimumWidth(250);
 	
-// PLACEMENT DES ELEMENTSS
+	// PLACEMENT DES ELEMENTSS
 	lay->addWidget(fwidget);
 	lay->setStretchFactor(fwidget, 1);
 	lay->minimumHeightForWidth(1);
 	lay->addWidget(ww);
 	setCentralWidget(w);
 	
-// CONNEXION DES BOUTONS AUX FONCTIONS
+	// CONNEXION DES BOUTONS AUX FONCTIONS
 	QObject::connect(next_btn,		SIGNAL(clicked()), fwidget,	SLOT(next()) );
-// 	QObject::connect(timer,			SIGNAL(timeout()), fwidget, 	SLOT(next()) ); // IMPROVEIT vraiment util d'utiliser signal->slot ?
+	// 	QObject::connect(timer,			SIGNAL(timeout()), fwidget, 	SLOT(next()) ); // IMPROVEIT vraiment util d'utiliser signal->slot ?
 	QObject::connect(play_btn,		SIGNAL(clicked(bool)), this,	SLOT(start_timer(bool)) );
 	QObject::connect(pause_btn,	SIGNAL(clicked(bool)), this, SLOT(stop_timer(bool)) );
 	QObject::connect(timer, 		SIGNAL(timeout()), this,		SLOT(compteur()) );
 	QObject::connect(next_btn, 	SIGNAL(clicked()), this,	SLOT(compteur()) );
-
+	
 	/// @author Florian
 	QObject::connect(reset_btn,	SIGNAL(clicked()), this,	SLOT(reset()) );
-		
+	
 	// Tests pour RAZ de la matrice
-// 	QObject::connect(reset_btn, SIGNAL(clicked()), this, SLOT(raz_matrice()) );
-// 	QObject::connect(this, SIGNAL(ask_restart()), fwidget, SLOT(restart()));
+	// 	QObject::connect(reset_btn, SIGNAL(clicked()), this, SLOT(raz_matrice()) );
+	// 	QObject::connect(this, SIGNAL(ask_restart()), fwidget, SLOT(restart()));
 	QObject::connect(slider,	SIGNAL(valueChanged(int)), this, SLOT(set_delai(int )));
 	
 	// taille minimale de la fenetre : (Hpanneau + Lpanneau)/(Hpanneau) + marges,
@@ -212,7 +212,7 @@ void FireScreen::reset()
 	nb_tour= 0;
 	majTimer();
 	
-	fwidget->restart();
+	fwidget->reset();
 }
 
 
@@ -223,5 +223,5 @@ void FireScreen::compteur()
 		nb_tour += 1;
 		majTimer();
 	}
-	else timer->stop();
+	else stop_timer(true);
 }

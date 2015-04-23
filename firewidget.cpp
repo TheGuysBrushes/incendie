@@ -302,13 +302,13 @@ bool FireWidget::next()
  * reinitialise la foret
  * @author Florian et un petit peu Ugo :p
  */
-void FireWidget::restart()
+void FireWidget::reset()
 {
-	Foret* OldForet= foret;
-	foret = new Foret(*OldForet, probaMatriceReset);
-	delete(OldForet);
+// 	Foret* OldForet= foret;
+// 	foret = new Foret(*OldForet, probaMatriceReset);
+// 	delete(OldForet);
 	// il faudrait en plus vider la matrice de feu ...
-// 	foret->reset(probaMatriceReset);
+	foret->reset(probaMatriceReset);
 	drawForest();
 	drawFire();
 	update();

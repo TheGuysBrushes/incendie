@@ -47,8 +47,7 @@ public:
 	bool allumerFeu(int ligne, int colonne);
 	bool finirFeu(int ligne, int colonne);
 	
-	bool next();
-	void restart();
+	void reset();
 
 protected:
 	void mousePressEvent(QMouseEvent *event);
@@ -57,6 +56,8 @@ protected:
 	void resizeEvent(QResizeEvent * event);
 	void paintEvent(QPaintEvent* event);
 	
+public slots:
+	bool next();
 // 	void transition(long x);
 };
 

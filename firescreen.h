@@ -39,7 +39,7 @@ public:
 	virtual ~FireScreen();
 // 	void init_foret(int hauteur, int largeur, float proba, float coef_brulure);
 		
-	void initialiseParametres(int hauteur, int largeur, float proba, long int nTemps, float coef_brulure);
+	void initialiseParametres(int hauteur, int largeur, float proba, float coef_brulure);
 	
 	void majTimer();
 		

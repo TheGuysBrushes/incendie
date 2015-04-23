@@ -58,6 +58,7 @@ Foret::~Foret()
 	}
 	
 	onFire.clear();
+	carbonized.clear();	
 }
 
 
@@ -299,24 +300,28 @@ void Foret::initialisation(float proba)
 	allumer(lignes/2, colonnes/2);
 	allumer(lignes/2+1, colonnes/2);
 	allumer(lignes/2, colonnes/2 +1);
-	
-	allumer(lignes/2+1, 0);
-	allumer(lignes/2+1, 1);
 }
 
 void Foret::reset(float proba)
 {
 	onFire.clear();
 	carbonized.clear();
-	initEmpty();
+
+// 	suppression de la matrice
+	for (int i= 0; i< lignes; ++i){
+		for (vector< Cellule* >::iterator j( matrice[i].begin() ); j!=matrice[i].end(); ++j){
+			delete *j;
+			// suppression d'une "ligne de la matrice"
+		}
+		matrice[i].clear();
+	}
+	matrice.clear();
+	
 	randomMatrice(proba);
 	
 	allumer(lignes/2, colonnes/2);
 	allumer(lignes/2+1, colonnes/2);
 	allumer(lignes/2, colonnes/2 +1);
-	
-	allumer(lignes/2+1, 0);
-	allumer(lignes/2+1, 1);
 }
 
 

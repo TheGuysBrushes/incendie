@@ -36,13 +36,8 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	slide_p->setMaximum(100);
 	slide_p->setMinimum(1);
 	
-	slide_c->setValue(50);
-// 	set_proba(50);
-	slide_p->setValue(50);
-// 	set_coef(50);
-	
-	p_value = new QLabel("0.50");
-	c_value = new QLabel("0.50");
+	p_value = new QLabel();
+	c_value = new QLabel();
 	
 	valid_btn = new QPushButton("Valider");
 	valid_btn->setDefault(true);
@@ -64,12 +59,13 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	
 	
 	// Connection entre Slider et Label associé
-	connect(slide_c, SIGNAL(valueChanged(int)), this, SLOT(set_coef(int)) );
-	connect(slide_p, SIGNAL(valueChanged(int)), this, SLOT(set_proba(int)) );
+	connect(slide_c,	SIGNAL(valueChanged(int)), this, SLOT(set_coef(int)) );
+	connect(slide_p,	SIGNAL(valueChanged(int)), this, SLOT(set_proba(int)) );
 	connect(valid_btn, SIGNAL(clicked()), this, SLOT(accept()) );
-
 	
-	
+	// Initialisation des sliders
+	slide_c->setValue(50);
+	slide_p->setValue(50);
 }
 
 Fwelcome::~Fwelcome()
@@ -89,7 +85,5 @@ void Fwelcome::set_coef(int x)
 	coef_brulure = (float) x/100;
 	c_value->setText(QString::number(coef_brulure));
 }
-
-
 
 
