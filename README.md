@@ -1,7 +1,7 @@
 # incendie
 Automate de simulation d'incendie
 
-Semaine 1
+<h2>Semaine 1</h2>
 
 <h3>Mardi</h3> réfléxion commune 
 
@@ -11,7 +11,7 @@ Semaine 1
 
 <h3>Vendredi</h3> Flo : Passage des fonctions via pointeurs et nettoyage du code ; Ugo : reflexion sur la modélisation des !=arbres
 
-Semaine 2
+<h2>Semaine 2</h2>
 
 <h3>Lundi</h3> Flo : - les cellules/arbres sont stockés par pointeurs dans le vecteur de vecteurs
               - la cellule ne contient qu'un état, si c'est un arbre (dynamic_cast) il a des attributs spécifiques
@@ -27,10 +27,10 @@ Semaine 2
  
  <h3>Jeudi</h3> Sélection aléatoire essence avec notion de bosquet. Nettoyage du code, debugage, tests mémoires ( concluant).
  
-<h3>Vendredi : Ugo : Transmission liée à l'humidité, réflexion sur modification système pv. 
+<h3>Vendredi</h3> Ugo : Transmission liée à l'humidité, réflexion sur modification système pv. 
               Florian  : Recherches survent + creation de la classe et des opérations sur les vecteurs de vents
 
-Semaine 3 :
+<h2>Semaine 3</h2>
 
   <h3>Lundi-Mardi</h3> Mise en place de l'intégration Qt, premières optimisations.
  
