@@ -127,60 +127,6 @@ void FireWidget::drawFire()
 	foret->clearCarbonized();
 }
 
-/**
- * IMPROVEIT
- * J'ai essayé de créer une fonction qui dessinerai les cellules grâce à l'appel d'une autre fonction donné en paramètre,
- * 	mais "function/std::function/function::function avec #include <functional> ne marche pas
- * @deprecated
- * @author Florian
- */
-
-/**
- * premiere fonction, il aurait fallu créer drawStatic ...
- */
-// void FireWidget::drawVariable(int posWidth, int posHeight, const Cellule* cell)
-// {
-// 	int cell_larg = width() / this->foret.largeur();
-// 	int cell_haut = height() / this->foret.hauteur();
-// 	
-// 	QPainter paint(this->buffer);
-// 	
-// 	if( cell->getEtat() == 0){
-// 		this->color->setNamedColor("black");
-// 		
-// 	}else if(cell->getEtat() == 1){
-// 		// Il faut ici vérifier l'essence de l'arbre pour lui attribuer une variante de vert
-// 		unsigned indice= dynamic_cast < const Arbre* >(cell)->getEssence()->getIndice();
-// 		setColor(indice);
-// 	}
-// 	paint.fillRect(posWidth, posHeight, cell_larg, cell_haut, *(color));	
-// }
-
-
-// void FireWidget::drawForest(void(*pDraw)(int, int, const Cellule*) )
-// {
-// 	int cell_larg = width() / this->foret.largeur();
-// 	int cell_haut = height() / this->foret.hauteur();
-// 	
-// 	int current_largeur= 0;
-// 	for(int i=0; i<this->foret.largeur(); ++i){
-// 		// On ne passe pas la hauteur de la grille mais le nombre de colonne*taille de colonne pour
-// 		// éviter la petite zone en bas de grille
-// 		vector< Cellule* >* ligne= foret[i];
-// 		
-// 		int current_hauteur= 0;
-// 		for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
-// 			Cellule* cell= *j;
-// 
-// 			pDraw(cell_larg,cell_haut, cell);
-// 			
-// 	// Incrémentations des positions des cellules
-// 			current_hauteur += cell_haut;
-// 		}
-// 		current_largeur += cell_larg;
-//     }
-// }
-
 
 bool FireWidget::eteindreFeu(int ligne, int colonne)
 {
