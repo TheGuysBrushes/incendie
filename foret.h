@@ -46,10 +46,11 @@ public:
 	void randomMatrice(float probabilite);
 	bool loadEssences(const std::string& fileName);
 	void initialisation(float proba);
+	void reset(float proba);
 	
 	// 	Getters and Setters
-	int largeur(){ return colonnes;};
-	int hauteur(){ return lignes;};
+	int largeur()	const { return colonnes;};
+	int hauteur()	const { return lignes;};
 	std::vector< Cellule* >* operator[](int ligne) { return &(matrice[ligne]); };
 	
 	const std::list< Arbre* >* getCarbonized() const	{ return &carbonized; };

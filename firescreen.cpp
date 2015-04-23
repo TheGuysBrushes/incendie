@@ -7,6 +7,10 @@
 #include <QtGui/QPushButton>
 #include <QtCore/QString>
 #include <QtGui/QSlider>
+
+#include <QtGui/QMenu>
+#include <QtGui/QMenuBar>
+#include <QtGui/QAction>
 /*		BUG 
  *  - Lorsque le clic est enfoncé et que l'on sort du cadre du widget, Arrêt brutal 
  * 

@@ -234,11 +234,8 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 
 	buffer = new QImage(tailleCell*foret->largeur(), tailleCell*foret->hauteur(), QImage::Format_ARGB32);
 	buffer->fill(Qt::white);
-// 	void(*pDraw)(int, int, const Cellule*);
-// 	pDraw= drawVariable;
 	drawForest();
 	drawFire();
-	// 	update(); // deja fais apres l'appel à resizeEvent ?
 }
 
 void FireWidget::mousePressEvent(QMouseEvent* event)
@@ -277,9 +274,14 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 }
 
 
-
-
-
+// ################
+// 	Deroulement
+// ################
+/**
+ * Passe de l'etat t à t+1 la foret
+ * @author Florian
+ * @return vrai si la foret a ete modifiée
+ */
 bool FireWidget::next()
 {
 	// pas suivant

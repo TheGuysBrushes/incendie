@@ -523,7 +523,7 @@ void Foret::showEssences() const
 		i->getIndice()		<< "\t| "<<
 		i->getMasse()		<< "\t| "<<
 		i->getDiametre()	<< "\t| "<< 
-		i->getHauteur()		<< "\t| "<<
+		i->getHauteur()	<< "\t| "<<
 		i->getType() 		<< "\t|"<<
 		i->getAgeMaturite()	<< "\t|"<< endl;
 	}
