@@ -101,6 +101,7 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
 
 	/// @author Florian
 	QObject::connect(reset_btn, SIGNAL(clicked()), fwidget, SLOT(restart()) );
+	QObject::connect(reset_btn, SIGNAL(clicked(bool)),this,SLOT(init_btn()) );
 		
 	// Tests pour RAZ de la matrice
 // 	QObject::connect(reset_btn, SIGNAL(clicked()), this, SLOT(raz_matrice()) );
@@ -134,7 +135,17 @@ void FireScreen::set_delai(int x)
 {
 	delai = (long)x;
 	delai_lbl->setText(QString::number(x));
+	timer->start(delai);
 }
+
+void FireScreen::init_btn()
+{
+	play_btn->setEnabled(true);
+	next_btn->setEnabled(true);
+	pause_btn->setDisabled(true);
+	timer->stop();
+}
+
 
 void FireScreen::compteur()
 {

@@ -42,6 +42,7 @@ public slots:
 	void stop_timer(bool);
 	void compteur();
 	void set_delai(int x );
+	void init_btn();
 
 signals:
 	void trans_continue(long );

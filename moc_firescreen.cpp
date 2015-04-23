@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'firescreen.h'
 **
-** Created: Thu Apr 23 00:08:17 2015
+** Created: Thu Apr 23 10:27:03 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_FireScreen[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -39,6 +39,7 @@ static const uint qt_meta_data_FireScreen[] = {
       65,   11,   11,   11, 0x0a,
       82,   11,   11,   11, 0x0a,
       95,   93,   11,   11, 0x0a,
+     110,   11,   11,   11, 0x0a,
 
        0        // eod
 };
@@ -47,7 +48,7 @@ static const char qt_meta_stringdata_FireScreen[] = {
     "FireScreen\0\0trans_continue(long)\0"
     "ask_restart()\0start_timer(bool)\0"
     "stop_timer(bool)\0compteur()\0x\0"
-    "set_delai(int)\0"
+    "set_delai(int)\0init_btn()\0"
 };
 
 void FireScreen::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -62,6 +63,7 @@ void FireScreen::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 3: _t->stop_timer((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 4: _t->compteur(); break;
         case 5: _t->set_delai((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 6: _t->init_btn(); break;
         default: ;
         }
     }
@@ -99,9 +101,9 @@ int FireScreen::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 7;
     }
     return _id;
 }
