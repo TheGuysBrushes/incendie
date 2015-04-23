@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'firewidget.h'
 **
-** Created: Wed Apr 22 17:34:14 2015
+** Created: Thu Apr 23 16:26:36 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -28,17 +28,20 @@ static const uint qt_meta_data_FireWidget[] = {
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       1,       // signalCount
+
+ // signals: signature, parameters, type, tag, flags
+      28,   12,   11,   11, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      12,   11,   11,   11, 0x0a,
-      19,   11,   11,   11, 0x0a,
+      53,   11,   11,   11, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_FireWidget[] = {
-    "FireWidget\0\0next()\0restart()\0"
+    "FireWidget\0\0largeur,hauteur\0"
+    "SizeCellChanged(int,int)\0restart()\0"
 };
 
 void FireWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -47,12 +50,11 @@ void FireWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         Q_ASSERT(staticMetaObject.cast(_o));
         FireWidget *_t = static_cast<FireWidget *>(_o);
         switch (_id) {
-        case 0: _t->next(); break;
+        case 0: _t->SizeCellChanged((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 1: _t->restart(); break;
         default: ;
         }
     }
-    Q_UNUSED(_a);
 }
 
 const QMetaObjectExtraData FireWidget::staticMetaObjectExtraData = {
@@ -92,5 +94,12 @@ int FireWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         _id -= 2;
     }
     return _id;
+}
+
+// SIGNAL 0
+void FireWidget::SizeCellChanged(int _t1, int _t2)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_END_MOC_NAMESPACE
