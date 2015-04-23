@@ -20,6 +20,7 @@ FireWidget::~FireWidget()
 {
 	delete(buffer);
 	delete(color);
+	delete(foret);
 }
 
 // void FireWidget::newForet(int hauteur, int largeur, float proba, float coef_brulure)
@@ -207,6 +208,32 @@ void FireWidget::drawFire()
 // }
 
 
+bool FireWidget::eteindreFeu(int ligne, int colonne)
+{
+	#if DEBUG_ALLUME
+	cout << "eteindre cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
+	#endif
+	
+	if(ligne>=0 && ligne < foret->hauteur()){
+		vector< Cellule* >* line= foret->operator[](ligne);
+		
+		if (colonne>=0 && colonne < foret->largeur()){
+			Cellule* cell= (*line)[colonne];	
+			
+			if (cell->getEtat()==2){
+				Arbre* ab= dynamic_cast< Arbre* >(cell);
+				foret->water(ab);
+				drawFire();
+				update();
+				
+				return true;
+			}
+		}
+	}
+	// cas d'erreur par défaut
+	return false;
+}
+
 bool FireWidget::allumerFeu(int ligne, int colonne)
 {
 #if DEBUG_ALLUME
@@ -224,8 +251,35 @@ bool FireWidget::allumerFeu(int ligne, int colonne)
 				foret->allumer(ab);
 				drawFire();
 				update();
+				
+				return true;
 			}
-			return true;
+		}
+	}
+	// cas d'erreur par défaut
+	return false;
+}
+
+bool FireWidget::finirFeu(int ligne, int colonne)
+{
+	#if DEBUG_ALLUME
+	cout << "embraser cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
+	#endif
+	
+	if(ligne>=0 && ligne < foret->hauteur()){
+		vector< Cellule* >* line= foret->operator[](ligne);
+		
+		if (colonne>=0 && colonne < foret->largeur()){
+			Cellule* cell= (*line)[colonne];	
+			
+			if (cell->getEtat()==2){
+				Arbre* ab= dynamic_cast< Arbre* >(cell);
+				foret->eteindre(ab);
+				drawFire();
+				update();
+				
+				return true;
+			}
 		}
 	}
 	// cas d'erreur par défaut
@@ -239,7 +293,7 @@ bool FireWidget::allumerFeu(int ligne, int colonne)
 void FireWidget::paintEvent(QPaintEvent* event)
 {
 	QPainter paint(this);
-	paint.drawImage(0, 0, *buffer);
+	paint.drawImage(0, 0, *buffer); // , 0, 0, width(), height());
 }
 
 void FireWidget::resizeEvent(QResizeEvent* event)
@@ -275,7 +329,14 @@ void FireWidget::mousePressEvent(QMouseEvent* event)
 	int colonne= event->y()/tailleCell;
 	int ligne= event->x()/tailleCell;
 	
-	allumerFeu(ligne, colonne);
+	if (event->button()==Qt::LeftButton)
+		allumerFeu(ligne, colonne);
+	else if (event->button()==Qt::MiddleButton)
+		finirFeu(ligne, colonne);
+	else if (event->button()==Qt::RightButton){
+		eteindreFeu(ligne, colonne);
+		drawForest();
+	}
 }
 
 
@@ -286,7 +347,14 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 	int colonne= event->y()/tailleCell;
 	int ligne= event->x()/tailleCell;
 	
-	allumerFeu(ligne, colonne);
+	if (event->buttons().testFlag(Qt::LeftButton) )
+		allumerFeu(ligne, colonne);
+	else if (event->buttons().testFlag(Qt::MiddleButton) )
+		finirFeu(ligne, colonne);
+	else if (event->buttons().testFlag(Qt::RightButton) ){
+		eteindreFeu(ligne, colonne);
+		drawForest();
+	}
 }
 
 

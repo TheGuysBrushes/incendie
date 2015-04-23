@@ -163,8 +163,8 @@ bool Foret::loadEssences(const string& fileName)
 			vector<string>& tokens = explode(line);	
 			// conversion du diametre en float
 			float x; istringstream(tokens[2])>> x;
-			essences.push_back( Essence(indice,
-												tokens[0], atoi(tokens[1].c_str()),
+			essences.push_back( Essence(indice, tokens[0],
+												atoi(tokens[1].c_str()),
 												x,
 												atoi(tokens[3].c_str()),
 												atoi(tokens[4].c_str()),
@@ -308,6 +308,16 @@ void Foret::initialisation(float proba)
 // 	Modification des éléments
 // ###################################
 
+void Foret::water(Arbre* ab)
+{
+// 	for (list< Arbre* >::iterator tmp(onFire.begin()); tmp!=onFire.end(); ++tmp)
+// 		if (ab==*tmp)
+
+	ab->water();
+	onFire.remove(ab);
+}
+
+
 void Foret::allumer(int row, int col)
 {
 	Cellule* tmp= matrice[row][col];
@@ -325,6 +335,12 @@ void Foret::allumer(Arbre* ab)
 	ab->burn();
 	onFire.push_back(ab);
 }
+
+void Foret::eteindre(Arbre* ab)
+{
+	ab->blast();
+}
+
 
 
 /**

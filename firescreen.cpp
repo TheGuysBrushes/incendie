@@ -46,7 +46,7 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
 	QLabel* tour_lbl = new QLabel("Nombre de tours :");
 	cpt_lbl = new QLabel();
 	
-	int val_init= 200;
+	int val_init= nTemps;
 	delai_lbl = new QLabel(QString::number(val_init));
 	// Ajouter la scrollbar horizontale
 	QSlider* slider = new QSlider(Qt::Horizontal,0);
@@ -137,7 +137,7 @@ void FireScreen::set_delai(int x)
 {
 	delai = (long)x;
 	delai_lbl->setText(QString::number(x));
-	timer->start(delai);
+	timer->setInterval(delai);
 }
 
 void FireScreen::init_btn()

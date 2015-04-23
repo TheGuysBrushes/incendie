@@ -28,7 +28,7 @@ private:
 	std::vector<std::vector< Cellule* > > matrice;
 	std::list< Arbre* >	onFire;
 	
-	// METHODES
+// METHODES
 private:
 	unsigned essenceRandom(int _j, int _i, unsigned distOthers);
 	
@@ -50,8 +50,14 @@ public:
 	std::vector< Cellule* >* operator[](int ligne) { return &(matrice[ligne]); };
 
 	// Autres méthodes
+	void water(Arbre* ab);
+	
 	void allumer(int row, int col);
 	void allumer(Arbre* ab);
+	
+	void eteindre(Arbre* ab);
+// 	void eteindre(int row, int col);
+	
 	void enflammer(int row, int col);
 	void enflammer(Arbre* ab);
 	std::list< Arbre* > adjacents(int col, int row, int distance) const;

@@ -43,6 +43,7 @@ public:
 	// Méthodes constantes
 	virtual bool isOnFire()	const	{ return etat==2; };
 	
+	void water()	{ etat= 1;	};
 	void burn()		{ etat= 2;	};
 	void blast()	{ etat= 3;	};
 };

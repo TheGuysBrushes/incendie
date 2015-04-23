@@ -36,7 +36,7 @@ public:
 	void setColor(int colorIndice);
 	
 // AFFICHAGES
-	void drawVariable(int posWidth, int posHeight, const Cellule* cell);
+// 	void drawVariable(int posWidth, int posHeight, const Cellule* cell);
 	
 	void drawForest();
 	void drawFire();
@@ -44,7 +44,9 @@ public:
 // 	void drawForest(void* drawCell(int, int, const Cellule*));
 // 	void drawForest(std::function<void(void)> drawCell );
 	
+	bool eteindreFeu(int ligne, int colonne);
 	bool allumerFeu(int ligne, int colonne);
+	bool finirFeu(int ligne, int colonne);
 	
 	bool next();
 
