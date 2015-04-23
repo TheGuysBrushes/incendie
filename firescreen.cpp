@@ -16,10 +16,21 @@
 FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float coef_brulure/*, QWidget* parent, Qt::WindowFlags flags*/)
 :	/*QMainWindow(parent, flags),*/	delai(nTemps)
 {
+	QAction* exit = new QAction(this);
+	exit->setText( "Quitter" );
+	
+	QAction* save = new QAction(this);
+	save->setText( "Save" );
+	
+	menuBar()/*->addMenu( "Menu" )*/->addAction(exit);
+	menuBar()->addAction(save);
+	connect(exit, SIGNAL(triggered()), SLOT(close()) );
+	
 // AFFICHEUR DE FORET
 	fwidget= new FireWidget(hauteur, largeur, proba, coef_brulure);
 	timer = new QTimer();
 	nb_tour = 0;
+	
 // BOUTONS
 	// Conteneur général
 	QWidget* w = new QWidget(this);

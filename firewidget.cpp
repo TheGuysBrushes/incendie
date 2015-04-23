@@ -10,7 +10,7 @@ FireWidget::FireWidget(int hauteur, int largeur, float proba, float coef_brulure
 	buffer = new QImage();
 	color = new QColor(Qt::black);
 	
-	setMinimumSize(hauteur, largeur);
+	setMinimumSize(largeur, hauteur);
 	
 	probaMatriceReset= proba;
 }

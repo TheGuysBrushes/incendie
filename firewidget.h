@@ -5,6 +5,9 @@
 #include <QtGui/QImage>
 #include <QtGui/QPainter>
 #include <QtGui/QColor>
+#include <QtGui/QMenu>
+#include <QtGui/QMenuBar>
+#include <QtGui/QAction>
 
 #include <functional>
 #include <vector>
