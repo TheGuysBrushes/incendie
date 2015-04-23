@@ -13,14 +13,14 @@ Semaine 1
 
 Semaine 2
 
-<h2>Lundi</h2> Flo : - les cellules/arbres sont stockés par pointeurs dans le vecteur de vecteurs
+<h3>Lundi</h3> Flo : - les cellules/arbres sont stockés par pointeurs dans le vecteur de vecteurs
               - la cellule ne contient qu'un état, si c'est un arbre (dynamic_cast) il a des attributs spécifiques
               - faire une sous-classe de arbre : arbre en cendres ? ou alors sous-classe de cellule ou seulement arbre dans état brulé (3) : plus simple
               - Nettoyage du code et commentaire.
               
         Ugo : Implémentation de la notion d'essence.
         
- <h2>Mardi : Intégration de la notion d'essence dans une forêt (Gestion moteur et graphique). Gestion couleurs != abres
+ <h3>Mardi</h3> : Intégration de la notion d'essence dans une forêt (Gestion moteur et graphique). Gestion couleurs != abres
          Cellule adjacentes en diagonale
  
  <h2>Mercredi :</h1>Calcul et prise en compte des points de vie en fonction des paramètres de l'essence et des caractères discrets de l'arbre.
