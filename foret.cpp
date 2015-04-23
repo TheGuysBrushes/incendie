@@ -304,6 +304,22 @@ void Foret::initialisation(float proba)
 	allumer(lignes/2+1, 1);
 }
 
+void Foret::reset(float proba)
+{
+	onFire.clear();
+	carbonized.clear();
+	initEmpty();
+	randomMatrice(proba);
+	
+	allumer(lignes/2, colonnes/2);
+	allumer(lignes/2+1, colonnes/2);
+	allumer(lignes/2, colonnes/2 +1);
+	
+	allumer(lignes/2+1, 0);
+	allumer(lignes/2+1, 1);
+}
+
+
 // ###################################
 // 	Modification des éléments
 // ###################################

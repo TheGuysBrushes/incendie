@@ -105,7 +105,9 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
 	
 // PLACEMENT DES ELEMENTSS
 	lay->addWidget(fwidget);
-	lay->addWidget(ww);;
+	lay->setStretchFactor(fwidget, 1);
+	lay->minimumHeightForWidth(1);
+	lay->addWidget(ww);
 	setCentralWidget(w);
 	
 // CONNEXION DES BOUTONS AUX FONCTIONS
@@ -124,6 +126,8 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
 // 	QObject::connect(reset_btn, SIGNAL(clicked()), this, SLOT(raz_matrice()) );
 // 	QObject::connect(this, SIGNAL(ask_restart()), fwidget, SLOT(restart()));
 	QObject::connect(slider, SIGNAL(valueChanged(int)), this, SLOT(set_delai(int )));
+	
+	connect(fwidget, SIGNAL(SizeCellChanged(int,int)), this, SLOT(minimumSize(int,int)));
 }
 
 FireScreen::~FireScreen()
@@ -131,7 +135,16 @@ FireScreen::~FireScreen()
 	delete(fwidget);
 }
 
-/***	Slots	***/
+void FireScreen::resizeEvent(QResizeEvent* Qevent)
+{
+	QWidget::resizeEvent(Qevent);
+	
+}
+
+
+// ########################
+/***			Slots			***/
+// ########################
 void FireScreen::start_timer(bool b)
 {
 	timer->start(delai);
@@ -172,6 +185,11 @@ void FireScreen::compteur()
 		cpt_lbl->setText(QString::number(nb_tour));
 	}
 	else timer->stop();
+}
+
+void FireScreen::minimumSize(int largeur, int hauteur)
+{
+	setMinimumSize(largeur+250, hauteur);
 }
 
 

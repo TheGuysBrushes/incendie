@@ -37,12 +37,17 @@ public:
 // 									QWidget* parent = 0, Qt::WindowFlags flags = 0);
 	virtual ~FireScreen();
 	
+protected:
+	void resizeEvent(QResizeEvent* Qevent);
+	
 public slots:
 	void start_timer(bool);
 	void stop_timer(bool);
 	void compteur();
 	void set_delai(int x );
 	void init_btn();
+	
+	void minimumSize(int largeur, int hauteur);
 
 signals:
 	void trans_continue(long );

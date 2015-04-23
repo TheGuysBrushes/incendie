@@ -222,13 +222,15 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 		delete(buffer);
 	}
 	
-	int tailleCote= min(event->size().width(), event->size().height());
-	#if DEBUG_TMATRICE
-	cout << "tH: "<< event->size().width()<< " tL "<< event->size().height()<< " ; min donne taille coté : " << tailleCote<< endl;
-	#endif
+	float nbCol= foret->largeur();
+	float nbRow= foret->hauteur();
+	tailleCell = min (event->size().width() / nbCol , event->size().height() / nbRow);
+	emit SizeCellChanged(tailleCell*nbCol, tailleCell*nbRow);
 	
-	float nbMax = max(foret->largeur(), foret->hauteur());
-	tailleCell = tailleCote /	nbMax;
+	#if DEBUG_DIMENSION
+	cout << "tH: "<< event->size().width()<< " tL "<< event->size().height()<< endl;
+	cout << "taille Cellule : "<< tailleCell<< endl;
+	#endif
 	
 // 	/*resize*/setMinimumSize(tailleCell*foret->largeur(), tailleCell*foret->hauteur());
 
@@ -306,7 +308,7 @@ void FireWidget::restart()
 	foret = new Foret(*OldForet, probaMatriceReset);
 	delete(OldForet);
 	// il faudrait en plus vider la matrice de feu ...
-// 	foret->randomMatrice(probaMatriceReset); 
+// 	foret->reset(probaMatriceReset);
 	// plante
 // 	foret->initialisation(probaMatriceReset);
 	drawForest();
