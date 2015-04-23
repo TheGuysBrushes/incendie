@@ -46,8 +46,6 @@ public slots:
 	void compteur();
 	void set_delai(int x );
 	void init_btn();
-	
-	void minimumSize(int largeur, int hauteur);
 
 signals:
 	void trans_continue(long );

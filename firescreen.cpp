@@ -128,7 +128,9 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
 // 	QObject::connect(this, SIGNAL(ask_restart()), fwidget, SLOT(restart()));
 	QObject::connect(slider, SIGNAL(valueChanged(int)), this, SLOT(set_delai(int )));
 	
-	setMinimumSize(lay->sizeHint().height()+250, lay->sizeHint().width());
+	// taille minimale de la fenetre : (Hpanneau + Lpanneau)/(Hpanneau) + marges,
+	//		ce qui donne un carré à gauche de cote au moins la hauteur du panneau, pour la foret, ET le panneau à droite
+	setMinimumSize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +10);
 }
 
 FireScreen::~FireScreen()
