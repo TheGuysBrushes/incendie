@@ -45,12 +45,14 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
 	QPushButton* reset_btn = new QPushButton("Reset ! Be careful");
 	QLabel* tour_lbl = new QLabel("Nombre de tours :");
 	cpt_lbl = new QLabel();
-	delai_lbl = new QLabel("500");
+	
+	int val_init= 200;
+	delai_lbl = new QLabel(QString::number(val_init));
 	// Ajouter la scrollbar horizontale
 	QSlider* slider = new QSlider(Qt::Horizontal,0);
-	slider->setMinimum(1);
-	slider->setMaximum(2000);
-	slider->setValue(500);
+	slider->setMinimum(20);
+	slider->setMaximum(1000);
+	slider->setValue(val_init);
 	
 	// Touches d'améliorations visuelles et d'initialisation de propriétés
 	titre->setStyleSheet("color : darkblue; font : bold italic 20px;");
