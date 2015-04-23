@@ -16,10 +16,29 @@
  * 
  * 
  */
+FireScreen::FireScreen(): QMainWindow()
+{
+	// AFFICHEUR DE FORET
+	nb_tour = 0;
+	
+	QAction* exit = new QAction(this);
+	exit->setText( "Quitter" );
+	
+	QAction* save = new QAction(this);
+	save->setText( "Save" );
+	
+	menuBar()/*->addMenu( "Menu" )*/->addAction(exit);
+	menuBar()->addAction(save);
+	connect(exit, SIGNAL(triggered()), SLOT(close()) );
+}
 
 FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float coef_brulure/*, QWidget* parent, Qt::WindowFlags flags*/)
 :	/*QMainWindow(parent, flags),*/	delai(nTemps)
 {
+	// AFFICHEUR DE FORET
+// 	fwidget= new FireWidget(hauteur, largeur, proba, coef_brulure);
+// 	timer = new QTimer();
+	nb_tour = 0;
 	
 	QAction* exit = new QAction(this);
 	exit->setText( "Quitter" );
@@ -31,10 +50,20 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
 	menuBar()->addAction(save);
 	connect(exit, SIGNAL(triggered()), SLOT(close()) );
 	
-// AFFICHEUR DE FORET
+	initialiseParametres(hauteur, largeur, proba, nTemps, coef_brulure);
+}
+
+FireScreen::~FireScreen()
+{
+	delete(fwidget);
+}
+
+void FireScreen::initialiseParametres(int hauteur, int largeur, float proba, long nTemps, float coef_brulure/*, QWidget* parent, Qt::WindowFlags flags*/)
+{
+	
 	fwidget= new FireWidget(hauteur, largeur, proba, coef_brulure);
 	timer = new QTimer();
-	nb_tour = 0;
+
 	
 // BOUTONS
 	// Conteneur général
@@ -130,13 +159,8 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
 	
 	// taille minimale de la fenetre : (Hpanneau + Lpanneau)/(Hpanneau) + marges,
 	//		ce qui donne un carré à gauche de cote au moins la hauteur du panneau, pour la foret, ET le panneau à droite
-	setMinimumSize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
 }
 
-FireScreen::~FireScreen()
-{
-	delete(fwidget);
-}
 
 void FireScreen::resizeEvent(QResizeEvent* Qevent)
 {

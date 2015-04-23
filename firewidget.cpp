@@ -274,6 +274,11 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 	}
 }
 
+void FireWidget::newForet(int _hauteur, int _largeur, float _proba, float _coef_brulure)
+{
+	delete(foret);
+	foret = new Foret(_hauteur,_largeur,_proba,_coef_brulure);
+}
 
 // ################
 // 	Deroulement

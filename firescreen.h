@@ -32,11 +32,15 @@ private:
 	int nb_tour;
 	long delai;
 public:
+	FireScreen();
 	FireScreen(int hauteur, int largeur, float proba, long nTemps, float coef_brulure=1.0/*, QWidget* parent = 0, Qt::WindowFlags flags = 0*/);
 // 	/*explicit */FireScreen(int hauteur, int largeur, float proba, long int nTemps = 0.60, float coef_brulure=1.0, bool t = 0,
 // 									QWidget* parent = 0, Qt::WindowFlags flags = 0);
 	virtual ~FireScreen();
-	
+		void init_foret(int hauteur, int largeur, float proba, float coef_brulure);
+		
+	void initialiseParametres(int hauteur, int largeur, float proba, long int nTemps, float coef_brulure);
+		
 protected:
 	void resizeEvent(QResizeEvent* Qevent);
 	
@@ -46,6 +50,7 @@ public slots:
 	void compteur();
 	void set_delai(int x );
 	void init_btn();
+
 
 signals:
 	void trans_continue(long );

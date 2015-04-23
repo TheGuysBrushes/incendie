@@ -26,10 +26,11 @@ private:
 	
 public:
 	// Constructeur et desctructeur
+	FireWidget();
 	FireWidget(int hauteur, int largeur, float proba = 0.60, float coef_brulure=1.0);
 	virtual ~FireWidget();
 	
-	void newForet(int _hauteur, int _largeur, float _proba = 0.60, float _coef_brulure=1.0);
+	void newForet(int _hauteur, int _largeur, float _proba, float _coef_brulure);
 	
 	// Autres méthodes
 	void setColor(int colorIndice);
