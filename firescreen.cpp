@@ -130,7 +130,7 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
 	
 	// taille minimale de la fenetre : (Hpanneau + Lpanneau)/(Hpanneau) + marges,
 	//		ce qui donne un carré à gauche de cote au moins la hauteur du panneau, pour la foret, ET le panneau à droite
-	setMinimumSize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +10);
+	setMinimumSize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
 }
 
 FireScreen::~FireScreen()
