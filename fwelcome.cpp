@@ -5,6 +5,12 @@
 
 Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 {
+	
+	// Conteneur
+	QVBoxLayout* lay = new QVBoxLayout(this);
+	QWidget* ww = new QWidget(this);
+	QGridLayout* grid_lay = new QGridLayout(ww);
+	
 	// Initialisation des composants
 	QString s = " Bienvenue sur l'automate de simulation de feux de foret. \n Veuillez renseigner les differents parametres pour la simulation \n que vous allez effectuer, puis validez. \n";
 	QLabel* present = new QLabel(s);
@@ -15,8 +21,13 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	QLabel* p_lbl = new QLabel("Probabilite : ");
 	QLabel* c_lbl = new QLabel("Coefficient : ");
 	
-	haut_edit = new QLineEdit("50");
-	larg_edit = new QLineEdit("50");
+	haut_spin = new QSpinBox(ww);
+	larg_spin = new QSpinBox(ww);
+	haut_spin->setMinimum(100);
+	larg_spin->setMinimum(100);
+	haut_spin->setMaximum(1000);
+	haut_spin->setMaximum(1000);
+	haut_spin->setSingleStep(25);
 	
 	QSlider * slide_p = new QSlider(Qt::Horizontal,0);
 	QSlider* slide_c = new QSlider(Qt::Horizontal,0);
@@ -32,15 +43,12 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	c_value = new QLabel("0.50");
 	
 	valid_btn = new QPushButton("Valider");
-	// Encapsulation des éléments
-	QVBoxLayout* lay = new QVBoxLayout(this);
-	QWidget* ww = new QWidget(this);
-	QGridLayout* grid_lay = new QGridLayout(ww);
+	valid_btn->setDefault(true);
 	
 	grid_lay->addWidget(h_lbl,0,0);
-	grid_lay->addWidget(haut_edit,0,1);
+	grid_lay->addWidget(haut_spin,0,1);
 	grid_lay->addWidget(l_lbl,1,0);
-	grid_lay->addWidget(larg_edit,1,1);
+	grid_lay->addWidget(larg_spin,1,1);
 	grid_lay->addWidget(p_lbl,2,0);
 	grid_lay->addWidget(slide_p,2,1);
 	grid_lay->addWidget(p_value,2,2);
@@ -56,6 +64,9 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	// Connection entre Slider et Label associé
 	connect(slide_c, SIGNAL(valueChanged(int)), this, SLOT(set_coef(int)) );
 	connect(slide_p, SIGNAL(valueChanged(int)), this, SLOT(set_proba(int)) );
+	connect(valid_btn, SIGNAL(clicked()), this, SLOT(accept()) );
+
+	
 	
 }
 
