@@ -23,7 +23,7 @@ Lundi : Flo : - les cellules/arbres sont stockés par pointeurs dans le vecteur 
  Mardi : Intégration de la notion d'essence dans une forêt (Gestion moteur et graphique). Gestion couleurs != abres
          Cellule adjacentes en diagonale
  
- Mercredi : Calcul et prise en compte des points de vie en fonction des paramètres de l'essence et des caractères discrets de l'arbre.
+ [h1]Mercredi :[/h1] Calcul et prise en compte des points de vie en fonction des paramètres de l'essence et des caractères discrets de l'arbre.
  
  Jeudi : Sélection aléatoire essence avec notion de bosquet. Nettoyage du code, debugage, tests mémoires ( concluant).
  
@@ -32,4 +32,11 @@ Lundi : Flo : - les cellules/arbres sont stockés par pointeurs dans le vecteur 
 
 Semaine 3 :
 
-  Lundi-Mardi : Mise en place de l'interface Qt.
+  Lundi-Mardi : Mise en place de l'intégration Qt, premières optimisations.
+ 
+  Mercredi    : Mise en place de l'interface, enrobage graphique. Florian : Correction du calculs de PV et des essences, optimisations.
+  
+  Jeudi       : Ugo : Ajout de fonctionnalités de l'interface.
+              - Florian : Modification du redimensionnement de la foret et optimisation du déroulement de l'affichage : => Ajout dans la foret d'une liste d'arbre qui viennent de s'eteindre suite à une combustion total, 
+  
+ 
