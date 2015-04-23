@@ -10,7 +10,7 @@ FireWidget::FireWidget(int hauteur, int largeur, float proba, float coef_brulure
 	buffer = new QImage();
 	color = new QColor(Qt::black);
 	
-	setMinimumSize(600,600);
+	setMinimumSize(hauteur, largeur);
 	
 	probaMatriceReset= proba;
 }
@@ -61,15 +61,15 @@ void FireWidget::setColor(int colorIndice)
  */
 void FireWidget::drawForest()
 {	
-	QPainter paint(this->buffer);
+	QPainter paint(buffer);
 	
-	int current_largeur= 0;
-	for(int i=0; i<this->foret->largeur(); ++i){
+	int current_hauteur= 0;
+	for(int i=0; i<foret->hauteur(); ++i){
 		// On ne passe pas la hauteur de la grille mais le nombre de colonne*taille de colonne pour
 		// éviter la petite zone en bas de grille
-		vector< Cellule* >* ligne= foret->operator[](i);
+		vector< Cellule* >* ligne= (*foret)[i];
 		
-		int current_hauteur= 0;
+		int current_largeur= 0;
 		for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
 			Cellule* cell= *j;
 			
@@ -81,6 +81,7 @@ void FireWidget::drawForest()
 				// Il faut ici vérifier l'essence de l'arbre pour lui attribuer une variante de vert
 				Arbre* ab= dynamic_cast < Arbre* >(cell);
 				unsigned indice= ab->getEssence()->getIndice();
+//				Pour changer la couleur de l'arbre en train d'etre enflammé 
 // 				int brulure= ab->getEssence()->get;
 				setColor(indice );
 				#if DEBUG_TMATRICE
@@ -90,12 +91,12 @@ void FireWidget::drawForest()
 			}
 			
 			// Incrémentations des positions des cellules
-			current_hauteur += tailleCell;
+			current_largeur += tailleCell;
 		}
 		#if DEBUG_TMATRICE
 		cout << endl;
 		#endif
-		current_largeur += tailleCell;
+		current_hauteur += tailleCell;
 	}
 	
 	#if DEBUG_TMATRICE
@@ -116,13 +117,13 @@ void FireWidget::drawFire()
 	
 	QPainter paint(this->buffer);
 	
-	int current_largeur= 0;
-	for(int i=0; i<this->foret->largeur(); ++i){
+	int current_hauteur= 0;
+	for(int i=0; i<foret->hauteur(); ++i){
 		// On ne passe pas la hauteur de la grille mais le nombre de colonne*taille de colonne pour
 		// éviter la petite zone en bas de grille
 		vector< Cellule* >* ligne= foret->operator[](i);
 		
-		int current_hauteur= 0;
+		int current_largeur= 0;
 		for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
 			Cellule* cell= *j;
 
@@ -140,12 +141,12 @@ void FireWidget::drawFire()
 			#endif
 
 			// Incrémentations des positions des cellules
-			current_hauteur += tailleCell;
+			current_largeur += tailleCell;
 		}
 		#if DEBUG_TMATRICE
 		cout << endl;
 		#endif
-		current_largeur += tailleCell;
+		current_hauteur+= tailleCell;
 	}
 	
 	#if DEBUG_TMATRICE
@@ -304,16 +305,15 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 	
 	int tailleCote= min(event->size().width(), event->size().height());
 	#if DEBUG_TMATRICE
-	cout << "tH: "<< event->size().width()<< " tL "<< event->size().height()<< " ; max donne taille coté : " << tailleCote<< endl;
+	cout << "tH: "<< event->size().width()<< " tL "<< event->size().height()<< " ; min donne taille coté : " << tailleCote<< endl;
 	#endif
 	
-	// 	resize(tailleCote,tailleCote);
-	
 	float nbMax = max(foret->largeur(), foret->hauteur());
-	
 	tailleCell = tailleCote /	nbMax;
+	
+// 	/*resize*/setMinimumSize(tailleCell*foret->largeur(), tailleCell*foret->hauteur());
 
-	buffer = new QImage(tailleCote,tailleCote, QImage::Format_ARGB32);
+	buffer = new QImage(tailleCell*foret->largeur(), tailleCell*foret->hauteur(), QImage::Format_ARGB32);
 	buffer->fill(Qt::white);
 // 	void(*pDraw)(int, int, const Cellule*);
 // 	pDraw= drawVariable;
@@ -326,8 +326,8 @@ void FireWidget::mousePressEvent(QMouseEvent* event)
 {
 	QWidget::mousePressEvent(event); // TODO verifier si à supprimmer
 	
-	int colonne= event->y()/tailleCell;
-	int ligne= event->x()/tailleCell;
+	int colonne= event->x()/tailleCell;
+	int ligne= event->y()/tailleCell;
 	
 	if (event->button()==Qt::LeftButton)
 		allumerFeu(ligne, colonne);
@@ -344,8 +344,8 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 {
 	QWidget::mouseMoveEvent(event);	// TODO verifier si à supprimmer
 	
-	int colonne= event->y()/tailleCell;
-	int ligne= event->x()/tailleCell;
+	int colonne= event->x()/tailleCell;
+	int ligne= event->y()/tailleCell;
 	
 	if (event->buttons().testFlag(Qt::LeftButton) )
 		allumerFeu(ligne, colonne);
