@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'firewidget.h'
 **
-** Created: Thu Apr 23 16:26:36 2015
+** Created: Thu Apr 23 16:41:52 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,25 +23,21 @@ static const uint qt_meta_data_FireWidget[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       1,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
-
- // signals: signature, parameters, type, tag, flags
-      28,   12,   11,   11, 0x05,
+       0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      53,   11,   11,   11, 0x0a,
+      12,   11,   11,   11, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_FireWidget[] = {
-    "FireWidget\0\0largeur,hauteur\0"
-    "SizeCellChanged(int,int)\0restart()\0"
+    "FireWidget\0\0restart()\0"
 };
 
 void FireWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -50,11 +46,11 @@ void FireWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         Q_ASSERT(staticMetaObject.cast(_o));
         FireWidget *_t = static_cast<FireWidget *>(_o);
         switch (_id) {
-        case 0: _t->SizeCellChanged((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 1: _t->restart(); break;
+        case 0: _t->restart(); break;
         default: ;
         }
     }
+    Q_UNUSED(_a);
 }
 
 const QMetaObjectExtraData FireWidget::staticMetaObjectExtraData = {
@@ -89,17 +85,10 @@ int FireWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 1)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 1;
     }
     return _id;
-}
-
-// SIGNAL 0
-void FireWidget::SizeCellChanged(int _t1, int _t2)
-{
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
-    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_END_MOC_NAMESPACE

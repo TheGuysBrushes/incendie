@@ -225,7 +225,6 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 	float nbCol= foret->largeur();
 	float nbRow= foret->hauteur();
 	tailleCell = min (event->size().width() / nbCol , event->size().height() / nbRow);
-	emit SizeCellChanged(tailleCell*nbCol, tailleCell*nbRow);
 	
 	#if DEBUG_DIMENSION
 	cout << "tH: "<< event->size().width()<< " tL "<< event->size().height()<< endl;

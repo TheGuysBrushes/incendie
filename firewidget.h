@@ -59,9 +59,6 @@ protected:
 public slots:
 	void restart();
 	
-signals:
-	void SizeCellChanged(int largeur, int hauteur);
-	
 // 	void transition(long x);
 };
 

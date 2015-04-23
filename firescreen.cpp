@@ -20,6 +20,7 @@
 FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float coef_brulure/*, QWidget* parent, Qt::WindowFlags flags*/)
 :	/*QMainWindow(parent, flags),*/	delai(nTemps)
 {
+	
 	QAction* exit = new QAction(this);
 	exit->setText( "Quitter" );
 	
@@ -127,7 +128,7 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
 // 	QObject::connect(this, SIGNAL(ask_restart()), fwidget, SLOT(restart()));
 	QObject::connect(slider, SIGNAL(valueChanged(int)), this, SLOT(set_delai(int )));
 	
-	connect(fwidget, SIGNAL(SizeCellChanged(int,int)), this, SLOT(minimumSize(int,int)));
+	setMinimumSize(lay->sizeHint().height()+250, lay->sizeHint().width());
 }
 
 FireScreen::~FireScreen()
@@ -186,10 +187,3 @@ void FireScreen::compteur()
 	}
 	else timer->stop();
 }
-
-void FireScreen::minimumSize(int largeur, int hauteur)
-{
-	setMinimumSize(largeur+250, hauteur);
-}
-
-
