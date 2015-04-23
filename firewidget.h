@@ -26,7 +26,6 @@ private:
 	
 public:
 	// Constructeur et desctructeur
-	FireWidget();
 	FireWidget(int hauteur, int largeur, float proba = 0.60, float coef_brulure=1.0);
 	virtual ~FireWidget();
 	
@@ -49,6 +48,7 @@ public:
 	bool finirFeu(int ligne, int colonne);
 	
 	bool next();
+	void restart();
 
 protected:
 	void mousePressEvent(QMouseEvent *event);
@@ -56,9 +56,6 @@ protected:
 // 	void mouseReleaseEvent(QMouseEvent *event);
 	void resizeEvent(QResizeEvent * event);
 	void paintEvent(QPaintEvent* event);
-	
-public slots:
-	void restart();
 	
 // 	void transition(long x);
 };

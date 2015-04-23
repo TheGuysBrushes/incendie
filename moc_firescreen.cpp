@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'firescreen.h'
 **
-** Created: Thu Apr 23 17:13:07 2015
+** Created: Thu Apr 23 21:24:47 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -48,7 +48,7 @@ static const char qt_meta_stringdata_FireScreen[] = {
     "FireScreen\0\0trans_continue(long)\0"
     "ask_restart()\0start_timer(bool)\0"
     "stop_timer(bool)\0compteur()\0x\0"
-    "set_delai(int)\0init_btn()\0"
+    "set_delai(int)\0reset()\0"
 };
 
 void FireScreen::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -63,7 +63,7 @@ void FireScreen::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 3: _t->stop_timer((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 4: _t->compteur(); break;
         case 5: _t->set_delai((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 6: _t->init_btn(); break;
+        case 6: _t->reset(); break;
         default: ;
         }
     }

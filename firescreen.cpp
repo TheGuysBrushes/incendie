@@ -32,26 +32,26 @@ FireScreen::FireScreen(): QMainWindow()
 	connect(exit, SIGNAL(triggered()), SLOT(close()) );
 }
 
-FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float coef_brulure/*, QWidget* parent, Qt::WindowFlags flags*/)
-:	/*QMainWindow(parent, flags),*/	delai(nTemps)
-{
-	// AFFICHEUR DE FORET
-// 	fwidget= new FireWidget(hauteur, largeur, proba, coef_brulure);
-// 	timer = new QTimer();
-	nb_tour = 0;
-	
-	QAction* exit = new QAction(this);
-	exit->setText( "Quitter" );
-	
-	QAction* save = new QAction(this);
-	save->setText( "Save" );
-	
-	menuBar()/*->addMenu( "Menu" )*/->addAction(exit);
-	menuBar()->addAction(save);
-	connect(exit, SIGNAL(triggered()), SLOT(close()) );
-	
-	initialiseParametres(hauteur, largeur, proba, nTemps, coef_brulure);
-}
+// FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float coef_brulure/*, QWidget* parent, Qt::WindowFlags flags*/)
+// :	/*QMainWindow(parent, flags),*/	delai(nTemps)
+// {
+// 	// AFFICHEUR DE FORET
+// // 	fwidget= new FireWidget(hauteur, largeur, proba, coef_brulure);
+// // 	timer = new QTimer();
+// 	nb_tour = 0;
+// 	
+// 	QAction* exit = new QAction(this);
+// 	exit->setText( "Quitter" );
+// 	
+// 	QAction* save = new QAction(this);
+// 	save->setText( "Save" );
+// 	
+// 	menuBar()/*->addMenu( "Menu" )*/->addAction(exit);
+// 	menuBar()->addAction(save);
+// 	connect(exit, SIGNAL(triggered()), SLOT(close()) );
+// 	
+// 	initialiseParametres(hauteur, largeur, proba, nTemps, coef_brulure);
+// }
 
 FireScreen::~FireScreen()
 {
@@ -60,7 +60,6 @@ FireScreen::~FireScreen()
 
 void FireScreen::initialiseParametres(int hauteur, int largeur, float proba, long nTemps, float coef_brulure/*, QWidget* parent, Qt::WindowFlags flags*/)
 {
-	
 	fwidget= new FireWidget(hauteur, largeur, proba, coef_brulure);
 	timer = new QTimer();
 
@@ -146,22 +145,30 @@ void FireScreen::initialiseParametres(int hauteur, int largeur, float proba, lon
 	QObject::connect(play_btn,		SIGNAL(clicked(bool)), this,	SLOT(start_timer(bool)) );
 	QObject::connect(pause_btn,	SIGNAL(clicked(bool)), this, SLOT(stop_timer(bool)) );
 	QObject::connect(timer, 		SIGNAL(timeout()), this,		SLOT(compteur()) );
-	QObject::connect(next_btn, 	SIGNAL(clicked(bool)), this,	SLOT(compteur()) );
+	QObject::connect(next_btn, 	SIGNAL(clicked()), this,	SLOT(compteur()) );
 
 	/// @author Florian
-	QObject::connect(reset_btn, SIGNAL(clicked()), fwidget, SLOT(restart()) );
-	QObject::connect(reset_btn, SIGNAL(clicked(bool)),this,SLOT(init_btn()) );
+	QObject::connect(reset_btn,	SIGNAL(clicked()), this,	SLOT(reset()) );
 		
 	// Tests pour RAZ de la matrice
 // 	QObject::connect(reset_btn, SIGNAL(clicked()), this, SLOT(raz_matrice()) );
 // 	QObject::connect(this, SIGNAL(ask_restart()), fwidget, SLOT(restart()));
-	QObject::connect(slider, SIGNAL(valueChanged(int)), this, SLOT(set_delai(int )));
+	QObject::connect(slider,	SIGNAL(valueChanged(int)), this, SLOT(set_delai(int )));
 	
 	// taille minimale de la fenetre : (Hpanneau + Lpanneau)/(Hpanneau) + marges,
 	//		ce qui donne un carré à gauche de cote au moins la hauteur du panneau, pour la foret, ET le panneau à droite
+	setMinimumSize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
+}
+
+void FireScreen::majTimer()
+{
+	cpt_lbl->setText(QString::number(nb_tour));
 }
 
 
+// #############
+// 	Events
+// #############
 void FireScreen::resizeEvent(QResizeEvent* Qevent)
 {
 	QWidget::resizeEvent(Qevent);
@@ -195,12 +202,17 @@ void FireScreen::set_delai(int x)
 	timer->setInterval(delai);
 }
 
-void FireScreen::init_btn()
+void FireScreen::reset()
 {
 	play_btn->setEnabled(true);
 	next_btn->setEnabled(true);
 	pause_btn->setDisabled(true);
+	
 	timer->stop();
+	nb_tour= 0;
+	majTimer();
+	
+	fwidget->restart();
 }
 
 
@@ -209,7 +221,7 @@ void FireScreen::compteur()
 	// IMPROVEIT tour suivant fait dans le compteur pour l'instant
 	if (fwidget->next()){
 		nb_tour += 1;
-		cpt_lbl->setText(QString::number(nb_tour));
+		majTimer();
 	}
 	else timer->stop();
 }

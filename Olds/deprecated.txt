@@ -1,3 +1,10 @@
+################################
+firescreen
+################################
+
+int screenWidth= QApplication::desktop()->screenGeometry().width();
+setMaximumWidth( min( screenWidth/largeur * largeur , screenWidth) );
+
 
 ################################
 #			foret.cpp			#

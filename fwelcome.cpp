@@ -37,7 +37,9 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	slide_p->setMinimum(1);
 	
 	slide_c->setValue(50);
+// 	set_proba(50);
 	slide_p->setValue(50);
+// 	set_coef(50);
 	
 	p_value = new QLabel("0.50");
 	c_value = new QLabel("0.50");

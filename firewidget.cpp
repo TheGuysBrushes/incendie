@@ -23,13 +23,9 @@ FireWidget::~FireWidget()
 	delete(foret);
 }
 
-// void FireWidget::newForet(int hauteur, int largeur, float proba, float coef_brulure)
-// {
-// 	
-// }
-
-
-//Autres méthodes
+// #####################
+//		Autres méthodes
+// #####################
 void FireWidget::setColor(int colorIndice)
 {
 	switch(colorIndice){
@@ -301,10 +297,10 @@ bool FireWidget::next()
 	return true; // cas par défaut, il y a eu un changement
 }
 
+
 /**
  * reinitialise la foret
  * @author Florian et un petit peu Ugo :p
- * BUG ne remet pas à zero le compteur ...
  */
 void FireWidget::restart()
 {
@@ -313,8 +309,6 @@ void FireWidget::restart()
 	delete(OldForet);
 	// il faudrait en plus vider la matrice de feu ...
 // 	foret->reset(probaMatriceReset);
-	// plante
-// 	foret->initialisation(probaMatriceReset);
 	drawForest();
 	drawFire();
 	update();
