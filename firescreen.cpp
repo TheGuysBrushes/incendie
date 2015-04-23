@@ -61,8 +61,8 @@ FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float
 	delai_lbl = new QLabel(QString::number(val_init));
 	// Ajouter la scrollbar horizontale
 	QSlider* slider = new QSlider(Qt::Horizontal,0);
-	slider->setMinimum(20);
-	slider->setMaximum(1000);
+	slider->setMinimum(10);
+	slider->setMaximum(500);
 	slider->setValue(val_init);
 	
 	// Touches d'améliorations visuelles et d'initialisation de propriétés

@@ -481,6 +481,8 @@ void Foret::transition(Arbre* ab)
 	
 	if ( ab->brule(burningCoef) )
 		onFire.push_back(ab);
+	else // quand un arbre ne brule plus (il devient cendres), on l'ajoute à la liste des arbres devenus cendres
+		carbonized.push_back(ab);
 }
 
 /**

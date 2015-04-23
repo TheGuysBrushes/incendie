@@ -101,57 +101,30 @@ void FireWidget::drawForest()
 	
 	#if DEBUG_TMATRICE
 	cout <<"fin draw forest ; "<< endl;
-	#endif	
+	#endif
 }
 
 /**
  * Dessine la matrice dans le buffer, sur l'ancienne matrice
  * 	On réutilise les cellules non susceptibles d'avoir été modifiées
- * @author Ugo and Florian
+ * @author Florian and Ugo
  */
 void FireWidget::drawFire()
 {
-	#if DEBUG_TMATRICE
-	cout <<"draw fire "<< endl;
-	#endif
+	QPainter paint(buffer);
 	
-	QPainter paint(this->buffer);
-	
-	int current_hauteur= 0;
-	for(int i=0; i<foret->hauteur(); ++i){
-		// On ne passe pas la hauteur de la grille mais le nombre de colonne*taille de colonne pour
-		// éviter la petite zone en bas de grille
-		vector< Cellule* >* ligne= foret->operator[](i);
-		
-		int current_largeur= 0;
-		for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
-			Cellule* cell= *j;
-
-			if(cell->getEtat() == 2){
-				this->color->setNamedColor("red");
-				paint.fillRect(current_largeur, current_hauteur, tailleCell, tailleCell, *(color));
-				
-			}else if(cell->getEtat() ==3){
-				this->color->setNamedColor("gray");
-				paint.fillRect(current_largeur, current_hauteur, tailleCell, tailleCell, *(color));
-			}
-
-			#if DEBUG_TMATRICE
-			cout <<"draw arbre feu ; ";
-			#endif
-
-			// Incrémentations des positions des cellules
-			current_largeur += tailleCell;
-		}
-		#if DEBUG_TMATRICE
-		cout << endl;
-		#endif
-		current_hauteur+= tailleCell;
+	list< Arbre * >* onFire= &(foret->onFire);
+	for( list< Arbre * >::const_iterator j( onFire->begin() ); j != onFire->end(); ++j){
+		color->setNamedColor("red");
+		paint.fillRect(tailleCell* (*j)->getPos().col, tailleCell* (*j)->getPos().row, tailleCell, tailleCell, *(color));
 	}
 	
-	#if DEBUG_TMATRICE
-	cout <<"fin draw fire" <<  endl;
-	#endif
+	const list< Arbre * >* newAsh= foret->getCarbonized();
+	for( list< Arbre * >::const_iterator j( newAsh->begin() ); j != newAsh->end(); ++j){
+		color->setNamedColor("gray");
+		paint.fillRect(tailleCell* (*j)->getPos().col, tailleCell* (*j)->getPos().row, tailleCell, tailleCell, *(color));
+	}
+	foret->clearCarbonized();
 }
 
 /**

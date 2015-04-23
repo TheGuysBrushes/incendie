@@ -26,13 +26,16 @@ private:
 	Vent wind;
 	std::vector< Essence > essences;
 	std::vector<std::vector< Cellule* > > matrice;
-	std::list< Arbre* >	onFire;
+// 	std::list< Arbre* >	onFire;
+	std::list< Arbre* >	carbonized;
 	
 // METHODES
 private:
 	unsigned essenceRandom(int _j, int _i, unsigned distOthers);
 	
 public:
+	std::list< Arbre* >	onFire;
+	
 	// Constructeur et destructeur
 	Foret(int n_lignes, int n_colonnes, float proba=0.60, float coefFire=1.0);
 	Foret(Foret& other, float proba=0.60);
@@ -48,6 +51,9 @@ public:
 	int largeur(){ return colonnes;};
 	int hauteur(){ return lignes;};
 	std::vector< Cellule* >* operator[](int ligne) { return &(matrice[ligne]); };
+	
+	const std::list< Arbre* >* getCarbonized() const	{ return &carbonized; };
+	void clearCarbonized()	{ carbonized.clear(); };
 
 	// Autres méthodes
 	void water(Arbre* ab);

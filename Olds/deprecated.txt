@@ -3,6 +3,7 @@
 #			foret.cpp			#
 #			explode()			#
 #	avec const char*			#
+################################
 
 vector< const char* >& explode(const string& str)
 {
@@ -20,24 +21,6 @@ vector< const char* >& explode(const string& str)
 
 	return   *tokens;
 }
-
-################################
-#		loadEssences()			#
-#	const char* et atof		#
-			vector<const char*>& tokens = explode(line);	
-			essences.push_back( Essence(indice,
-												tokens[0], atoi(tokens[1]/*.c_str()*/),
-												atof(tokens[2]/*, NULL*/),
-												atoi(tokens[3]/*.c_str()*/),
-												atoi(tokens[4]/*.c_str()*/),
-												atoi(tokens[5]/*.c_str()*/)			)		);
-			#if DEBUG_FILE
-			cout << "diam : " << atof(tokens[2]/*.c_str()*//*, NULL*/)<< endl;
-			#endif
-
-################################			
-################################
-		
 
 ################################
 #			foret.cpp			#
@@ -85,4 +68,59 @@ après bool modif = false;
 
 void Foret::eteindre(int row, int col){
 	dynamic_cast < Arbre* >(matrice[row][col])->blast();
+}
+
+
+################################
+#			foret.h/cpp			#
+#			drawFire();			#
+################################
+/**
+ * Dessine la matrice dans le buffer, sur l'ancienne matrice
+ * 	On réutilise les cellules non susceptibles d'avoir été modifiées
+ * @author Ugo and Florian
+ */
+void FireWidget::drawFire()
+{
+	#if DEBUG_TMATRICE
+	cout <<"draw fire "<< endl;
+	#endif
+	
+	QPainter paint(this->buffer);
+	
+	int current_hauteur= 0;
+	for(int i=0; i<foret->hauteur(); ++i){
+		// On ne passe pas la hauteur de la grille mais le nombre de colonne*taille de colonne pour
+		// éviter la petite zone en bas de grille
+		vector< Cellule* >* ligne= foret->operator[](i);
+		
+		int current_largeur= 0;
+		for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
+			Cellule* cell= *j;
+
+			if(cell->getEtat() == 2){
+				this->color->setNamedColor("red");
+				paint.fillRect(current_largeur, current_hauteur, tailleCell, tailleCell, *(color));
+				
+			}else if(cell->getEtat() ==3){
+				this->color->setNamedColor("gray");
+				paint.fillRect(current_largeur, current_hauteur, tailleCell, tailleCell, *(color));
+			}
+
+			#if DEBUG_TMATRICE
+			cout <<"draw arbre feu ; ";
+			#endif
+
+			// Incrémentations des positions des cellules
+			current_largeur += tailleCell;
+		}
+		#if DEBUG_TMATRICE
+		cout << endl;
+		#endif
+		current_hauteur+= tailleCell;
+	}
+	
+	#if DEBUG_TMATRICE
+	cout <<"fin draw fire" <<  endl;
+	#endif
 }
