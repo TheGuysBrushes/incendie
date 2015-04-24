@@ -40,6 +40,7 @@ public:
 	virtual ~FireScreen();
 		
 	void initialiseParametres(int hauteur, int largeur, float proba, float coef_brulure);
+	void majTimer();
 		
 protected:
 	void resizeEvent(QResizeEvent* Qevent);

@@ -105,6 +105,10 @@ void FireWidget::drawForest()
 				#endif
 				drawCell(current_largeur, current_hauteur);
 			}
+			else if (cell->getEtat() == 3){
+				color->setNamedColor("gray");
+				drawCell(current_largeur, current_hauteur);
+			}
 			
 			// Incrémentations des positions des cellules
 			current_largeur += tailleCell;
