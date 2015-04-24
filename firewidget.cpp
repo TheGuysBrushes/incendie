@@ -19,6 +19,7 @@ FireWidget::FireWidget(int hauteur, int largeur, float proba, float coef_brulure
 // Destructeur
 FireWidget::~FireWidget()
 {
+	delete(bufferPainter);
 	delete(buffer);
 	delete(color);
 	delete(foret);

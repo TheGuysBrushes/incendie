@@ -180,7 +180,8 @@ void FireScreen::initialiseParametres(int hauteur, int largeur, float proba, flo
 
 	// taille minimale de la fenetre : (Hpanneau + Lpanneau)/(Hpanneau) + marges,
 	//		ce qui donne un carré à gauche de cote au moins la hauteur du panneau, pour la foret, ET le panneau à droite
-	setMinimumSize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
+// 	setMinimumSize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
+	setMinimumHeight(lay->sizeHint().height() +menuBar()->sizeHint().height());
 
 	// Maximums
 	int freePixHeight= QApplication::desktop()->screenGeometry().height()-45 ; // 45 pixel à cause des marges et menu (observé 43)
