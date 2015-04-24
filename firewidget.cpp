@@ -150,7 +150,7 @@ void FireWidget::drawFire()
  * @author Florian
  * @param ligne 
  * @param colonne ligne et colonne de l'arbre à eteindre
- * @return vrai si il y avait un arbre en feu
+* @return vrai si il y avait un arbre en feu
  */
 bool FireWidget::eteindreFeu(int ligne, int colonne)
 {

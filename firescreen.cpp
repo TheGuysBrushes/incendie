@@ -11,6 +11,8 @@
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
 #include <QtGui/QAction>
+#include <QApplication>
+#include <qdesktopwidget.h>
 /*		BUG 
  *  - Lorsque le clic est enfoncé et que l'on sort du cadre du widget, Arrêt brutal 
  * 	TODO CORRIGE ?
@@ -179,6 +181,23 @@ void FireScreen::initialiseParametres(int hauteur, int largeur, float proba, flo
 	// taille minimale de la fenetre : (Hpanneau + Lpanneau)/(Hpanneau) + marges,
 	//		ce qui donne un carré à gauche de cote au moins la hauteur du panneau, pour la foret, ET le panneau à droite
 	setMinimumSize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
+
+	// Maximums
+	int freePixHeight= QApplication::desktop()->screenGeometry().height()-45 ; // 45 pixel à cause des marges et menu (observé 43)
+	int freePixWidth= QApplication::desktop()->screenGeometry().width() -250-15; // les 15 pixels car il doit y avoir des marges (observé 14)
+	
+	int maxCellHeight= freePixHeight/hauteur; 
+	int maxCellWidth= freePixWidth/largeur;
+	int tCellMax= std::min(maxCellHeight, maxCellWidth);
+	
+	setMaximumHeight( tCellMax * hauteur +45 );
+	setMaximumWidth( tCellMax * largeur +250 +15 );
+	
+	#if DEBUG_DIMENSION
+	std::cout<< "taille cell max : "<< tCellMax<< std::endl;
+	std::cout<< "hauteur redim : "<< freePixHeight/hauteur *hauteur<< " taille libre : "<< freePixHeight<< std::endl;
+	std::cout<< maxCellWidth<< " largeur redim : "<< freePixWidth/largeur *largeur<< " taille libre : "<< freePixWidth<< std::endl;
+	#endif
 }
 
 /**
