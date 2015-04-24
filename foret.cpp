@@ -302,7 +302,7 @@ void Foret::initialisation(float proba)
 	allumer(lignes/2, colonnes/2 +1);
 }
 
-void Foret::reset(float proba)
+void Foret::reset(int _haut, int _larg, float coef, float proba)
 {
 	onFire.clear();
 	carbonized.clear();

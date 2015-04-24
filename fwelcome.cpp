@@ -9,7 +9,9 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	// Conteneur
 	QVBoxLayout* lay = new QVBoxLayout(this);
 	QWidget* ww = new QWidget(this);
+	QWidget* www = new QWidget(this);
 	QGridLayout* grid_lay = new QGridLayout(ww);
+	QHBoxLayout* h_lay = new QHBoxLayout(www);
 	
 	// Initialisation des composants
 	QString s = " Bienvenue sur l'automate de simulation de feux de foret. \n Veuillez renseigner les differents parametres pour la simulation \n que vous allez effectuer, puis validez. \n";
@@ -46,6 +48,8 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	valid_btn = new QPushButton("Valider");
 	valid_btn->setDefault(true);
 	
+	cancel_btn = new QPushButton("Annuler");
+	cancel_btn->setVisible(false);
 	grid_lay->addWidget(h_lbl,0,0);
 	grid_lay->addWidget(haut_spin,0,1);
 	
@@ -60,15 +64,19 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	grid_lay->addWidget(slide_c,3,1);
 	grid_lay->addWidget(c_value,3,2);
 	
+	h_lay->addWidget(valid_btn);
+	h_lay->addWidget(cancel_btn);
+	
 	lay->addWidget(present);
 	lay->addWidget(ww);
-	lay->addWidget(valid_btn);
+	lay->addWidget(www);
 	
 	
 	// Connection entre Slider et Label associé
 	connect(slide_p,	SIGNAL(valueChanged(int)), this, SLOT(set_proba(int)) );
 	connect(slide_c,	SIGNAL(valueChanged(int)), this, SLOT(set_coef(int)) );
 	connect(valid_btn, SIGNAL(clicked()), this, SLOT(accept()) );
+	connect(cancel_btn, SIGNAL(clicked()), this, SLOT(reject()) );
 	
 	// Initialisation des sliders
 	slide_c->setValue(50);

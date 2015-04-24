@@ -108,7 +108,7 @@ void FireScreen::initialiseParametres(int hauteur, int largeur, float proba, flo
 	QLabel* trans_con = new QLabel("Transmission continue : ");
 	
 	QLabel* tour_lbl = new QLabel("Nombre de tours :");
-	majTimer();
+	cpt_lbl->setText(QString::number(nb_tour));
 	
 	// Ajouter la scrollbar horizontale
 	set_delai(interTempsInit);
@@ -181,16 +181,6 @@ void FireScreen::initialiseParametres(int hauteur, int largeur, float proba, flo
 	setMinimumSize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
 }
 
-/**
- * Met à l'affichage du timer, utilise nb_tour
- * @author Florian et Ugo
- */
-void FireScreen::majTimer()
-{
-	cpt_lbl->setText(QString::number(nb_tour));
-}
-
-
 // #############
 // 	Events
 // #############
@@ -229,12 +219,23 @@ void FireScreen::set_delai(int x)
 
 void FireScreen::reset()
 {
-	stop_timer(true);
+	Fwelcome* fwel = new Fwelcome(this);
+	fwel->cancel_btn->setVisible(true);
+	fwel->show();
+	if(fwel->exec() == QDialog::Accepted ){
+		stop_timer(true);
+		nb_tour= 0;
+		// Je supprime, on va pas créer une fonction pour un truc qui demande une ligne
+// 		majTimer();
+		cpt_lbl->setText(QString::number(nb_tour));
+		int hauteur = fwel->get_haut();
+		int largeur = fwel->get_larg();
+		float proba = fwel->get_proba();
+		float coef_brulure = fwel->get_coef();
 	
-	nb_tour= 0;
-	majTimer();
-	
-	fwidget->reset();
+		fwidget->reset(hauteur,largeur,proba,coef_brulure);
+	}
+
 }
 
 
@@ -243,7 +244,7 @@ void FireScreen::compteur()
 	// IMPROVEIT tour suivant fait dans le compteur pour l'instant
 	if (fwidget->next()){
 		nb_tour += 1;
-		majTimer();
+		cpt_lbl->setText(QString::number(nb_tour));
 	}
 	else stop_timer(true);
 }

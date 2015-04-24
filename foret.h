@@ -46,7 +46,7 @@ public:
 	void randomMatrice(float probabilite);
 	bool loadEssences(const std::string& fileName);
 	void initialisation(float proba);
-	void reset(float proba);
+	void reset(int _haut, int _larg, float coef, float proba);
 	
 	// 	Getters and Setters
 	int largeur()	const { return colonnes;};

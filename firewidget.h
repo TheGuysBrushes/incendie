@@ -46,7 +46,7 @@ public:
 	bool allumerFeu(int ligne, int colonne);
 	bool finirFeu(int ligne, int colonne);
 	
-	void reset();
+	void reset(int _haut, int _larg, float coef, float proba);
 
 protected:
 	void mousePressEvent(QMouseEvent *event);

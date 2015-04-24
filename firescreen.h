@@ -6,6 +6,7 @@
 #include <QtGui/QLabel>
 #include <QtGui/QPushButton>
 
+#include "fwelcome.h"
 #include "firewidget.h"
 /*	TODO :
  * 		- Extraire les paramètres pour initialiser la forêt :
@@ -39,8 +40,6 @@ public:
 	virtual ~FireScreen();
 		
 	void initialiseParametres(int hauteur, int largeur, float proba, float coef_brulure);
-	
-	void majTimer();
 		
 protected:
 	void resizeEvent(QResizeEvent* Qevent);

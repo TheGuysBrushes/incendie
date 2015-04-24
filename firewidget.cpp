@@ -345,13 +345,14 @@ bool FireWidget::next()
  * reinitialise la foret
  * @author Florian et un petit peu Ugo :p
  */
-void FireWidget::reset()
+void FireWidget::reset(int _haut, int _larg, float coef, float proba)
 {
 // 	Foret* OldForet= foret;
 // 	foret = new Foret(*OldForet, probaMatriceReset);
 // 	delete(OldForet);
 // IMPROVEIT quelle est la meilleure facon ?
-	foret->reset(probaMatriceReset);
+	
+	foret->reset(_haut,_larg,coef,proba);
 	drawForest();
 	drawFire();
 	update();

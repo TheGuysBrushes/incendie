@@ -19,6 +19,7 @@ private:
 	float coef_brulure;
 	
 public:
+	QPushButton* cancel_btn;
 	Fwelcome(QWidget* parent);
 	virtual ~Fwelcome();
 	int get_haut() const{ return haut_spin->value(); };
