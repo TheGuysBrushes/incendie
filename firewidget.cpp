@@ -142,7 +142,7 @@ void FireWidget::drawFire()
 		color->setNamedColor("gray");
 		drawTree(*j);
 	}
-// 	foret->clearCarbonized();
+	foret->clearCarbonized();
 }
 
 /**

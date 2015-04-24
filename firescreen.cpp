@@ -195,7 +195,7 @@ void FireScreen::majTimer()
 // #############
 void FireScreen::resizeEvent(QResizeEvent* Qevent)
 {
-	
+// 	QWidget::resizeEvent(Qevent);
 }
 
 
