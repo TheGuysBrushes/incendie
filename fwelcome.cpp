@@ -22,12 +22,16 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	QLabel* c_lbl = new QLabel("Coefficient : ");
 	
 	haut_spin = new QSpinBox(ww);
-	larg_spin = new QSpinBox(ww);
 	haut_spin->setMinimum(100);
-	larg_spin->setMinimum(100);
-	haut_spin->setMaximum(1000);
 	haut_spin->setMaximum(1000);
 	haut_spin->setSingleStep(25);
+	haut_spin->setAccelerated(1);
+	
+	larg_spin = new QSpinBox(ww);
+	larg_spin->setMinimum(100);
+	larg_spin->setMaximum(1000);
+	larg_spin->setSingleStep(25);
+	larg_spin->setAccelerated(1);
 	
 	QSlider * slide_p = new QSlider(Qt::Horizontal,0);
 	QSlider* slide_c = new QSlider(Qt::Horizontal,0);
@@ -44,11 +48,14 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	
 	grid_lay->addWidget(h_lbl,0,0);
 	grid_lay->addWidget(haut_spin,0,1);
+	
 	grid_lay->addWidget(l_lbl,1,0);
 	grid_lay->addWidget(larg_spin,1,1);
+	
 	grid_lay->addWidget(p_lbl,2,0);
 	grid_lay->addWidget(slide_p,2,1);
 	grid_lay->addWidget(p_value,2,2);
+	
 	grid_lay->addWidget(c_lbl,3,0);
 	grid_lay->addWidget(slide_c,3,1);
 	grid_lay->addWidget(c_value,3,2);
@@ -59,8 +66,8 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	
 	
 	// Connection entre Slider et Label associé
-	connect(slide_c,	SIGNAL(valueChanged(int)), this, SLOT(set_coef(int)) );
 	connect(slide_p,	SIGNAL(valueChanged(int)), this, SLOT(set_proba(int)) );
+	connect(slide_c,	SIGNAL(valueChanged(int)), this, SLOT(set_coef(int)) );
 	connect(valid_btn, SIGNAL(clicked()), this, SLOT(accept()) );
 	
 	// Initialisation des sliders

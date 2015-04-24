@@ -37,7 +37,6 @@ public:
 // 	/*explicit */FireScreen(int hauteur, int largeur, float proba, long int nTemps = 0.60, float coef_brulure=1.0, bool t = 0,
 // 									QWidget* parent = 0, Qt::WindowFlags flags = 0);
 	virtual ~FireScreen();
-// 	void init_foret(int hauteur, int largeur, float proba, float coef_brulure);
 		
 	void initialiseParametres(int hauteur, int largeur, float proba, float coef_brulure);
 	
