@@ -13,10 +13,9 @@
 #include <QtGui/QAction>
 #include <QApplication>
 #include <qdesktopwidget.h>
-/*		BUG 
- *  - Lorsque le clic est enfoncé et que l'on sort du cadre du widget, Arrêt brutal 
- * 	TODO CORRIGE ?
- * 
+/*		
+ * - BUG Lorsque le clic est enfoncé et que l'on sort du cadre du widget, Arrêt brutal 	TODO CORRIGE ?
+ * - TODO voir pour choisir une meilleur taille initiale (on peut mettre les tailles max)
  */
 FireScreen::FireScreen(): QMainWindow()
 {

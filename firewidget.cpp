@@ -9,7 +9,7 @@ FireWidget::FireWidget(int hauteur, int largeur, float proba, float coef_brulure
 	foret = new Foret(hauteur,largeur,proba,coef_brulure);
 	buffer = new QImage();
 	color = new QColor(Qt::black);
-	bufferPainter= new QPainter(buffer);
+	bufferPainter= new QPainter();
 	
 	setMinimumSize(largeur, hauteur);
 	
@@ -60,6 +60,9 @@ void FireWidget::setColor(int colorIndice)
 void FireWidget::drawCell(int width, int height)
 {
 	bufferPainter->fillRect(width, height, tailleCell, tailleCell, *(color));
+	#if DEBUG_TMATRICE
+	cout <<"draw cell ; ";
+	#endif
 }
 
 // utiliser drawCell?
@@ -71,6 +74,9 @@ void FireWidget::drawCell(int width, int height)
 void FireWidget::drawTree(const Arbre* ab)
 {
 	bufferPainter->fillRect(tailleCell* ab->getPos().col, tailleCell* ab->getPos().row, tailleCell, tailleCell, *(color));
+	#if DEBUG_TMATRICE
+	cout <<"draw tree ; ";
+	#endif
 }
 
 
@@ -80,6 +86,8 @@ void FireWidget::drawTree(const Arbre* ab)
  */
 void FireWidget::drawForest()
 {	
+	bufferPainter->begin(buffer);
+	
 	int current_hauteur= 0;
 	for(int i=0; i<foret->hauteur(); ++i){
 		// On ne passe pas la hauteur de la grille mais le nombre de colonne*taille de colonne pour
@@ -97,13 +105,16 @@ void FireWidget::drawForest()
 			else if(cell->getEtat() == 1){
 				// Il faut ici vérifier l'essence de l'arbre pour lui attribuer une variante de vert
 				Arbre* ab= dynamic_cast < Arbre* >(cell);
-				unsigned indice= ab->getEssence()->getIndice();
+				
 //				Pour changer la couleur de l'arbre en train d'etre enflammé 
 // 				int brulure= ab->getEssence()->get;
-				setColor(indice );
-				#if DEBUG_TMATRICE
-				cout <<"draw cell ; ";
-				#endif
+				
+				unsigned indice= ab->getEssence()->getIndice();
+				setColor(indice);
+				drawCell(current_largeur, current_hauteur);
+			}
+			else if (cell->getEtat() == 2){
+				color->setNamedColor("red");
 				drawCell(current_largeur, current_hauteur);
 			}
 			else if (cell->getEtat() == 3){
@@ -120,6 +131,8 @@ void FireWidget::drawForest()
 		current_hauteur += tailleCell;
 	}
 	
+	bufferPainter->end();
+	
 	#if DEBUG_TMATRICE
 	cout <<"fin draw forest ; "<< endl;
 	#endif
@@ -132,11 +145,14 @@ void FireWidget::drawForest()
  */
 void FireWidget::drawFire()
 {
-	list< Arbre * >* onFire= &(foret->onFire);
-	for( list< Arbre * >::const_iterator j( onFire->begin() ); j != onFire->end(); ++j){
+	bufferPainter->begin(buffer);
+	
+	const list< Arbre * >* newOnFire= foret->getBurned();
+	for( list< Arbre * >::const_iterator j( newOnFire->begin() ); j != newOnFire->end(); ++j){
 		color->setNamedColor("red");
 		drawTree(*j);
 	}
+	foret->clearBurned();
 	
 	const list< Arbre * >* newAsh= foret->getCarbonized();
 	for( list< Arbre * >::const_iterator j( newAsh->begin() ); j != newAsh->end(); ++j){
@@ -144,6 +160,8 @@ void FireWidget::drawFire()
 		drawTree(*j);
 	}
 	foret->clearCarbonized();
+	
+	bufferPainter->end();
 }
 
 /**
@@ -251,6 +269,7 @@ bool FireWidget::finirFeu(int ligne, int colonne)
 // #############
 void FireWidget::paintEvent(QPaintEvent* event)
 {
+// 	bufferPainter->end();
 	QPainter paint(this);
 	paint.drawImage(0, 0, *buffer); // , 0, 0, width(), height());
 }
@@ -259,6 +278,7 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 {	
 	if (!buffer->isNull()){
 		delete(buffer);
+// 		bufferPainter->end();
 	}
 	
 	float nbCol= foret->largeur();
@@ -271,13 +291,13 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 	#endif
 	
 // 	/*resize*/setMinimumSize(tailleCell*foret->largeur(), tailleCell*foret->hauteur());
-
+	
 	buffer = new QImage(tailleCell*foret->largeur(), tailleCell*foret->hauteur(), QImage::Format_ARGB32);
 	buffer->fill(Qt::white);
 	// TODO regarder si on peut utiliser un seul Qpainter pour toutes les ecritures dans le buffer?
 	// CORRIGE ne pas faire de delete 
-// 	delete bufferPainter;
-	bufferPainter= new QPainter(buffer);
+// 	/*delete*/ bufferPainter->end();
+// 	bufferPainter= new QPainter(buffer);
 	
 	drawForest();
 	drawFire();

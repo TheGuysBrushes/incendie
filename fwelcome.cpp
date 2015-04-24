@@ -2,6 +2,9 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QGridLayout>
+/*
+ * - BUG Les sliders/labels changent de dimension lorsqu'il y a un nombre à 2 chiffres après la virgule
+ */
 
 Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 {
@@ -36,11 +39,12 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	larg_spin->setAccelerated(1);
 	
 	QSlider * slide_p = new QSlider(Qt::Horizontal,0);
+	slide_p->setMaximum(100);
+	slide_p->setMinimum(1);
+	
 	QSlider* slide_c = new QSlider(Qt::Horizontal,0);
 	slide_c->setMaximum(100);
 	slide_c->setMinimum(1);
-	slide_p->setMaximum(100);
-	slide_p->setMinimum(1);
 	
 	p_value = new QLabel();
 	c_value = new QLabel();

@@ -21,20 +21,22 @@ private:
 	int lignes;
 	int colonnes;
 	
-	float burningCoef; // ralenti la progression du feu, fixé au lancement, peut être modifié? 
+	float burningCoef; // ralenti la progression du feu, il lui faut plus de tours pour avancer : affecte la précision des mesures
 	
 	Vent wind;
 	std::vector< Essence > essences;
 	std::vector<std::vector< Cellule* > > matrice;
-// 	std::list< Arbre* >	onFire;
+	std::list< Arbre* >	onFire;
+	// on pourrait faire une seule liste avec tous les arbres qui ont changé d'état ; IMPROVEIT ?
 	std::list< Arbre* >	carbonized;
+	std::list< Arbre* >	burned;
+	
 	
 // METHODES
 private:
 	unsigned essenceRandom(int _j, int _i, unsigned distOthers);
 	
 public:
-	std::list< Arbre* >	onFire;
 	
 	// Constructeur et destructeur
 	Foret(int n_lignes, int n_colonnes, float proba=0.60, float coefFire=1.0);
@@ -53,8 +55,12 @@ public:
 	int hauteur()	const { return lignes;};
 	std::vector< Cellule* >* operator[](int ligne) { return &(matrice[ligne]); };
 	
+	const std::list< Arbre* >* getOnFire() const	{ return &onFire; };
 	const std::list< Arbre* >* getCarbonized() const	{ return &carbonized; };
+	const std::list< Arbre* >* getBurned() const	{ return &burned; };
+	
 	void clearCarbonized()	{ carbonized.clear(); };
+	void clearBurned()	{ burned.clear(); };
 
 	// Autres méthodes
 	void water(Arbre* ab);

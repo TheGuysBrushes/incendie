@@ -58,7 +58,9 @@ Foret::~Foret()
 	}
 	
 	onFire.clear();
-	carbonized.clear();	
+	burned.clear();
+	carbonized.clear();
+	
 }
 
 
@@ -400,9 +402,10 @@ void Foret::enflammer(Arbre* ab)
 // 	}
 // 	else {
 	ab->enflammer(burningCoef);
-	if (ab->isOnFire())
+	if (ab->isOnFire()){
 		onFire.push_back(ab);
-// 	}
+		burned.push_back(ab);
+	}
 }
 
 /**
