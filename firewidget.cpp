@@ -270,7 +270,8 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 	buffer = new QImage(tailleCell*foret->largeur(), tailleCell*foret->hauteur(), QImage::Format_ARGB32);
 	buffer->fill(Qt::white);
 	// TODO regarder si on peut utiliser un seul Qpainter pour toutes les ecritures dans le buffer?
-	delete bufferPainter;
+	// CORRIGE ne pas faire de delete 
+// 	delete bufferPainter;
 	bufferPainter= new QPainter(buffer);
 	
 	drawForest();
