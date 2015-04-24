@@ -186,7 +186,6 @@ void FireScreen::initialiseParametres(int hauteur, int largeur, float proba, flo
 // #############
 void FireScreen::resizeEvent(QResizeEvent* Qevent)
 {
-	QWidget::resizeEvent(Qevent);
 	
 }
 
