@@ -2,8 +2,8 @@
 <h1>Automate de simulation d'incendie</h1>
 
 <h2>Semaine 1</h2>
-
-  <h3>Mardi</h3> réfléxion commune 
+  <h3>Mardi</h3>
+  - Réfléxion commune 
 
   <h3>Mercredi</h3>
   - Flo : génération et affichage matrice
@@ -18,13 +18,13 @@
   - Ugo : reflexion sur la modélisation des !=arbres
 
 <h2>Semaine 2</h2>
-
   <h3>Lundi</h3>
     - Flo :
       + les cellules/arbres sont stockés par pointeurs dans le vecteur de vecteurs
       + la cellule ne contient qu'un état, si c'est un arbre (dynamic_cast) il a des attributs spécifiques
       + faire une sous-classe de arbre : arbre en cendres ? ou alors sous-classe de cellule ou seulement arbre dans état brulé (3) : plus simple
       + Nettoyage du code et commentaire.
+      
     - Ugo : Implémentation de la notion d'essence.
 
   <h3>Mardi</h3>
