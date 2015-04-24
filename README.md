@@ -65,6 +65,7 @@
 
   <h3>Vendredi</h3>
   - Gestion des tailles minimales et maximales de la fenetre selon la taille de la foret et de l'écran.
-  - Organisation/nettoyage du code.
+  - Organisation du code.
+  - Passage en revue des commentaires "inutiles" du code, nettoyage et ajout de commentaires.
     + Ugo : Amélioration du bouton reset.
-    + Florian : ajout dans la foret d'une liste d'arbre qui viennent de s'allumer pour optimiser l'affichage, voir si ce sera toujours pertinent lorsque l'on ajoutera des "phases de brulure" aux arbres
+    + Florian : ajout dans la foret d'une liste d'arbre qui viennent de s'allumer pour optimiser l'affichage, voir si ce sera toujours pertinent lorsque l'on ajoutera des "phases de brulure" aux arbres.
