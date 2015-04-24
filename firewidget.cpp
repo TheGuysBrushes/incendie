@@ -355,7 +355,7 @@ void FireWidget::reset(int _haut, int _larg, float coef, float proba)
 // 	foret = new Foret(*OldForet, probaMatriceReset);
 // 	delete(OldForet);
 // IMPROVEIT quelle est la meilleure facon ?
-	
+	buffer->fill(1);
 	foret->reset(_haut,_larg,coef,proba);
 	drawForest();
 	drawFire();

@@ -317,6 +317,10 @@ void Foret::reset(int _haut, int _larg, float coef, float proba)
 	}
 	matrice.clear();
 	
+	lignes = _haut;
+	colonnes = _larg;
+	burningCoef = coef;
+	
 	randomMatrice(proba);
 	
 	allumer(lignes/2, colonnes/2);
