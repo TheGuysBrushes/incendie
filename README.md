@@ -5,11 +5,17 @@
 
   <h3>Mardi</h3> réfléxion commune 
 
-  <h3>Mercredi</h3> Flo : génération et affichage matrice ; Ugo : Cahiers des charges et réflexion
+  <h3>Mercredi</h3>
+  -Flo : génération et affichage matrice
+  -Ugo : Cahiers des charges et réflexion
 
-  <h3>Jeudi</h3> Flo : déclenchement d'un incendie et propagation simple ; Ugo : réflexion sur SDD et != arbres
+  <h3>Jeudi</h3>
+  -Flo : déclenchement d'un incendie et propagation simple 
+  -Ugo : réflexion sur SDD et != arbres
 
-  <h3>Vendredi</h3> Flo : Passage des fonctions via pointeurs et nettoyage du code ; Ugo : reflexion sur la modélisation des !=arbres
+  <h3>Vendredi</h3>
+  -Flo : Passage des fonctions via pointeurs et nettoyage du code 
+  -Ugo : reflexion sur la modélisation des !=arbres
 
 <h2>Semaine 2</h2>
 
@@ -29,12 +35,13 @@
    <h3>Jeudi</h3> Sélection aléatoire essence avec notion de bosquet. Nettoyage du code, debugage, tests mémoires ( concluant).
  
   <h3>Vendredi</h3> Ugo : Transmission liée à l'humidité, réflexion sur modification système pv. 
-              Florian  : Recherches survent + creation de la classe et des opérations sur les vecteurs de vents
+              Florian  : Recherches sur vents + creation de la classe et des opérations sur les vecteurs de vents
 
 <h2>Semaine 3</h2>
 
   <h3>Lundi</h3>
-    Mise en place de l'intégration Qt. 
+  -Mise en place de l'intégration Qt.
+    +Florian : création de quelques primitives de calculs pour le vent.
     
   <h3>Mardi</h3>
   - Premières optimisations de l'affichage de la foret + bouton pas à pas.
