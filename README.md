@@ -25,7 +25,7 @@
       + faire une sous-classe de arbre : arbre en cendres ? ou alors sous-classe de cellule ou seulement arbre dans état brulé (3) : plus simple
       + Nettoyage du code et commentaire.
       
-    - Ugo : Implémentation de la notion d'essence.
+  - Ugo : Implémentation de la notion d'essence.
 
   <h3>Mardi</h3>
   - Intégration de la notion d'essence dans une forêt (Gestion moteur et graphique)
