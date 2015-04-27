@@ -8,15 +8,15 @@
 
 #include "fwelcome.h"
 #include "firewidget.h"
-/*	TODO :
- * 		- Extraire les paramètres pour initialiser la forêt :
- * 				- AlertDialog au démarrage du programme
- * 		- RAZ de la matrice :
- * 				- AlertDialog puis création nouvelle forêt
+/*	TODO firescreen:
  * 
- * 	 DONE : 
- * 		- Gestion du temps continu  
- * 
+ *	 DONE : 
+ * - Gestion du temps continu
+ *	- Extraire les paramètres pour initialiser la forêt :
+ * 	- AlertDialog au démarrage du programme
+ * 	
+ * - RAZ de la matrice :
+ * 	- AlertDialog puis création nouvelle forêt
  */
 class FireScreen : public QMainWindow
 {

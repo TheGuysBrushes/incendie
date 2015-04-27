@@ -12,8 +12,6 @@ FireWidget::FireWidget(int hauteur, int largeur, float proba, float coef_brulure
 	bufferPainter= new QPainter();
 	
 	setMinimumSize(largeur, hauteur);
-	
-	probaMatriceReset= proba;
 }
 
 // Destructeur

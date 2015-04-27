@@ -23,8 +23,6 @@ private:
 	long temps;
 	bool running;
 	
-	float probaMatriceReset; // TODO temp
-	
 public:
 	// Constructeur et desctructeur
 	FireWidget(int hauteur, int largeur, float proba = 0.60, float coef_brulure=1.0);
