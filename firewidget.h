@@ -8,7 +8,7 @@
 #include <functional>
 #include <vector>
 
-#include "foret.h"
+#include "Moteur/foret.h"
 
 class FireWidget : public QWidget {
 Q_OBJECT

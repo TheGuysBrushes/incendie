@@ -6,7 +6,7 @@
 
 #include "../debug.h"
 
-#include "../coordonnee.h" // TEMP
+#include "coordonnee.h"
 
 
 class Vent
