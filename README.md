@@ -19,7 +19,7 @@
 
 <h2>Semaine 2</h2>
   <h3>Lundi</h3>
-    - Flo :
+  - Flo :
       + les cellules/arbres sont stockés par pointeurs dans le vecteur de vecteurs
       + la cellule ne contient qu'un état, si c'est un arbre (dynamic_cast) il a des attributs spécifiques
       + faire une sous-classe de arbre : arbre en cendres ? ou alors sous-classe de cellule ou seulement arbre dans état brulé (3) : plus simple
