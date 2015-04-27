@@ -524,7 +524,7 @@ bool Foret::NextMove()
 	bool modif= false;
 	
 	if (!onFire.empty()){
-		modif= true;		
+		modif= true;
 		list< Arbre* > old= onFire;
 		onFire.clear();		
 		// TODO utiliser mapping ?

@@ -378,6 +378,7 @@ void FireWidget::reset(int _haut, int _larg, float coef, float proba)
 // IMPROVEIT quelle est la meilleure facon ?
 	buffer->fill(1);
 	foret->reset(_haut,_larg,coef,proba);
+	setMinimumSize(_larg, _haut);
 	drawForest();
 	drawFire();
 	update();
