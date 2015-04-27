@@ -39,8 +39,8 @@ public:
 // 									QWidget* parent = 0, Qt::WindowFlags flags = 0);
 	virtual ~FireScreen();
 		
-	void initialiseParametres(int hauteur, int largeur, float proba, float coef_brulure);
-	void initSizes(int _h, int _l);
+	void initialiseParametres(int largeur, int hauteur, float proba, float coef_brulure);
+	void initSizes(int largeur, int hauteur);
 	
 	void majTimer();
 		
@@ -50,14 +50,9 @@ protected:
 public slots:
 	void start_timer(bool);
 	void stop_timer(bool);
-	void compteur();
+	void nextCompteur();
 	void set_delai(int x );
 	void reset();
-
-
-signals:
-	void trans_continue(long );
-	void ask_restart();
 
 };
 

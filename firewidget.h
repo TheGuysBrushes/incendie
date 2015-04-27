@@ -25,16 +25,16 @@ private:
 	
 public:
 	// Constructeur et desctructeur
-	FireWidget(int hauteur, int largeur, float proba = 0.60, float coef_brulure=1.0);
+	FireWidget(int _largeur, int _hauteur, float proba = 0.60, float coef_brulure=1.0);
 	virtual ~FireWidget();
 	
-	void newForet(int _hauteur, int _largeur, float _proba, float _coef_brulure);
+	void newForet(int _largeur, int _hauteur, float _proba, float _coef_brulure);
 	
 	// Autres méthodes
 	void setColor(int colorIndice);
 	
 // AFFICHAGES
-	void drawCell(int width, int height);
+	void drawCell(int colonne, int ligne);
 	void drawTree(const Arbre* ab);
 
 	void drawForest();

@@ -23,7 +23,7 @@ public:
 	
 	void setNS(float val);
 	void setEW(float val);
-	void setVent(float _NS, float _EW); // TODO trouver meilleur nom pour dire qu'on redéfinit direction et puissance
+	void setVent(float _NS, float _EW); // IMPROVEIT trouver meilleur nom pour dire qu'on redefinit direction et puissance
 	
 	virtual Vent& operator+(const Vent& other);
 	virtual Vent& operator-(const Vent& other);

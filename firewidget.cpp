@@ -4,14 +4,14 @@
 using namespace std;
 
 // Constructeur
-FireWidget::FireWidget(int hauteur, int largeur, float proba, float coef_brulure)
+FireWidget::FireWidget(int _largeur, int _hauteur, float proba, float coef_brulure)
 {
-	foret = new Foret(hauteur,largeur,proba,coef_brulure);
+	foret = new Foret(_largeur, _hauteur, proba, coef_brulure);
 	buffer = new QImage();
 	color = new QColor(Qt::black);
 	bufferPainter= new QPainter();
 	
-	setMinimumSize(largeur, hauteur);
+	setMinimumSize(_largeur, _hauteur);
 }
 
 // Destructeur
@@ -55,9 +55,9 @@ void FireWidget::setColor(int colorIndice)
  * @author Florian
  * @param ab arbre à dessiner
  */
-void FireWidget::drawCell(int width, int height)
+void FireWidget::drawCell(int colonne, int ligne)
 {
-	bufferPainter->fillRect(width, height, tailleCell, tailleCell, *(color));
+	bufferPainter->fillRect(colonne, ligne, tailleCell, tailleCell, *(color));
 	#if DEBUG_TMATRICE
 	cout <<"draw cell ; ";
 	#endif
@@ -229,7 +229,7 @@ bool FireWidget::allumerFeu(int ligne, int colonne)
 }
 
 /**
- * Opere une combustion complete sur un arbre en feu (TODO faire sur les arbres non en feu ?)
+ * Opere une combustion complete sur un arbre en feu (IMPROVEIT faire sur les arbres non en feu ?)
  * @author Florian
  * @param ligne
  * @param colonne ligne et colonne de l'arbre à bruler totalement
@@ -292,10 +292,6 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 	
 	buffer = new QImage(tailleCell*foret->largeur(), tailleCell*foret->hauteur(), QImage::Format_ARGB32);
 	buffer->fill(Qt::white);
-	// TODO regarder si on peut utiliser un seul Qpainter pour toutes les ecritures dans le buffer?
-	// CORRIGE ne pas faire de delete 
-// 	/*delete*/ bufferPainter->end();
-// 	bufferPainter= new QPainter(buffer);
 	
 	drawForest();
 	drawFire();
@@ -303,8 +299,6 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 
 void FireWidget::mousePressEvent(QMouseEvent* event)
 {
-	QWidget::mousePressEvent(event); // TODO verifier si à supprimmer
-	
 	int colonne= event->x()/tailleCell;
 	int ligne= event->y()/tailleCell;
 	
@@ -321,8 +315,6 @@ void FireWidget::mousePressEvent(QMouseEvent* event)
 
 void FireWidget::mouseMoveEvent(QMouseEvent* event)
 {
-	QWidget::mouseMoveEvent(event);	// TODO verifier si à supprimmer
-	
 	int colonne= event->x()/tailleCell;
 	int ligne= event->y()/tailleCell;
 	
@@ -336,10 +328,10 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 	}
 }
 
-void FireWidget::newForet(int _hauteur, int _largeur, float _proba, float _coef_brulure)
+void FireWidget::newForet(int _largeur, int _hauteur, float _proba, float _coef_brulure)
 {
 	delete(foret);
-	foret = new Foret(_hauteur,_largeur,_proba,_coef_brulure);
+	foret = new Foret(_largeur,_hauteur, _proba, _coef_brulure);
 }
 
 // ################
@@ -368,14 +360,14 @@ bool FireWidget::next()
  * reinitialise la foret
  * @author Florian et un petit peu Ugo :p
  */
-void FireWidget::reset(int _haut, int _larg, float coef, float proba)
+void FireWidget::reset(int _larg, int _haut, float coef, float proba)
 {
 // 	Foret* OldForet= foret;
 // 	foret = new Foret(*OldForet, probaMatriceReset);
 // 	delete(OldForet);
 // IMPROVEIT quelle est la meilleure facon ?
 	buffer->fill(1);
-	foret->reset(_haut,_larg,coef,proba);
+	foret->reset(_larg,_haut, coef, proba);
 	setMinimumSize(_larg, _haut);
 	drawForest();
 	drawFire();

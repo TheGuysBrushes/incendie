@@ -109,8 +109,8 @@ void Arbre::enflammer(float coef)
 bool Arbre::brule(float coef)
 {
 	// On va déterminer le nombre de points de vie à enlever en fonction des paramètres :
-	// - des caractères discrets de l'arbre
-	// - extérieurs --> TODO
+	// - DID des caractères discrets de l'arbre
+	// - TODO determiner le nombre de points de vie à enlever en fonction des parametres exterieurs
 	int decrementation = 100.0*coef;
 	#if DEBUG_DECRE
 	cout << coef<< ",decre init: "<< decrementation << "|";

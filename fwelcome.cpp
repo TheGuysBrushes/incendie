@@ -21,28 +21,28 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	QLabel* present = new QLabel(s);
 	present->setWordWrap(true);
 	
-	QLabel* h_lbl = new QLabel("Hauteur : ");
-	QLabel* l_lbl = new QLabel("Largeur : ");
-	QLabel* p_lbl = new QLabel("Probabilite : ");
-	QLabel* c_lbl = new QLabel("Coefficient : ");
 	
+	QLabel* h_lbl = new QLabel("Hauteur : ");
 	haut_spin = new QSpinBox(ww);
 	haut_spin->setMinimum(100);
 	haut_spin->setMaximum(1000);
 	haut_spin->setSingleStep(25);
 	haut_spin->setAccelerated(1);
 	
+	QLabel* l_lbl = new QLabel("Largeur : ");
 	larg_spin = new QSpinBox(ww);
 	larg_spin->setMinimum(100);
 	larg_spin->setMaximum(1000);
 	larg_spin->setSingleStep(25);
 	larg_spin->setAccelerated(1);
 	
-	QSlider * slide_p = new QSlider(Qt::Horizontal,0);
+	QLabel* p_lbl = new QLabel("Probabilite : ");
+	QSlider * slide_p = new QSlider(Qt::Horizontal, 0);
 	slide_p->setMaximum(100);
 	slide_p->setMinimum(1);
 	
-	QSlider* slide_c = new QSlider(Qt::Horizontal,0);
+	QLabel* c_lbl = new QLabel("Coefficient : ");
+	QSlider* slide_c = new QSlider(Qt::Horizontal, 0);
 	slide_c->setMaximum(100);
 	slide_c->setMinimum(1);
 	
@@ -96,13 +96,13 @@ Fwelcome::~Fwelcome()
 void Fwelcome::set_proba(int x)
 {
 	proba = (float) x/100;
-	p_value->setText(QString::number(proba));
+	p_value->setText(QString::number(proba, 'f', 2));
 }
 
 void Fwelcome::set_coef(int x)
 {
 	coef_brulure = (float) x/100;
-	c_value->setText(QString::number(coef_brulure));
+	c_value->setText(QString::number(coef_brulure, 'f', 2));
 }
 
 

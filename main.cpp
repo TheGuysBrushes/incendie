@@ -33,7 +33,7 @@ int main(int argc, char** argv)
 		largeur = fwel->get_larg();
 		proba = fwel->get_proba();
 		coef_brulure = fwel->get_coef();
-		screen->initialiseParametres(hauteur, largeur, proba, coef_brulure);
+		screen->initialiseParametres(largeur, hauteur, proba, coef_brulure);
 		screen->show();
 	}
 	

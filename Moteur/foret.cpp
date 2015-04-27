@@ -40,7 +40,7 @@ using namespace std;
 //		Constructeurs et destructeur
 // ################################### 
 
-Foret::Foret(int n_lignes, int n_colonnes, float proba, float coefFire)
+Foret::Foret(int n_colonnes, int n_lignes, float proba, float coefFire)
 : lignes(n_lignes), colonnes(n_colonnes), burningCoef(coefFire), wind(0.0,0.0)
 {
 	initialisation(proba);
@@ -299,7 +299,7 @@ void Foret::randomMatrice(float probabilite)
  */
 void Foret::initialisation(float proba)
 {
-	loadEssences("../essence_data.txt");
+	loadEssences("../Moteur/essence_data.txt");
 	randomMatrice(proba);
 	
 	// DEPARTS D'INCENDIES
@@ -308,7 +308,7 @@ void Foret::initialisation(float proba)
 	allumer(lignes/2, colonnes/2 +1);
 }
 
-void Foret::reset(int _haut, int _larg, float coef, float proba)
+void Foret::reset(int largeur, int hauteur, float coef, float proba)
 {
 	onFire.clear();
 	carbonized.clear();
@@ -323,8 +323,8 @@ void Foret::reset(int _haut, int _larg, float coef, float proba)
 	}
 	matrice.clear();
 	
-	lignes = _haut;
-	colonnes = _larg;
+	lignes = hauteur;
+	colonnes = largeur;
 	burningCoef = coef;
 	
 	randomMatrice(proba);

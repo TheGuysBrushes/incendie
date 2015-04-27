@@ -39,7 +39,7 @@ private:
 public:
 	
 	// Constructeur et destructeur
-	Foret(int n_lignes, int n_colonnes, float proba=0.60, float coefFire=1.0);
+	Foret(int n_colonnes, int n_lignes, float proba = 0.60, float coefFire = 1.0);
 	Foret(Foret& other, float proba=0.60);
 	virtual ~Foret();
 	
@@ -48,7 +48,7 @@ public:
 	void randomMatrice(float probabilite);
 	bool loadEssences(const std::string& fileName);
 	void initialisation(float proba);
-	void reset(int _haut, int _larg, float coef, float proba);
+	void reset(int largeur, int hauteur, float coef, float proba);
 	
 	// 	Getters and Setters
 	int largeur()	const { return colonnes;};

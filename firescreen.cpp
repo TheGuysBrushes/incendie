@@ -14,8 +14,7 @@
 #include <QApplication>
 #include <qdesktopwidget.h>
 /*		
- * - BUG Lorsque le clic est enfoncé et que l'on sort du cadre du widget, Arrêt brutal 	TODO CORRIGE ?
- * - TODO voir pour choisir une meilleur taille initiale (on peut mettre les tailles max)
+ * - TODO voir pour choisir une meilleur taille initiale
  */
 FireScreen::FireScreen(): QMainWindow()
 {
@@ -63,10 +62,10 @@ FireScreen::~FireScreen()
 	delete  timer;
 }
 
-void FireScreen::initialiseParametres(int hauteur, int largeur, float proba, float coef_brulure/*, QWidget* parent, Qt::WindowFlags flags*/)
+void FireScreen::initialiseParametres(int largeur, int hauteur, float proba, float coef_brulure/*, QWidget* parent, Qt::WindowFlags flags*/)
 {
 	// AFFICHEUR DE FORET
-	fwidget= new FireWidget(hauteur, largeur, proba, coef_brulure);
+	fwidget= new FireWidget(largeur, hauteur, proba, coef_brulure);
 	
 /*** 	BOUTONS ET INTERFACE		***/
 	
@@ -149,20 +148,16 @@ void FireScreen::initialiseParametres(int hauteur, int largeur, float proba, flo
 	setCentralWidget(w);
 	
 	// CONNEXION DES BOUTONS AUX FONCTIONS
-	QObject::connect(next_btn,		SIGNAL(clicked()), fwidget,	SLOT(next()) );
-	// 	QObject::connect(timer,			SIGNAL(timeout()), fwidget, 	SLOT(next()) ); // IMPROVEIT vraiment util d'utiliser signal->slot ?
+	QObject::connect(next_btn,		SIGNAL(clicked()), fwidget,		SLOT(next()) );
 	QObject::connect(play_btn,		SIGNAL(clicked(bool)), this,	SLOT(start_timer(bool)) );
-	QObject::connect(pause_btn,	SIGNAL(clicked(bool)), this, SLOT(stop_timer(bool)) );
-	QObject::connect(timer, 		SIGNAL(timeout()), this,		SLOT(compteur()) );
-	QObject::connect(next_btn, 	SIGNAL(clicked()), this,	SLOT(compteur()) );
+	QObject::connect(pause_btn,		SIGNAL(clicked(bool)), this,	SLOT(stop_timer(bool)) );
+	QObject::connect(timer, 			SIGNAL(timeout()), this,			SLOT(nextCompteur()) );
+	QObject::connect(next_btn, 		SIGNAL(clicked()), this,			SLOT(nextCompteur()) );
 	
 	QObject::connect(slider,	SIGNAL(valueChanged(int)), this, SLOT(set_delai(int )));
 	
 	/// @author Florian
 	QObject::connect(reset_btn,	SIGNAL(clicked()), this,	SLOT(reset()) );
-	
-	// Tests pour RAZ de la matrice
-	// 	QObject::connect(this, SIGNAL(ask_restart()), fwidget, SLOT(restart()));
 	
 	
 /*** 	DEFINITTION DU STYLE DES ELEMENTS	***/
@@ -181,27 +176,30 @@ void FireScreen::initialiseParametres(int hauteur, int largeur, float proba, flo
 	//		ce qui donne un carré à gauche de cote au moins la hauteur du panneau, pour la foret, ET le panneau à droite
 // 	setMinimumSize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
 	setMinimumHeight(lay->sizeHint().height() +menuBar()->sizeHint().height());
-	initSizes(hauteur,largeur);
+// 	resize( std::max(lay->sizeHint().height(), largeur) +250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
+	initSizes(largeur, hauteur);
 	
 }
 
-void FireScreen::initSizes(int _hauteur, int _largeur)
+void FireScreen::initSizes(int largeur, int hauteur)
 {
+// 	resize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
+	
 	// Maximums
 	int freePixHeight= QApplication::desktop()->screenGeometry().height()-45 ; // 45 pixel à cause des marges et menu (observé 43)
 	int freePixWidth= QApplication::desktop()->screenGeometry().width() -250-15; // les 15 pixels car il doit y avoir des marges (observé 14)
 	
-	int maxCellHeight= freePixHeight/_hauteur; 
-	int maxCellWidth= freePixWidth/_largeur;
-	int tCellMax= std::min(maxCellHeight, maxCellWidth);
+	int maxCellHeight= freePixHeight/hauteur; 
+	int maxCellWidth= freePixWidth/largeur;
+	int tCellMax= std::min(maxCellWidth, maxCellHeight);
 	
-	setMaximumHeight( tCellMax *_hauteur +45 );
-	setMaximumWidth( tCellMax * _largeur +250 +15 );
+	setMaximumHeight( tCellMax *hauteur +45 );
+	setMaximumWidth( tCellMax * largeur +250 +15 );
 	
 	#if DEBUG_DIMENSION
 	std::cout<< "taille cell max : "<< tCellMax<< std::endl;
-	std::cout<< "hauteur redim : "<< maxCellHeight *_hauteur<< " taille libre : "<< freePixHeight<< std::endl;
-	std::cout<< maxCellWidth<< " largeur redim : "<< maxCellWidth *_largeur<< " taille libre : "<< freePixWidth<< std::endl;
+	std::cout<< "hauteur redim : "<< maxCellHeight *hauteur<< " taille libre : "<< freePixHeight<< std::endl;
+	std::cout<< maxCellWidth<< " largeur redim : "<< maxCellWidth *largeur<< " taille libre : "<< freePixWidth<< std::endl;
 	#endif
 }
 
@@ -255,6 +253,7 @@ void FireScreen::reset()
 	fwel->cancel_btn->setVisible(true);
 	fwel->setModal(true);
 	fwel->show();
+	
 	if(fwel->exec() == QDialog::Accepted ){
 		stop_timer(true);
 		nb_tour= 0;
@@ -264,14 +263,13 @@ void FireScreen::reset()
 		float proba = fwel->get_proba();
 		float coef_brulure = fwel->get_coef();
 		fwidget->reset(hauteur,largeur,coef_brulure, proba);
+		
+		initSizes(largeur, hauteur);
 	}
-
 }
 
-
-void FireScreen::compteur()
+void FireScreen::nextCompteur()
 {
-	// IMPROVEIT tour suivant fait dans le compteur pour l'instant
 	if (fwidget->next()){
 		nb_tour += 1;
 		majTimer();
