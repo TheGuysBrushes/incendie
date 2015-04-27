@@ -361,6 +361,7 @@ void Foret::allumer(Arbre* ab)
 {
 	ab->burn();
 	onFire.push_back(ab);
+	burned.push_back(ab);
 }
 
 void Foret::eteindre(Arbre* ab)
