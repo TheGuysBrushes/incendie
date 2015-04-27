@@ -27,14 +27,14 @@ private:
 	std::vector< Essence > essences;
 	std::vector<std::vector< Cellule* > > matrice;
 	std::list< Arbre* >	onFire;
-	// on pourrait faire une seule liste avec tous les arbres qui ont changé d'état ; IMPROVEIT ?
+	// IMPROVEIT ? on pourrait faire une seule liste avec tous les arbres qui ont changé d'état
 	std::list< Arbre* >	carbonized;
 	std::list< Arbre* >	burned;
 	
 	
 // METHODES
 private:
-	unsigned essenceRandom(int _j, int _i, unsigned distOthers);
+	unsigned essenceRandom(int row, int col, unsigned int distOthers);
 	
 public:
 	
@@ -63,6 +63,8 @@ public:
 	void clearBurned()	{ burned.clear(); };
 
 	// Autres méthodes
+	void plantTree(int row, int col);
+	
 	void water(Arbre* ab);
 	
 	void allumer(int row, int col);
@@ -73,7 +75,7 @@ public:
 	
 	void enflammer(int row, int col);
 	void enflammer(Arbre* ab);
-	std::list< Arbre* > adjacents(int col, int row, int distance) const;
+	std::list< Arbre* > adjacents(int row, int col, int distance) const;
 	std::list< Arbre* > adjacents(const Arbre * ab, int distance) const;
 	
 	// 	Avancee du temps

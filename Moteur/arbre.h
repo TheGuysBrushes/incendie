@@ -12,7 +12,8 @@ class Arbre: public Cellule
 {
 private:
 	Coordonnee pos;
-	const Essence* essence;
+	// les essences sont constantes et un arbre a toujours la même essence
+	const Essence * const essence;
 	
 	int age;
 	float humidite;
@@ -23,9 +24,8 @@ private:
 	
 public:
 	// Constructeurs et destructeur
-	Arbre(int col, int row, const Essence* _essence, unsigned _age = 0, unsigned _humidite = 20);
-	Arbre(Cellule* cell, int col, int row, const Essence* _essence, unsigned _age = 0, unsigned _humidite = 20);
-	virtual ~Arbre();	
+	Arbre(int row, int col, const Essence* const _essence, unsigned int _age = 0, unsigned int _humidite = 20);
+	Arbre(Cellule* cell, int row, int col, const Essence*const _essence, unsigned int _age = 0, unsigned int _humidite = 20);
 		
 	// Getters 
 	virtual int getEtat()	const	{ return etat; };

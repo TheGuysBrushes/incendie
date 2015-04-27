@@ -16,24 +16,22 @@
 
 using namespace std;
 
-Arbre::Arbre(int col, int row, const Essence* _essence, unsigned _age, unsigned _humidite)
+Arbre::Arbre(int row, int col, const Essence* const _essence, unsigned _age, unsigned _humidite)
 	: Cellule(1), pos(col, row),essence(_essence),age(_age),humidite(_humidite)
 {	
 	initialise();
 }
 
-Arbre::Arbre(Cellule* cell, int col, int row, const Essence* _essence, unsigned _age, unsigned _humidite)
+/**
+ * Construit un arbre "à partir" d'une cellule
+ * @param cell cellule à remplacer, elle est désallouée
+ */
+Arbre::Arbre(Cellule* cell, int row, int col, const Essence* const _essence, unsigned int _age, unsigned int _humidite)
 	: Cellule(1), pos(col, row),essence(_essence),age(_age),humidite(_humidite)
 {
 	initialise();
 	// suppression ancienne cellule 
-	delete(cell); // TODO delete this comment apres valgrind
-// 	cell= this;	// TODO verifier si on peut faire cela : remplace l'ancienne cellule par le nouvel arbrre
-}
-
-
-Arbre::~Arbre()
-{
+	delete(cell);
 }
 
 
