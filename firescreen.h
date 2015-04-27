@@ -40,7 +40,8 @@ public:
 	virtual ~FireScreen();
 		
 	void initialiseParametres(int hauteur, int largeur, float proba, float coef_brulure);
-	void initSizes();
+	void initSizes(int _h, int _l);
+	
 	void majTimer();
 		
 protected:
