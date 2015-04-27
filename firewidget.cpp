@@ -365,7 +365,7 @@ void FireWidget::reset(int _larg, int _haut, float coef, float proba)
 // 	Foret* OldForet= foret;
 // 	foret = new Foret(*OldForet, probaMatriceReset);
 // 	delete(OldForet);
-// IMPROVEIT quelle est la meilleure facon ?
+// IMPROVEIT quelle est la meilleure facon de RAZ une foret?
 	buffer->fill(1);
 	foret->reset(_larg,_haut, coef, proba);
 	setMinimumSize(_larg, _haut);

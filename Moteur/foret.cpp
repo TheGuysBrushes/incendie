@@ -17,7 +17,7 @@ int ecartHMax= 50;
 // - la cellule ne contient qu'un état, si c'est un arbre (dynamic_cast) il a des attributs spécifiques
 // - faire une sous-classe de arbre : arbre en cendres ? ou alors sous-classe de cellule ou seulement arbre dans état brulé (3) : plus simpe
 
-/* TODO foret	*/
+/* foret	*/
 //	DID : 1	: utiliser les coordonnées des arbres dans les méthodes plutôt que de les passer en arguments
 // 			+ code nettoyé (commentaires ...)
 //	DID	2	: revérifier les arguments des méthodes et les algorithmes pour prendre en compte les modif
@@ -25,13 +25,13 @@ int ecartHMax= 50;
 // DID	4	: Prise en compte des PV
 // DID	5	: Gérer arbres adjacents diagonaux ET avec plus de 1 de distance
 //			5 bis	: reduire la transmission selon la distance ?, creer classe ? (Arbre+distance)
-// 		6	: EN PARTIE	; Prise en compte coefs
-//			7	: Ajout des vents
+// TODO	6	: EN PARTIE	; Prise en compte coefs
+//	TODO	7	: Ajout des vents
 
 //	DID	8	: Implementation de Qt
 // DID	9	: Debut d'interface de configuration (taille, vitesse ...)
 
-//			10	: Jeux d'essais
+//	TODO	10	: Jeux d'essais
 
 using namespace std;
 
@@ -77,7 +77,7 @@ Foret::~Foret()
  * 	nécessaire pour l'initialisation des essences d'arbres
  * @author Ugo
  * @param str : Chaine à découper
- * @return vecteur des mots séparés par des espaces // TODO TRIM ? + remplacer "_" par des espaces
+ * @return vecteur des mots séparés par des espaces // TODO TRIM
  */
 // TODO voir si il faut utiliser référence ou pointeur
 vector< string >& explode(const string& str)
@@ -85,7 +85,7 @@ vector< string >& explode(const string& str)
 	istringstream split(str);
 	vector< string >* tokens = new vector<string>;
 	
-	for(string each; getline(split, each, ' '); tokens->push_back(each.c_str()) );
+	for(string each; getline(split, each, ' '); tokens->push_back( each.c_str()) );
 	
 	#if DEBUG_FILE
 	cout << "vecteur : \t";
@@ -114,15 +114,15 @@ bool Foret::loadEssences(const string& fileName)
 {
 	// Initialisation du vecteur d'essence
 	ifstream f (fileName.c_str());
-	#if DEBUG_FILE==1
+	#if DEBUG_FILE
 	cout<< "fichier ouvert?" <<endl;
 	#endif
 	if(f){
-		string line;
-		
-		#if DEBUG_FILE==1
+		#if DEBUG_FILE
 		cout <<"oui"<< endl;
 		#endif
+		
+		string line;
 		
 		int indice = 0;
 		while(getline(f,line)){
@@ -131,6 +131,17 @@ bool Foret::loadEssences(const string& fileName)
 			#endif
 			
 			vector<string>& tokens = explode(line);	
+			
+			// remplacement des underscores par des espaces
+			if ( tokens[0].find('_')!= string::npos ){
+				int ind= tokens[0].find('_');
+				#if DEBUG_FILE
+				cout << "ind de _ : "<< ind<< endl;
+				#endif
+				
+				tokens[0][ind]= ' ';
+			}
+			
 			// conversion du diametre en float
 			float x; istringstream(tokens[2])>> x;
 			essences.push_back( Essence(indice, tokens[0],
@@ -144,13 +155,13 @@ bool Foret::loadEssences(const string& fileName)
 // 			delete(tokens);
 		}
 		
-		#if DEBUG_FILE==1
+		#if DEBUG_FILE
 		showEssences();
 		#endif
 		return true;
 	}
 	else {
-		#if DEBUG_FILE==1
+		#if DEBUG_FILE
 		cout << "non" <<endl;
 		#endif
 		return false;
