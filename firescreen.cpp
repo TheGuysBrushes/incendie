@@ -248,6 +248,7 @@ void FireScreen::reset()
 {
 	Fwelcome* fwel = new Fwelcome(this);
 	fwel->cancel_btn->setVisible(true);
+	fwel->setModal(true);
 	fwel->show();
 	if(fwel->exec() == QDialog::Accepted ){
 		stop_timer(true);
@@ -257,8 +258,8 @@ void FireScreen::reset()
 		int largeur = fwel->get_larg();
 		float proba = fwel->get_proba();
 		float coef_brulure = fwel->get_coef();
-	
-		fwidget->reset(hauteur,largeur,proba,coef_brulure);
+		std::cout << "proba : " << proba << "; coef : " << coef_brulure << std::endl;
+		fwidget->reset(hauteur,largeur,coef_brulure, proba);
 	}
 
 }
