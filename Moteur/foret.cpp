@@ -33,6 +33,8 @@ int ecartHMax= 50;
 
 //	TODO	10	: Jeux d'essais
 
+//  IMPROVEIT si plusieurs arbres se touchent, le feu est plus fort?
+
 using namespace std;
 
 
@@ -79,7 +81,7 @@ Foret::~Foret()
  * @param str : Chaine à découper
  * @return vecteur des mots séparés par des espaces // TODO TRIM
  */
-// TODO voir si il faut utiliser référence ou pointeur
+// IMPROVEIT voir si il faut utiliser référence ou pointeur
 vector< string >& explode(const string& str)
 {
 	istringstream split(str);
@@ -95,7 +97,7 @@ vector< string >& explode(const string& str)
 	cout << endl;
 	#endif
 
-	return   *tokens;
+	return *tokens;
 }
 
 
@@ -414,8 +416,7 @@ void Foret::enflammer(int row, int col)
 void Foret::enflammer(Arbre* ab)
 {
 // 	if (ab->getEtat==2){
-// // 		ab->brule(); TODO verifier si lorsque l'arbre est ajouté plusieurs fois dans la liste des adjacents, il commence à brûler, brule plus fort/vite ?
-// 				====> IMPROVEIT si plusieurs arbres se touchent, le feu est plus fort?
+// // 		ab->brule();
 // 	}
 // 	else {
 	ab->enflammer(burningCoef);
@@ -431,7 +432,7 @@ void Foret::enflammer(Arbre* ab)
  * @param col indice de la colonne de la cellule
  * @param row indice de la ligne de la cellule
  * @param distance distance sur laquelle s'effectue la recherche de voisins
- * @return list de pointeurs sur arbres // TODO ajout attribut distance ?
+ * @return list de pointeurs sur arbres // IMPROVEIT ajout attribut distance ?
  */
 std::list< Arbre* > Foret::adjacents(int row, int col, int distance) const
 {
@@ -518,7 +519,7 @@ std::list< Arbre* > Foret::adjacents(const Arbre * ab, int distance) const
  */
 void Foret::transition(Arbre* ab)
 {
-	unsigned distAdj= 1; // distance à laquelle les voisins seront enflammes ; TODO dist 1= contact, dist 2= diagonaux, dist 3 =
+	unsigned distAdj= 1; // distance à laquelle les voisins seront enflammes ; IMPROVEIT dist 1= contact, dist 2= diagonaux, dist 3 = ...
 	list< Arbre* > voisins= adjacents(ab, distAdj);
 	for (list< Arbre* >::iterator a(voisins.begin()); a!=voisins.end(); ++a){
 		enflammer( (*a) );
