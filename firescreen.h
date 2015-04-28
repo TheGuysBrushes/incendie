@@ -39,11 +39,12 @@ public:
 // 									QWidget* parent = 0, Qt::WindowFlags flags = 0);
 	virtual ~FireScreen();
 		
-	void initialiseParametres(int largeur, int hauteur, float proba, float coef_brulure);
+	void initForest(int largeur, int hauteur, float proba, float coef_brulure);
+	void initComponents();
 	void initSizes(int largeur, int hauteur);
 	
 	void majTimer();
-	void set();
+	bool initialisation();
 		
 protected:
 	void resizeEvent(QResizeEvent* Qevent);

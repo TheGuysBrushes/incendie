@@ -316,12 +316,12 @@ void Foret::initialisation(float proba)
 	randomMatrice(proba);
 }
 
-void Foret::reset(int largeur, int hauteur, float proba, float coef)
+void Foret::clean()
 {
 	onFire.clear();
 	carbonized.clear();
-
-// 	suppression de la matrice
+	
+	// 	suppression de la matrice
 	for (int i= 0; i< lignes; ++i){
 		for (vector< Cellule* >::iterator j( matrice[i].begin() ); j!=matrice[i].end(); ++j){
 			delete *j;
@@ -330,12 +330,14 @@ void Foret::reset(int largeur, int hauteur, float proba, float coef)
 		matrice[i].clear();
 	}
 	matrice.clear();
-	
+}
+
+
+void Foret::setValues(int largeur, int hauteur, float coef)
+{
 	lignes = hauteur;
 	colonnes = largeur;
 	burningCoef = coef;
-	
-	randomMatrice(proba);
 }
 
 

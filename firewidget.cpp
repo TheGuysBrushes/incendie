@@ -6,13 +6,14 @@ using namespace std;
 // Constructeur
 FireWidget::FireWidget(int _largeur, int _hauteur, float proba, float coef_brulure)
 {
-	foret = new Foret(_largeur, _hauteur, proba, coef_brulure);
-	buffer = new QImage();
-	color = new QColor(Qt::black);
-	bufferPainter= new QPainter();
-	
+
 	setMinimumSize(_largeur, _hauteur);
 }
+
+FireWidget::FireWidget(): QWidget()
+{
+}
+
 
 // Destructeur
 FireWidget::~FireWidget()
@@ -22,6 +23,17 @@ FireWidget::~FireWidget()
 	delete(color);
 	delete(foret);
 }
+
+void FireWidget::initialise(int _largeur, int _hauteur, float proba, float coef_brulure)
+{
+	foret = new Foret(_largeur, _hauteur, proba, coef_brulure);
+	buffer = new QImage();
+	color = new QColor(Qt::black);
+	bufferPainter= new QPainter();
+	
+	setMinimumSize(_largeur, _hauteur);
+}
+
 
 // #####################
 //		Autres méthodes
@@ -360,6 +372,11 @@ void FireWidget::set(int _larg, int _haut, float proba, float coef)
 }
 
 
+void FireWidget::delForet()
+{
+	delete(foret);
+}
+
 /**
  * reinitialise la foret
  * @author Florian et un petit peu Ugo :p
@@ -370,8 +387,11 @@ void FireWidget::reset(int _larg, int _haut, float proba, float coef)
 // 	foret = new Foret(*OldForet, probaMatriceReset);
 // 	delete(OldForet);
 // IMPROVEIT quelle est la meilleure facon de RAZ une foret?
-	buffer->fill(1);
-	foret->reset(_larg,_haut, proba, coef);
+// 	buffer->fill(1);
+	foret->clean();
+	foret->setValues(_larg,_haut, coef);
+	foret->randomMatrice(proba);
+// 	foret->reset(_larg,_haut, proba, coef);
 	setMinimumSize(_larg, _haut);
 	drawForest();
 	drawFire();

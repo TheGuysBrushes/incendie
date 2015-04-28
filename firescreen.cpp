@@ -29,7 +29,6 @@ FireScreen::FireScreen(): QMainWindow()
 	menuBar()->addAction(save);
 	connect(exit, SIGNAL(triggered()), SLOT(close()) );
 	
-	nb_tour = 0;
 	timer = new QTimer();
 	
 	next_btn = new QPushButton("Next");
@@ -62,11 +61,16 @@ FireScreen::~FireScreen()
 	delete  timer;
 }
 
-void FireScreen::initialiseParametres(int largeur, int hauteur, float proba, float coef_brulure/*, QWidget* parent, Qt::WindowFlags flags*/)
+void FireScreen::initForest(int largeur, int hauteur, float proba, float coef_brulure)
 {
+	nb_tour = 0;
 	// AFFICHEUR DE FORET
-	fwidget= new FireWidget(largeur, hauteur, proba, coef_brulure);
-	
+	fwidget= new FireWidget(largeur,hauteur, proba, coef_brulure);
+}
+
+
+void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
+{
 /*** 	BOUTONS ET INTERFACE		***/
 	
 	// CONTENEURS
@@ -210,20 +214,24 @@ void FireScreen::majTimer()
 	cpt_lbl->setText(QString::number(nb_tour));
 }
 
-void FireScreen::set()
+bool FireScreen::initialisation()
 {
+
+	
 	Fwelcome* fwel = new Fwelcome(this);
 	fwel->show();
 	if(fwel->exec() == QDialog::Accepted ){
-		int hauteur = fwel->get_haut();
 		int largeur = fwel->get_larg();
-		float proba = fwel->get_proba();
-		float coef_brulure = fwel->get_coef();
-		initialiseParametres(largeur, hauteur, proba, coef_brulure);
+		int hauteur = fwel->get_haut();
+		initForest(largeur, hauteur,
+					  fwel->get_proba(),
+					  fwel->get_coef()	);
+		initComponents();
 		majTimer();
 		initSizes(largeur, hauteur);
-		show();
+		return true;
 	}
+	return false;
 }
 
 
@@ -271,16 +279,22 @@ void FireScreen::reset()
 	
 	if(fwel->exec() == QDialog::Accepted ){
 		stop_timer(true);
-		nb_tour= 0;
-		majTimer();
-// 		set(fwel);
+		fwidget->delForet();
+		
 		int largeur = fwel->get_larg();
 		int hauteur = fwel->get_haut();
-		float proba = fwel->get_proba();
-		float coef_brulure = fwel->get_coef();
-		fwidget->reset(largeur, hauteur, proba, coef_brulure);
-// 		fwidget->reset(fwel);
+		initForest(largeur, hauteur,
+					fwel->get_proba(),
+					fwel->get_coef()	);
+// 		fwidget->reset(largeur, hauteur,
+// 							fwel->get_proba(),
+// 							fwel->get_coef()	);
 		
+		nb_tour= 0;
+		
+		majTimer();
+		initSizes(largeur, hauteur);
+// 		fwidget->reset(fwel);
 	}
 }
 

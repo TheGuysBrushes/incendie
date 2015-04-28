@@ -15,7 +15,8 @@ int main(int argc, char** argv)
 	QApplication app(argc, argv);
 	
 	FireScreen* screen = new FireScreen();
-	screen->set();
+	if ( screen->initialisation() )
+		screen->show();
 	
 	return app.exec();
 }
