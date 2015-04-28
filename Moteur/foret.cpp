@@ -43,7 +43,7 @@ using namespace std;
 // ################################### 
 
 Foret::Foret(int n_colonnes, int n_lignes, float proba, float coefFire)
-: lignes(n_lignes), colonnes(n_colonnes), burningCoef(coefFire), wind(0.0,0.0)
+: lignes(n_lignes), colonnes(n_colonnes), burningCoef(coefFire), wind(3.0,3.0)
 {
 	initialisation(proba);
 }
@@ -380,6 +380,23 @@ void Foret::eteindre(Arbre* ab)
 }
 
 
+/**
+ * Enflamme un arbre
+ * @author Florian
+ * @param ab arbre à enflammer
+ */
+void Foret::enflammer(Arbre* ab)
+{
+// 	if (ab->getEtat==2){
+// // 		ab->brule();
+// 	}
+// 	else {
+	ab->enflammer(burningCoef);
+	if (ab->isOnFire()){
+		onFire.push_back(ab);
+		burned.push_back(ab);
+	}
+}
 
 /**
  * Enflamme une cellule si elle existe, selon sa position dans la matrice
@@ -401,23 +418,6 @@ void Foret::enflammer(int col, int row)
 // 	else if (etat==2){}
 }
 
-/**
- * Enflamme un arbre
- * @author Florian
- * @param ab arbre à enflammer
- */
-void Foret::enflammer(Arbre* ab)
-{
-// 	if (ab->getEtat==2){
-// // 		ab->brule();
-// 	}
-// 	else {
-	ab->enflammer(burningCoef);
-	if (ab->isOnFire()){
-		onFire.push_back(ab);
-		burned.push_back(ab);
-	}
-}
 
 /**
  * Retourne les arbres qui sont proches d'une cellule donnée
@@ -489,6 +489,38 @@ std::list< Arbre* > Foret::adjacents(int col, int row, int distance) const
 	}
 	return liste;
 }
+/**
+ * Parcours la liste des arbres en feu et emflamme les voisins en tenant compte de la direction du vent
+ * @author Ugo
+ * 
+ */
+void Foret::adjacents_vent(Arbre*  a)
+{
+// 	for (list< Arbre* >::iterator a(old->begin()); a!=old->end(); ++a){
+// 	for (list< Arbre* >::iterator a(onFire.begin()); a!=onFire.end(); ++a){
+		int row = a->getPos().row;
+		int col = a->getPos().col;
+		
+		int h = wind.getPower_h();
+		int l = wind.getPower_v();
+		
+		for(int i = 0; i < abs(wind.getPower_h()); ++i){
+			for(int j = 0; j < abs(wind.getPower_v()); ++j){
+				if((h+row-i) > 0 && (h+row-i) < (lignes) && (l+col-j) > 0 && (l+col-j) < (colonnes)){
+					Cellule* cell = matrice[row+(h-i)][col+(l-j)];
+					if(cell->getEtat() == 1)
+						enflammer(dynamic_cast < Arbre* >(cell));
+				}
+				
+			}
+			
+		}
+		if ( a->brule(burningCoef) )
+			onFire.push_back(a);
+		else // quand un arbre ne brule plus (il devient cendres), on l'ajoute à la liste des arbres devenus cendres
+			carbonized.push_back(a);	
+}
+
 
 /**
  * Retourne les arbres qui sont proches d'une cellule donnée, appelle adjacents(int, int)
@@ -531,17 +563,19 @@ void Foret::transition(Arbre* ab)
  */
 bool Foret::NextMove()
 {
-	bool modif= false;
+	bool modif(false);
 	
 	if (!onFire.empty()){
 		modif= true;
 		list< Arbre* > old= onFire;
 		onFire.clear();		
-		// TODO utiliser mapping ?
+// 		// TODO utiliser mapping ?
 		for (list< Arbre* >::iterator ab(old.begin()); ab!=old.end(); ++ab){
-			transition(*ab);
+// 			transition(*ab);
+			adjacents_vent(*ab);
 		}
-	}	
+	}
+	
 	return modif;
 }
 
