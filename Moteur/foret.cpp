@@ -178,7 +178,7 @@ bool Foret::loadEssences(const string& fileName)
  * @param distOthers distance à laquelle on doit prendre en compte les arbres avoisinants
  * @return indice, dans le tableau d'essence, de l'essence "tirée"
  */
-unsigned Foret::essenceRandom(int row, int col, unsigned distOthers){
+unsigned Foret::essenceRandom(int col, int row, unsigned distOthers){
 	
 	// Initialisation du tableau de pondération
 	unsigned probaEss[essences.size()];
@@ -187,7 +187,7 @@ unsigned Foret::essenceRandom(int row, int col, unsigned distOthers){
 	}
 	
 	// Récupération des voisins
-	list<Arbre*> voisins = adjacents(row, col, distOthers);
+	list<Arbre*> voisins = adjacents(col, row, distOthers);
 	// Pondération du tableau
 	unsigned densite= 5;	// plus le parametre est élevé, plus les chances que les arbres soit les mêmes que leurs voisins est forte (formation bosquets)
 	for (list< Arbre* >::const_iterator a(voisins.begin()); a!=voisins.end(); ++a){
@@ -207,11 +207,11 @@ unsigned Foret::essenceRandom(int row, int col, unsigned distOthers){
 	return ess;
 }
 
-void Foret::plantTree(int row, int col)
+void Foret::plantTree(int col, int row)
 {
 	// on choisit une essence aléatoirement pour cet arbre
 	unsigned distVoisins= 2;
-	unsigned ess = essenceRandom(row,col, distVoisins);
+	unsigned ess = essenceRandom(col,row, distVoisins);
 	#if DEBUG_ESSENCE==1
 	cout << ess << " ; ";
 	#endif
@@ -224,7 +224,7 @@ void Foret::plantTree(int row, int col)
 	
 	const Essence* pEss= &(essences[ess]);
 	// pour l'instant, on considere que tous les arbres ont atteint leur maturite
-	Arbre* ab= new Arbre(matrice[row][col], row,col, pEss, rand()%ecartAgeMax +pEss->getAgeMaturite(), rand()%ecartHMax +hMin );
+	Arbre* ab= new Arbre(matrice[row][col], col,row, pEss, rand()%ecartAgeMax +pEss->getAgeMaturite(), rand()%ecartHMax +hMin );
 	matrice[row][col]= ab;
 }
 
@@ -280,7 +280,7 @@ void Foret::randomMatrice(float probabilite)
 			
 			// si le nombre est supérieur au seuil, c'est un arbre
 			if (test>seuil){
-				plantTree(i ,j);
+				plantTree(j ,i);
 			}
 		}
 	}
@@ -314,11 +314,6 @@ void Foret::initialisation(float proba)
 {
 	loadEssences("../Moteur/essence_data.txt");
 	randomMatrice(proba);
-	
-	// DEPARTS D'INCENDIES
-	allumer(lignes/2, colonnes/2);
-	allumer(lignes/2+1, colonnes/2);
-	allumer(lignes/2, colonnes/2 +1);
 }
 
 void Foret::reset(int largeur, int hauteur, float coef, float proba)
@@ -341,10 +336,6 @@ void Foret::reset(int largeur, int hauteur, float coef, float proba)
 	burningCoef = coef;
 	
 	randomMatrice(proba);
-	
-	allumer(lignes/2, colonnes/2);
-	allumer(lignes/2+1, colonnes/2);
-	allumer(lignes/2, colonnes/2 +1);
 }
 
 
@@ -362,7 +353,7 @@ void Foret::water(Arbre* ab)
 }
 
 
-void Foret::allumer(int row, int col)
+void Foret::allumer(int col, int row)
 {
 	Cellule* tmp= matrice[row][col];
 	
@@ -395,7 +386,7 @@ void Foret::eteindre(Arbre* ab)
  * @param col colonne où est la cellule
  * @deprecated
  */
-void Foret::enflammer(int row, int col)
+void Foret::enflammer(int col, int row)
 {
 	Cellule* tmp= matrice[row][col];
 	
@@ -434,7 +425,7 @@ void Foret::enflammer(Arbre* ab)
  * @param distance distance sur laquelle s'effectue la recherche de voisins
  * @return list de pointeurs sur arbres // IMPROVEIT ajout attribut distance ?
  */
-std::list< Arbre* > Foret::adjacents(int row, int col, int distance) const
+std::list< Arbre* > Foret::adjacents(int col, int row, int distance) const
 {
 //	Voir les images pour modif ? calcul transmission selon distance (1.4/distance) -0.4 ? : transmission proportionnelle inverse à distance de 0 à 3.33
 	list< Arbre* > liste;

@@ -16,7 +16,7 @@
 
 using namespace std;
 
-Arbre::Arbre(int row, int col, const Essence* const _essence, unsigned _age, unsigned _humidite)
+Arbre::Arbre(int col, int row, const Essence* const _essence, unsigned _age, unsigned _humidite)
 	: Cellule(1), pos(col, row),essence(_essence),age(_age),humidite(_humidite)
 {	
 	initialise();
@@ -26,7 +26,7 @@ Arbre::Arbre(int row, int col, const Essence* const _essence, unsigned _age, uns
  * Construit un arbre "à partir" d'une cellule
  * @param cell cellule à remplacer, elle est désallouée
  */
-Arbre::Arbre(Cellule* cell, int row, int col, const Essence* const _essence, unsigned int _age, unsigned int _humidite)
+Arbre::Arbre(Cellule* cell, int col, int row, const Essence*const _essence, unsigned int _age, unsigned int _humidite)
 	: Cellule(1), pos(col, row),essence(_essence),age(_age),humidite(_humidite)
 {
 	initialise();

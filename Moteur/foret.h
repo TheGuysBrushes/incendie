@@ -34,7 +34,7 @@ private:
 	
 // METHODES
 private:
-	unsigned essenceRandom(int row, int col, unsigned int distOthers);
+	unsigned essenceRandom(int col, int row, unsigned int distOthers);
 	
 public:
 	
@@ -63,19 +63,19 @@ public:
 	void clearBurned()	{ burned.clear(); };
 
 	// Autres méthodes
-	void plantTree(int row, int col);
+	void plantTree(int col, int row);
 	
 	void water(Arbre* ab);
 	
-	void allumer(int row, int col);
+	void allumer(int col, int row);
 	void allumer(Arbre* ab);
 	
 	void eteindre(Arbre* ab);
 // 	void eteindre(int row, int col);
 	
-	void enflammer(int row, int col);
+	void enflammer(int col, int row);
 	void enflammer(Arbre* ab);
-	std::list< Arbre* > adjacents(int row, int col, int distance) const;
+	std::list< Arbre* > adjacents(int col, int row, int distance) const;
 	std::list< Arbre* > adjacents(const Arbre * ab, int distance) const;
 	
 	// 	Avancee du temps
