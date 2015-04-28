@@ -13,17 +13,16 @@ class Vent
 {
 private:
 // 	Coordonnee direction;
-	float NS;	// NS= Nord-Sud
-	float EW;	// EW= Est-Ouest
+	float power_h;	// NS= Nord-Sud
+	float power_v;	// EW= Est-Ouest
 	
 public:
-	Vent(float NordSud, float EstOuest);
+	Vent(float _power_h, float _power_v);
 	Vent(const Vent& other);
 // 	virtual ~Vent();
 	
-	void setNS(float val);
-	void setEW(float val);
-	void setVent(float _NS, float _EW); // IMPROVEIT trouver meilleur nom pour dire qu'on redefinit direction et puissance
+	void setPower_h(float val);
+	void setPower_v(float val);
 	
 	virtual Vent& operator+(const Vent& other);
 	virtual Vent& operator-(const Vent& other);
