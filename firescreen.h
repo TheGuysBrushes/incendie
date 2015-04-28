@@ -39,7 +39,7 @@ public:
 // 									QWidget* parent = 0, Qt::WindowFlags flags = 0);
 	virtual ~FireScreen();
 		
-	void initForest(int largeur, int hauteur, float proba, float coef_brulure);
+	void initForest(const Fwelcome* fwel);
 	void initComponents();
 	void initSizes(int largeur, int hauteur);
 	

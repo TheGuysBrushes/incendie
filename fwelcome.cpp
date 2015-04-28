@@ -22,19 +22,19 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	present->setWordWrap(true);
 	
 	
-	QLabel* h_lbl = new QLabel("Hauteur : ");
-	haut_spin = new QSpinBox(ww);
-	haut_spin->setMinimum(100);
-	haut_spin->setMaximum(1000);
-	haut_spin->setSingleStep(25);
-	haut_spin->setAccelerated(1);
-	
 	QLabel* l_lbl = new QLabel("Largeur : ");
 	larg_spin = new QSpinBox(ww);
 	larg_spin->setMinimum(100);
 	larg_spin->setMaximum(1000);
 	larg_spin->setSingleStep(25);
 	larg_spin->setAccelerated(1);
+	
+	QLabel* h_lbl = new QLabel("Hauteur : ");
+	haut_spin = new QSpinBox(ww);
+	haut_spin->setMinimum(100);
+	haut_spin->setMaximum(1000);
+	haut_spin->setSingleStep(25);
+	haut_spin->setAccelerated(1);
 	
 	QLabel* p_lbl = new QLabel("Probabilite : ");
 	QSlider * slide_p = new QSlider(Qt::Horizontal, 0);
@@ -54,11 +54,11 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	
 	cancel_btn = new QPushButton("Annuler");
 	cancel_btn->setVisible(false);
-	grid_lay->addWidget(h_lbl,0,0);
-	grid_lay->addWidget(haut_spin,0,1);
+	grid_lay->addWidget(l_lbl, 0,0);
+	grid_lay->addWidget(larg_spin, 0,1);
 	
-	grid_lay->addWidget(l_lbl,1,0);
-	grid_lay->addWidget(larg_spin,1,1);
+	grid_lay->addWidget(h_lbl, 1,0);
+	grid_lay->addWidget(haut_spin, 1,1);
 	
 	grid_lay->addWidget(p_lbl,2,0);
 	grid_lay->addWidget(slide_p,2,1);

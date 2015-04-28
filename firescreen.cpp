@@ -61,18 +61,26 @@ FireScreen::~FireScreen()
 	delete  timer;
 }
 
-void FireScreen::initForest(int largeur, int hauteur, float proba, float coef_brulure)
+void FireScreen::initForest(const Fwelcome* fwel)
 {
 	nb_tour = 0;
-	// AFFICHEUR DE FORET
-	fwidget= new FireWidget(largeur,hauteur, proba, coef_brulure);
+	
+	int largeur = fwel->get_larg();
+	int hauteur = fwel->get_haut();
+	fwidget->initialise(largeur,hauteur,
+							  fwel->get_proba(),
+							  fwel->get_coef());
+	
+	majTimer();
+	initSizes(largeur, hauteur);
 }
 
 
 void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 {
 /*** 	BOUTONS ET INTERFACE		***/
-	
+	fwidget= new FireWidget();
+
 	// CONTENEURS
 	// Conteneur général
 	QWidget* w = new QWidget(this);
@@ -216,19 +224,13 @@ void FireScreen::majTimer()
 
 bool FireScreen::initialisation()
 {
-
+	initComponents();
 	
 	Fwelcome* fwel = new Fwelcome(this);
 	fwel->show();
-	if(fwel->exec() == QDialog::Accepted ){
-		int largeur = fwel->get_larg();
-		int hauteur = fwel->get_haut();
-		initForest(largeur, hauteur,
-					  fwel->get_proba(),
-					  fwel->get_coef()	);
-		initComponents();
-		majTimer();
-		initSizes(largeur, hauteur);
+	
+	if( fwel->exec() == QDialog::Accepted ){
+		initForest(fwel);
 		return true;
 	}
 	return false;
@@ -270,31 +272,23 @@ void FireScreen::set_delai(int x)
 	timer->setInterval(delai);
 }
 
+
+
 void FireScreen::reset()
 {
+	stop_timer(true);
+	
 	Fwelcome* fwel = new Fwelcome(this);
 	fwel->cancel_btn->setVisible(true);
 	fwel->setModal(true);
 	fwel->show();
 	
-	if(fwel->exec() == QDialog::Accepted ){
-		stop_timer(true);
+	if( fwel->exec() == QDialog::Accepted ){
 		fwidget->delForet();
 		
-		int largeur = fwel->get_larg();
-		int hauteur = fwel->get_haut();
-		initForest(largeur, hauteur,
-					fwel->get_proba(),
-					fwel->get_coef()	);
-// 		fwidget->reset(largeur, hauteur,
-// 							fwel->get_proba(),
-// 							fwel->get_coef()	);
+		initForest(fwel);
 		
-		nb_tour= 0;
-		
-		majTimer();
-		initSizes(largeur, hauteur);
-// 		fwidget->reset(fwel);
+		fwidget->redraw();
 	}
 }
 

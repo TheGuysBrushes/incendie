@@ -43,15 +43,14 @@ public:
 
 	void drawForest();
 	void drawFire();
+	void redraw();
 	
 	bool eteindreFeu(int colonne, int ligne);
 	bool allumerFeu(int colonne, int ligne);
 	bool finirFeu(int colonne, int ligne);
 	
-	void set(int _larg, int _haut, float proba, float coef);
-	void set(const Fwelcome* fwel);
-	
 	void delForet();
+	/** @deprecated */
 	void reset(int _larg, int _haut, float proba, float coef);
 
 protected:

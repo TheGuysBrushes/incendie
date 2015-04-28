@@ -4,9 +4,13 @@
 using namespace std;
 
 // Constructeur
-FireWidget::FireWidget(int _largeur, int _hauteur, float proba, float coef_brulure)
+FireWidget::FireWidget(int _largeur, int _hauteur, float proba, float coef_brulure): QWidget()
 {
-
+	foret = new Foret(_largeur, _hauteur, proba, coef_brulure);
+	buffer = new QImage();
+	color = new QColor(Qt::black);
+	bufferPainter= new QPainter();
+	
 	setMinimumSize(_largeur, _hauteur);
 }
 
@@ -24,6 +28,10 @@ FireWidget::~FireWidget()
 	delete(foret);
 }
 
+
+// #####################
+//		Autres méthodes
+// #####################
 void FireWidget::initialise(int _largeur, int _hauteur, float proba, float coef_brulure)
 {
 	foret = new Foret(_largeur, _hauteur, proba, coef_brulure);
@@ -34,10 +42,6 @@ void FireWidget::initialise(int _largeur, int _hauteur, float proba, float coef_
 	setMinimumSize(_largeur, _hauteur);
 }
 
-
-// #####################
-//		Autres méthodes
-// #####################
 void FireWidget::setColor(int colorIndice)
 {
 	switch(colorIndice){
@@ -174,6 +178,19 @@ void FireWidget::drawFire()
 	bufferPainter->end();
 }
 
+void FireWidget::redraw()
+{
+	if (!buffer->isNull()){
+		delete(buffer);
+		// 		bufferPainter->end();
+	}
+	buffer = new QImage(tailleCell*foret->largeur(), tailleCell*foret->hauteur(), QImage::Format_ARGB32);
+	drawForest();
+	drawFire();
+	update();
+}
+
+
 /**
  * Eteint un arbre à une position donnée
  * @author Florian
@@ -279,18 +296,12 @@ bool FireWidget::finirFeu(int colonne, int ligne)
 // #############
 void FireWidget::paintEvent(QPaintEvent* event)
 {
-// 	bufferPainter->end();
 	QPainter paint(this);
 	paint.drawImage(0, 0, *buffer); // , 0, 0, width(), height());
 }
 
 void FireWidget::resizeEvent(QResizeEvent* event)
-{	
-	if (!buffer->isNull()){
-		delete(buffer);
-// 		bufferPainter->end();
-	}
-	
+{
 	float nbCol= foret->largeur();
 	float nbRow= foret->hauteur();
 	tailleCell = min (event->size().width() / nbCol , event->size().height() / nbRow);
@@ -299,14 +310,8 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 	cout << "tH: "<< event->size().width()<< " tL "<< event->size().height()<< endl;
 	cout << "taille Cellule : "<< tailleCell<< endl;
 	#endif
-	
-// 	/*resize*/setMinimumSize(tailleCell*foret->largeur(), tailleCell*foret->hauteur());
-	
-	buffer = new QImage(tailleCell*foret->largeur(), tailleCell*foret->hauteur(), QImage::Format_ARGB32);
-	buffer->fill(Qt::white);
-	
-	drawForest();
-	drawFire();
+
+	redraw();
 }
 
 void FireWidget::mousePressEvent(QMouseEvent* event)
@@ -366,11 +371,6 @@ bool FireWidget::next()
 	
 	return true; // cas par défaut, il y a eu un changement
 }
-void FireWidget::set(int _larg, int _haut, float proba, float coef)
-// void FireWidget::set(const Fwelcome* fwel)
-{
-}
-
 
 void FireWidget::delForet()
 {
@@ -380,6 +380,7 @@ void FireWidget::delForet()
 /**
  * reinitialise la foret
  * @author Florian et un petit peu Ugo :p
+ * @deprecated
  */
 void FireWidget::reset(int _larg, int _haut, float proba, float coef)
 {
