@@ -169,14 +169,14 @@ void FireWidget::drawFire()
  * @param colonne ligne et colonne de l'arbre à eteindre
 * @return vrai si il y avait un arbre en feu
  */
-bool FireWidget::eteindreFeu(int ligne, int colonne)
+bool FireWidget::eteindreFeu(int colonne, int ligne)
 {
 	#if DEBUG_ALLUME
 	cout << "eteindre cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
 	#endif
 	
 	if(ligne>=0 && ligne < foret->hauteur()){
-		vector< Cellule* >* line= foret->operator[](ligne);
+		vector< Cellule* >* line= (*foret)[ligne];
 		
 		if (colonne>=0 && colonne < foret->largeur()){
 			Cellule* cell= (*line)[colonne];	
@@ -202,14 +202,14 @@ bool FireWidget::eteindreFeu(int ligne, int colonne)
  * @param colonne ligne et colonne de l'arbre à enflammer
  * @return vrai si il y avait un arbre enflammable
  */
-bool FireWidget::allumerFeu(int ligne, int colonne)
+bool FireWidget::allumerFeu(int colonne, int ligne)
 {
 #if DEBUG_ALLUME
 	cout << "allumer cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
 #endif
 	
 	if(ligne>=0 && ligne < foret->hauteur()){
-		vector< Cellule* >* line= foret->operator[](ligne);
+		vector< Cellule* >* line= (*foret)[ligne];
 		
 		if (colonne>=0 && colonne < foret->largeur()){
 			Cellule* cell= (*line)[colonne];	
@@ -235,14 +235,14 @@ bool FireWidget::allumerFeu(int ligne, int colonne)
  * @param colonne ligne et colonne de l'arbre à bruler totalement
  * @return vrai si il y avait un arbre en feu
  */
-bool FireWidget::finirFeu(int ligne, int colonne)
+bool FireWidget::finirFeu(int colonne, int ligne)
 {
 	#if DEBUG_ALLUME
 	cout << "embraser cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
 	#endif
 	
 	if(ligne>=0 && ligne < foret->hauteur()){
-		vector< Cellule* >* line= foret->operator[](ligne);
+		vector< Cellule* >* line= (*foret)[ligne];
 		
 		if (colonne>=0 && colonne < foret->largeur()){
 			Cellule* cell= (*line)[colonne];	
@@ -303,11 +303,11 @@ void FireWidget::mousePressEvent(QMouseEvent* event)
 	int ligne= event->y()/tailleCell;
 	
 	if (event->button()==Qt::LeftButton)
-		allumerFeu(ligne, colonne);
+		allumerFeu(colonne, ligne);
 	else if (event->button()==Qt::MiddleButton)
-		finirFeu(ligne, colonne);
+		finirFeu(colonne, ligne);
 	else if (event->button()==Qt::RightButton){
-		eteindreFeu(ligne, colonne);
+		eteindreFeu(colonne, ligne);
 		drawForest();
 	}
 }
@@ -319,20 +319,20 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 	int ligne= event->y()/tailleCell;
 	
 	if (event->buttons().testFlag(Qt::LeftButton) )
-		allumerFeu(ligne, colonne);
+		allumerFeu(colonne, ligne);
 	else if (event->buttons().testFlag(Qt::MiddleButton) )
-		finirFeu(ligne, colonne);
+		finirFeu(colonne, ligne);
 	else if (event->buttons().testFlag(Qt::RightButton) ){
-		eteindreFeu(ligne, colonne);
+		eteindreFeu(colonne, ligne);
 		drawForest();
 	}
 }
 
-void FireWidget::newForet(int _largeur, int _hauteur, float _proba, float _coef_brulure)
-{
-	delete(foret);
-	foret = new Foret(_largeur,_hauteur, _proba, _coef_brulure);
-}
+// void FireWidget::newForet(int _largeur, int _hauteur, float _proba, float _coef_brulure)
+// {
+// 	delete(foret);
+// 	foret = new Foret(_largeur,_hauteur, _proba, _coef_brulure);
+// }
 
 // ################
 // 	Deroulement
@@ -354,20 +354,24 @@ bool FireWidget::next()
 	
 	return true; // cas par défaut, il y a eu un changement
 }
+void FireWidget::set(int _larg, int _haut, float proba, float coef)
+// void FireWidget::set(const Fwelcome* fwel)
+{
+}
 
 
 /**
  * reinitialise la foret
  * @author Florian et un petit peu Ugo :p
  */
-void FireWidget::reset(int _larg, int _haut, float coef, float proba)
+void FireWidget::reset(int _larg, int _haut, float proba, float coef)
 {
 // 	Foret* OldForet= foret;
 // 	foret = new Foret(*OldForet, probaMatriceReset);
 // 	delete(OldForet);
 // IMPROVEIT quelle est la meilleure facon de RAZ une foret?
 	buffer->fill(1);
-	foret->reset(_larg,_haut, coef, proba);
+	foret->reset(_larg,_haut, proba, coef);
 	setMinimumSize(_larg, _haut);
 	drawForest();
 	drawFire();

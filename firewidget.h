@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "Moteur/foret.h"
+#include "fwelcome.h"
 
 class FireWidget : public QWidget {
 Q_OBJECT
@@ -40,11 +41,13 @@ public:
 	void drawForest();
 	void drawFire();
 	
-	bool eteindreFeu(int ligne, int colonne);
-	bool allumerFeu(int ligne, int colonne);
-	bool finirFeu(int ligne, int colonne);
+	bool eteindreFeu(int colonne, int ligne);
+	bool allumerFeu(int colonne, int ligne);
+	bool finirFeu(int colonne, int ligne);
 	
-	void reset(int _haut, int _larg, float coef, float proba);
+	void set(int _larg, int _haut, float proba, float coef);
+	void set(const Fwelcome* fwel);
+	void reset(int _larg, int _haut, float proba, float coef);
 
 protected:
 	void mousePressEvent(QMouseEvent *event);

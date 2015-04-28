@@ -108,7 +108,7 @@ void FireScreen::initialiseParametres(int largeur, int hauteur, float proba, flo
 	QLabel* trans_con = new QLabel("Transmission continue : ");
 	
 	QLabel* tour_lbl = new QLabel("Nombre de tours :");
-	majTimer();
+// 	majTimer();
 	
 	// Ajouter la scrollbar horizontale
 	set_delai(interTempsInit);
@@ -177,8 +177,6 @@ void FireScreen::initialiseParametres(int largeur, int hauteur, float proba, flo
 // 	setMinimumSize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
 	setMinimumHeight(lay->sizeHint().height() +menuBar()->sizeHint().height());
 // 	resize( std::max(lay->sizeHint().height(), largeur) +250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
-	initSizes(largeur, hauteur);
-	
 }
 
 void FireScreen::initSizes(int largeur, int hauteur)
@@ -211,6 +209,23 @@ void FireScreen::majTimer()
 {
 	cpt_lbl->setText(QString::number(nb_tour));
 }
+
+void FireScreen::set()
+{
+	Fwelcome* fwel = new Fwelcome(this);
+	fwel->show();
+	if(fwel->exec() == QDialog::Accepted ){
+		int hauteur = fwel->get_haut();
+		int largeur = fwel->get_larg();
+		float proba = fwel->get_proba();
+		float coef_brulure = fwel->get_coef();
+		initialiseParametres(largeur, hauteur, proba, coef_brulure);
+		majTimer();
+		initSizes(largeur, hauteur);
+		show();
+	}
+}
+
 
 // #############
 // 	Events
@@ -258,13 +273,14 @@ void FireScreen::reset()
 		stop_timer(true);
 		nb_tour= 0;
 		majTimer();
-		int hauteur = fwel->get_haut();
+// 		set(fwel);
 		int largeur = fwel->get_larg();
+		int hauteur = fwel->get_haut();
 		float proba = fwel->get_proba();
 		float coef_brulure = fwel->get_coef();
-		fwidget->reset(hauteur,largeur,coef_brulure, proba);
+		fwidget->reset(largeur, hauteur, proba, coef_brulure);
+// 		fwidget->reset(fwel);
 		
-		initSizes(largeur, hauteur);
 	}
 }
 

@@ -316,7 +316,7 @@ void Foret::initialisation(float proba)
 	randomMatrice(proba);
 }
 
-void Foret::reset(int largeur, int hauteur, float coef, float proba)
+void Foret::reset(int largeur, int hauteur, float proba, float coef)
 {
 	onFire.clear();
 	carbonized.clear();

@@ -43,6 +43,7 @@ public:
 	void initSizes(int largeur, int hauteur);
 	
 	void majTimer();
+	void set();
 		
 protected:
 	void resizeEvent(QResizeEvent* Qevent);
