@@ -26,6 +26,7 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	larg_spin = new QSpinBox(ww);
 	larg_spin->setMinimum(100);
 	larg_spin->setMaximum(1000);
+	larg_spin->setValue(150);
 	larg_spin->setSingleStep(25);
 	larg_spin->setAccelerated(1);
 	

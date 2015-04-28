@@ -43,7 +43,7 @@ using namespace std;
 // ################################### 
 
 Foret::Foret(int n_colonnes, int n_lignes, float proba, float coefFire)
-: lignes(n_lignes), colonnes(n_colonnes), burningCoef(coefFire), wind(3.0,3.0)
+: lignes(n_lignes), colonnes(n_colonnes), burningCoef(coefFire), wind(2.0,2.0)
 {
 	initialisation(proba);
 }
