@@ -203,7 +203,7 @@ void FireScreen::initSizes(int largeur, int hauteur)
 	int maxCellWidth= freePixWidth/largeur;
 	int tCellMax= std::min(maxCellWidth, maxCellHeight);
 	
-	setMaximumHeight( tCellMax *hauteur +45 );
+	setMaximumHeight( tCellMax * hauteur +45 );
 	setMaximumWidth( tCellMax * largeur +250 +15 );
 	
 	#if DEBUG_DIMENSION

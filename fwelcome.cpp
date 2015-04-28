@@ -2,6 +2,8 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QGridLayout>
+#include <QApplication>
+#include <qdesktopwidget.h>
 /*
  * - BUG Les sliders/labels changent de dimension lorsqu'il y a un nombre à 2 chiffres après la virgule
  */
@@ -25,7 +27,7 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	QLabel* l_lbl = new QLabel("Largeur : ");
 	larg_spin = new QSpinBox(ww);
 	larg_spin->setMinimum(100);
-	larg_spin->setMaximum(1000);
+	larg_spin->setMaximum(QApplication::desktop()->screenGeometry().width() -250-15);
 	larg_spin->setValue(150);
 	larg_spin->setSingleStep(25);
 	larg_spin->setAccelerated(1);
@@ -33,7 +35,7 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	QLabel* h_lbl = new QLabel("Hauteur : ");
 	haut_spin = new QSpinBox(ww);
 	haut_spin->setMinimum(100);
-	haut_spin->setMaximum(1000);
+	haut_spin->setMaximum(QApplication::desktop()->screenGeometry().height()-45-25 ); // 45 pixel à cause des marges et menu (observé 43)
 	haut_spin->setSingleStep(25);
 	haut_spin->setAccelerated(1);
 	
