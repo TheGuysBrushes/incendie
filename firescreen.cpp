@@ -24,6 +24,7 @@ FireScreen::FireScreen(): QMainWindow()
 	QAction* save = new QAction(this);
 	save->setText( "Save" );
 	
+	fwidget= new FireWidget();
 	
 	menuBar()/*->addMenu( "Menu" )*/->addAction(exit);
 	menuBar()->addAction(save);
@@ -79,7 +80,6 @@ void FireScreen::initForest(const Fwelcome* fwel)
 void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 {
 /*** 	BOUTONS ET INTERFACE		***/
-	fwidget= new FireWidget();
 
 	// CONTENEURS
 	// Conteneur général
