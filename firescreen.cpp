@@ -1,10 +1,8 @@
 #include "firescreen.h"
 
-#include <QtGui/QHBoxLayout>
+// #include <QtGui/QHBoxLayout>
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QGridLayout>
-#include <QtGui/QLabel>
-#include <QtGui/QPushButton>
 #include <QtCore/QString>
 #include <QtGui/QSlider>
 
@@ -76,22 +74,14 @@ void FireScreen::initForest(const Fwelcome* fwel)
 	initSizes(largeur, hauteur);
 }
 
-
-void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
+void FireScreen::initMenus(QHBoxLayout* HLayout)
 {
-/*** 	BOUTONS ET INTERFACE		***/
-
-	// CONTENEURS
-	// Conteneur général
-	QWidget* w = new QWidget(this);
-	
-	// Sous-conteneurs
-	QHBoxLayout* lay = new QHBoxLayout(w);
-	QWidget* ww = new QWidget(w);
+	QWidget* ww = new QWidget();
+	HLayout->addWidget(ww);
 	// Propriétés utiles?
-	ww->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Minimum);
-	// 	ww->setMaximumWidth(250);
-	// 	ww->setMinimumWidth(250);
+	// 	ww->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Minimum);
+	// 		ww->setMaximumWidth(350);
+	// 		ww->setMinimumWidth(350);
 	
 	QVBoxLayout* vert_lay1 = new QVBoxLayout(ww);
 	QWidget* ww1 = new QWidget(ww);
@@ -115,12 +105,12 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 	
 	
 	int interTempsInit= 200;
-
+	
 	// Compteur de tours et Slider
 	QLabel* trans_con = new QLabel("Transmission continue : ");
 	
 	QLabel* tour_lbl = new QLabel("Nombre de tours :");
-// 	majTimer();
+	// 	majTimer();
 	
 	// Ajouter la scrollbar horizontale
 	set_delai(interTempsInit);
@@ -129,7 +119,7 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 	slider->setMinimum(10);
 	slider->setMaximum(500);
 	slider->setValue(interTempsInit);	// position initiale du slider
-
+	
 	// Ajout des éléments dans les conteneurs
 	grid_lay1->addWidget(next_btn,0,0);
 	
@@ -152,13 +142,6 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 	vert_lay1->addStretch(2);
 	vert_lay1->setAlignment(titre,Qt::AlignHCenter);
 	
-	// PLACEMENT DES ELEMENTS
-	lay->addWidget(fwidget);
-	lay->setStretchFactor(fwidget, 1);
-	lay->minimumHeightForWidth(1);
-	lay->addWidget(ww);
-	setCentralWidget(w);
-	
 	// CONNEXION DES BOUTONS AUX FONCTIONS
 	QObject::connect(next_btn,		SIGNAL(clicked()), fwidget,		SLOT(next()) );
 	QObject::connect(play_btn,		SIGNAL(clicked(bool)), this,	SLOT(start_timer(bool)) );
@@ -167,12 +150,9 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 	QObject::connect(next_btn, 		SIGNAL(clicked()), this,			SLOT(nextCompteur()) );
 	
 	QObject::connect(slider,	SIGNAL(valueChanged(int)), this, SLOT(set_delai(int )));
-	
-	/// @author Florian
 	QObject::connect(reset_btn,	SIGNAL(clicked()), this,	SLOT(reset()) );
 	
-	
-/*** 	DEFINITTION DU STYLE DES ELEMENTS	***/
+	/*** 	DEFINITTION DU STYLE DES ELEMENTS	***/
 	// Touches d'améliorations visuelles et d'initialisation de propriétés
 	titre->setStyleSheet("color : darkblue; font : bold italic 20px;");
 	trans_con->setStyleSheet("text-decoration : underline; color : darkblue ; font : italic 14px");
@@ -181,14 +161,34 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 	cpt_lbl->setStyleSheet("QLabel { color : darkblue; }");
 	delai_lbl->setStyleSheet("QLabel { color : darkblue; }");
 	
+}
+
+
+void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
+{
+/*** 	BOUTONS ET INTERFACE		***/
+
+// CONTENEURS
+	// Conteneur général
+	QWidget* w = new QWidget(this);
+	setCentralWidget(w);
+	
+	// Sous-conteneurs
+	QHBoxLayout* lay = new QHBoxLayout(w);
+	
+// PLACEMENT DES ELEMENTS
+	// Partie gauche
+	lay->addWidget(fwidget);
+	lay->setStretchFactor(fwidget, 1);
+	lay->minimumHeightForWidth(1);
+	
+	// Partie droite, menus
+	initMenus(lay);
 	
 // 	Definition de la taille selon les éléments
-
-	// taille minimale de la fenetre : (Hpanneau + Lpanneau)/(Hpanneau) + marges,
-	//		ce qui donne un carré à gauche de cote au moins la hauteur du panneau, pour la foret, ET le panneau à droite
-// 	setMinimumSize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
-	setMinimumHeight(lay->sizeHint().height() +menuBar()->sizeHint().height());
-// 	resize( std::max(lay->sizeHint().height(), largeur) +250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
+	setMinimumHeight(lay->sizeHint().height() + menuBar()->sizeHint().height());
+// 	setMinimumWidth(vert_lay1->sizeHint().width());
+	
 }
 
 void FireScreen::initSizes(int largeur, int hauteur)

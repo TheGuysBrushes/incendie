@@ -5,6 +5,7 @@
 #include <QtCore/QTimer>
 #include <QtGui/QLabel>
 #include <QtGui/QPushButton>
+#include <QtGui/QHBoxLayout>
 
 #include "fwelcome.h"
 #include "firewidget.h"
@@ -40,6 +41,7 @@ public:
 	virtual ~FireScreen();
 		
 	void initForest(const Fwelcome* fwel);
+	void initMenus(QHBoxLayout* HLayout) /*const*/;
 	void initComponents();
 	void initSizes(int largeur, int hauteur);
 	
