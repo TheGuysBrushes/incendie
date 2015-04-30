@@ -323,12 +323,13 @@ void FireScreen::update_vent(int y){
 	float horizontal = cos(PI*(float)angle/180.0);
 	float vertical = sin(PI*(float)angle/180.0);
 	
-	if(vitesse >= 5 && vitesse <= 50){
-		fwidget->setVent(horizontal,vertical);
-	}else if(vitesse >50 && vitesse <=100){
-		fwidget->setVent(horizontal*2.0, vertical*2.0);
+	if(vitesse >50 && vitesse <=100){
+		horizontal *= 2.0;
+		vertical *= 2.0;
 	}else{
-		fwidget->setVent(horizontal*3.0, vertical*3.0);		
+		horizontal *= 4.0;
+		vertical *= 4.0;
 	}
-	
+	fwidget->setVent(horizontal+1.0,vertical+1.0);
+	cout << "valeur horizontal : " << horizontal << " ; valeur vertical : " << vertical << endl;
 }
