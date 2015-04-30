@@ -9,6 +9,7 @@
 
 #include "fwelcome.h"
 #include "firewidget.h"
+#include "windwidget.h"
 /*	TODO firescreen:
  * 
  *	 DONE : 
@@ -23,6 +24,7 @@ class FireScreen : public QMainWindow
 {
 Q_OBJECT
 private:
+	WindWidget* vent_widget;
 	FireWidget* fwidget;
 	QLabel* cpt_lbl;
 	QLabel* delai_lbl;
@@ -57,6 +59,7 @@ public slots:
 	void nextCompteur();
 	void set_delai(int x );
 	void reset();
+	void update_vent(int y);
 
 };
 

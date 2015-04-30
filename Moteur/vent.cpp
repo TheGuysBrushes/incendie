@@ -15,6 +15,16 @@ Vent::Vent(const Vent& other)
 
 // Vent::~Vent(){}
 
+void Vent::setPower_h(float val)
+{
+	power_h = val;
+}
+
+void Vent::setPower_v(float val)
+{
+	power_v = val;
+}
+
 
 // ####################
 // 	OPERATIONS

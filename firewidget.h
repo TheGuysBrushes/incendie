@@ -37,6 +37,8 @@ public:
 	// Autres méthodes
 	void setColor(int colorIndice);
 	
+	void setVent(float _hor, float _ver);
+	
 // AFFICHAGES
 	void drawCell(int colonne, int ligne);
 	void drawTree(const Arbre* ab);

@@ -43,13 +43,14 @@ using namespace std;
 // ################################### 
 
 Foret::Foret(int n_colonnes, int n_lignes, float proba, float coefFire)
-: lignes(n_lignes), colonnes(n_colonnes), burningCoef(coefFire), wind(2.0,2.0)
+: lignes(n_lignes), colonnes(n_colonnes), burningCoef(coefFire)
 {
 	initialisation(proba);
+	wind = new Vent(2.0,2.0);
 }
 
 Foret::Foret(Foret& other, float proba)
- : lignes(other.lignes), colonnes(other.colonnes), burningCoef(other.burningCoef), wind(0.0,0.0)
+ : lignes(other.lignes), colonnes(other.colonnes), burningCoef(other.burningCoef)
 {
 	initialisation(proba);
 }
@@ -501,11 +502,11 @@ void Foret::adjacents_vent(Arbre*  a)
 		int row = a->getPos().row;
 		int col = a->getPos().col;
 		
-		int h = wind.getPower_h();
-		int l = wind.getPower_v();
+		int h = wind->getPower_h();
+		int l = wind->getPower_v();
 		
-		for(int i = 0; i < abs(wind.getPower_h()); ++i){
-			for(int j = 0; j < abs(wind.getPower_v()); ++j){
+		for(int i = 0; i < abs(wind->getPower_h()); ++i){
+			for(int j = 0; j < abs(wind->getPower_v()); ++j){
 				if((h+row-i) > 0 && (h+row-i) < (lignes) && (l+col-j) > 0 && (l+col-j) < (colonnes)){
 					Cellule* cell = matrice[row+(h-i)][col+(l-j)];
 					if(cell->getEtat() == 1)

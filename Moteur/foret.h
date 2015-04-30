@@ -23,7 +23,7 @@ private:
 	
 	float burningCoef; // ralenti la progression du feu, il lui faut plus de tours pour avancer : affecte la précision des mesures
 	
-	Vent wind;
+	Vent* wind;
 	std::vector< Essence > essences;
 	std::vector<std::vector< Cellule* > > matrice;
 	std::list< Arbre* >	onFire;
@@ -56,6 +56,7 @@ public:
 	// 	Getters and Setters
 	int largeur()	const { return colonnes;};
 	int hauteur()	const { return lignes;};
+	Vent* getVent() const { return wind; };
 	std::vector< Cellule* >* operator[](int ligne) { return &(matrice[ligne]); };
 	
 	const std::list< Arbre* >* getOnFire() const	{ return &onFire; };

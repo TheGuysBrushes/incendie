@@ -11,6 +11,13 @@
 #include <QtGui/QAction>
 #include <QApplication>
 #include <qdesktopwidget.h>
+
+#include <math.h>
+#define PI 3.14159265
+
+using namespace std;
+
+
 /*		
  * - TODO voir pour choisir une meilleur taille initiale
  */
@@ -23,6 +30,7 @@ FireScreen::FireScreen(): QMainWindow()
 	save->setText( "Save" );
 	
 	fwidget= new FireWidget();
+	vent_widget = new WindWidget();
 	
 	menuBar()/*->addMenu( "Menu" )*/->addAction(exit);
 	menuBar()->addAction(save);
@@ -97,6 +105,7 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	
 	// Element du panneau de direction de l'automate
 	QLabel* titre = new QLabel("Automate cellulaire");
+	QLabel* info_vent= new QLabel("Parametres du vent :");
 	
 	// Boutons
 	QLabel* trans_p2p = new QLabel("Transmission pas-a-pas : ");
@@ -132,6 +141,8 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	h_lay1->addWidget(cpt_lbl);
 	
 	vert_lay1->addWidget(titre);
+	vert_lay1->addWidget(info_vent);
+	vert_lay1->addWidget(vent_widget);
 	vert_lay1->addWidget(trans_p2p);
 	vert_lay1->addWidget(ww1);
 	vert_lay1->addWidget(trans_con);
@@ -151,12 +162,14 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	
 	QObject::connect(slider,	SIGNAL(valueChanged(int)), this, SLOT(set_delai(int )));
 	QObject::connect(reset_btn,	SIGNAL(clicked()), this,	SLOT(reset()) );
+	connect(vent_widget, SIGNAL(modif_value(int)), this, SLOT(update_vent(int)) );
 	
 	/*** 	DEFINITTION DU STYLE DES ELEMENTS	***/
 	// Touches d'améliorations visuelles et d'initialisation de propriétés
 	titre->setStyleSheet("color : darkblue; font : bold italic 20px;");
 	trans_con->setStyleSheet("text-decoration : underline; color : darkblue ; font : italic 14px");
 	trans_p2p->setStyleSheet("text-decoration : underline; color : darkblue ; font : italic 14px");
+	info_vent->setStyleSheet("text-decoration : underline; color : darkblue ; font : italic 14px");
 	tour_lbl->setStyleSheet("QLabel {  color : darkblue; }");
 	cpt_lbl->setStyleSheet("QLabel { color : darkblue; }");
 	delai_lbl->setStyleSheet("QLabel { color : darkblue; }");
@@ -299,4 +312,23 @@ void FireScreen::nextCompteur()
 		majTimer();
 	}
 	else stop_timer(true);
+}
+
+void FireScreen::update_vent(int y){
+	// Les paramètres du vent ont été modifiés
+	// On doit récupérer les valeurs et mettre à jour le vent
+	int angle = vent_widget->get_angle();
+	int vitesse = vent_widget->get_vitesse();
+	
+	float horizontal = cos(PI*(float)angle/180.0);
+	float vertical = sin(PI*(float)angle/180.0);
+	
+	if(vitesse >= 5 && vitesse <= 50){
+		fwidget->setVent(horizontal,vertical);
+	}else if(vitesse >50 && vitesse <=100){
+		fwidget->setVent(horizontal*2.0, vertical*2.0);
+	}else{
+		fwidget->setVent(horizontal*3.0, vertical*3.0);		
+	}
+	
 }

@@ -290,6 +290,12 @@ bool FireWidget::finirFeu(int colonne, int ligne)
 	return false;
 }
 
+void FireWidget::setVent(float _hor, float _ver){
+	
+	foret->getVent()->setPower_h(_hor);
+	foret->getVent()->setPower_v(_ver);
+}
+
 
 // #############
 // 	Events
