@@ -28,44 +28,90 @@ FireWidget::~FireWidget()
 	delete(foret);
 }
 
+// #####################
+//		Initialisations
+// #####################
+bool FireWidget::loadPicture(QString filename)
+{
+	QImage img;
+// 	img.fill(qRgba(50, 50, 50, 255));
+	img.load(filename);
+	pictureForest= new QPixmap();
+	if (pictureForest->convertFromImage(img)){
+		#if DEBUG_IMAGE
+		cout<< "image chargée"<< endl;
+		#endif
+		
+		return true;
+	}
+	else {
+		#if DEBUG_IMAGE
+		cout<< "image non chargée"<< endl;
+		#endif
+		
+		return false;
+	}
+}
 
-// #####################
-//		Autres méthodes
-// #####################
+
 void FireWidget::initialise(int _largeur, int _hauteur, float proba, float coef_brulure)
 {
 	foret = new Foret(_largeur, _hauteur, proba, coef_brulure);
 	buffer = new QImage();
 	color = new QColor(Qt::black);
 	bufferPainter= new QPainter();
+	loadPicture("../foret_pay.png");
 	
 	setMinimumSize(_largeur, _hauteur);
 }
 
+// #####################
+//		Autres méthodes
+// #####################
 void FireWidget::setColor(int colorIndice)
 {
 	switch(colorIndice){
 		case 0:
-			this->color->setRgb(1,100,0,255);
+			this->color->setRgb(1,100,0,		100);
 			break;
 		case 1:
-			this->color->setRgb(34,139,34,255);
+			this->color->setRgb(34,139,34,	100);
 			break;
 		case 2:
-			this->color->setRgb(107,142,35,255);
+			this->color->setRgb(107,142,35,	100);
 			break;
 		case 3:
-			this->color->setRgb(0,205,0,255);
+			this->color->setRgb(0,205,0,		100);
 			break;
 		case 4:
-			this->color->setRgb(46,139,87,255);
-			break;								
+			this->color->setRgb(46,139,87,	100);
+			break;
 	}
 }
 
 // #################
 //		Affichages
 // #################
+void FireWidget::drawPicture()
+{
+	
+	QByteArray data;
+	
+	for(int i=0; i<foret->hauteur(); ++i){
+		vector< Cellule* >* ligne= (*foret)[i];
+		
+		for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
+			data.push_back( (*j)->getEtat() *10);
+		}
+	}
+	
+	bufferPainter->begin(buffer);
+	
+	bufferPainter->drawPixmap(0, 0, *pictureForest);
+	
+	bufferPainter->end();
+}
+
 /**
  * imprime une cellule à une position donnée, utilise la couleur de la classe
  * @author Florian
@@ -185,6 +231,7 @@ void FireWidget::redraw()
 		// 		bufferPainter->end();
 	}
 	buffer = new QImage(tailleCell*foret->largeur(), tailleCell*foret->hauteur(), QImage::Format_ARGB32);
+	drawPicture();
 	drawForest();
 	drawFire();
 	update();
@@ -400,6 +447,7 @@ void FireWidget::reset(int _larg, int _haut, float proba, float coef)
 	foret->randomMatrice(proba);
 // 	foret->reset(_larg,_haut, proba, coef);
 	setMinimumSize(_larg, _haut);
+	drawPicture();
 	drawForest();
 	drawFire();
 	update();

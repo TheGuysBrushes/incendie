@@ -5,8 +5,10 @@
 #include <QtGui/QImage>
 #include <QtGui/QPainter>
 #include <QtGui/QColor>
-#include <functional>
+// #include <functional>
 #include <vector>
+
+#include <QtCore/QByteArray>
 
 #include "Moteur/foret.h"
 #include "fwelcome.h"
@@ -21,6 +23,8 @@ private:
 	QPainter* bufferPainter;
 	int tailleCell;
 	
+	QPixmap* pictureForest;
+	
 	long temps;
 	bool running;
 	
@@ -30,6 +34,7 @@ public:
 	FireWidget();
 	virtual ~FireWidget();
 	
+	bool loadPicture(QString filename);
 	void initialise(int _largeur, int _hauteur, float proba = 0.60, float coef_brulure=1.0);
 	
 // 	void newForet(int _largeur, int _hauteur, float _proba, float _coef_brulure);
@@ -40,6 +45,7 @@ public:
 	void setVent(float _hor, float _ver);
 	
 // AFFICHAGES
+	void drawPicture();
 	void drawCell(int colonne, int ligne);
 	void drawTree(const Arbre* ab);
 
