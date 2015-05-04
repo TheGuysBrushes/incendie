@@ -3,6 +3,11 @@
 
 using namespace std;
 
+/* TODO 	1- Création de la zone de selection clics souris
+ * TODO 	2- Sur le release, confirmation de la zone et application de l'effet choisi
+ * TODO 	3- Pour les effets, deux boutons ( coupure et retardateur ) dont un par défaut activé
+ */
+
 // Constructeur
 FireWidget::FireWidget(int _largeur, int _hauteur, float proba, float coef_brulure): QWidget()
 {
@@ -12,6 +17,7 @@ FireWidget::FireWidget(int _largeur, int _hauteur, float proba, float coef_brulu
 	bufferPainter= new QPainter();
 	
 	setMinimumSize(_largeur, _hauteur);
+	// 	TODO setBaseSize();
 }
 
 FireWidget::FireWidget(): QWidget()
@@ -34,7 +40,7 @@ FireWidget::~FireWidget()
 bool FireWidget::loadPicture(QString filename)
 {
 	QImage img;
-// 	img.fill(qRgba(50, 50, 50, 255));
+	// 	img.fill(qRgba(50, 50, 50, 255));
 	img.load(filename);
 	pictureForest= new QPixmap();
 	if (pictureForest->convertFromImage(img)){
@@ -68,6 +74,7 @@ void FireWidget::initialise(int _largeur, int _hauteur, float proba, float coef_
 // #####################
 //		Autres méthodes
 // #####################
+#define GRAY_TRANSPARENT 5
 void FireWidget::setColor(int colorIndice)
 {
 	switch(colorIndice){
@@ -85,6 +92,9 @@ void FireWidget::setColor(int colorIndice)
 			break;
 		case 4:
 			this->color->setRgb(46,139,87,	100);
+			break;
+		case GRAY_TRANSPARENT:
+			this->color->setRgb(100,100,100,	100);
 			break;
 	}
 }
@@ -166,19 +176,21 @@ void FireWidget::drawForest()
 				// Il faut ici vérifier l'essence de l'arbre pour lui attribuer une variante de vert
 				Arbre* ab= dynamic_cast < Arbre* >(cell);
 				
-//				Pour changer la couleur de l'arbre en train d'etre enflammé 
-// 				int brulure= ab->getEssence()->get;
+				//				Pour changer la couleur de l'arbre en train d'etre enflammé 
+				// 				int brulure= ab->getEssence()->get;
 				
 				unsigned indice= ab->getEssence()->getIndice();
 				setColor(indice);
 				drawCell(current_largeur, current_hauteur);
 			}
 			else if (cell->getEtat() == 2){
+				this->
 				color->setNamedColor("red");
 				drawCell(current_largeur, current_hauteur);
 			}
 			else if (cell->getEtat() == 3){
-				color->setNamedColor("gray");
+				// 				color->setNamedColor("gray");
+				setColor(GRAY_TRANSPARENT);
 				drawCell(current_largeur, current_hauteur);
 			}
 			
@@ -216,7 +228,8 @@ void FireWidget::drawFire()
 	
 	const list< Arbre * >* newAsh= foret->getCarbonized();
 	for( list< Arbre * >::const_iterator j( newAsh->begin() ); j != newAsh->end(); ++j){
-		color->setNamedColor("gray");
+		// 		color->setNamedColor("gray");
+		setColor(GRAY_TRANSPARENT);
 		drawTree(*j);
 	}
 	foret->clearCarbonized();
@@ -243,7 +256,7 @@ void FireWidget::redraw()
  * @author Florian
  * @param ligne 
  * @param colonne ligne et colonne de l'arbre à eteindre
-* @return vrai si il y avait un arbre en feu
+ * @return vrai si il y avait un arbre en feu
  */
 bool FireWidget::eteindreFeu(int colonne, int ligne)
 {
@@ -280,16 +293,16 @@ bool FireWidget::eteindreFeu(int colonne, int ligne)
  */
 bool FireWidget::allumerFeu(int colonne, int ligne)
 {
-#if DEBUG_ALLUME
+	#if DEBUG_ALLUME
 	cout << "allumer cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
-#endif
+	#endif
 	
 	if(ligne>=0 && ligne < foret->hauteur()){
 		vector< Cellule* >* line= (*foret)[ligne];
 		
 		if (colonne>=0 && colonne < foret->largeur()){
 			Cellule* cell= (*line)[colonne];	
-		
+			
 			if (cell->getEtat()==1){
 				Arbre* ab= dynamic_cast< Arbre* >(cell);
 				foret->allumer(ab);
@@ -363,10 +376,11 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 	cout << "tH: "<< event->size().width()<< " tL "<< event->size().height()<< endl;
 	cout << "taille Cellule : "<< tailleCell<< endl;
 	#endif
-
+	
 	redraw();
 }
 
+// TODO faire une fonction qui prend le "button" de l'event et fait les instructions en conséquences
 void FireWidget::mousePressEvent(QMouseEvent* event)
 {
 	int colonne= event->x()/tailleCell;
@@ -377,6 +391,7 @@ void FireWidget::mousePressEvent(QMouseEvent* event)
 	else if (event->button()==Qt::MiddleButton)
 		finirFeu(colonne, ligne);
 	else if (event->button()==Qt::RightButton){
+		/* TODO voir en haut */
 		eteindreFeu(colonne, ligne);
 		drawForest();
 	}
@@ -393,21 +408,11 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 	else if (event->buttons().testFlag(Qt::MiddleButton) )
 		finirFeu(colonne, ligne);
 	else if (event->buttons().testFlag(Qt::RightButton) ){
-		/* TODO :
-		 * 			- Création de la zone de selection
-		 * 			- Sur le release, confirmation de la zone et application de l'effet choisi
-		 * 			- Pour les effets, deux boutons ( coupure et retardateur ) dont un par défaut activé
-		 */
+		/* TODO voir en haut */
 		eteindreFeu(colonne, ligne);
 		drawForest();
 	}
 }
-
-// void FireWidget::newForet(int _largeur, int _hauteur, float _proba, float _coef_brulure)
-// {
-// 	delete(foret);
-// 	foret = new Foret(_largeur,_hauteur, _proba, _coef_brulure);
-// }
 
 // ################
 // 	Deroulement
@@ -457,4 +462,4 @@ void FireWidget::reset(int _larg, int _haut, float proba, float coef)
 	drawFire();
 	update();
 }
-
+	
