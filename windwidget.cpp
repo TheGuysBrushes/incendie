@@ -18,8 +18,8 @@ WindWidget::WindWidget():vitesse(5){
 	QHBoxLayout* h_lay2 = new QHBoxLayout(www);
 	
 	QSlider* slider_angle = new QSlider(Qt::Horizontal);
-	slider_angle->setMinimum(-180);
-	slider_angle->setMaximum(180);
+	slider_angle->setMinimum(0);
+	slider_angle->setMaximum(360);
 	slider_angle->setValue(45);	// position initiale du slider
 	
 	QSlider* slider_vitesse = new QSlider(Qt::Vertical);

@@ -319,17 +319,26 @@ void FireScreen::update_vent(int y){
 	// On doit récupérer les valeurs et mettre à jour le vent
 	int angle = vent_widget->get_angle();
 	int vitesse = vent_widget->get_vitesse();
+	float vertical;
 	
-	float horizontal = cos(PI*(float)angle/180.0);
-	float vertical = sin(PI*(float)angle/180.0);
-	
-	if(vitesse >50 && vitesse <=100){
-		horizontal *= 2.0;
-		vertical *= 2.0;
+	float horizontal;
+	if( (angle >= 90 && angle <180) || (angle >=270 && angle < 360)){
+		vertical = sin(PI*(float)(angle+180.0)/180.0);
+		horizontal = cos(PI*(float)(angle+180)/180.0);
 	}else{
+		vertical = sin(PI*(float)angle/180.0);
+		horizontal = cos(PI*(float)angle/180.0);
+	}
+	if(vitesse >50 && vitesse <=100){
+		horizontal *= 3.0;
+		vertical *= 3.0;
+	}else if(vitesse > 100){
 		horizontal *= 4.0;
 		vertical *= 4.0;
+	}else{
+		horizontal*=2.0;
+		vertical*=2.0;
 	}
-	fwidget->setVent(horizontal+1.0,vertical+1.0);
-	cout << "valeur horizontal : " << horizontal << " ; valeur vertical : " << vertical << endl;
+	fwidget->setVent(horizontal,vertical);
+	cout << "Angle : "<<angle<<" ; valeur horizontal : " << horizontal << " ; valeur vertical : " << vertical << endl;
 }
