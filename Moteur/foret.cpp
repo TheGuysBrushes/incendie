@@ -507,7 +507,7 @@ void Foret::adjacents_vent(Arbre*  a)
 		
 		for(int i = 0; i < abs(wind->getPower_h()); ++i){
 			for(int j = 0; j < abs(wind->getPower_v()); ++j){
-				if((h+row-i) > 0 && (h+row-i) < (lignes) && (l+col-j) > 0 && (l+col-j) < (colonnes)){
+				if((h+row-i) >= 0 && (h+row-i) < (lignes) && (l+col-j) >= 0 && (l+col-j) < (colonnes)){
 					Cellule* cell = matrice[row+(h-i)][col+(l-j)];
 					if(cell->getEtat() == 1)
 						enflammer(dynamic_cast < Arbre* >(cell));

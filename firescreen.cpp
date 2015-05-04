@@ -340,5 +340,5 @@ void FireScreen::update_vent(int y){
 		vertical*=2.0;
 	}
 	fwidget->setVent(horizontal,vertical);
-	cout << "Angle : "<<angle<<" ; valeur horizontal : " << horizontal << " ; valeur vertical : " << vertical << endl;
+	cout << "Vitesse : "<< vitesse<< "; Angle : "<<angle<<" ; valeur horizontal : " << horizontal << " ; valeur vertical : " << vertical << endl;
 }

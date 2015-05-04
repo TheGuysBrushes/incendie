@@ -82,6 +82,7 @@ void WindWidget::set_angle(int x){
 void WindWidget::set_vitesse(int y){
 	
 	vitesse_lbl->setText(QString::number(y));
+	vitesse = y;
 	emit modif_value(y);
 }
 
