@@ -69,3 +69,20 @@
   - Passage en revue des commentaires "inutiles" du code, nettoyage et ajout de commentaires.
     + Ugo : Amélioration du bouton reset.
     + Florian : ajout dans la foret d'une liste d'arbre qui viennent de s'allumer pour optimiser l'affichage, voir si ce sera toujours pertinent lorsque l'on ajoutera des "phases de brulure" aux arbres.
+
+
+<h2> Semaine 4 </h2>
+
+  <h3> Lundi </h3>
+    - Ugo : Réfléxion sur la mise en place des vents, reprise de la classe dédiée et améliorations
+  <h3> Mardi </h3>
+    - Ugo : Implémentation et tests de l'algorithme de transition avec prise en compte du vent.
+  <h3> Mercredi </h3>
+    - Ugo : Mise en place de la dynamisation du vent au cours du temps via widget dédié.
+  <h3> Jeudi </h3>
+    - Ugo : Incorporation du widget WindWidget, mise en place, tests et détection des bugs.
+    
+<h2> Semaine 5 </h2>
+
+  <h3> Lundi </h3>
+    - Ugo : Correction des bugs sur le vents, détection de nouveaux bugs
