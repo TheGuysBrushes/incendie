@@ -393,6 +393,11 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 	else if (event->buttons().testFlag(Qt::MiddleButton) )
 		finirFeu(colonne, ligne);
 	else if (event->buttons().testFlag(Qt::RightButton) ){
+		/* TODO :
+		 * 			- Création de la zone de selection
+		 * 			- Sur le release, confirmation de la zone et application de l'effet choisi
+		 * 			- Pour les effets, deux boutons ( coupure et retardateur ) dont un par défaut activé
+		 */
 		eteindreFeu(colonne, ligne);
 		drawForest();
 	}
