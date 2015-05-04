@@ -10,6 +10,8 @@ FireWidget::FireWidget(int _largeur, int _hauteur, float proba, float coef_brulu
 	buffer = new QImage();
 	color = new QColor(Qt::black);
 	bufferPainter= new QPainter();
+	origin = new QPoint(0,0);
+	rubberBand = NULL;
 	
 	setMinimumSize(_largeur, _hauteur);
 }
@@ -377,8 +379,17 @@ void FireWidget::mousePressEvent(QMouseEvent* event)
 	else if (event->button()==Qt::MiddleButton)
 		finirFeu(colonne, ligne);
 	else if (event->button()==Qt::RightButton){
+		/* Supprimé pour gestion coupures et retardateurs ***/
 		eteindreFeu(colonne, ligne);
 		drawForest();
+	
+// 		*(origin) = event->globalPos();
+		/*if(!rubberBand){
+			rubberBand = new QRubberBand(QRubberBand::Rectangle,0);
+		}
+		rubberBand->setGeometry(QRect(*origin,QSize(10,10)));
+		rubberBand->show();
+		*/
 	}
 }
 
@@ -398,9 +409,13 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 		 * 			- Sur le release, confirmation de la zone et application de l'effet choisi
 		 * 			- Pour les effets, deux boutons ( coupure et retardateur ) dont un par défaut activé
 		 */
-		eteindreFeu(colonne, ligne);
-		drawForest();
+// 		rubberBand->setGeometry(QRect(*origin,event->pos()).normalized());
 	}
+}
+
+void FireWidget::mouseReleaseEvent(QMouseEvent* event)
+{
+// 	rubberBand->hide();
 }
 
 // void FireWidget::newForet(int _largeur, int _hauteur, float _proba, float _coef_brulure)

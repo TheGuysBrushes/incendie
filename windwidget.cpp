@@ -66,7 +66,6 @@ WindWidget::~WindWidget(){
 /*** Events ***/
 void WindWidget::resizeEvent(QResizeEvent* Qevent)
 {
-	QWidget::resizeEvent(Qevent);
 }
 
 /*** Slots ***/

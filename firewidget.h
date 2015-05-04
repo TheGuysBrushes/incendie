@@ -5,6 +5,8 @@
 #include <QtGui/QImage>
 #include <QtGui/QPainter>
 #include <QtGui/QColor>
+#include <QtGui/QRubberBand>
+#include <QtCore/QPoint>
 // #include <functional>
 #include <vector>
 
@@ -21,6 +23,8 @@ private:
 	QImage* buffer;
 	QColor* color;
 	QPainter* bufferPainter;
+	QRubberBand* rubberBand;
+	QPoint* origin;
 	int tailleCell;
 	
 	QPixmap* pictureForest;
@@ -64,7 +68,7 @@ public:
 protected:
 	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
-// 	void mouseReleaseEvent(QMouseEvent *event);
+	void mouseReleaseEvent(QMouseEvent *event);
 	void resizeEvent(QResizeEvent * event);
 	void paintEvent(QPaintEvent* event);
 	
