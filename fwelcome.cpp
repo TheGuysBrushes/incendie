@@ -10,6 +10,15 @@
 
 Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 {
+	// Initialisation des composants dynamiques (SpinBox exceptées)
+	p_value = new QLabel();
+	c_value = new QLabel();
+	
+	valid_btn = new QPushButton("Valider");
+	valid_btn->setDefault(true);
+	
+	cancel_btn = new QPushButton("Annuler");
+	cancel_btn->setVisible(false);
 	
 	// Conteneur
 	QVBoxLayout* lay = new QVBoxLayout(this);
@@ -49,14 +58,6 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	slide_c->setMaximum(100);
 	slide_c->setMinimum(1);
 	
-	p_value = new QLabel();
-	c_value = new QLabel();
-	
-	valid_btn = new QPushButton("Valider");
-	valid_btn->setDefault(true);
-	
-	cancel_btn = new QPushButton("Annuler");
-	cancel_btn->setVisible(false);
 	grid_lay->addWidget(l_lbl, 0,0);
 	grid_lay->addWidget(larg_spin, 0,1);
 	
@@ -94,6 +95,14 @@ Fwelcome::~Fwelcome()
 {
 
 }
+
+/*** Autres Méthodes ***/
+void Fwelcome::initComponents(){
+	
+	
+}
+
+
 
 /*** SLOTS ***/
 void Fwelcome::set_proba(int x)

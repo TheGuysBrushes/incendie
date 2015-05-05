@@ -323,7 +323,7 @@ void FireScreen::reset()
 	stop_timer(true);
 	
 	Fwelcome* fwel = new Fwelcome(this);
-	fwel->cancel_btn->setVisible(true);
+	fwel->get_cancel()->setVisible(true);
 	fwel->setModal(true);
 	fwel->show();
 	
