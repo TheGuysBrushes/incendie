@@ -19,7 +19,9 @@ WindCircle::WindCircle(int x):angle(x){
 }
 
 WindCircle::~WindCircle(){
-
+	delete(buffer);
+	delete(center);
+	delete(direction);
 }
 /*** Getters and Setters ***/
 /**
@@ -31,6 +33,18 @@ void WindCircle::setAngle(int x){
 	angle = x;
 }
 
+/**
+ * Permet de calculer le point d'arrivée du segment 
+ * sur le cercle trigonométrique en fonction de l'angle passé 
+ * en paramètre.
+ * @param int Valeur de l'angle choisi
+ * @author Ugo
+ */
+void WindCircle::setDirection(int angle){
+	float rayon =(float)height()/2.0 - 25.0;
+	direction->setX(cos(PI*(float)angle/180.0)*rayon+center->rx());
+	direction->setY(sin(PI*(float)angle/180.0)*rayon+center->ry());
+}
 
 /*** Autres Méthodes ***/
 /**
@@ -78,21 +92,6 @@ void WindCircle::effaceBuffer(){
 	drawCircle();
 }
 
-/**
- * Permet de calculer le point d'arrivée du segment 
- * sur le cercle trigonométrique en fonction de l'angle passé 
- * en paramètre.
- * @param int Valeur de l'angle choisi
- * @author Ugo
- */
-void WindCircle::setDirection(int angle){
-	float rayon =(float)height()/2.0 - 25.0;
-	direction->setX(cos(PI*(float)angle/180.0)*rayon+center->rx());
-	direction->setY(sin(PI*(float)angle/180.0)*rayon+center->ry());
-}
-
-
-
 /*** Events ***/
 void WindCircle::paintEvent(QPaintEvent* event){
 	QPainter paint(this);
@@ -102,7 +101,7 @@ void WindCircle::paintEvent(QPaintEvent* event){
 void WindCircle::resizeEvent(QResizeEvent* event){
     if (!buffer->isNull()){
 		delete(buffer);
-		// 		bufferPainter->end();
+// 		bufferPainter->end();
 	}
 	buffer = new QImage(event->size().width(),event->size().height(), QImage::Format_ARGB32);
 
@@ -112,5 +111,3 @@ void WindCircle::resizeEvent(QResizeEvent* event){
   	drawCircle();
 	drawDir();
 }
-
-/*** Slots ***/

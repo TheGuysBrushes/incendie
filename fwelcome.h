@@ -22,22 +22,22 @@ private:
 	float proba;
 	float coef_brulure;
 	QPushButton* cancel_btn;
-	
+
 public:
 	/* Constructeur et destructeur */
 	Fwelcome(QWidget* parent);
 	virtual ~Fwelcome();
-	
+
 	/* Autres Méthodes */
 	void initComponents();
-	
+
 	/* Getters */
 	int get_haut() const{ return haut_spin->value(); };
 	int get_larg() const{ return larg_spin->value(); };
 	float get_proba() const{ return proba; };
 	float get_coef() const{ return coef_brulure; };
 	QPushButton* get_cancel() const { return cancel_btn; };
-	
+
 public slots:
 	/* Setters */
 	void set_proba(int x);

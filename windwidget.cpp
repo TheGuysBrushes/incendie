@@ -21,7 +21,9 @@ WindWidget::WindWidget():vitesse(5){
 }
 
 WindWidget::~WindWidget(){
-	
+	delete(wind);
+	delete(angle_lbl);
+	delete(vitesse_lbl);
 }
 
 /*** Autres Méthodes ***/
@@ -76,11 +78,8 @@ void WindWidget::initComponents()
 	connect(slider_vitesse, SIGNAL(valueChanged(int)), this, SLOT(set_vitesse(int)));
 }
 
-
-
 /*** Events ***/
-void WindWidget::resizeEvent(QResizeEvent* Qevent)
-{
+void WindWidget::resizeEvent(QResizeEvent* Qevent){
 }
 
 /*** Slots ***/
@@ -107,4 +106,3 @@ void WindWidget::set_vitesse(int y){
 	vitesse = y;
 	emit modif_value(y);
 }
-
