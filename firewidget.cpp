@@ -44,6 +44,12 @@ FireWidget::~FireWidget(){
 }
 
 /*** Autres Méthodes ***/
+/**
+ * Fonction agissant comme le constructeur. Permet de gérer la 
+ * ré-initialisation de la matrice
+ * @author Florian et Ugo ?
+ * @param identique_constructeur
+ */
 void FireWidget::initialise(int _largeur, int _hauteur, float proba, float coef_brulure)
 {
 	foret = new Foret(_largeur, _hauteur, proba, coef_brulure);
@@ -55,6 +61,19 @@ void FireWidget::initialise(int _largeur, int _hauteur, float proba, float coef_
 	setMinimumSize(_largeur, _hauteur);
 }
 
+/**
+ * Méthodes de destruction de la forêt pour gérer la 
+ * ré-initialisation de la matrice
+ */
+void FireWidget::delForet(){
+	delete(foret);
+}
+
+/**
+ * Fonction à commenter par son auteur :p
+ * @author Florian
+ * @param QString ?
+ */
 bool FireWidget::loadPicture(QString filename){
 	
 	QImage img;
@@ -77,6 +96,111 @@ bool FireWidget::loadPicture(QString filename){
 	}
 }
 
+/**
+ * Eteint un arbre à une position donnée
+ * @author Florian
+ * @param int/int indices de la colonne et de la ligne de l'arbre à éteindre
+ * @return vrai si il y avait un arbre en feu
+ */
+bool FireWidget::eteindreFeu(int colonne, int ligne)
+{
+	#if DEBUG_ALLUME
+	cout << "eteindre cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
+	#endif
+
+	if(ligne>=0 && ligne < foret->height()){
+		vector< Cellule* >* line= (*foret)[ligne];
+
+		if (colonne>=0 && colonne < foret->width()){
+			Cellule* cell= (*line)[colonne];	
+
+			if (cell->getEtat()==2){
+				Arbre* ab= dynamic_cast< Arbre* >(cell);
+				foret->water(ab);
+				drawChanged();
+				update();
+
+				return true;
+			}
+		}
+	}
+	// cas d'erreur par défaut
+	return false;
+}
+
+/**
+ * Allume un feu sur un arbre "vivant"
+ * @author Florian
+ * @param ligne
+ * @param colonne ligne et colonne de l'arbre à enflammer
+ * @return vrai si il y avait un arbre enflammable
+ */
+bool FireWidget::allumerFeu(int colonne, int ligne)
+{
+	#if DEBUG_ALLUME
+	cout << "allumer cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
+	#endif
+
+	if(ligne>=0 && ligne < foret->height()){
+		vector< Cellule* >* line= (*foret)[ligne];
+
+		if (colonne>=0 && colonne < foret->width()){
+			Cellule* cell= (*line)[colonne];	
+
+			if (cell->getEtat()==1){
+				Arbre* ab= dynamic_cast< Arbre* >(cell);
+				foret->allumer(ab);
+				drawChanged();
+				update();
+
+				return true;
+			}
+		}
+	}
+	// cas d'erreur par défaut
+	return false;
+}
+
+/**
+ * Opere une combustion complete sur un arbre en feu (IMPROVEIT faire sur les arbres non en feu ?)
+ * @author Florian
+ * @param ligne
+ * @param colonne ligne et colonne de l'arbre à bruler totalement
+ * @return vrai si il y avait un arbre en feu
+ */
+bool FireWidget::finirFeu(int colonne, int ligne)
+{
+	#if DEBUG_ALLUME
+	cout << "embraser cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
+	#endif
+
+	if(ligne>=0 && ligne < foret->height()){
+		vector< Cellule* >* line= (*foret)[ligne];
+
+		if (colonne>=0 && colonne < foret->width()){
+			Cellule* cell= (*line)[colonne];	
+
+			if (cell->getEtat()==2){
+				Arbre* ab= dynamic_cast< Arbre* >(cell);
+				foret->eteindre(ab);
+				drawChanged();
+				update();
+
+				return true;
+			}
+		}
+	}
+	// cas d'erreur par défaut
+	return false;
+}
+
+/*** Setters ***/
+
+/**
+ * Fonction permettant de fixer la couleur à utiliser pour dessiner un arbre
+ * @param int indice de l'essence de l'arbre
+ * @author Florian et Ugo
+ */
 void FireWidget::setColor(int colorIndice)
 {
 	switch(colorIndice){
@@ -101,32 +225,38 @@ void FireWidget::setColor(int colorIndice)
 	}
 }
 
-/*** Affichage ***/
+void FireWidget::setVent(float _hor, float _ver){
 
-void FireWidget::drawPicture()
-{
-	
+	foret->getVent()->setPower_h(_hor);
+	foret->getVent()->setPower_v(_ver);
+}
+
+/*** Affichage ***/
+/**
+ * Fonction à commenter par son auteur :p
+ * @author Florian
+ */
+void FireWidget::drawPicture(){
+
 	QByteArray data;
-	
+
 	for(int i=0; i<foret->height(); ++i){
 		vector< Cellule* >* ligne= (*foret)[i];
-		
+
 		for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
 			data.push_back( (*j)->getEtat() *10);
 		}
 	}
-	
+
 	bufferPainter->begin(buffer);
-	
 	bufferPainter->drawPixmap(0, 0, *pictureForest);
-	
 	bufferPainter->end();
 }
 
 /**
- * imprime une cellule à une position donnée, utilise la couleur de la classe
+ * Imprime une cellule à une position donnée, utilise la couleur courante
  * @author Florian
- * @param ab arbre à dessiner
+ * @param int col,row indices de la colonne et de la ligne de la cellue
  */
 void FireWidget::drawCell(int colonne, int ligne)
 {
@@ -136,32 +266,36 @@ void FireWidget::drawCell(int colonne, int ligne)
 	#endif
 }
 
-// utiliser drawCell?
 /**
- * imprime un arbre selon sa position, utilise la couleur de la classe
+ * Imprime un arbre selon sa position, utilise la couleur courante.
  * @author Florian
  * @param ab arbre à dessiner
+ * TODO Utilisation de drawCell pourquoi pas mais à toi de t'y coller ^^
  */
 void FireWidget::drawTree(const Arbre* ab)
 {
+// 	drawCell(ab->getPos().col, ab->getPos().row);
 	bufferPainter->fillRect(tailleCell* ab->getPos().col, tailleCell* ab->getPos().row, tailleCell, tailleCell, *(color));
 	#if DEBUG_TMATRICE
 	cout <<"draw tree ; ";
 	#endif
 }
+/**
+ * Dessine l'ensemble des arbres de la liste passée en paramètre
+ * @param list<Arbre*> liste des arbres à dessiner
+ * @author Florian et Ugo (commentaires :p )
+ */
+void FireWidget::drawList( list< Arbre* > * arbres){
 
-void FireWidget::drawList( list< Arbre* > * arbres)
-{
 	for( list< Arbre * >::const_iterator j( arbres->begin() ); j != arbres->end(); ++j){
 		drawTree(*j);
 	}
 	arbres->clear();
 }
 
-
 /**
  * Dessine les arbres et cellules vides dans le buffer
- * @author Florian and Ugo
+ * @author Ugo et Florian
  */
 void FireWidget::drawForest()
 {	
@@ -221,7 +355,7 @@ void FireWidget::drawForest()
 
 /**
  * Redessine les arbres qui ont changés d'état, sur l'ancienne matrice
- * 	On réutilise les cellules non susceptibles d'avoir été modifiées
+ * On réutilise les cellules non susceptibles d'avoir été modifiées
  * @author Florian and Ugo
  */
 // TODO faire une fonction qui prend une couleur et une liste d'arbres, qui "imprime" les arbres avec cette couleur
@@ -238,6 +372,10 @@ void FireWidget::drawChanged()
 	bufferPainter->end();
 }
 
+/**
+ * Vide le buffer et rafraichit l'affichage
+ * @author Florian et Ugo
+ */
 void FireWidget::redraw()
 {
 	if (!buffer->isNull()){
@@ -251,124 +389,15 @@ void FireWidget::redraw()
 	update();
 }
 
+/*** Events ***/
+void FireWidget::paintEvent(QPaintEvent* event){
 
-/**
- * Eteint un arbre à une position donnée
- * @author Florian
- * @param ligne 
- * @param colonne ligne et colonne de l'arbre à eteindre
- * @return vrai si il y avait un arbre en feu
- */
-bool FireWidget::eteindreFeu(int colonne, int ligne)
-{
-	#if DEBUG_ALLUME
-	cout << "eteindre cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
-	#endif
-	
-	if(ligne>=0 && ligne < foret->height()){
-		vector< Cellule* >* line= (*foret)[ligne];
-		
-		if (colonne>=0 && colonne < foret->width()){
-			Cellule* cell= (*line)[colonne];	
-			
-			if (cell->getEtat()==2){
-				Arbre* ab= dynamic_cast< Arbre* >(cell);
-				foret->water(ab);
-				drawChanged();
-				update();
-				
-				return true;
-			}
-		}
-	}
-	// cas d'erreur par défaut
-	return false;
-}
-
-/**
- * Allume un feu sur un arbre "vivant"
- * @author Florian
- * @param ligne
- * @param colonne ligne et colonne de l'arbre à enflammer
- * @return vrai si il y avait un arbre enflammable
- */
-bool FireWidget::allumerFeu(int colonne, int ligne)
-{
-	#if DEBUG_ALLUME
-	cout << "allumer cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
-	#endif
-	
-	if(ligne>=0 && ligne < foret->height()){
-		vector< Cellule* >* line= (*foret)[ligne];
-		
-		if (colonne>=0 && colonne < foret->width()){
-			Cellule* cell= (*line)[colonne];	
-			
-			if (cell->getEtat()==1){
-				Arbre* ab= dynamic_cast< Arbre* >(cell);
-				foret->allumer(ab);
-				drawChanged();
-				update();
-				
-				return true;
-			}
-		}
-	}
-	// cas d'erreur par défaut
-	return false;
-}
-
-/**
- * Opere une combustion complete sur un arbre en feu (IMPROVEIT faire sur les arbres non en feu ?)
- * @author Florian
- * @param ligne
- * @param colonne ligne et colonne de l'arbre à bruler totalement
- * @return vrai si il y avait un arbre en feu
- */
-bool FireWidget::finirFeu(int colonne, int ligne)
-{
-	#if DEBUG_ALLUME
-	cout << "embraser cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
-	#endif
-	
-	if(ligne>=0 && ligne < foret->height()){
-		vector< Cellule* >* line= (*foret)[ligne];
-		
-		if (colonne>=0 && colonne < foret->width()){
-			Cellule* cell= (*line)[colonne];	
-			
-			if (cell->getEtat()==2){
-				Arbre* ab= dynamic_cast< Arbre* >(cell);
-				foret->eteindre(ab);
-				drawChanged();
-				update();
-				
-				return true;
-			}
-		}
-	}
-	// cas d'erreur par défaut
-	return false;
-}
-
-void FireWidget::setVent(float _hor, float _ver){
-	
-	foret->getVent()->setPower_h(_hor);
-	foret->getVent()->setPower_v(_ver);
-}
-
-
-// #############
-// 	Events
-// #############
-void FireWidget::paintEvent(QPaintEvent* event)
-{
 	QPainter paint(this);
-	paint.drawImage(0, 0, *buffer); // , 0, 0, width(), height());
+	paint.drawImage(0, 0, *buffer);
 }
 
-void FireWidget::resizeEvent(QResizeEvent* event)
-{
+void FireWidget::resizeEvent(QResizeEvent* event){
+
 	float nbCol= foret->height();
 	float nbRow= foret->width();
 	tailleCell = min (event->size().width() / nbCol , event->size().height() / nbRow);
@@ -377,7 +406,7 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 	cout << "tH: "<< event->size().width()<< " tL "<< event->size().height()<< endl;
 	cout << "taille Cellule : "<< tailleCell<< endl;
 	#endif
-	
+
 	redraw();
 }
 
@@ -398,7 +427,6 @@ void FireWidget::mousePressEvent(QMouseEvent* event)
 	}
 }
 
-
 void FireWidget::mouseMoveEvent(QMouseEvent* event)
 {
 	int colonne= event->x()/tailleCell;
@@ -415,9 +443,7 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 	}
 }
 
-// ################
-// 	Deroulement
-// ################
+/*** Slots ***/
 /**
  * Passe de l'etat t à t+1 la foret
  * @author Florian
@@ -434,11 +460,6 @@ bool FireWidget::next()
 	update();
 	
 	return true; // cas par défaut, il y a eu un changement
-}
-
-void FireWidget::delForet()
-{
-	delete(foret);
 }
 
 /**

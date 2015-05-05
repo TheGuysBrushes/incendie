@@ -52,6 +52,10 @@ public:
 	bool finirFeu(int colonne, int ligne);
 // 	void newForet(int _largeur, int _hauteur, float _proba, float _coef_brulure);
 
+	/* Getters et Setters */
+	void setColor(int colorIndice);	
+	void setVent(float _hor, float _ver);
+	
 	/* Affichage */
 	void drawPicture();
 	void drawCell(int colonne, int ligne);
@@ -60,10 +64,6 @@ public:
 	void drawForest();
 	void drawChanged();
 	void redraw();
-
-	/* Getters et Setters */
-	void setColor(int colorIndice);	
-	void setVent(float _hor, float _ver);
 
 	/** @deprecated */
 	void reset(int _larg, int _haut, float proba, float coef);
