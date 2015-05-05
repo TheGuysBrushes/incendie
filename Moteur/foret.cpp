@@ -223,7 +223,7 @@ std::list< list< Arbre* > >& Foret::getChanged()
 
 /**
  * "Plante" un arbre à la position donnée dans la matrice
- * @author Florian
+ * @author Florian et Ugo
  */
 void Foret::plantTree(int col, int row)
 {
