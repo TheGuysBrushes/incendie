@@ -77,7 +77,7 @@ protected:
 	
 public slots:
 	bool next();
-	void drawFire();
+// 	void drawFire();
 // 	void transition(long x);
 };
 
