@@ -55,6 +55,7 @@ public:
 	void drawPicture();
 	void drawCell(int colonne, int ligne);
 	void drawTree(const Arbre* ab);
+	void drawList(std::list< Arbre* >* arbres);
 
 	void drawForest();
 	void drawChanged();

@@ -60,8 +60,8 @@ public:
 	std::vector< Cellule* >* operator[](int ligne) { return &(matrice[ligne]); };
 	
 	const std::list< Arbre* >* getOnFire() const	{ return &onFire; };
-	const std::list< Arbre* >* getCarbonized() const	{ return &carbonized; };
-	const std::list< Arbre* >* getBurned() const	{ return &burned; };
+	std::list< Arbre* >* getCarbonized()	{ return &carbonized; };
+	std::list< Arbre* >* getBurned()		{ return &burned; };
 	
 	void clearCarbonized()	{ carbonized.clear(); };
 	void clearBurned()	{ burned.clear(); };

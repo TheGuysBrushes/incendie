@@ -149,6 +149,14 @@ void FireWidget::drawTree(const Arbre* ab)
 	#endif
 }
 
+void FireWidget::drawList( list< Arbre* > * arbres)
+{
+	for( list< Arbre * >::const_iterator j( arbres->begin() ); j != arbres->end(); ++j){
+		drawTree(*j);
+	}
+	arbres->clear();
+}
+
 
 /**
  * Dessine les arbres et cellules vides dans le buffer
@@ -220,20 +228,11 @@ void FireWidget::drawChanged()
 {
 	bufferPainter->begin(buffer);
 	
-	const list< Arbre * >* newOnFire= foret->getBurned();
-	for( list< Arbre * >::const_iterator j( newOnFire->begin() ); j != newOnFire->end(); ++j){
-		color->setNamedColor("red");
-		drawTree(*j);
-	}
-	foret->clearBurned();
+	color->setNamedColor("red");
+	drawList(foret->getBurned());
 	
-	const list< Arbre * >* newAsh= foret->getCarbonized();
-	for( list< Arbre * >::const_iterator j( newAsh->begin() ); j != newAsh->end(); ++j){
-		// 		color->setNamedColor("gray");
-		setColor(GRAY_TRANSPARENT);
-		drawTree(*j);
-	}
-	foret->clearCarbonized();
+	setColor(GRAY_TRANSPARENT);
+	drawList(foret->getCarbonized());
 	
 	bufferPainter->end();
 }
