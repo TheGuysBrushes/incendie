@@ -7,6 +7,8 @@
 #include <QtGui/QPushButton>
 #include <QtGui/QHBoxLayout>
 
+#include <QtGui/QRubberBand>
+#include <QtCore/QPoint>
 #include "fwelcome.h"
 #include "firewidget.h"
 #include "windwidget.h"
@@ -32,6 +34,12 @@ private:
 	QPushButton* play_btn;
 	QPushButton* next_btn;
 	
+	QWidget* w;
+	QPoint origin;
+	QRubberBand* rubber;
+	
+	
+	
 	QTimer* timer;
 	int nb_tour;
 	long delai;
@@ -52,6 +60,9 @@ public:
 		
 protected:
 	void resizeEvent(QResizeEvent* Qevent);
+	void mousePressEvent(QMouseEvent* event);
+	void mouseMoveEvent(QMouseEvent*event);
+	void mouseReleaseEvent(QMouseEvent* event);
 	
 public slots:
 	void start_timer(bool);

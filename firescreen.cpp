@@ -10,6 +10,7 @@
 #include <QtGui/QMenuBar>
 #include <QtGui/QAction>
 #include <QApplication>
+
 #include <qdesktopwidget.h>
 
 #include <math.h>
@@ -183,11 +184,14 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 
 // CONTENEURS
 	// Conteneur général
-	QWidget* w = new QWidget(this);
+	w = new QWidget(this);
 	setCentralWidget(w);
 	
 	// Sous-conteneurs
 	QHBoxLayout* lay = new QHBoxLayout(w);
+	
+	// Tests rubberBand
+	rubber = NULL;
 	
 // PLACEMENT DES ELEMENTS
 	// Partie gauche
@@ -256,6 +260,33 @@ bool FireScreen::initialisation()
 void FireScreen::resizeEvent(QResizeEvent* Qevent)
 {
 // 	QWidget::resizeEvent(Qevent);
+}
+
+void FireScreen::mousePressEvent(QMouseEvent* event)
+{
+	if(event->button() == Qt::RightButton){
+		origin = event->pos();
+		if(!rubber)
+			rubber = new QRubberBand(QRubberBand::Rectangle,fwidget);
+		rubber->setGeometry(QRect(origin,QSize()));
+		rubber->show();
+		
+	}
+}
+
+void FireScreen::mouseMoveEvent(QMouseEvent* event)
+{
+	if(rubber){
+		rubber->setGeometry(QRect(origin, event->pos()).normalized());
+		fwidget->update();
+	}
+}
+
+void FireScreen::mouseReleaseEvent(QMouseEvent* event)
+{
+	if(rubber){
+		rubber->hide();
+	}
 }
 
 
