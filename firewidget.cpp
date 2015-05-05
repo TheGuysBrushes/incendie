@@ -27,6 +27,7 @@ FireWidget::FireWidget(int _largeur, int _hauteur, float proba, float coef_brulu
 	color = new QColor(Qt::black);
 	bufferPainter= new QPainter();
 	
+	rubber = NULL;
 	setMinimumSize(_largeur, _hauteur);
 	// 	TODO setBaseSize();
 }
@@ -57,6 +58,7 @@ void FireWidget::initialise(int _largeur, int _hauteur, float proba, float coef_
 	color = new QColor(Qt::black);
 	bufferPainter= new QPainter();
 	loadPicture("../foret_pay.png");
+	rubber = NULL;
 	
 	setMinimumSize(_largeur, _hauteur);
 }
@@ -424,8 +426,13 @@ void FireWidget::mousePressEvent(QMouseEvent* event)
 		finirFeu(colonne, ligne);
 	else if (event->button()==Qt::RightButton){
 		/* TODO voir en haut */
-		eteindreFeu(colonne, ligne);
-		drawForest();
+// 		eteindreFeu(colonne, ligne);
+// 		drawForest();
+		origin = event->pos();
+		if(!rubber)
+			rubber = new QRubberBand(QRubberBand::Rectangle,this);
+		rubber->setGeometry(QRect(origin,QSize()));
+		rubber->show();
 	}
 }
 
@@ -439,11 +446,21 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 	else if (event->buttons().testFlag(Qt::MiddleButton) )
 		finirFeu(colonne, ligne);
 	else if (event->buttons().testFlag(Qt::RightButton) ){
-		/* TODO voir en haut */
-		eteindreFeu(colonne, ligne);
-		drawForest();
+		 //TODO voir en haut 
+// 		eteindreFeu(colonne, ligne);
+// 		drawForest();
+		if(rubber)
+			rubber->setGeometry(QRect(origin,event->pos()).normalized());
 	}
+	
 }
+
+void FireWidget::mouseReleaseEvent(QMouseEvent* event)
+{
+	if(rubber)
+		rubber->hide();
+}
+
 
 /*** Slots ***/
 /**

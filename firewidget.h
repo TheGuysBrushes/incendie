@@ -9,7 +9,8 @@
 #include <vector>
 
 #include <QtCore/QByteArray>
-
+#include <QtCore/QPoint>
+#include <QtGui/QRubberBand>
 #include "Moteur/foret.h"
 #include "fwelcome.h"
 
@@ -32,7 +33,8 @@ private:
 	int tailleCell;
 
 	QPixmap* pictureForest;
-
+	QPoint origin;
+	QRubberBand* rubber;
 	long temps;
 	bool running;
 
@@ -72,7 +74,7 @@ protected:
 	/* Events */
 	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
-// 	void mouseReleaseEvent(QMouseEvent *event);
+	void mouseReleaseEvent(QMouseEvent *event);
 	void resizeEvent(QResizeEvent * event);
 	void paintEvent(QPaintEvent* event);
 	
