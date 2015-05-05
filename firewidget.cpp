@@ -215,6 +215,7 @@ void FireWidget::drawForest()
  * 	On réutilise les cellules non susceptibles d'avoir été modifiées
  * @author Florian and Ugo
  */
+// TODO faire une fonction qui prend une couleur et une liste d'arbres, qui "imprime" les arbres avec cette couleur
 void FireWidget::drawChanged()
 {
 	bufferPainter->begin(buffer);
