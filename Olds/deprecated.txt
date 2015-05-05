@@ -1,3 +1,14 @@
+04/05
+################################
+#			firewidget.cpp			#
+#				newForet()			#
+################################
+// void FireWidget::newForet(int _largeur, int _hauteur, float _proba, float _coef_brulure)
+// {
+	// 	delete(foret);
+	// 	foret = new Foret(_largeur,_hauteur, _proba, _coef_brulure);
+	// }
+
 
 22/04
 ################################
