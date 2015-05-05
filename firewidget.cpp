@@ -455,7 +455,7 @@ void FireWidget::reset(int _larg, int _haut, float proba, float coef)
 // 	buffer->fill(1);
 	foret->clean();
 	foret->setValues(_larg,_haut, coef);
-	foret->randomMatrice(proba);
+	foret->randomMatrix(proba);
 // 	foret->reset(_larg,_haut, proba, coef);
 	setMinimumSize(_larg, _haut);
 	drawPicture();

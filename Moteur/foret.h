@@ -25,7 +25,7 @@ private:
 	
 	Vent* wind;
 	std::vector< Essence > essences;
-	std::vector<std::vector< Cellule* > > matrice;
+	std::vector<std::vector< Cellule* > > matrix;
 	std::list< Arbre* >	onFire;
 	// IMPROVEIT ? on pourrait faire une seule liste avec tous les arbres qui ont changé d'état
 	std::list< Arbre* >	carbonized;
@@ -46,7 +46,7 @@ public:
 	
 	// Initialisations
 	void initEmpty();
-	void randomMatrice(float probabilite);
+	void randomMatrix(float probabilite);
 	bool loadEssences(const std::string& fileName);
 	void initialisation(float proba);
 	
@@ -58,7 +58,7 @@ public:
 	int width()	const { return colonnes;};
 	int height()	const { return lignes;};
 	Vent* getVent() const { return wind; };
-	std::vector< Cellule* >* operator[](int ligne) { return &(matrice[ligne]); };
+	std::vector< Cellule* >* operator[](int ligne) { return &(matrix[ligne]); };
 	
 	const std::list< Arbre* >* getOnFire() const	{ return &onFire; };
 	std::list< Arbre* >* getCarbonized()	{ return &carbonized; };

@@ -61,7 +61,7 @@ Foret::Foret(Foret& other, float proba)
 Foret::~Foret()
 {
 	for (int i= 0; i< lignes; ++i){
-		for (vector< Cellule* >::iterator j( matrice[i].begin() ); j!=matrice[i].end(); ++j){
+		for (vector< Cellule* >::iterator j( matrix[i].begin() ); j!=matrix[i].end(); ++j){
 			delete *j;
 		}
 	}
@@ -231,8 +231,8 @@ void Foret::plantTree(int col, int row)
 	
 	const Essence* pEss= &(essences[ess]);
 	// pour l'instant, on considere que tous les arbres ont atteint leur maturite
-	Arbre* ab= new Arbre(matrice[row][col], col,row, pEss, rand()%ecartAgeMax +pEss->getAgeMaturite(), rand()%ecartHMax +hMin );
-	matrice[row][col]= ab;
+	Arbre* ab= new Arbre(matrix[row][col], col,row, pEss, rand()%ecartAgeMax +pEss->getAgeMaturite(), rand()%ecartHMax +hMin );
+	matrix[row][col]= ab;
 }
 
 
@@ -251,7 +251,7 @@ void Foret::initEmpty()
 		}
 		
 		// ajout de la ligne dans la matrice
-		matrice.push_back(tmp);
+		matrix.push_back(tmp);
 	}
 }
 
@@ -261,7 +261,7 @@ void Foret::initEmpty()
  * @author Florian and Ugo
  * @param probabilite chance qu'a un arbre d'être placé sur chaque case
  */
-void Foret::randomMatrice(float probabilite)
+void Foret::randomMatrix(float probabilite)
 {
 	srand(std::time(0));
 	if (probabilite>1){
@@ -320,11 +320,12 @@ void Foret::randomMatrice(float probabilite)
 void Foret::initialisation(float proba)
 {
 	loadEssences("../Moteur/essence_data.txt");
-	randomMatrice(proba);
+	randomMatrix(proba);
 }
 
 /**
  * Met la foret à l'état vierge : aucun arbre
+ * @author Florian
  */
 void Foret::clean()
 {
@@ -333,13 +334,13 @@ void Foret::clean()
 	
 	// 	suppression de la matrice
 	for (int i= 0; i< lignes; ++i){
-		for (vector< Cellule* >::iterator j( matrice[i].begin() ); j!=matrice[i].end(); ++j){
+		for (vector< Cellule* >::iterator j( matrix[i].begin() ); j!=matrix[i].end(); ++j){
 			delete *j;
 			// suppression d'une "ligne de la matrice"
 		}
-		matrice[i].clear();
+		matrix[i].clear();
 	}
-	matrice.clear();
+	matrix.clear();
 }
 
 /**
@@ -388,7 +389,7 @@ void Foret::allumer(Arbre* ab)
  */
 void Foret::allumer(int col, int row)
 {
-	Cellule* tmp= matrice[row][col];
+	Cellule* tmp= matrix[row][col];
 	
 	int etat= tmp->getEtat();
 	
@@ -435,7 +436,7 @@ void Foret::enflammer(Arbre* ab)
  */
 void Foret::enflammer(int col, int row)
 {
-	Cellule* tmp= matrice[row][col];
+	Cellule* tmp= matrix[row][col];
 	
 	int etat= tmp->getEtat();
 	
@@ -509,7 +510,7 @@ std::list< Arbre* > Foret::adjacents(int col, int row, int distance) const
 		
 		for (int j= posCol; j<posColMax; ++j){
 			
-			Cellule* cell= matrice[i][j];
+			Cellule* cell= matrix[i][j];
 			// verification que la cellule est un arbre, qui n'est pas enflammee
 			if (cell->getEtat()==1)
 				liste.push_back( dynamic_cast < Arbre* >(cell) );
@@ -535,7 +536,7 @@ void Foret::adjacents_vent(Arbre*  a)
 		for(int i = 0; i < abs(wind->getPower_h()); ++i){
 			for(int j = 0; j < abs(wind->getPower_v()); ++j){
 				if((h+row-i) >= 0 && (h+row-i) < (lignes) && (l+col-j) >= 0 && (l+col-j) < (colonnes)){
-					Cellule* cell = matrice[row+(h-i)][col+(l-j)];
+					Cellule* cell = matrix[row+(h-i)][col+(l-j)];
 					if(cell->getEtat() == 1)
 						enflammer(dynamic_cast < Arbre* >(cell));
 				}
