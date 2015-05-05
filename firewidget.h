@@ -5,8 +5,7 @@
 #include <QtGui/QImage>
 #include <QtGui/QPainter>
 #include <QtGui/QColor>
-#include <QtGui/QRubberBand>
-#include <QtCore/QPoint>
+
 // #include <functional>
 #include <vector>
 
@@ -26,8 +25,6 @@ private:
 	QImage* buffer;
 	QColor* color;
 	QPainter* bufferPainter;
-	QRubberBand* rubberBand;
-	QPoint* origin;
 	int tailleCell;
 	
 	QPixmap* pictureForest;
@@ -78,7 +75,7 @@ protected:
 	
 public slots:
 	bool next();
-	void drawFire();
+// 	void drawFire();
 // 	void transition(long x);
 };
 

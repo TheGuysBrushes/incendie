@@ -6,6 +6,11 @@ using namespace std;
 #define PI 3.14159265
 
 /*** Constructeur et destructeur ***/
+/**
+ * Constructeur de classe
+ * @param int Valeur de l'angle initial
+ * @author Ugo
+ */
 WindCircle::WindCircle(int x):angle(x){
 	buffer = new QImage();
 	center = new QPointF((float)(width()/2.0),(float)(height()/2.0));
@@ -17,13 +22,21 @@ WindCircle::~WindCircle(){
 
 }
 /*** Getters and Setters ***/
-void WindCircle::setAngle(int x)
-{
+/**
+ * Met à jour la valeur de l'angle
+ * @param int Valeur de l'angle
+ * @author Ugo
+ */
+void WindCircle::setAngle(int x){
 	angle = x;
 }
 
 
 /*** Autres Méthodes ***/
+/**
+ * Méthode graphique permettant d'afficher le cercle de la boussole
+ * @author Ugo
+ */
 void WindCircle::drawCircle(){
 	QPainter paint(this->buffer);
 	float rayon = height()/2.0 - 25.0;
@@ -42,24 +55,36 @@ void WindCircle::drawCircle(){
 	paint.drawText(QPointF(center->rx()-rayon-20, center->ry()+4), QString("O"));
 	
 }
-
+/**
+ * Méthode graphique permettant d'afficher la ligne 
+ * directionnelle de la boussole
+ * @author Ugo
+ */
 void WindCircle::drawDir(){
 	effaceBuffer();
 	setDirection(angle);
 	QPainter paint(this->buffer);
 	QPen pen(Qt::red);paint.setPen(pen);
 
-	paint.drawLine(*center, *direction);
-	
-	
+	paint.drawLine(*center, *direction);	
 }
 
-void WindCircle::effaceBuffer()
-{
+/**
+ * Méthode générique pour vider le buffer 
+ * @author Ugo
+ */
+void WindCircle::effaceBuffer(){
 	buffer->fill(1);
 	drawCircle();
 }
 
+/**
+ * Permet de calculer le point d'arrivée du segment 
+ * sur le cercle trigonométrique en fonction de l'angle passé 
+ * en paramètre.
+ * @param int Valeur de l'angle choisi
+ * @author Ugo
+ */
 void WindCircle::setDirection(int angle){
 	float rayon =(float)height()/2.0 - 25.0;
 	direction->setX(cos(PI*(float)angle/180.0)*rayon+center->rx());
@@ -75,18 +100,11 @@ void WindCircle::paintEvent(QPaintEvent* event){
 }
 
 void WindCircle::resizeEvent(QResizeEvent* event){
-    if(this->buffer->isNull()){
-      // Redimensionnement manuel
-      this->setMinimumSize(100,100);
-      this->buffer = new QImage(100,100,QImage::Format_ARGB32); 
-      this->buffer->fill(1);
-    }
-    else{
-      // Vérifier le redimensionnement de la QImage
-      this->buffer = new QImage(event->size().width(),event->size().height(),QImage::Format_ARGB32);
-      this->buffer->fill(1);
-
-    }
+    if (!buffer->isNull()){
+		delete(buffer);
+		// 		bufferPainter->end();
+	}
+	buffer = new QImage(event->size().width(),event->size().height(), QImage::Format_ARGB32);
 
 	center->setX(event->size().width()/2);
 	center->setY(event->size().height()/2);
