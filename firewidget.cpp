@@ -1,6 +1,7 @@
 #include "firewidget.h"
 #include <QtGui/qevent.h>
 
+#define GRAY_TRANSPARENT 5
 using namespace std;
 
 /* TODO 	1- Création de la zone de selection clics souris
@@ -8,7 +9,17 @@ using namespace std;
  * TODO 	3- Pour les effets, deux boutons ( coupure et retardateur ) dont un par défaut activé
  */
 
-// Constructeur
+/*** Constructeur et destructeur ***/
+/**
+ * Constructeur de classe. Initialise les différents pointeurs
+ * et fixe la taille minimale du widget
+ * @param int _largeur : nombre de colonnes de la matrice 
+ * @param int _hauteur : nombre de lignes de la matrice
+ * @param float _proba : probabilité qu'une cellule deviennent un arbre
+ * @param float _coef : coefficient de combustion de l'incendie
+ * @author Ugo et Florian
+ * 
+ */
 FireWidget::FireWidget(int _largeur, int _hauteur, float proba, float coef_brulure): QWidget()
 {
 	foret = new Foret(_largeur, _hauteur, proba, coef_brulure);
@@ -20,46 +31,19 @@ FireWidget::FireWidget(int _largeur, int _hauteur, float proba, float coef_brulu
 	// 	TODO setBaseSize();
 }
 
-FireWidget::FireWidget(): QWidget()
-{
+FireWidget::FireWidget(): QWidget(){
 }
 
-
-// Destructeur
-FireWidget::~FireWidget()
-{
-	delete(bufferPainter);
+FireWidget::~FireWidget(){
+	
+	delete(foret);
 	delete(buffer);
 	delete(color);
-	delete(foret);
+	delete(bufferPainter);
+	delete(pictureForest);
 }
 
-// #####################
-//		Initialisations
-// #####################
-bool FireWidget::loadPicture(QString filename)
-{
-	QImage img;
-	// 	img.fill(qRgba(50, 50, 50, 255));
-	img.load(filename);
-	pictureForest= new QPixmap();
-	if (pictureForest->convertFromImage(img)){
-		#if DEBUG_IMAGE
-		cout<< "image chargée"<< endl;
-		#endif
-		
-		return true;
-	}
-	else {
-		#if DEBUG_IMAGE
-		cout<< "image non chargée"<< endl;
-		#endif
-		
-		return false;
-	}
-}
-
-
+/*** Autres Méthodes ***/
 void FireWidget::initialise(int _largeur, int _hauteur, float proba, float coef_brulure)
 {
 	foret = new Foret(_largeur, _hauteur, proba, coef_brulure);
@@ -71,43 +55,60 @@ void FireWidget::initialise(int _largeur, int _hauteur, float proba, float coef_
 	setMinimumSize(_largeur, _hauteur);
 }
 
-// #####################
-//		Autres méthodes
-// #####################
-#define GRAY_TRANSPARENT 5
+bool FireWidget::loadPicture(QString filename){
+	
+	QImage img;
+// 	img.fill(qRgba(50, 50, 50, 255));
+	img.load(filename);
+	pictureForest= new QPixmap();
+	if (pictureForest->convertFromImage(img)){
+		#if DEBUG_IMAGE
+		cout<< "image chargée"<< endl;
+		#endif
+
+		return true;
+	}
+	else {
+		#if DEBUG_IMAGE
+		cout<< "image non chargée"<< endl;
+		#endif
+
+		return false;
+	}
+}
+
 void FireWidget::setColor(int colorIndice)
 {
 	switch(colorIndice){
 		case 0:
-			this->color->setRgb(1,100,0,		100);
+			this->color->setRgb(1,100,0,100);
 			break;
 		case 1:
-			this->color->setRgb(34,139,34,	100);
+			this->color->setRgb(34,139,34,100);
 			break;
 		case 2:
-			this->color->setRgb(107,142,35,	100);
+			this->color->setRgb(107,142,35,100);
 			break;
 		case 3:
-			this->color->setRgb(0,205,0,		100);
+			this->color->setRgb(0,205,0,100);
 			break;
 		case 4:
-			this->color->setRgb(46,139,87,	100);
+			this->color->setRgb(46,139,87,100);
 			break;
 		case GRAY_TRANSPARENT:
-			this->color->setRgb(100,100,100,	100);
+			this->color->setRgb(100,100,100,100);
 			break;
 	}
 }
 
-// #################
-//		Affichages
-// #################
+/*** Affichage ***/
+
 void FireWidget::drawPicture()
 {
 	
 	QByteArray data;
 	
-	for(int i=0; i<foret->hauteur(); ++i){
+	for(int i=0; i<foret->height(); ++i){
 		vector< Cellule* >* ligne= (*foret)[i];
 		
 		for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
@@ -167,7 +168,7 @@ void FireWidget::drawForest()
 	bufferPainter->begin(buffer);
 	
 	int current_hauteur= 0;
-	for(int i=0; i<foret->hauteur(); ++i){
+	for(int i=0; i<foret->height(); ++i){
 		// On ne passe pas la hauteur de la grille mais le nombre de colonne*taille de colonne pour
 		// éviter la petite zone en bas de grille
 		vector< Cellule* >* ligne= (*foret)[i];
@@ -243,7 +244,7 @@ void FireWidget::redraw()
 		delete(buffer);
 		// 		bufferPainter->end();
 	}
-	buffer = new QImage(tailleCell*foret->largeur(), tailleCell*foret->hauteur(), QImage::Format_ARGB32);
+	buffer = new QImage(tailleCell*foret->width(), tailleCell*foret->height(), QImage::Format_ARGB32);
 	drawPicture();
 	drawForest();
 	drawChanged();
@@ -264,10 +265,10 @@ bool FireWidget::eteindreFeu(int colonne, int ligne)
 	cout << "eteindre cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
 	#endif
 	
-	if(ligne>=0 && ligne < foret->hauteur()){
+	if(ligne>=0 && ligne < foret->height()){
 		vector< Cellule* >* line= (*foret)[ligne];
 		
-		if (colonne>=0 && colonne < foret->largeur()){
+		if (colonne>=0 && colonne < foret->width()){
 			Cellule* cell= (*line)[colonne];	
 			
 			if (cell->getEtat()==2){
@@ -297,10 +298,10 @@ bool FireWidget::allumerFeu(int colonne, int ligne)
 	cout << "allumer cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
 	#endif
 	
-	if(ligne>=0 && ligne < foret->hauteur()){
+	if(ligne>=0 && ligne < foret->height()){
 		vector< Cellule* >* line= (*foret)[ligne];
 		
-		if (colonne>=0 && colonne < foret->largeur()){
+		if (colonne>=0 && colonne < foret->width()){
 			Cellule* cell= (*line)[colonne];	
 			
 			if (cell->getEtat()==1){
@@ -330,10 +331,10 @@ bool FireWidget::finirFeu(int colonne, int ligne)
 	cout << "embraser cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
 	#endif
 	
-	if(ligne>=0 && ligne < foret->hauteur()){
+	if(ligne>=0 && ligne < foret->height()){
 		vector< Cellule* >* line= (*foret)[ligne];
 		
-		if (colonne>=0 && colonne < foret->largeur()){
+		if (colonne>=0 && colonne < foret->width()){
 			Cellule* cell= (*line)[colonne];	
 			
 			if (cell->getEtat()==2){
@@ -368,8 +369,8 @@ void FireWidget::paintEvent(QPaintEvent* event)
 
 void FireWidget::resizeEvent(QResizeEvent* event)
 {
-	float nbCol= foret->largeur();
-	float nbRow= foret->hauteur();
+	float nbCol= foret->height();
+	float nbRow= foret->width();
 	tailleCell = min (event->size().width() / nbCol , event->size().height() / nbRow);
 	
 	#if DEBUG_DIMENSION
