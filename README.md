@@ -69,25 +69,28 @@
   - Passage en revue des commentaires "inutiles" du code, nettoyage et ajout de commentaires.
     + Ugo : Amélioration du bouton reset.
     + Florian : ajout dans la foret d'une liste d'arbre qui viennent de s'allumer pour optimiser l'affichage, voir si ce sera toujours pertinent lorsque l'on ajoutera des "phases de brulure" aux arbres.
-
+  - Florian : Mise en page du readme et ajouts d'étapes et détails.
 
 <h2> Semaine 4 </h2>
 
   <h3> Lundi </h3>
     - Ugo : Réfléxion sur la mise en place des vents, reprise de la classe dédiée et améliorations
-    
+    - Florian : mise à jour du code et nettoyage à partir des TODO et autres commentaires
     
   <h3> Mardi </h3>
     - Ugo : Implémentation et tests de l'algorithme de transition avec prise en compte du vent.
-    
+    - Florian : homogénisation du lors de l'utilisation de Colonnes / Lignes et Width / Height
     
   <h3> Mercredi </h3>
     - Ugo : Mise en place de la dynamisation du vent au cours du temps via widget dédié.
-    
+    - Florian : Divers correctif de dimension, factorisation du code pour la création et la recréation des fôrets.
     
   <h3> Jeudi </h3>
     - Ugo : Incorporation du widget WindWidget, mise en place, tests et détection des bugs.
+    - Debut des recherches de possibilité d'implémentation des images satellites et de sauvegarde/création de matrice à partir d'images.
     
+  <h3>Vendredi</h3>
+    -Florian : Premiere implémentation basique de test d'ajout d'image dans le programme.
     
 <h2> Semaine 5 </h2>
 
