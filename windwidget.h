@@ -19,7 +19,7 @@ private:
 	WindCircle* wind;
 	QLabel* angle_lbl;
 	QLabel* vitesse_lbl;
-	
+
 	int vitesse;
 
 public:

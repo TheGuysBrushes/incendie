@@ -20,18 +20,32 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	cancel_btn = new QPushButton("Annuler");
 	cancel_btn->setVisible(false);
 	
-	// Conteneur
+	initComponents();
+}
+
+Fwelcome::~Fwelcome(){
+	delete(valid_btn);
+	delete(haut_spin);
+	delete(larg_spin);
+	delete(p_value);
+	delete(c_value);
+	delete(cancel_btn);
+}
+
+/*** Autres Méthodes ***/
+void Fwelcome::initComponents(){
+
+	/* Conteneurs */
 	QVBoxLayout* lay = new QVBoxLayout(this);
 	QWidget* ww = new QWidget(this);
 	QWidget* www = new QWidget(this);
 	QGridLayout* grid_lay = new QGridLayout(ww);
 	QHBoxLayout* h_lay = new QHBoxLayout(www);
 	
-	// Initialisation des composants
+	/* Initialisation des composants statiques (hors SpinBox ) */
 	QString s = " Bienvenue sur l'automate de simulation de feux de foret. \n Veuillez renseigner les differents parametres pour la simulation \n que vous allez effectuer, puis validez. \n";
 	QLabel* present = new QLabel(s);
 	present->setWordWrap(true);
-	
 	
 	QLabel* l_lbl = new QLabel("Largeur : ");
 	larg_spin = new QSpinBox(ww);
@@ -52,12 +66,13 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	QSlider * slide_p = new QSlider(Qt::Horizontal, 0);
 	slide_p->setMaximum(100);
 	slide_p->setMinimum(1);
-	
+
 	QLabel* c_lbl = new QLabel("Coefficient : ");
 	QSlider* slide_c = new QSlider(Qt::Horizontal, 0);
 	slide_c->setMaximum(100);
 	slide_c->setMinimum(1);
-	
+
+	/* Emboitements */
 	grid_lay->addWidget(l_lbl, 0,0);
 	grid_lay->addWidget(larg_spin, 0,1);
 	
@@ -67,54 +82,48 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	grid_lay->addWidget(p_lbl,2,0);
 	grid_lay->addWidget(slide_p,2,1);
 	grid_lay->addWidget(p_value,2,2);
-	
+
 	grid_lay->addWidget(c_lbl,3,0);
 	grid_lay->addWidget(slide_c,3,1);
 	grid_lay->addWidget(c_value,3,2);
-	
+
 	h_lay->addWidget(valid_btn);
 	h_lay->addWidget(cancel_btn);
-	
+
 	lay->addWidget(present);
 	lay->addWidget(ww);
 	lay->addWidget(www);
-	
-	
-	// Connection entre Slider et Label associé
+
+	/* Connexion entre les différents éléments */
 	connect(slide_p,	SIGNAL(valueChanged(int)), this, SLOT(set_proba(int)) );
 	connect(slide_c,	SIGNAL(valueChanged(int)), this, SLOT(set_coef(int)) );
 	connect(valid_btn, SIGNAL(clicked()), this, SLOT(accept()) );
 	connect(cancel_btn, SIGNAL(clicked()), this, SLOT(reject()) );
-	
-	// Initialisation des sliders
+
+	// Appel à setValue pour déclencer l'affichage de la valeur à la construction du widget
 	slide_c->setValue(50);
 	slide_p->setValue(50);
 }
 
-Fwelcome::~Fwelcome()
-{
-
-}
-
-/*** Autres Méthodes ***/
-void Fwelcome::initComponents(){
-	
-	
-}
-
-
-
 /*** SLOTS ***/
-void Fwelcome::set_proba(int x)
-{
+/**
+ * Met à jour la valeur de la probabilité qu'une cellule soit un arbre
+ * et affiche la valeur courante.
+ * @param int Probabilité qu'une cellule devienne un arbre.
+ * @author Ugo
+ */
+void Fwelcome::set_proba(int x){
 	proba = (float) x/100;
 	p_value->setText(QString::number(proba, 'f', 2));
 }
 
-void Fwelcome::set_coef(int x)
-{
+/**
+ * Met à jour la valeur du coefficient de combustion de l'incendie
+ * et affiche la valeur courante
+ * @param int Coefficient de combustion
+ * @author Ugo
+ */
+void Fwelcome::set_coef(int x){
 	coef_brulure = (float) x/100;
 	c_value->setText(QString::number(coef_brulure, 'f', 2));
 }
-
-
