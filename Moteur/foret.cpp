@@ -26,7 +26,7 @@ int ecartHMax= 50;
 // DID	5	: Gérer arbres adjacents diagonaux ET avec plus de 1 de distance
 //			5 bis	: reduire la transmission selon la distance ?, creer classe ? (Arbre+distance)
 // TODO	6	: EN PARTIE	; Prise en compte coefs
-//	TODO	7	: Ajout des vents
+//	TODO	7	: EN PARTIE	; Ajout des vents
 
 //	DID	8	: Implementation de Qt
 // DID	9	: Debut d'interface de configuration (taille, vitesse ...)
@@ -55,7 +55,9 @@ Foret::Foret(Foret& other, float proba)
 	initialisation(proba);
 }
 
-
+/**
+ * On vide également les listes, mêmes si c'est fait automatiquement TODO verifier si ca n'empeche pas un probleme de "double libération" des arbres  et l'ordre libérer-vider
+ */
 Foret::~Foret()
 {
 	for (int i= 0; i< lignes; ++i){
@@ -208,6 +210,10 @@ unsigned Foret::essenceRandom(int col, int row, unsigned distOthers){
 	return ess;
 }
 
+/**
+ * "Plante" un arbre à la position donnée dans la matrice
+ * @author Florian
+ */
 void Foret::plantTree(int col, int row)
 {
 	// on choisit une essence aléatoirement pour cet arbre
@@ -317,6 +323,9 @@ void Foret::initialisation(float proba)
 	randomMatrice(proba);
 }
 
+/**
+ * Met la foret à l'état vierge : aucun arbre
+ */
 void Foret::clean()
 {
 	onFire.clear();
@@ -333,7 +342,10 @@ void Foret::clean()
 	matrice.clear();
 }
 
-
+/**
+ * Définit/redéfinit la taille et le coefficient de brulure d'une foret
+ * @author Florian
+ */
 void Foret::setValues(int largeur, int hauteur, float coef)
 {
 	lignes = hauteur;
@@ -345,7 +357,16 @@ void Foret::setValues(int largeur, int hauteur, float coef)
 // ###################################
 // 	Modification des éléments
 // ###################################
-
+/**
+ * Eteint un arbre en conservant ses points de vie courant
+ * @author Florian
+ */
+void Foret::allumer(Arbre* ab)
+{
+	ab->burn();
+	onFire.push_back(ab);
+	burned.push_back(ab);
+}
 void Foret::water(Arbre* ab)
 {
 // 	for (list< Arbre* >::iterator tmp(onFire.begin()); tmp!=onFire.end(); ++tmp)
@@ -356,6 +377,21 @@ void Foret::water(Arbre* ab)
 }
 
 
+/**
+ * Definit un arbre comme étant en feu
+ * @author Florian
+ */
+void Foret::allumer(Arbre* ab)
+{
+	ab->burn();
+	onFire.push_back(ab);
+	burned.push_back(ab);
+}
+
+/**
+ * Definit une position comme étant en feu, si c'est un arbre
+ * @author Florian
+ */
 void Foret::allumer(int col, int row)
 {
 	Cellule* tmp= matrice[row][col];
@@ -368,13 +404,10 @@ void Foret::allumer(int col, int row)
 	}
 }
 
-void Foret::allumer(Arbre* ab)
-{
-	ab->burn();
-	onFire.push_back(ab);
-	burned.push_back(ab);
-}
-
+/**
+ * Definit un arbre comme étant en cendres
+ * @author Florian
+ */
 void Foret::eteindre(Arbre* ab)
 {
 	ab->blast();
@@ -382,7 +415,7 @@ void Foret::eteindre(Arbre* ab)
 
 
 /**
- * Enflamme un arbre
+ * Enflamme un arbre : un autre arbre lui "transmet" du feu
  * @author Florian
  * @param ab arbre à enflammer
  */
