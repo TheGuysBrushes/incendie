@@ -398,13 +398,15 @@ void FireWidget::paintEvent(QPaintEvent* event){
 
 void FireWidget::resizeEvent(QResizeEvent* event){
 
-	float nbCol= foret->height();
-	float nbRow= foret->width();
+	float nbRow= foret->height();
+	float nbCol= foret->width();
 	tailleCell = min (event->size().width() / nbCol , event->size().height() / nbRow);
 	
 	#if DEBUG_DIMENSION
+	cout << nbCol<< " / "<< nbRow<< endl;
 	cout << "tH: "<< event->size().width()<< " tL "<< event->size().height()<< endl;
 	cout << "taille Cellule : "<< tailleCell<< endl;
+	cout << endl;
 	#endif
 
 	redraw();

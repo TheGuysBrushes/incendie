@@ -210,6 +210,17 @@ unsigned Foret::essenceRandom(int col, int row, unsigned distOthers){
 	return ess;
 }
 
+std::list< list< Arbre* > >& Foret::getChanged()
+{
+	list< list< Arbre* > > listes;
+	listes.push_back(uprooted);
+	listes.push_back(extinguished);
+	listes.push_back(burned);
+	listes.push_back(carbonized);
+	return listes;
+}
+
+
 /**
  * "Plante" un arbre à la position donnée dans la matrice
  * @author Florian
