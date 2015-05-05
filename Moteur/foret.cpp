@@ -361,12 +361,6 @@ void Foret::setValues(int largeur, int hauteur, float coef)
  * Eteint un arbre en conservant ses points de vie courant
  * @author Florian
  */
-void Foret::allumer(Arbre* ab)
-{
-	ab->burn();
-	onFire.push_back(ab);
-	burned.push_back(ab);
-}
 void Foret::water(Arbre* ab)
 {
 // 	for (list< Arbre* >::iterator tmp(onFire.begin()); tmp!=onFire.end(); ++tmp)

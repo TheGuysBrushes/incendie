@@ -30,6 +30,7 @@ private:
 	// IMPROVEIT ? on pourrait faire une seule liste avec tous les arbres qui ont changé d'état
 	std::list< Arbre* >	carbonized;
 	std::list< Arbre* >	burned;
+	std::list< Arbre* >	extinguished;
 	
 	
 // METHODES
@@ -54,8 +55,8 @@ public:
 	void setValues(int largeur, int hauteur, float coef);
 	
 	// 	Getters and Setters
-	int largeur()	const { return colonnes;};
-	int hauteur()	const { return lignes;};
+	int width()	const { return colonnes;};
+	int height()	const { return lignes;};
 	Vent* getVent() const { return wind; };
 	std::vector< Cellule* >* operator[](int ligne) { return &(matrice[ligne]); };
 	
