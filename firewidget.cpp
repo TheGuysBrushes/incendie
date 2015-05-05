@@ -211,11 +211,11 @@ void FireWidget::drawForest()
 }
 
 /**
- * Dessine la matrice dans le buffer, sur l'ancienne matrice
+ * Redessine les arbres qui ont changés d'état, sur l'ancienne matrice
  * 	On réutilise les cellules non susceptibles d'avoir été modifiées
  * @author Florian and Ugo
  */
-void FireWidget::drawFire()
+void FireWidget::drawChanged()
 {
 	bufferPainter->begin(buffer);
 	
@@ -246,7 +246,7 @@ void FireWidget::redraw()
 	buffer = new QImage(tailleCell*foret->largeur(), tailleCell*foret->hauteur(), QImage::Format_ARGB32);
 	drawPicture();
 	drawForest();
-	drawFire();
+	drawChanged();
 	update();
 }
 
@@ -273,7 +273,7 @@ bool FireWidget::eteindreFeu(int colonne, int ligne)
 			if (cell->getEtat()==2){
 				Arbre* ab= dynamic_cast< Arbre* >(cell);
 				foret->water(ab);
-				drawFire();
+				drawChanged();
 				update();
 				
 				return true;
@@ -306,7 +306,7 @@ bool FireWidget::allumerFeu(int colonne, int ligne)
 			if (cell->getEtat()==1){
 				Arbre* ab= dynamic_cast< Arbre* >(cell);
 				foret->allumer(ab);
-				drawFire();
+				drawChanged();
 				update();
 				
 				return true;
@@ -339,7 +339,7 @@ bool FireWidget::finirFeu(int colonne, int ligne)
 			if (cell->getEtat()==2){
 				Arbre* ab= dynamic_cast< Arbre* >(cell);
 				foret->eteindre(ab);
-				drawFire();
+				drawChanged();
 				update();
 				
 				return true;
@@ -429,7 +429,7 @@ bool FireWidget::next()
 		return false;
 	
 	// mise à jour de l'image puis affichage à l'écran
-	drawFire();
+	drawChanged();
 	update();
 	
 	return true; // cas par défaut, il y a eu un changement
@@ -459,7 +459,7 @@ void FireWidget::reset(int _larg, int _haut, float proba, float coef)
 	setMinimumSize(_larg, _haut);
 	drawPicture();
 	drawForest();
-	drawFire();
+	drawChanged();
 	update();
 }
 	

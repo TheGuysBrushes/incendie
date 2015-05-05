@@ -53,7 +53,7 @@ public:
 	void drawTree(const Arbre* ab);
 
 	void drawForest();
-	void drawFire();
+	void drawChanged();
 	void redraw();
 	
 	bool eteindreFeu(int colonne, int ligne);
@@ -73,6 +73,7 @@ protected:
 	
 public slots:
 	bool next();
+	void drawFire();
 // 	void transition(long x);
 };
 
