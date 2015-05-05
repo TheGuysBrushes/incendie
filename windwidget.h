@@ -21,22 +21,29 @@ private:
 	QLabel* vitesse_lbl;
 	
 	int vitesse;
-	
+
 public:
+	/* Constructeur et destructeur */
 	WindWidget();
 	virtual ~WindWidget();
+	
+	/* Méthodes d'initialisation */
+	void initComponents();
+	
+	/* Getters */
 	int get_angle() const { return wind->getAngle(); };
 	int get_vitesse() const { return vitesse; };
+	
+protected:
+	void resizeEvent(QResizeEvent* Qevent);
+
 public slots:
+	/* Setters */
 	void set_angle(int x);
 	void set_vitesse(int y);
 	
 signals:
 	void modif_value(int);
-	
-protected:
-	void resizeEvent(QResizeEvent* Qevent);
-	
 };
 
 #endif // WINDWIDGET_H
