@@ -1,15 +1,23 @@
 #include "firewidget.h"
 #include <QtGui/qevent.h>
 
-#define GRAY_TRANSPARENT 5
+#define GRAY_TRANSPARENT 	5
+#define RED_TRANSPARENT 	6
+#define ANTI_RED_TRANSPARENT	7
+
 using namespace std;
 
 /* TODO 	1- Création de la zone de selection clics souris
  * TODO 	2- Sur le release, confirmation de la zone et application de l'effet choisi
  * TODO 	3- Pour les effets, deux boutons ( coupure et retardateur ) dont un par défaut activé
+ * 
+ * TODO	4- utiliser des Qrgba pour définir les couleurs
+ * TODO 	4_bis- utiliser buffer->pixel(i, 0); pour changer couleur ?
  */
 
+// ##################################
 /*** Constructeur et destructeur ***/
+// #################################
 /**
  * Constructeur de classe. Initialise les différents pointeurs
  * et fixe la taille minimale du widget
@@ -22,14 +30,13 @@ using namespace std;
  */
 FireWidget::FireWidget(int _largeur, int _hauteur, float proba, float coef_brulure): QWidget()
 {
-	foret = new Foret(_largeur, _hauteur, proba, coef_brulure);
+	forest = new Foret(_largeur, _hauteur, proba, coef_brulure);
 	buffer = new QImage();
 	color = new QColor(Qt::black);
 	bufferPainter= new QPainter();
 	
 	rubber = NULL;
 	setMinimumSize(_largeur, _hauteur);
-	// 	TODO setBaseSize();
 }
 
 FireWidget::FireWidget(): QWidget(){
@@ -37,14 +44,16 @@ FireWidget::FireWidget(): QWidget(){
 
 FireWidget::~FireWidget(){
 	
-	delete(foret);
+	delete(forest);
 	delete(buffer);
 	delete(color);
 	delete(bufferPainter);
 	delete(pictureForest);
 }
 
-/*** Autres Méthodes ***/
+// ########################
+/*** 	Autres Méthodes 	***/
+// ########################
 /**
  * Fonction agissant comme le constructeur. Permet de gérer la 
  * ré-initialisation de la matrice
@@ -53,7 +62,7 @@ FireWidget::~FireWidget(){
  */
 void FireWidget::initialise(int _largeur, int _hauteur, float proba, float coef_brulure)
 {
-	foret = new Foret(_largeur, _hauteur, proba, coef_brulure);
+	forest = new Foret(_largeur, _hauteur, proba, coef_brulure);
 	buffer = new QImage();
 	color = new QColor(Qt::black);
 	bufferPainter= new QPainter();
@@ -68,7 +77,7 @@ void FireWidget::initialise(int _largeur, int _hauteur, float proba, float coef_
  * ré-initialisation de la matrice
  */
 void FireWidget::delForet(){
-	delete(foret);
+	delete(forest);
 }
 
 /**
@@ -110,15 +119,15 @@ bool FireWidget::eteindreFeu(int colonne, int ligne)
 	cout << "eteindre cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
 	#endif
 
-	if(ligne>=0 && ligne < foret->height()){
-		vector< Cellule* >* line= (*foret)[ligne];
+	if(ligne>=0 && ligne < forest->height()){
+		vector< Cellule* >* line= (*forest)[ligne];
 
-		if (colonne>=0 && colonne < foret->width()){
+		if (colonne>=0 && colonne < forest->width()){
 			Cellule* cell= (*line)[colonne];	
 
 			if (cell->getEtat()==2){
 				Arbre* ab= dynamic_cast< Arbre* >(cell);
-				foret->water(ab);
+				forest->water(ab);
 				drawChanged();
 				update();
 
@@ -143,15 +152,15 @@ bool FireWidget::allumerFeu(int colonne, int ligne)
 	cout << "allumer cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
 	#endif
 
-	if(ligne>=0 && ligne < foret->height()){
-		vector< Cellule* >* line= (*foret)[ligne];
+	if(ligne>=0 && ligne < forest->height()){
+		vector< Cellule* >* line= (*forest)[ligne];
 
-		if (colonne>=0 && colonne < foret->width()){
+		if (colonne>=0 && colonne < forest->width()){
 			Cellule* cell= (*line)[colonne];	
 
 			if (cell->getEtat()==1){
 				Arbre* ab= dynamic_cast< Arbre* >(cell);
-				foret->allumer(ab);
+				forest->allumer(ab);
 				drawChanged();
 				update();
 
@@ -176,15 +185,15 @@ bool FireWidget::finirFeu(int colonne, int ligne)
 	cout << "embraser cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
 	#endif
 
-	if(ligne>=0 && ligne < foret->height()){
-		vector< Cellule* >* line= (*foret)[ligne];
+	if(ligne>=0 && ligne < forest->height()){
+		vector< Cellule* >* line= (*forest)[ligne];
 
-		if (colonne>=0 && colonne < foret->width()){
+		if (colonne>=0 && colonne < forest->width()){
 			Cellule* cell= (*line)[colonne];	
 
 			if (cell->getEtat()==2){
 				Arbre* ab= dynamic_cast< Arbre* >(cell);
-				foret->eteindre(ab);
+				forest->eteindre(ab);
 				drawChanged();
 				update();
 
@@ -202,55 +211,72 @@ bool FireWidget::finirFeu(int colonne, int ligne)
  * Fonction permettant de fixer la couleur à utiliser pour dessiner un arbre
  * @param int indice de l'essence de l'arbre
  * @author Florian et Ugo
+ * IMPROVEIT plus de nuances de couleurs ?, une couleur par cellule : on utiliserai une methode differente de "peinture" ? 
  */
 void FireWidget::setColor(int colorIndice)
 {
 	switch(colorIndice){
 		case 0:
-			this->color->setRgb(1,100,0,100);
+			this->color->setRgb(01,100,00,	100);
 			break;
 		case 1:
-			this->color->setRgb(34,139,34,100);
+			this->color->setRgb(34,139,34	,	100);
 			break;
 		case 2:
-			this->color->setRgb(107,142,35,100);
+			this->color->setRgb(107,142,35,	100);
 			break;
 		case 3:
-			this->color->setRgb(0,205,0,100);
+			this->color->setRgb(00,205,00,	100);
 			break;
 		case 4:
-			this->color->setRgb(46,139,87,100);
+			this->color->setRgb(46,139,87,	100);
 			break;
 		case GRAY_TRANSPARENT:
-			this->color->setRgb(100,100,100,100);
+			this->color->setRgb(0,80,80,		180);
 			break;
+		case RED_TRANSPARENT:
+			this->color->setRgb(255,00,00,	180);
+			break;
+		case ANTI_RED_TRANSPARENT:
+			this->color->setRgb(00,75,75,	 180);
+			break;
+			
+		default :
+			this->color->setRgb(255,255,255,	100);
 	}
 }
 
 void FireWidget::setVent(float _hor, float _ver){
 
-	foret->getVent()->setPower_h(_hor);
-	foret->getVent()->setPower_v(_ver);
+	forest->getVent()->setPower_h(_hor);
+	forest->getVent()->setPower_v(_ver);
 }
 
-/*** Affichage ***/
+/* TODO creation matrice à partir d'image dans forest ou dans firewidget ? ou les deux
+ */
+// 	Pour créer la matrice
+// 	QByteArray data;
+// 
+// 	for(int i=0; i<forest->height(); ++i){
+// 		vector< Cellule* >* ligne= (*forest)[i];
+// 
+// 		for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
+// 			data.push_back( (*j)->getEtat() *10);
+// 		}
+// 	}
+
+
+
+// ########################
+/***		Affichages		***/
+// ########################
 /**
  * Fonction à commenter par son auteur :p
  * @author Florian
  */
 void FireWidget::drawPicture(){
-
-	QByteArray data;
-
-	for(int i=0; i<foret->height(); ++i){
-		vector< Cellule* >* ligne= (*foret)[i];
-
-		for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
-			data.push_back( (*j)->getEtat() *10);
-		}
-	}
-
-	bufferPainter->begin(buffer);
+// 	bufferPainter->end();
+	bufferPainter->begin(this);
 	bufferPainter->drawPixmap(0, 0, *pictureForest);
 	bufferPainter->end();
 }
@@ -272,7 +298,8 @@ void FireWidget::drawCell(int colonne, int ligne)
  * Imprime un arbre selon sa position, utilise la couleur courante.
  * @author Florian
  * @param ab arbre à dessiner
- * TODO Utilisation de drawCell pourquoi pas mais à toi de t'y coller ^^
+ * TODO Utilisation de drawCell pourquoi pas mais à toi de t'y coller ^^ 
+ * TODO REPONSE : c'est tres facile(il y a deja la ligne), c'est juste un soucis de performance//clareté//modularité
  */
 void FireWidget::drawTree(const Arbre* ab)
 {
@@ -304,10 +331,10 @@ void FireWidget::drawForest()
 	bufferPainter->begin(buffer);
 	
 	int current_hauteur= 0;
-	for(int i=0; i<foret->height(); ++i){
+	for(int i=0; i<forest->height(); ++i){
 		// On ne passe pas la hauteur de la grille mais le nombre de colonne*taille de colonne pour
 		// éviter la petite zone en bas de grille
-		vector< Cellule* >* ligne= (*foret)[i];
+		vector< Cellule* >* ligne= (*forest)[i];
 		
 		int current_largeur= 0;
 		for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
@@ -329,13 +356,12 @@ void FireWidget::drawForest()
 				drawCell(current_largeur, current_hauteur);
 			}
 			else if (cell->getEtat() == 2){
-				this->
-				color->setNamedColor("red");
+				setColor(RED_TRANSPARENT);
 				drawCell(current_largeur, current_hauteur);
 			}
 			else if (cell->getEtat() == 3){
-				// 				color->setNamedColor("gray");
-				setColor(GRAY_TRANSPARENT);
+// 				setColor(GRAY_TRANSPARENT);
+				setColor(ANTI_RED_TRANSPARENT);
 				drawCell(current_largeur, current_hauteur);
 			}
 			
@@ -365,11 +391,12 @@ void FireWidget::drawChanged()
 {
 	bufferPainter->begin(buffer);
 	
-	color->setNamedColor("red");
-	drawList(foret->getBurned());
+	setColor(RED_TRANSPARENT);
+	drawList(forest->getBurned());
 	
-	setColor(GRAY_TRANSPARENT);
-	drawList(foret->getCarbonized());
+// 	setColor(GRAY_TRANSPARENT);
+	setColor(ANTI_RED_TRANSPARENT);
+	drawList(forest->getCarbonized());
 	
 	bufferPainter->end();
 }
@@ -384,24 +411,27 @@ void FireWidget::redraw()
 		delete(buffer);
 		// 		bufferPainter->end();
 	}
-	buffer = new QImage(tailleCell*foret->width(), tailleCell*foret->height(), QImage::Format_ARGB32);
-	drawPicture();
+	buffer = new QImage(tailleCell*forest->width(), tailleCell*forest->height(), QImage::Format_ARGB32);
+// 	drawPicture();
 	drawForest();
 	drawChanged();
 	update();
 }
 
-/*** Events ***/
+// ###################
+/*** 		Events 	***/
+// ##################
 void FireWidget::paintEvent(QPaintEvent* event){
 
+	drawPicture();
 	QPainter paint(this);
 	paint.drawImage(0, 0, *buffer);
 }
 
 void FireWidget::resizeEvent(QResizeEvent* event){
 
-	float nbRow= foret->height();
-	float nbCol= foret->width();
+	float nbRow= forest->height();
+	float nbCol= forest->width();
 	tailleCell = min (event->size().width() / nbCol , event->size().height() / nbRow);
 	
 	#if DEBUG_DIMENSION
@@ -429,9 +459,11 @@ void FireWidget::mousePressEvent(QMouseEvent* event)
 // 		eteindreFeu(colonne, ligne);
 // 		drawForest();
 		origin = event->pos();
+		
 		if(!rubber)
-			rubber = new QRubberBand(QRubberBand::Rectangle,this);
-		rubber->setGeometry(QRect(origin,QSize()));
+			rubber = new QRubberBand(QRubberBand::Rectangle, this);
+		
+		rubber->setGeometry( QRect(origin, QSize()) );
 		rubber->show();
 	}
 }
@@ -462,7 +494,9 @@ void FireWidget::mouseReleaseEvent(QMouseEvent* event)
 }
 
 
-/*** Slots ***/
+// #################
+/***	 	Slots	 	***/
+// #################
 /**
  * Passe de l'etat t à t+1 la foret
  * @author Florian
@@ -471,7 +505,7 @@ void FireWidget::mouseReleaseEvent(QMouseEvent* event)
 bool FireWidget::next()
 {
 	// pas suivant
-	if (!foret->NextMove())
+	if (!forest->NextMove())
 		return false;
 	
 	// mise à jour de l'image puis affichage à l'écran
@@ -488,15 +522,15 @@ bool FireWidget::next()
  */
 void FireWidget::reset(int _larg, int _haut, float proba, float coef)
 {
-// 	Foret* OldForet= foret;
-// 	foret = new Foret(*OldForet, probaMatriceReset);
+// 	Foret* OldForet= forest;
+// 	forest = new Foret(*OldForet, probaMatriceReset);
 // 	delete(OldForet);
 // IMPROVEIT quelle est la meilleure facon de RAZ une foret?
 // 	buffer->fill(1);
-	foret->clean();
-	foret->setValues(_larg,_haut, coef);
-	foret->randomMatrix(proba);
-// 	foret->reset(_larg,_haut, proba, coef);
+	forest->clean();
+	forest->setValues(_larg,_haut, coef);
+	forest->randomMatrix(proba);
+// 	forest->reset(_larg,_haut, proba, coef);
 	setMinimumSize(_larg, _haut);
 	drawPicture();
 	drawForest();

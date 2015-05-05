@@ -67,7 +67,7 @@ public:
 	std::list< Arbre* >* getExtinguished()	{ return &extinguished; };
 	std::list< Arbre* >* getCarbonized()		{ return &carbonized; };
 	std::list< Arbre* >* getBurned()			{ return &burned; };
-	std::list< std::list< Arbre* > >& getChanged()	;
+	std::list< std::list< Arbre* > >* getChanged()	;
 	
 	void clearCarbonized()	{ carbonized.clear(); };
 	void clearBurned()	{ burned.clear(); };

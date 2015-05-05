@@ -16,7 +16,7 @@
 #include <math.h>
 #define PI 3.14159265
 
-using namespace std;
+// using namespace std; // TODO remove it : utilisé seulement pour les debug
 
 
 /*		
@@ -210,23 +210,27 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 
 void FireScreen::initSizes(int largeur, int hauteur)
 {
-// 	resize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
 	
 	// Maximums
-	int freePixHeight= QApplication::desktop()->screenGeometry().height()-45 ; // 45 pixel à cause des marges et menu (observé 43)
 	int freePixWidth= QApplication::desktop()->screenGeometry().width() -250-15; // les 15 pixels car il doit y avoir des marges (observé 14)
+	int freePixHeight= QApplication::desktop()->screenGeometry().height()-45 ; // 45 pixel à cause des marges et menu (observé 43)
 	
-	int maxCellHeight= freePixHeight/hauteur; 
 	int maxCellWidth= freePixWidth/largeur;
+	int maxCellHeight= freePixHeight/hauteur; 
 	int tCellMax= std::min(maxCellWidth, maxCellHeight);
 	
-	setMaximumHeight( tCellMax * hauteur +45 );
 	setMaximumWidth( tCellMax * largeur +250 +15 );
+	setMaximumHeight( tCellMax * hauteur +45 );
+	
+	// 	resize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
+	// TODO mettre une largeur de base minimum, à partir de la hauteur du menu droite (calculer la taille d'une cellule si la hauteur de la fenetre est la hauteur du menu)
+	resize( (tCellMax+1)/2 * largeur +250 +15, (tCellMax + 1)/2 * hauteur +45 );
 	
 	#if DEBUG_DIMENSION
 	std::cout<< "taille cell max : "<< tCellMax<< std::endl;
-	std::cout<< "hauteur redim : "<< maxCellHeight *hauteur<< " taille libre : "<< freePixHeight<< std::endl;
-	std::cout<< maxCellWidth<< " largeur redim : "<< maxCellWidth *largeur<< " taille libre : "<< freePixWidth<< std::endl;
+	std::cout<< "largeur : "<< maxCellWidth *largeur<< 	"px \tsur : "<< freePixWidth	<<	" dispos"<<std::endl;
+	std::cout<< "hauteur : "<< maxCellHeight *hauteur<<	"px \tsur : "<< freePixHeight	<<	" dispos"<<std::endl;
+	std::cout<< std::endl;
 	#endif
 }
 
@@ -371,5 +375,8 @@ void FireScreen::update_vent(int y){
 		vertical*=2.0;
 	}
 	fwidget->setVent(horizontal,vertical);
-	cout << "Vitesse : "<< vitesse<< "; Angle : "<<angle<<" ; valeur horizontal : " << horizontal << " ; valeur vertical : " << vertical << endl;
+	
+	#if DEBUG_VENT
+	std::cout << "Vitesse : "<< vitesse<< "; Angle : "<<angle<<" ; valeur horizontal : " << horizontal << " ; valeur vertical : " << vertical << std::endl;
+	#endif
 }

@@ -26,7 +26,7 @@
 class FireWidget : public QWidget {
 Q_OBJECT
 private:
-	Foret* foret;
+	Foret* forest;
 	QImage* buffer;
 	QColor* color;
 	QPainter* bufferPainter;
