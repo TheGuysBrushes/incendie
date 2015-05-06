@@ -52,9 +52,9 @@ public:
 		
 protected:
 	void resizeEvent(QResizeEvent* Qevent);
-	void mousePressEvent(QMouseEvent* event);
-	void mouseMoveEvent(QMouseEvent*event);
-	void mouseReleaseEvent(QMouseEvent* event);
+// 	void mousePressEvent(QMouseEvent* event);
+// 	void mouseMoveEvent(QMouseEvent*event);
+// 	void mouseReleaseEvent(QMouseEvent* event);
 	
 public slots:
 	void start_timer(bool);
