@@ -212,7 +212,7 @@ unsigned Foret::essenceRandom(int col, int row, unsigned distOthers){
 
 std::list< list< Arbre* > >* Foret::getChanged()
 {
-	list< list< Arbre* > >* listes;
+	list< list< Arbre* > >* listes= new list< list< Arbre* > >();
 	listes->push_back(uprooted);
 	listes->push_back(extinguished);
 	listes->push_back(burned);

@@ -269,8 +269,7 @@ void FireWidget::setVent(float _hor, float _ver){
  * @author Florian
  */
 void FireWidget::drawPicture(){
-// 	bufferPainter->end();
-	bufferPainter->begin(this);
+	bufferPainter->begin(buffer);
 	bufferPainter->drawPixmap(0, 0, *pictureForest);
 	bufferPainter->end();
 }
@@ -406,7 +405,7 @@ void FireWidget::redraw()
 		// 		bufferPainter->end();
 	}
 	buffer = new QImage(tailleCell*forest->width(), tailleCell*forest->height(), QImage::Format_ARGB32);
-// 	drawPicture();
+	drawPicture();
 	drawForest();
 	drawChanged();
 	update();
@@ -416,8 +415,6 @@ void FireWidget::redraw()
 /*** 		Events 	***/
 // ##################
 void FireWidget::paintEvent(QPaintEvent* event){
-
-	drawPicture();
 	QPainter paint(this);
 	paint.drawImage(0, 0, *buffer);
 }
