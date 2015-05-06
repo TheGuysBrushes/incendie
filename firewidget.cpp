@@ -457,7 +457,7 @@ void FireWidget::mousePressEvent(QMouseEvent* event)
 		if(!rubber)
 			rubber = new QRubberBand(QRubberBand::Rectangle, this);
 		
-		rubber->setGeometry( QRect(origin, QSize()) );
+
 		rubber->show();
 	}
 }
