@@ -184,14 +184,11 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 
 // CONTENEURS
 	// Conteneur général
-	w = new QWidget(this);
+	QWidget* w = new QWidget(this);
 	setCentralWidget(w);
 	
 	// Sous-conteneurs
 	QHBoxLayout* lay = new QHBoxLayout(w);
-	
-	// Tests rubberBand
-	rubber = NULL;
 	
 // PLACEMENT DES ELEMENTS
 	// Partie gauche
@@ -265,34 +262,6 @@ void FireScreen::resizeEvent(QResizeEvent* Qevent)
 {
 // 	QWidget::resizeEvent(Qevent);
 }
-
-void FireScreen::mousePressEvent(QMouseEvent* event)
-{
-	if(event->button() == Qt::RightButton){
-		origin = event->pos();
-		if(!rubber)
-			rubber = new QRubberBand(QRubberBand::Rectangle,fWidget);
-		rubber->setGeometry(QRect(origin,QSize()));
-		rubber->show();
-		
-	}
-}
-
-void FireScreen::mouseMoveEvent(QMouseEvent* event)
-{
-	if(rubber){
-		rubber->setGeometry(QRect(origin, event->pos()).normalized());
-		fWidget->update();
-	}
-}
-
-void FireScreen::mouseReleaseEvent(QMouseEvent* event)
-{
-	if(rubber){
-		rubber->hide();
-	}
-}
-
 
 // ########################
 /***			Slots			***/
