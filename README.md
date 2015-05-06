@@ -18,7 +18,7 @@
   - Ugo : reflexion sur la modélisation des !=arbres
 
 <h2>Semaine 2</h2>
-  <h3>Lundi</h3>
+<h3>Lundi</h3>
   - Flo :
       + les cellules/arbres sont stockés par pointeurs dans le vecteur de vecteurs
       + la cellule ne contient qu'un état, si c'est un arbre (dynamic_cast) il a des attributs spécifiques
@@ -32,13 +32,13 @@
   - Gestion couleurs != abres
     + Florian : Cellule adjacentes en diagonale
  
-  <h3>Mercredi</h3>
+<h3>Mercredi</h3>
   - Calcul et prise en compte des points de vie en fonction des paramètres de l'essence et des caractères discrets de l'arbre.
 
-  <h3>Jeudi</h3>
+<h3>Jeudi</h3>
   - Sélection aléatoire essence avec notion de bosquet. Nettoyage du code, debugage, tests mémoires ( concluant).
  
-  <h3>Vendredi</h3>
+<h3>Vendredi</h3>
   - Ugo : Transmission liée à l'humidité, réflexion sur modification système pv. 
   - Florian  : Recherches sur vents + creation de la classe et des opérations sur les vecteurs de vents
 
