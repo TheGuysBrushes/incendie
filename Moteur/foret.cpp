@@ -380,6 +380,7 @@ void Foret::water(Arbre* ab)
 
 	ab->water();
 	onFire.remove(ab);
+	extinguished.push_back(ab);
 }
 
 
@@ -417,6 +418,7 @@ void Foret::allumer(int col, int row)
 void Foret::eteindre(Arbre* ab)
 {
 	ab->blast();
+	carbonized.push_back(ab);
 }
 
 
