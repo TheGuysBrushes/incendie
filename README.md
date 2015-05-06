@@ -5,15 +5,15 @@
   <h3>Mardi</h3>
   - Réfléxion commune 
 
-  <h3>Mercredi</h3>
+<h3>Mercredi</h3>
   - Flo : génération et affichage matrice
   - Ugo : Cahiers des charges et réflexion
 
-  <h3>Jeudi</h3>
+<h3>Jeudi</h3>
   - Flo : déclenchement d'un incendie et propagation simple 
   - Ugo : réflexion sur SDD et != arbres
 
-  <h3>Vendredi</h3>
+<h3>Vendredi</h3>
   - Flo : Passage des fonctions via pointeurs et nettoyage du code 
   - Ugo : reflexion sur la modélisation des !=arbres
 
@@ -27,7 +27,7 @@
       
   - Ugo : Implémentation de la notion d'essence.
 
-  <h3>Mardi</h3>
+<h3>Mardi</h3>
   - Intégration de la notion d'essence dans une forêt (Gestion moteur et graphique)
   - Gestion couleurs != abres
     + Florian : Cellule adjacentes en diagonale
@@ -72,12 +72,11 @@
   - Florian : Mise en page du readme et ajouts d'étapes et détails.
 
 <h2> Semaine 4 </h2>
-
-  <h3> Lundi </h3>
+<h3> Lundi </h3>
     - Ugo : Réfléxion sur la mise en place des vents, reprise de la classe dédiée et améliorations
     - Florian : mise à jour du code et nettoyage à partir des TODO et autres commentaires
     
-  <h3> Mardi </h3>
+<h3> Mardi </h3>
     - Ugo : Implémentation et tests de l'algorithme de transition avec prise en compte du vent.
     - Florian : homogénisation du lors de l'utilisation de Colonnes / Lignes et Width / Height
     
