@@ -30,13 +30,7 @@ using namespace std;
  */
 FireWidget::FireWidget(int _largeur, int _hauteur, float proba, float coef_brulure): QWidget()
 {
-	forest = new Foret(_largeur, _hauteur, proba, coef_brulure);
-	buffer = new QImage();
-	color = new QColor(Qt::black);
-	bufferPainter= new QPainter();
-	
-	rubber = NULL;
-	setMinimumSize(_largeur, _hauteur);
+	initialise(_largeur, _hauteur, proba, coef_brulure);
 }
 
 FireWidget::FireWidget(): QWidget(){
