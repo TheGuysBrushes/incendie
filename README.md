@@ -80,16 +80,16 @@
     - Ugo : Implémentation et tests de l'algorithme de transition avec prise en compte du vent.
     - Florian : homogénisation du lors de l'utilisation de Colonnes / Lignes et Width / Height
     
-  <h3> Mercredi </h3>
-    - Ugo : Mise en place de la dynamisation du vent au cours du temps via widget dédié.
-    - Florian : Divers correctif de dimension, factorisation du code pour la création et la recréation des fôrets.
+<h3> Mercredi </h3>
+  - Ugo : Mise en place de la dynamisation du vent au cours du temps via widget dédié.
+  - Florian : Divers correctif de dimension, factorisation du code pour la création et la recréation des fôrets.
     
-  <h3> Jeudi </h3>
-    - Ugo : Incorporation du widget WindWidget, mise en place, tests et détection des bugs.
-    - Debut des recherches de possibilité d'implémentation des images satellites et de sauvegarde/création de matrice à partir d'images.
+<h3> Jeudi </h3>
+  - Ugo : Incorporation du widget WindWidget, mise en place, tests et détection des bugs.
+  - Debut des recherches de possibilité d'implémentation des images satellites et de sauvegarde/création de matrice à partir d'images.
     
-  <h3>Vendredi</h3>
-    -Florian : Premiere implémentation basique de test d'ajout d'image dans le programme.
+<h3>Vendredi</h3>
+  -Florian : Premiere implémentation basique de test d'ajout d'image dans le programme.
     
 <h2> Semaine 5 </h2>
 
