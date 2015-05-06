@@ -76,12 +76,12 @@
 <h2> Semaine 4 </h2>
 
 <h3> Lundi </h3>
-    - Ugo : Réfléxion sur la mise en place des vents, reprise de la classe dédiée et améliorations
-    - Florian : mise à jour du code et nettoyage à partir des TODO et autres commentaires
+  - Ugo : Réfléxion sur la mise en place des vents, reprise de la classe dédiée et améliorations
+  - Florian : mise à jour du code et nettoyage à partir des TODO et autres commentaires
     
 <h3> Mardi </h3>
-    - Ugo : Implémentation et tests de l'algorithme de transition avec prise en compte du vent.
-    - Florian : homogénisation du lors de l'utilisation de Colonnes / Lignes et Width / Height
+  - Ugo : Implémentation et tests de l'algorithme de transition avec prise en compte du vent.
+  - Florian : homogénisation du lors de l'utilisation de Colonnes / Lignes et Width / Height
     
 <h3> Mercredi </h3>
   - Ugo : Mise en place de la dynamisation du vent au cours du temps via widget dédié.
@@ -97,12 +97,11 @@
 <h2> Semaine 5 </h2>
 
 <h3> Lundi </h3>
-    - Ugo : Correction des bugs sur le vents, détection de nouveaux bugs
-    - Florian : Travaux sur la matrice d'arbres avec des images<h3> Lundi </h3>
+  - Ugo : Correction des bugs sur le vents, détection de nouveaux bugs
+  - Florian : Travaux sur la matrice d'arbres avec des images<h3> Lundi </h3>
     
 <h3> Mardi </h3>
-    
-<h3> Mercredi </h3>
+  - Florian fsh3> Mercredi </h3>
     
 <h3> Jeudi </h3>
     
