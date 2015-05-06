@@ -101,7 +101,10 @@
   - Florian : Travaux sur la matrice d'arbres avec des images<h3> Lundi </h3>
     
 <h3> Mardi </h3>
-  - Florian fsh3> Mercredi </h3>
+  - Florian  : Ajouts et modif pour les couleurs d'arbres et les dimensions de la fenetre, commentaires et corrections.
+
+<h3> Mercredi </h3>
+  -Florian
     
 <h3> Jeudi </h3>
     
