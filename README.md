@@ -2,7 +2,8 @@
 <h1>Automate de simulation d'incendie</h1>
 
 <h2>Semaine 1</h2>
-  <h3>Mardi</h3>
+
+<h3>Mardi</h3>
   - Réfléxion commune 
 
 <h3>Mercredi</h3>
@@ -18,6 +19,7 @@
   - Ugo : reflexion sur la modélisation des !=arbres
 
 <h2>Semaine 2</h2>
+
 <h3>Lundi</h3>
   - Flo :
       + les cellules/arbres sont stockés par pointeurs dans le vecteur de vecteurs
@@ -72,6 +74,7 @@
   - Florian : Mise en page du readme et ajouts d'étapes et détails.
 
 <h2> Semaine 4 </h2>
+
 <h3> Lundi </h3>
     - Ugo : Réfléxion sur la mise en place des vents, reprise de la classe dédiée et améliorations
     - Florian : mise à jour du code et nettoyage à partir des TODO et autres commentaires
@@ -85,14 +88,36 @@
   - Florian : Divers correctif de dimension, factorisation du code pour la création et la recréation des fôrets.
     
 <h3> Jeudi </h3>
-  - Ugo : Incorporation du widget WindWidget, mise en place, tests et détection des bugs.
+  - Samed Incorporation du widget WindWidget, mise en place, tests et détection des bugs.
   - Debut des recherches de possibilité d'implémentation des images satellites et de sauvegarde/création de matrice à partir d'images.
     
-<h3>Vendredi</h3>
+<h3> Samedi </h3>
   -Florian : Premiere implémentation basique de test d'ajout d'image dans le programme.
     
 <h2> Semaine 5 </h2>
 
-  <h3> Lundi </h3>
+<h3> Lundi </h3>
     - Ugo : Correction des bugs sur le vents, détection de nouveaux bugs
-    - 
+    - Florian : Travaux sur la matrice d'arbres avec des images<h3> Lundi </h3>
+    
+<h3> Mardi </h3>
+    
+<h3> Mercredi </h3>
+    
+<h3> Jeudi </h3>
+    
+<h3> Vendredi </h3>
+
+
+
+<h2> Semaine X </h2>
+
+<h3> Lundi </h3>
+    
+<h3> Mardi </h3>
+    
+<h3> Mercredi </h3>
+    
+<h3> Jeudi </h3>
+    
+<h3> Vendredi </h3>
