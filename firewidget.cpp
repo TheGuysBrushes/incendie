@@ -1,7 +1,7 @@
 #include "firewidget.h"
 #include <QtGui/qevent.h>
 
-#define GRAY_TRANSPARENT 	5
+#define GRAY 	5
 #define RED_TRANSPARENT 	6
 #define ANTI_RED_TRANSPARENT	7
 
@@ -225,8 +225,8 @@ void FireWidget::setColor(int colorIndice)
 		case 4:
 			this->color->setRgb(46,139,87,	100);
 			break;
-		case GRAY_TRANSPARENT:
-			this->color->setRgb(0,80,80,		180);
+		case GRAY:
+			this->color->setRgb(80,80,80,		255);
 			break;
 		case RED_TRANSPARENT:
 			this->color->setRgb(255,00,00,	180);
@@ -353,8 +353,8 @@ void FireWidget::drawForest()
 				drawCell(current_largeur, current_hauteur);
 			}
 			else if (cell->getEtat() == 3){
-// 				setColor(GRAY_TRANSPARENT);
-				setColor(ANTI_RED_TRANSPARENT);
+				setColor(GRAY);
+// 				setColor(ANTI_RED_TRANSPARENT);
 				drawCell(current_largeur, current_hauteur);
 			}
 			
@@ -387,8 +387,8 @@ void FireWidget::drawChanged()
 	setColor(RED_TRANSPARENT);
 	drawList(forest->getBurned());
 	
-// 	setColor(GRAY_TRANSPARENT);
-	setColor(ANTI_RED_TRANSPARENT);
+	setColor(GRAY);
+// 	setColor(ANTI_RED_TRANSPARENT);
 	drawList(forest->getCarbonized());
 	
 	bufferPainter->end();

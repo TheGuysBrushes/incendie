@@ -30,8 +30,8 @@ FireScreen::FireScreen(): QMainWindow()
 	QAction* save = new QAction(this);
 	save->setText( "Save" );
 	
-	fwidget= new FireWidget();
-	vent_widget = new WindWidget();
+	fWidget= new FireWidget();
+	windWidget = new WindWidget();
 	
 	menuBar()/*->addMenu( "Menu" )*/->addAction(exit);
 	menuBar()->addAction(save);
@@ -57,7 +57,7 @@ FireScreen::FireScreen(): QMainWindow()
 
 FireScreen::~FireScreen()
 {
-	delete(fwidget);	
+	delete(fWidget);	
 
 	delete delai_lbl;
 	delete cpt_lbl;
@@ -75,7 +75,7 @@ void FireScreen::initForest(const Fwelcome* fwel)
 	
 	int largeur = fwel->get_larg();
 	int hauteur = fwel->get_haut();
-	fwidget->initialise(largeur,hauteur,
+	fWidget->initialise(largeur,hauteur,
 							  fwel->get_proba(),
 							  fwel->get_coef());
 	
@@ -143,7 +143,7 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	
 	vert_lay1->addWidget(titre);
 	vert_lay1->addWidget(info_vent);
-	vert_lay1->addWidget(vent_widget);
+	vert_lay1->addWidget(windWidget);
 	vert_lay1->addWidget(trans_p2p);
 	vert_lay1->addWidget(ww1);
 	vert_lay1->addWidget(trans_con);
@@ -155,7 +155,7 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	vert_lay1->setAlignment(titre,Qt::AlignHCenter);
 	
 	// CONNEXION DES BOUTONS AUX FONCTIONS
-	QObject::connect(next_btn,		SIGNAL(clicked()), fwidget,		SLOT(next()) );
+	QObject::connect(next_btn,		SIGNAL(clicked()), fWidget,		SLOT(next()) );
 	QObject::connect(play_btn,		SIGNAL(clicked(bool)), this,	SLOT(start_timer(bool)) );
 	QObject::connect(pause_btn,		SIGNAL(clicked(bool)), this,	SLOT(stop_timer(bool)) );
 	QObject::connect(timer, 			SIGNAL(timeout()), this,			SLOT(nextCompteur()) );
@@ -163,7 +163,7 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	
 	QObject::connect(slider,	SIGNAL(valueChanged(int)), this, SLOT(set_delai(int )));
 	QObject::connect(reset_btn,	SIGNAL(clicked()), this,	SLOT(reset()) );
-	connect(vent_widget, SIGNAL(modif_value(int)), this, SLOT(update_vent(int)) );
+	connect(windWidget, SIGNAL(modif_value(int)), this, SLOT(updateWind(int)) );
 	
 	/*** 	DEFINITTION DU STYLE DES ELEMENTS	***/
 	// Touches d'améliorations visuelles et d'initialisation de propriétés
@@ -195,8 +195,8 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 	
 // PLACEMENT DES ELEMENTS
 	// Partie gauche
-	lay->addWidget(fwidget);
-	lay->setStretchFactor(fwidget, 1);
+	lay->addWidget(fWidget);
+	lay->setStretchFactor(fWidget, 1);
 	lay->minimumHeightForWidth(1);
 	
 	// Partie droite, menus
@@ -219,7 +219,7 @@ void FireScreen::initSizes(int largeur, int hauteur)
 	int maxCellHeight= freePixHeight/hauteur; 
 	int tCellMax= std::min(maxCellWidth, maxCellHeight);
 	
-	setMaximumWidth( tCellMax * largeur +250 +15 );
+	setMaximumWidth( tCellMax * largeur +250 +25 );
 	setMaximumHeight( tCellMax * hauteur +45 );
 	
 	// 	resize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
@@ -271,7 +271,7 @@ void FireScreen::mousePressEvent(QMouseEvent* event)
 	if(event->button() == Qt::RightButton){
 		origin = event->pos();
 		if(!rubber)
-			rubber = new QRubberBand(QRubberBand::Rectangle,fwidget);
+			rubber = new QRubberBand(QRubberBand::Rectangle,fWidget);
 		rubber->setGeometry(QRect(origin,QSize()));
 		rubber->show();
 		
@@ -282,7 +282,7 @@ void FireScreen::mouseMoveEvent(QMouseEvent* event)
 {
 	if(rubber){
 		rubber->setGeometry(QRect(origin, event->pos()).normalized());
-		fwidget->update();
+		fWidget->update();
 	}
 }
 
@@ -332,28 +332,28 @@ void FireScreen::reset()
 	fwel->show();
 	
 	if( fwel->exec() == QDialog::Accepted ){
-		fwidget->delForet();
+		fWidget->delForet();
 		
 		initForest(fwel);
 		
-		fwidget->redraw();
+		fWidget->redraw();
 	}
 }
 
 void FireScreen::nextCompteur()
 {
-	if (fwidget->next()){
+	if (fWidget->next()){
 		nb_tour += 1;
 		majTimer();
 	}
 	else stop_timer(true);
 }
 
-void FireScreen::update_vent(int y){
+void FireScreen::updateWind(int y){
 	// Les paramètres du vent ont été modifiés
 	// On doit récupérer les valeurs et mettre à jour le vent
-	int angle = vent_widget->get_angle();
-	int vitesse = vent_widget->get_vitesse();
+	int angle = windWidget->get_angle();
+	int vitesse = windWidget->get_vitesse();
 	float vertical;
 	
 	float horizontal;
@@ -374,7 +374,7 @@ void FireScreen::update_vent(int y){
 		horizontal*=2.0;
 		vertical*=2.0;
 	}
-	fwidget->setVent(horizontal,vertical);
+	fWidget->setVent(horizontal,vertical);
 	
 	#if DEBUG_VENT
 	std::cout << "Vitesse : "<< vitesse<< "; Angle : "<<angle<<" ; valeur horizontal : " << horizontal << " ; valeur vertical : " << vertical << std::endl;

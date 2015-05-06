@@ -26,8 +26,8 @@ class FireScreen : public QMainWindow
 {
 Q_OBJECT
 private:
-	WindWidget* vent_widget;
-	FireWidget* fwidget;
+	WindWidget* windWidget;
+	FireWidget* fWidget;
 	QLabel* cpt_lbl;
 	QLabel* delai_lbl;
 	QPushButton* pause_btn;
@@ -70,7 +70,7 @@ public slots:
 	void nextCompteur();
 	void set_delai(int x );
 	void reset();
-	void update_vent(int y);
+	void updateWind(int y);
 
 };
 
