@@ -72,12 +72,11 @@
   - Florian : Mise en page du readme et ajouts d'étapes et détails.
 
 <h2> Semaine 4 </h2>
-
-  <h3> Lundi </h3>
+<h3> Lundi </h3>
     - Ugo : Réfléxion sur la mise en place des vents, reprise de la classe dédiée et améliorations
     - Florian : mise à jour du code et nettoyage à partir des TODO et autres commentaires
     
-  <h3> Mardi </h3>
+<h3> Mardi </h3>
     - Ugo : Implémentation et tests de l'algorithme de transition avec prise en compte du vent.
     - Florian : homogénisation du lors de l'utilisation de Colonnes / Lignes et Width / Height
     
