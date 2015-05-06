@@ -1,3 +1,11 @@
+	
+	firewdiget.cpp : ligne 388
+
+	
+		
+	drawChanged();
+	update();
+	
 
 22/04
 ################################

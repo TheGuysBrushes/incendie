@@ -122,8 +122,6 @@ bool FireWidget::eteindreFeu(int colonne, int ligne)
 			if (cell->getEtat()==2){
 				Arbre* ab= dynamic_cast< Arbre* >(cell);
 				forest->water(ab);
-				drawChanged();
-				update();
 
 				return true;
 			}
@@ -155,8 +153,6 @@ bool FireWidget::allumerFeu(int colonne, int ligne)
 			if (cell->getEtat()==1){
 				Arbre* ab= dynamic_cast< Arbre* >(cell);
 				forest->allumer(ab);
-				drawChanged();
-				update();
 
 				return true;
 			}
@@ -188,8 +184,6 @@ bool FireWidget::finirFeu(int colonne, int ligne)
 			if (cell->getEtat()==2){
 				Arbre* ab= dynamic_cast< Arbre* >(cell);
 				forest->eteindre(ab);
-				drawChanged();
-				update();
 
 				return true;
 			}
@@ -391,6 +385,9 @@ void FireWidget::drawChanged()
 // 	setColor(ANTI_RED_TRANSPARENT);
 	drawList(forest->getCarbonized());
 	
+	color->setNamedColor("blue");
+	drawList(forest->getExtinguished());
+	
 	bufferPainter->end();
 }
 
@@ -457,6 +454,9 @@ void FireWidget::mousePressEvent(QMouseEvent* event)
 		rubber->setGeometry(QRect(origin, QSize()));
 		rubber->show();
 	}
+	
+	drawChanged();
+	update();
 }
 
 void FireWidget::mouseMoveEvent(QMouseEvent* event)
@@ -476,6 +476,8 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 			rubber->setGeometry(QRect(origin,event->pos()).normalized());
 	}
 	
+	drawChanged();
+	update();
 }
 
 void FireWidget::mouseReleaseEvent(QMouseEvent* event)
