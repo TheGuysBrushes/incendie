@@ -158,15 +158,15 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	vert_lay1->setAlignment(titre,Qt::AlignHCenter);
 	
 	// CONNEXION DES BOUTONS AUX FONCTIONS
-	QObject::connect(next_btn,		SIGNAL(clicked()), fWidget,		SLOT(next()) );
-	QObject::connect(play_btn,		SIGNAL(clicked(bool)), this,	SLOT(start_timer(bool)) );
-	QObject::connect(pause_btn,		SIGNAL(clicked(bool)), this,	SLOT(stop_timer(bool)) );
-	QObject::connect(timer, 			SIGNAL(timeout()), this,			SLOT(nextCompteur()) );
-	QObject::connect(next_btn, 		SIGNAL(clicked()), this,			SLOT(nextCompteur()) );
+	connect(next_btn,	SIGNAL(clicked()), 		fWidget,	SLOT(next()) );
+	connect(play_btn,	SIGNAL(clicked()), 		this,	SLOT( start_timer(bool)) );
+	connect(pause_btn,	SIGNAL(clicked()),	this,	SLOT( stop_timer(bool)) );
+	connect(timer,		SIGNAL(timeout()), 		this,	SLOT( nextCompteur()) );
+	connect(next_btn,	SIGNAL(clicked()), 		this,	SLOT( nextCompteur()) );
 	
-	QObject::connect(slider,	SIGNAL(valueChanged(int)), this, SLOT(set_delai(int )));
-	QObject::connect(reset_btn,	SIGNAL(clicked()), this,	SLOT(reset()) );
-	connect(windWidget, SIGNAL(modif_value(int)), this, SLOT(updateWind(int)) );
+	connect(slider,	SIGNAL(valueChanged(int)),		this, SLOT( set_delai(int)) );
+	connect(reset_btn,	SIGNAL(clicked()), 			this,	SLOT( reset()) );
+	connect(windWidget,	SIGNAL(modif_value(int)),	this, SLOT( updateWind(int)) );
 	
 	
 	/*** 	DEFINITTION DU STYLE DES ELEMENTS	***/
