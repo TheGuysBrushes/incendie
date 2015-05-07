@@ -31,6 +31,8 @@ private:
 	QPushButton* pause_btn;
 	QPushButton* play_btn;
 	QPushButton* next_btn;
+	QPushButton* cut_btn;
+	QPushButton* delay_btn;
 	
 	QTimer* timer;
 	int nb_tour;
@@ -62,6 +64,7 @@ public slots:
 	void nextCompteur();
 	void set_delai(int x );
 	void reset();
+	void invertBtn(bool);
 	void updateWind(int y);
 
 };

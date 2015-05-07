@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'firescreen.h'
 **
-** Created: Wed May 6 15:16:08 2015
+** Created: Thu May 7 15:23:21 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_FireScreen[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -36,7 +36,8 @@ static const uint qt_meta_data_FireScreen[] = {
       47,   11,   11,   11, 0x0a,
       64,   62,   11,   11, 0x0a,
       79,   11,   11,   11, 0x0a,
-      89,   87,   11,   11, 0x0a,
+      87,   11,   11,   11, 0x0a,
+     105,  103,   11,   11, 0x0a,
 
        0        // eod
 };
@@ -44,7 +45,8 @@ static const uint qt_meta_data_FireScreen[] = {
 static const char qt_meta_stringdata_FireScreen[] = {
     "FireScreen\0\0start_timer(bool)\0"
     "stop_timer(bool)\0nextCompteur()\0x\0"
-    "set_delai(int)\0reset()\0y\0updateWind(int)\0"
+    "set_delai(int)\0reset()\0invertBtn(bool)\0"
+    "y\0updateWind(int)\0"
 };
 
 void FireScreen::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -58,7 +60,8 @@ void FireScreen::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 2: _t->nextCompteur(); break;
         case 3: _t->set_delai((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 4: _t->reset(); break;
-        case 5: _t->updateWind((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 5: _t->invertBtn((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 6: _t->updateWind((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -96,9 +99,9 @@ int FireScreen::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 7;
     }
     return _id;
 }
