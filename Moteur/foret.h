@@ -67,24 +67,29 @@ public:
 	std::list< Arbre* >* getExtinguished()	{ return &extinguished; };
 	std::list< Arbre* >* getCarbonized()		{ return &carbonized; };
 	std::list< Arbre* >* getBurned()			{ return &burned; };
-	std::list< std::list< Arbre* > >* getChanged()	;
+	std::list< std::list< Arbre* > >* getChanged();
 	
 	void clearCarbonized()	{ carbonized.clear(); };
 	void clearBurned()	{ burned.clear(); };
 
 	// Autres méthodes
 	void plantTree(int col, int row);
+
+	void uproot(Arbre* ab);
+	void uproot(int col, int row);
 	
 	void water(Arbre* ab);
-	
-	void allumer(int col, int row);
+
 	void allumer(Arbre* ab);
+	void allumer(int col, int row);
 	
 	void eteindre(Arbre* ab);
 // 	void eteindre(int row, int col);
 	
-	void enflammer(int col, int row);
 	void enflammer(Arbre* ab);
+	void enflammer(int col, int row);
+	
+	
 	std::list< Arbre* > adjacents(int col, int row, int distance) const;
 	std::list< Arbre* > adjacents(const Arbre * ab, int distance) const;
 	

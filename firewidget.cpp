@@ -346,7 +346,7 @@ void FireWidget::drawForest()
 				setColor(RED_TRANSPARENT);
 				drawCell(current_largeur, current_hauteur);
 			}
-			else if (cell->getEtat() == 3){
+			else if (cell->getEtat() == -1){
 				setColor(GRAY);
 // 				setColor(ANTI_RED_TRANSPARENT);
 				drawCell(current_largeur, current_hauteur);
@@ -387,6 +387,9 @@ void FireWidget::drawChanged()
 	
 	color->setNamedColor("blue");
 	drawList(forest->getExtinguished());
+	
+	color->setNamedColor("black");
+	drawList(forest->getUprooted());
 	
 	bufferPainter->end();
 }

@@ -45,7 +45,8 @@ public:
 	
 	void water()	{ etat= 1;	};
 	void burn()		{ etat= 2;	};
-	void blast()	{ etat= 3;	};
+	void blast()	{ etat= -1;	};
+	void uproot()	{ etat= 0;	};
 };
 
 #endif // ARBRE_H

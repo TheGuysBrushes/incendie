@@ -366,12 +366,45 @@ void Foret::setValues(int largeur, int hauteur, float coef)
 }
 
 
-// ###################################
+// ##################################
 // 	Modification des éléments
-// ###################################
+// ##################################
+
+// IMPROVEIT couper un arbre : supprimer arbre puis créer cellule ?, laisser l'arbre ?
+/**
+ * Coupe ou déracine un arbre (IMPROVEIT pour l'instant l'arbre est laissé)
+ * @author Florian
+ * @param ab arbre à supprimer
+ */
+void Foret::uproot(Arbre* ab)
+{
+	ab->uproot();
+	onFire.remove(ab);
+	uprooted.push_back(ab);
+}
+
+/**
+ * Coupe ou déracine l'arbre à la position donnée
+ * @author Florian
+ * @param ab arbre à supprimer
+ */
+void Foret::uproot(int col, int row)
+{
+	Cellule* tmp= matrix[row][col];
+	
+	int etat= tmp->getEtat();
+	
+	if (etat>0){	// si il s'agit un arbre
+		Arbre * ab = dynamic_cast<Arbre *>(tmp);
+		uproot(ab);
+	}
+}
+
+
 /**
  * Eteint un arbre en conservant ses points de vie courant
  * @author Florian
+ * @param ab arbre à éteindre
  */
 void Foret::water(Arbre* ab)
 {
@@ -387,6 +420,7 @@ void Foret::water(Arbre* ab)
 /**
  * Definit un arbre comme étant en feu
  * @author Florian
+ * @param ab arbre à allumer
  */
 void Foret::allumer(Arbre* ab)
 {
@@ -398,6 +432,7 @@ void Foret::allumer(Arbre* ab)
 /**
  * Definit une position comme étant en feu, si c'est un arbre
  * @author Florian
+ * @param col_row position de l'arbre à allumer
  */
 void Foret::allumer(int col, int row)
 {
@@ -414,6 +449,7 @@ void Foret::allumer(int col, int row)
 /**
  * Definit un arbre comme étant en cendres
  * @author Florian
+ * @param ab arbre à mettre en cendres
  */
 void Foret::eteindre(Arbre* ab)
 {
