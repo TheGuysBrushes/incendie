@@ -42,6 +42,8 @@ FireScreen::FireScreen(): QMainWindow()
 	next_btn = new QPushButton("Next");
 	play_btn = new QPushButton("Play");
 	pause_btn = new QPushButton("Pause");
+	cut_btn = new QPushButton("Coupure");
+	delay_btn = new QPushButton("Retardateur");
 	pause_btn->setDisabled(true);
 	
 	cpt_lbl = new QLabel();
@@ -97,12 +99,15 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	QVBoxLayout* vert_lay1 = new QVBoxLayout(menus);
 	QWidget* ww1 = new QWidget(menus);
 	QWidget* ww2 = new QWidget(menus);
+	QWidget* ww3 = new QWidget(menus);
 	
 	QGridLayout* grid_lay1 = new QGridLayout(ww1);
-	QGridLayout* grid_lay2 = new QGridLayout(ww2);   
+	QGridLayout* grid_lay2 = new QGridLayout(ww2); 
+	
 	QWidget* www = new QWidget(ww2);
 	
 	QHBoxLayout* h_lay1 = new QHBoxLayout(www);
+	QHBoxLayout* h_lay2 = new QHBoxLayout(ww3);
 	
 	//ELEMENTS
 	
@@ -115,12 +120,10 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	
 	QPushButton* reset_btn = new QPushButton("Reset ! Be careful");
 	
-	
 	int interTempsInit= 200;
 	
 	// Compteur de tours et Slider
-	QLabel* trans_con = new QLabel("Transmission continue : ");
-	
+	QLabel* trans_con = new QLabel("Transmission continue : ");	
 	QLabel* tour_lbl = new QLabel("Nombre de tours :");
 	// 	majTimer(); REMOVEIT ?
 	
@@ -144,6 +147,9 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	h_lay1->addWidget(tour_lbl);
 	h_lay1->addWidget(cpt_lbl);
 	
+	h_lay2->addWidget(cut_btn);
+	h_lay2->addWidget(delay_btn);
+	
 	vert_lay1->addWidget(titre);
 	vert_lay1->addWidget(info_vent);
 	vert_lay1->addWidget(windWidget);
@@ -152,6 +158,7 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	vert_lay1->addWidget(trans_con);
 	vert_lay1->addWidget(ww2);
 	vert_lay1->addWidget(www);
+	vert_lay1->addWidget(ww3);
 	vert_lay1->addWidget(reset_btn);
 	
 	vert_lay1->addStretch(2);
@@ -169,6 +176,12 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	connect(windWidget,	SIGNAL(modif_value(int)),	this, SLOT( updateWind(int)) );
 	
 	
+	QObject::connect(cut_btn,SIGNAL(clicked(bool)),this, SLOT(invertBtn(bool)));	
+	QObject::connect(delay_btn,SIGNAL(clicked(bool)),this, SLOT(invertBtn(bool)));
+	
+	cut_btn->setEnabled(true);
+	delay_btn->setEnabled(false);
+	
 	/*** 	DEFINITTION DU STYLE DES ELEMENTS	***/
 	// Touches d'améliorations visuelles et d'initialisation de propriétés
 	titre->setStyleSheet("color : darkblue; font : bold italic 20px;");
@@ -180,6 +193,22 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	delai_lbl->setStyleSheet("QLabel { color : darkblue; }");
 	
 }
+/**
+ * Cette fonction permet d'inverser les actions effectuées par le clic
+ * droit.
+ * @author Ugo
+ */
+void FireScreen::invertBtn(bool )
+{
+	if(cut_btn->isEnabled()){
+		cut_btn->setDisabled(true);
+		delay_btn->setEnabled(true);
+	}else{
+		delay_btn->setDisabled(true);
+		cut_btn->setEnabled(true);
+	}
+}
+
 
 
 void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
