@@ -416,15 +416,15 @@ void Foret::water(Arbre* ab)
 	extinguished.push_back(ab);
 }
 
-
+// EMBRASEMENT
 /**
  * Definit un arbre comme étant en feu
  * @author Florian
  * @param ab arbre à allumer
  */
-void Foret::allumer(Arbre* ab)
+void Foret::kindle(Arbre* ab)
 {
-	ab->burn();
+	ab->kindle();
 	onFire.push_back(ab);
 	burned.push_back(ab);
 }
@@ -434,7 +434,7 @@ void Foret::allumer(Arbre* ab)
  * @author Florian
  * @param col_row position de l'arbre à allumer
  */
-void Foret::allumer(int col, int row)
+void Foret::kindle(int col, int row)
 {
 	Cellule* tmp= matrix[row][col];
 	
@@ -442,34 +442,36 @@ void Foret::allumer(int col, int row)
 	
 	if (etat==1){
 		Arbre * ab = dynamic_cast<Arbre *>(tmp);
-		allumer(ab);
+		kindle(ab);
 	}
 }
 
+// EXTINCTION
 /**
  * Definit un arbre comme étant en cendres
  * @author Florian
  * @param ab arbre à mettre en cendres
  */
-void Foret::eteindre(Arbre* ab)
+void Foret::blast(Arbre* ab)
 {
 	ab->blast();
 	carbonized.push_back(ab);
 }
 
 
+// BURNING
 /**
  * Enflamme un arbre : un autre arbre lui "transmet" du feu
  * @author Florian
  * @param ab arbre à enflammer
  */
-void Foret::enflammer(Arbre* ab)
+void Foret::burn(Arbre* ab)
 {
 // 	if (ab->getEtat==2){
 // // 		ab->brule();
 // 	}
 // 	else {
-	ab->enflammer(burningCoef);
+	ab->spark(burningCoef);
 	if (ab->isOnFire()){
 		onFire.push_back(ab);
 		burned.push_back(ab);
@@ -483,7 +485,7 @@ void Foret::enflammer(Arbre* ab)
  * @param col colonne où est la cellule
  * @deprecated
  */
-void Foret::enflammer(int col, int row)
+void Foret::burn(int col, int row)
 {
 	Cellule* tmp= matrix[row][col];
 	
@@ -491,7 +493,7 @@ void Foret::enflammer(int col, int row)
 	
 	if (etat==1){
 		Arbre * ab = dynamic_cast<Arbre *>(tmp);
-		enflammer(ab);
+		burn(ab);
 	}
 // 	else if (etat==2){}
 }
@@ -598,7 +600,7 @@ void Foret::burnAdjacentsWind(Arbre* a)
 				Cellule* cell = matrix[row + (h-i)][col + (l-j)];
 				
 				if(cell->getEtat() == 1)
-					enflammer(dynamic_cast < Arbre* >(cell));
+					burn(dynamic_cast < Arbre* >(cell));
 			}
 			
 		}
@@ -621,10 +623,10 @@ void Foret::transition(Arbre* ab)
 	unsigned distAdj= 1; // distance à laquelle les voisins seront enflammes ; IMPROVEIT dist 1= contact, dist 2= diagonaux, dist 3 = ...
 	list< Arbre* > voisins= adjacents(ab, distAdj);
 	for (list< Arbre* >::iterator a(voisins.begin()); a!=voisins.end(); ++a){
-		enflammer( (*a) );
+		burn( (*a) );
 	}
 	
-	if ( ab->brule(burningCoef) )
+	if ( ab->burn(burningCoef) )
 		onFire.push_back(ab);
 	else // quand un arbre ne brule plus (il devient cendres), on l'ajoute à la liste des arbres devenus cendres
 		carbonized.push_back(ab);
@@ -640,7 +642,7 @@ void Foret::transitionWind(Arbre*  a)
 {
 	burnAdjacentsWind(a);
 	
-	if ( a->brule(burningCoef) )
+	if ( a->burn(burningCoef) )
 		onFire.push_back(a);
 	else // quand un arbre ne brule plus (il devient cendres), on l'ajoute à la liste des arbres devenus cendres
 		carbonized.push_back(a);

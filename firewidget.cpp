@@ -152,7 +152,7 @@ bool FireWidget::allumerFeu(int colonne, int ligne)
 
 			if (cell->getEtat()==1){
 				Arbre* ab= dynamic_cast< Arbre* >(cell);
-				forest->allumer(ab);
+				forest->kindle(ab);
 
 				return true;
 			}
@@ -183,7 +183,7 @@ bool FireWidget::finirFeu(int colonne, int ligne)
 
 			if (cell->getEtat()==2){
 				Arbre* ab= dynamic_cast< Arbre* >(cell);
-				forest->eteindre(ab);
+				forest->blast(ab);
 
 				return true;
 			}

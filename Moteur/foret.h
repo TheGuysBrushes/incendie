@@ -56,6 +56,7 @@ public:
 	
 	void setValues(int largeur, int hauteur, float coef);
 	
+	
 	// 	Getters and Setters
 	int width()	const { return colonnes;};
 	int height()	const { return lignes;};
@@ -72,7 +73,8 @@ public:
 	void clearCarbonized()	{ carbonized.clear(); };
 	void clearBurned()	{ burned.clear(); };
 
-	// Autres méthodes
+	
+	// Manipulations d'arbre
 	void plantTree(int col, int row);
 
 	void uproot(Arbre* ab);
@@ -80,16 +82,17 @@ public:
 	
 	void water(Arbre* ab);
 
-	void allumer(Arbre* ab);
-	void allumer(int col, int row);
+	void kindle(Arbre* ab);
+	void kindle(int col, int row);
 	
-	void eteindre(Arbre* ab);
+	void blast(Arbre* ab);
 // 	void eteindre(int row, int col);
 	
-	void enflammer(Arbre* ab);
-	void enflammer(int col, int row);
+	void burn(Arbre* ab);
+	void burn(int col, int row);
+
 	
-	
+	// Autres méthodes
 	std::list< Arbre* > adjacents(int col, int row, int distance) const;
 	std::list< Arbre* > adjacents(const Arbre * ab, int distance) const;
 	
@@ -97,8 +100,9 @@ public:
 	
 	// 	Avancee du temps
 	// voir transition avec d'autres parametres
-	void transition(Arbre* cell);
+	void transition(Arbre* cell); /** @deprecated */
 	void transitionWind(Arbre* cell);
+	
 	bool NextMove();
 	
 	// Affichage attributs

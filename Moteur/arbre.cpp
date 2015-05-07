@@ -93,7 +93,12 @@ void Arbre::initialise()
 // 	Actions
 // ###############
 
-void Arbre::enflammer(float coef)
+/**
+ * L'arbre reçoit des flammes et risque de s'enflammer
+ * @author Florian
+ * TODO ajouter aléatoire
+ */
+void Arbre::spark(float coef)
 {
 	if (humidite<seuil)
 		etat= 2;
@@ -106,7 +111,7 @@ void Arbre::enflammer(float coef)
  * @author Florian
  * TODO Prendre en compte paramètres pour le nombre de points à enlever * 
  */
-bool Arbre::brule(float coef)
+bool Arbre::burn(float coef)
 {
 	// On va déterminer le nombre de points de vie à enlever en fonction des paramètres :
 	// - DID des caractères discrets de l'arbre

@@ -36,15 +36,15 @@ public:
 	const Essence* getEssence()	const	{ return essence; };
 
 	// Autres méthodes
-	void enflammer	(float coef=1.0);
-	bool brule		(float coef=1.0);
+	void spark	(float coef=1.0);
+	bool burn	(float coef=1.0);
 	void initialise();
 	
 	// Méthodes constantes
 	virtual bool isOnFire()	const	{ return etat==2; };
 	
 	void water()	{ etat= 1;	};
-	void burn()		{ etat= 2;	};
+	void kindle()	{ etat= 2;	};
 	void blast()	{ etat= -1;	};
 	void uproot()	{ etat= 0;	};
 };
