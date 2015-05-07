@@ -3,7 +3,7 @@
 
 #include "../debug.h"
 
-#include "Essence.h"
+#include "essence.h"
 #include "cellule.h"
 #include "coordonnee.h"
 
@@ -16,11 +16,11 @@ private:
 	const Essence * const essence;
 	
 	int age;
-	float humidite;
+	float humidity;
 	float coefficient;
 	
 	int seuil;	// à partir de essence
-	int pv;	// calculés lors de la création
+	int hp;	// calculés lors de la création
 	
 public:
 	// Constructeurs et destructeur
@@ -28,10 +28,10 @@ public:
 	Arbre(Cellule* cell, int col, int row, const Essence*const _essence, unsigned int _age = 0, unsigned int _humidite = 20);
 		
 	// Getters 
-	virtual int getEtat()	const	{ return etat; };
-	int getPv()	const					{ return pv;};
+	virtual int getState()	const	{ return state; };
+	int getPv()	const					{ return hp;};
 	float	getCoeff()	const			{ return coefficient; };
-	float getHumidite()	const		{ return humidite; };
+	float getHumidity()	const		{ return humidity; };
 	const Coordonnee& getPos()		const	{ return pos; };
 	const Essence* getEssence()	const	{ return essence; };
 
@@ -41,12 +41,12 @@ public:
 	void initialise();
 	
 	// Méthodes constantes
-	virtual bool isOnFire()	const	{ return etat==2; };
+	virtual bool isOnFire()	const	{ return state==2; };
 	
-	void water()	{ etat= 1;	};
-	void kindle()	{ etat= 2;	};
-	void blast()	{ etat= -1;	};
-	void uproot()	{ etat= 0;	};
+	void water()	{ state= 1;	};
+	void kindle()	{ state= 2;	};
+	void blast()	{ state= -1;	};
+	void uproot()	{ state= 0;	};
 };
 
 #endif // ARBRE_H

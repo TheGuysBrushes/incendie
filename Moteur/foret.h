@@ -7,10 +7,9 @@
 
 #include "../debug.h"
 
-#include "coordonnee.h"
 #include "cellule.h"
 #include "arbre.h"
-#include "Essence.h"
+#include "essence.h"
 #include "vent.h"
 
 #define MAXI 1000 

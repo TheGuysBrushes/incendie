@@ -3,8 +3,6 @@
 #include <fstream>
 #include <cstdlib>
 #include <ctime>
-// #include <bits/stl_algo.h>
-// #include <bits/algorithmfwd.h>
 
 int hMin= 20;
 int ecartAgeMax= 80;
@@ -46,6 +44,7 @@ Foret::Foret(int n_colonnes, int n_lignes, float proba, float coefFire)
 : lignes(n_lignes), colonnes(n_colonnes), burningCoef(coefFire)
 {
 	initialisation(proba);
+// TODO Ugo : faire des constructeur qui permettent de créer un vent inital en accord avec la valeur initiale du curseur
 	wind = new Vent(2.0,2.0);
 }
 
@@ -392,7 +391,7 @@ void Foret::uproot(int col, int row)
 {
 	Cellule* tmp= matrix[row][col];
 	
-	int etat= tmp->getEtat();
+	int etat= tmp->getState();
 	
 	if (etat>0){	// si il s'agit un arbre
 		Arbre * ab = dynamic_cast<Arbre *>(tmp);
@@ -438,7 +437,7 @@ void Foret::kindle(int col, int row)
 {
 	Cellule* tmp= matrix[row][col];
 	
-	int etat= tmp->getEtat();
+	int etat= tmp->getState();
 	
 	if (etat==1){
 		Arbre * ab = dynamic_cast<Arbre *>(tmp);
@@ -467,7 +466,7 @@ void Foret::blast(Arbre* ab)
  */
 void Foret::burn(Arbre* ab)
 {
-// 	if (ab->getEtat==2){
+// 	if (ab->getState==2){
 // // 		ab->brule();
 // 	}
 // 	else {
@@ -489,7 +488,7 @@ void Foret::burn(int col, int row)
 {
 	Cellule* tmp= matrix[row][col];
 	
-	int etat= tmp->getEtat();
+	int etat= tmp->getState();
 	
 	if (etat==1){
 		Arbre * ab = dynamic_cast<Arbre *>(tmp);
@@ -563,7 +562,7 @@ std::list< Arbre* > Foret::adjacents(int col, int row, int distance) const
 			
 			Cellule* cell= matrix[i][j];
 			// verification que la cellule est un arbre, qui n'est pas enflammee
-			if (cell->getEtat()==1)
+			if (cell->getState()==1)
 				liste.push_back( dynamic_cast < Arbre* >(cell) );
 		}
 	}
@@ -599,7 +598,7 @@ void Foret::burnAdjacentsWind(Arbre* a)
 			if( ( (h+row-i) >= 0 ) && ( (h+row-i) < (lignes) ) && ( (l+col-j) >= 0 ) && ( (l+col-j) < (colonnes) ) ){
 				Cellule* cell = matrix[row + (h-i)][col + (l-j)];
 				
-				if(cell->getEtat() == 1)
+				if(cell->getState() == 1)
 					burn(dynamic_cast < Arbre* >(cell));
 			}
 			

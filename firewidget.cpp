@@ -119,7 +119,7 @@ bool FireWidget::eteindreFeu(int colonne, int ligne)
 		if (colonne>=0 && colonne < forest->width()){
 			Cellule* cell= (*line)[colonne];	
 
-			if (cell->getEtat()==2){
+			if (cell->getState()==2){
 				Arbre* ab= dynamic_cast< Arbre* >(cell);
 				forest->water(ab);
 
@@ -150,7 +150,7 @@ bool FireWidget::allumerFeu(int colonne, int ligne)
 		if (colonne>=0 && colonne < forest->width()){
 			Cellule* cell= (*line)[colonne];	
 
-			if (cell->getEtat()==1){
+			if (cell->getState()==1){
 				Arbre* ab= dynamic_cast< Arbre* >(cell);
 				forest->kindle(ab);
 
@@ -181,7 +181,7 @@ bool FireWidget::finirFeu(int colonne, int ligne)
 		if (colonne>=0 && colonne < forest->width()){
 			Cellule* cell= (*line)[colonne];	
 
-			if (cell->getEtat()==2){
+			if (cell->getState()==2){
 				Arbre* ab= dynamic_cast< Arbre* >(cell);
 				forest->blast(ab);
 
@@ -240,6 +240,7 @@ void FireWidget::setVent(float _hor, float _ver){
 	forest->getVent()->setPower_v(_ver);
 }
 
+
 /* TODO creation matrice à partir d'image dans forest ou dans firewidget ? ou les deux
  */
 // 	Pour créer la matrice
@@ -249,10 +250,9 @@ void FireWidget::setVent(float _hor, float _ver){
 // 		vector< Cellule* >* ligne= (*forest)[i];
 // 
 // 		for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
-// 			data.push_back( (*j)->getEtat() *10);
+// 			data.push_back( (*j)->getState() *10);
 // 		}
 // 	}
-
 
 
 // ########################
@@ -327,11 +327,11 @@ void FireWidget::drawForest()
 		for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
 			Cellule* cell= *j;
 			
-			if( cell->getEtat() == 0){
+			if( cell->getState() == 0){
 				color->setNamedColor("black");
 				drawCell(current_largeur, current_hauteur);
 			}
-			else if(cell->getEtat() == 1){
+			else if(cell->getState() == 1){
 				// Il faut ici vérifier l'essence de l'arbre pour lui attribuer une variante de vert
 				Arbre* ab= dynamic_cast < Arbre* >(cell);
 				
@@ -342,11 +342,11 @@ void FireWidget::drawForest()
 				setColor(indice);
 				drawCell(current_largeur, current_hauteur);
 			}
-			else if (cell->getEtat() == 2){
+			else if (cell->getState() == 2){
 				setColor(RED_TRANSPARENT);
 				drawCell(current_largeur, current_hauteur);
 			}
-			else if (cell->getEtat() == -1){
+			else if (cell->getState() == -1){
 				setColor(GRAY);
 // 				setColor(ANTI_RED_TRANSPARENT);
 				drawCell(current_largeur, current_hauteur);
@@ -427,7 +427,7 @@ void FireWidget::resizeEvent(QResizeEvent* event){
 	
 	#if DEBUG_DIMENSION
 	cout << nbCol<< " / "<< nbRow<< endl;
-	cout << "tH: "<< event->size().width()<< " tL "<< event->size().height()<< endl;
+	cout << "tW: "<< event->size().width()<< " tH: "<< event->size().height()<< endl;
 	cout << "taille Cellule : "<< tailleCell<< endl;
 	cout << endl;
 	#endif
@@ -523,11 +523,13 @@ void FireWidget::reset(int _larg, int _haut, float proba, float coef)
 // 	delete(OldForet);
 // IMPROVEIT quelle est la meilleure facon de RAZ une foret?
 // 	buffer->fill(1);
-	forest->clean();
-	forest->setValues(_larg,_haut, coef);
-	forest->randomMatrix(proba);
-// 	forest->reset(_larg,_haut, proba, coef);
+
+	forest->clean();	// suppression de l'ancienne foret
+	forest->setValues(_larg,_haut, coef); // changement des valeurs de taille et de brulure
+	forest->randomMatrix(proba);	// création de la nouvelle foret IMPROVEIT faire un randomMatrix dans setValues ?
+
 	setMinimumSize(_larg, _haut);
+	
 	drawPicture();
 	drawForest();
 	drawChanged();

@@ -16,7 +16,7 @@
 #include <math.h>
 #define PI 3.14159265
 
-// using namespace std; // TODO remove it : utilisé seulement pour les debug
+// using namespace std; // REMOVEIT ? : utilisé seulement pour les debug
 
 
 /*		
@@ -58,6 +58,8 @@ FireScreen::FireScreen(): QMainWindow()
 FireScreen::~FireScreen()
 {
 	delete(fWidget);	
+	
+	delete menus;
 
 	delete delai_lbl;
 	delete cpt_lbl;
@@ -85,16 +87,16 @@ void FireScreen::initForest(const Fwelcome* fwel)
 
 void FireScreen::initMenus(QHBoxLayout* HLayout)
 {
-	QWidget* ww = new QWidget();
-	HLayout->addWidget(ww);
+	/*QWidget* */menus = new QWidget();
+	HLayout->addWidget(menus);
 	// Propriétés utiles?
-	// 	ww->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Minimum);
-	// 		ww->setMaximumWidth(350);
-	// 		ww->setMinimumWidth(350);
+		menus->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Minimum);
+// 			menus->setMaximumWidth(300);
+// 			menus->setMinimumWidth(300);
 	
-	QVBoxLayout* vert_lay1 = new QVBoxLayout(ww);
-	QWidget* ww1 = new QWidget(ww);
-	QWidget* ww2 = new QWidget(ww);
+	QVBoxLayout* vert_lay1 = new QVBoxLayout(menus);
+	QWidget* ww1 = new QWidget(menus);
+	QWidget* ww2 = new QWidget(menus);
 	
 	QGridLayout* grid_lay1 = new QGridLayout(ww1);
 	QGridLayout* grid_lay2 = new QGridLayout(ww2);   
@@ -120,7 +122,7 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	QLabel* trans_con = new QLabel("Transmission continue : ");
 	
 	QLabel* tour_lbl = new QLabel("Nombre de tours :");
-	// 	majTimer();
+	// 	majTimer(); REMOVEIT ?
 	
 	// Ajouter la scrollbar horizontale
 	set_delai(interTempsInit);
@@ -130,7 +132,8 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	slider->setMaximum(500);
 	slider->setValue(interTempsInit);	// position initiale du slider
 	
-	// Ajout des éléments dans les conteneurs
+	
+// Ajout des éléments dans les conteneurs
 	grid_lay1->addWidget(next_btn,0,0);
 	
 	grid_lay2->addWidget(play_btn,0,0);
@@ -164,6 +167,7 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	QObject::connect(slider,	SIGNAL(valueChanged(int)), this, SLOT(set_delai(int )));
 	QObject::connect(reset_btn,	SIGNAL(clicked()), this,	SLOT(reset()) );
 	connect(windWidget, SIGNAL(modif_value(int)), this, SLOT(updateWind(int)) );
+	
 	
 	/*** 	DEFINITTION DU STYLE DES ELEMENTS	***/
 	// Touches d'améliorations visuelles et d'initialisation de propriétés
@@ -205,32 +209,50 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 	
 }
 
+/**
+ * Definit les tailles maximales de la fenetre
+ * @author Florian et Ugo
+ * @param largeur nombre de cases de la matrice en largeur
+ * @param hauteur nombre de cases en hauteur
+ */
 void FireScreen::initSizes(int largeur, int hauteur)
 {
+	int largeurMenu= menus->sizeHint().width();
 	
 	// Maximums
-	int freePixWidth= QApplication::desktop()->screenGeometry().width() -250-15; // les 15 pixels car il doit y avoir des marges (observé 14)
+	int freePixWidth= QApplication::desktop()->screenGeometry().width() -25; // les 25 pixels car il doit y avoir des marges (observé 14 puis 24 ??)
 	int freePixHeight= QApplication::desktop()->screenGeometry().height()-45 ; // 45 pixel à cause des marges et menu (observé 43)
 	
-	int maxCellWidth= freePixWidth/largeur;
+	int maxCellWidth= (freePixWidth - largeurMenu) / largeur;
 	int maxCellHeight= freePixHeight/hauteur; 
 	int tCellMax= std::min(maxCellWidth, maxCellHeight);
 	
-	setMaximumWidth( tCellMax * largeur +250 +25 );
+	setMaximumWidth( tCellMax * largeur +largeurMenu +25 );
 	setMaximumHeight( tCellMax * hauteur +45 );
 	
 	// 	resize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
 	// TODO mettre une largeur de base minimum, à partir de la hauteur du menu droite (calculer la taille d'une cellule si la hauteur de la fenetre est la hauteur du menu)
-	resize( (tCellMax+1)/2 * largeur +250 +15, (tCellMax + 1)/2 * hauteur +45 );
+	resize( (tCellMax+1)/2 * largeur + largeurMenu +25, (tCellMax + 1)/2 * hauteur +45 );
 	
+	/// ATTENTION les valeurs max sont redéfinies dans ce debug, il faut transposer les valeurs correctes au dessus (pour "performances")
 	#if DEBUG_DIMENSION
 	std::cout<< "taille cell max : "<< tCellMax<< std::endl;
-	std::cout<< "largeur : "<< maxCellWidth *largeur<< 	"px \tsur : "<< freePixWidth	<<	" dispos"<<std::endl;
-	std::cout<< "hauteur : "<< maxCellHeight *hauteur<<	"px \tsur : "<< freePixHeight	<<	" dispos"<<std::endl;
+	
+	int maxLarg= tCellMax * largeur + largeurMenu +25;
+	setMaximumWidth( maxLarg);
+	std::cout<< "larg max window "<< maxLarg<< "px sur "<< freePixWidth	<< " dont "<< largeurMenu<< " menus, dispos"<<std::endl;
+	
+	int maxHaut= tCellMax * hauteur +45;
+	setMaximumHeight(maxHaut);
+	std::cout<< "haut max window "<< maxHaut<<	"px sur "<< freePixHeight	<<	" dispos"<<std::endl;
 	std::cout<< std::endl;
 	#endif
 }
 
+
+// ##############################
+/***		Autres methodes		***/
+// ##############################
 /**
  * Met à l'affichage du timer, utilise nb_tour
  * @author Florian et Ugo
@@ -260,7 +282,14 @@ bool FireScreen::initialisation()
 // #############
 void FireScreen::resizeEvent(QResizeEvent* Qevent)
 {
-// 	QWidget::resizeEvent(Qevent);
+	QWidget::resizeEvent(Qevent);
+	
+	#if DEBUG_DIMENSION
+	std::cout << "WWindow: "<< Qevent->size().width()<< " HWindow: "<< Qevent->size().height()<< std::endl;
+	std::cout << "WMenu: "<< menus->sizeHint().width()<< " HMenu: "<<menus->sizeHint().height()<< std::endl;
+	std::cout << "WDispo: "<<  Qevent->size().width() - menus->sizeHint().width()<< " HDispo: "<< Qevent->size().height() - menus->sizeHint().height()<< std::endl;
+	
+	#endif
 }
 
 // ########################

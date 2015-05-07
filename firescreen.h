@@ -26,6 +26,9 @@ Q_OBJECT
 private:
 	WindWidget* windWidget;
 	FireWidget* fWidget;
+	
+	QWidget* menus;
+	
 	QLabel* cpt_lbl;
 	QLabel* delai_lbl;
 	QPushButton* pause_btn;

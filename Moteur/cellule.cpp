@@ -2,10 +2,12 @@
 
 // Constructeur
 Cellule::Cellule(int etat_init)
-	:etat(etat_init){}
+	:state(etat_init)
+{}
 
 Cellule::Cellule(const Cellule& other)
-	:etat(other.etat) {}
+	:state(other.state)
+{}
 	
 	
 Cellule& Cellule::operator=(Cellule cell)
@@ -16,6 +18,6 @@ Cellule& Cellule::operator=(Cellule cell)
 
 
 // Setters
-void Cellule::setEtat(int x){
-  etat = x;
+void Cellule::setState(int x){
+	state= x;
 }

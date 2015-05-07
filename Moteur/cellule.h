@@ -5,22 +5,22 @@ class Cellule
 {
 	
 protected:
-	int etat; // utilie dans arbre
+	int state; // utilie dans arbre
 	
 public:
 
-	// Constructors
-	Cellule(int etat_init=0);
-	Cellule(const Cellule& other);
+// Constructors
+Cellule(int etat_init=0);
+Cellule(const Cellule& other);
+
+Cellule& operator=(Cellule cell);
+
+	// Getters and setters
+	virtual int getState() const { return 0; };
 	
-	Cellule& operator=(Cellule cell);
+	void setState(int x);
 	
-		// Getters and setters
-		virtual int getEtat() const { return 0; };
-		
-		void setEtat(int x);
-		
-		// Other methods
+	// Other methods
 	
 };
 

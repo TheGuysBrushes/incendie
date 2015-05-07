@@ -17,7 +17,7 @@
 using namespace std;
 
 Arbre::Arbre(int col, int row, const Essence* const _essence, unsigned _age, unsigned _humidite)
-	: Cellule(1), pos(col, row),essence(_essence),age(_age),humidite(_humidite)
+	: Cellule(1), pos(col, row),essence(_essence),age(_age),humidity(_humidite)
 {	
 	initialise();
 }
@@ -27,7 +27,7 @@ Arbre::Arbre(int col, int row, const Essence* const _essence, unsigned _age, uns
  * @param cell cellule à remplacer, elle est désallouée
  */
 Arbre::Arbre(Cellule* cell, int col, int row, const Essence*const _essence, unsigned int _age, unsigned int _humidite)
-	: Cellule(1), pos(col, row),essence(_essence),age(_age),humidite(_humidite)
+	: Cellule(1), pos(col, row),essence(_essence),age(_age),humidity(_humidite)
 {
 	initialise();
 	// suppression ancienne cellule 
@@ -76,11 +76,11 @@ void Arbre::initialise()
 	
 	// Les données des essences sont décrites pour un arbre de 50 ans à 20% d'humidité
 
-	pv = points *(1 +( 50 + (age/*-ageMatur*/ ) )/50.0);
-	pv *= 1  + (humidite-12)/100.0;
+	hp = points *(1 +( 50 + (age/*-ageMatur*/ ) )/50.0);
+	hp *= 1  + (humidity-12)/100.0;
 	
 	#if DEBUG_PV==1
-	cout << " => pv : "<< pv << endl;
+	cout << " => hp : "<< hp << endl;
 	#endif
 	// L'initialisation du coefficient sera faite plus tard puisqu'il dépend des paramètres extérieurs à l'arbre 
 	// Humidité ambiante, force du vent etc
@@ -100,9 +100,9 @@ void Arbre::initialise()
  */
 void Arbre::spark(float coef)
 {
-	if (humidite<seuil)
-		etat= 2;
-	else humidite -= 10.0*coef;
+	if (humidity < seuil)
+		state= 2;
+	else humidity -= 10.0*coef;
 }
 
 
@@ -122,7 +122,7 @@ bool Arbre::burn(float coef)
 	cout << "type  : " << essence->getType();
 	#endif
 	
-	decrementation *= 1.0/( (float)humidite );
+	decrementation *= 1.0/( (float)humidity );
 	if(essence->getType() == 0){
 		// On considère qu'un épineux brule plus vite qu'un feuillu
 		decrementation *= 1.20;
@@ -134,10 +134,10 @@ bool Arbre::burn(float coef)
 	cout << ",fin: "<< decrementation << "||";
 	#endif
 	
-	pv-= decrementation;
-	humidite *= 0.9;
+	hp-= decrementation;
+	humidity *= 0.9;
 	// Si l'arbre n'a plus de points de vie, il passe à l'état cendre
-	if (pv<=0){
+	if (hp<=0){
 		blast();
 		return false;
 	}
