@@ -93,11 +93,12 @@ public:
 	std::list< Arbre* > adjacents(int col, int row, int distance) const;
 	std::list< Arbre* > adjacents(const Arbre * ab, int distance) const;
 	
-	void adjacents_vent(Arbre* a);
+	void burnAdjacentsWind(Arbre* a);
 	
 	// 	Avancee du temps
 	// voir transition avec d'autres parametres
 	void transition(Arbre* cell);
+	void transitionWind(Arbre* cell);
 	bool NextMove();
 	
 	// Affichage attributs

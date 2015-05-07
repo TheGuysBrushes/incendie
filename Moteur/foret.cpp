@@ -567,38 +567,6 @@ std::list< Arbre* > Foret::adjacents(int col, int row, int distance) const
 	}
 	return liste;
 }
-/**
- * Parcours la liste des arbres en feu et emflamme les voisins en tenant compte de la direction du vent
- * @author Ugo
- * 
- */
-void Foret::adjacents_vent(Arbre*  a)
-{
-// 	for (list< Arbre* >::iterator a(old->begin()); a!=old->end(); ++a){
-// 	for (list< Arbre* >::iterator a(onFire.begin()); a!=onFire.end(); ++a){
-		int row = a->getPos().row;
-		int col = a->getPos().col;
-		
-		int h = wind->getPower_h();
-		int l = wind->getPower_v();
-		
-		for(int i = 0; i < abs(wind->getPower_h()); ++i){
-			for(int j = 0; j < abs(wind->getPower_v()); ++j){
-				if((h+row-i) >= 0 && (h+row-i) < (lignes) && (l+col-j) >= 0 && (l+col-j) < (colonnes)){
-					Cellule* cell = matrix[row+(h-i)][col+(l-j)];
-					if(cell->getEtat() == 1)
-						enflammer(dynamic_cast < Arbre* >(cell));
-				}
-				
-			}
-			
-		}
-		if ( a->brule(burningCoef) )
-			onFire.push_back(a);
-		else // quand un arbre ne brule plus (il devient cendres), on l'ajoute à la liste des arbres devenus cendres
-			carbonized.push_back(a);
-}
-
 
 /**
  * Retourne les arbres qui sont proches d'une cellule donnée, appelle adjacents(int, int)
@@ -612,6 +580,33 @@ std::list< Arbre* > Foret::adjacents(const Arbre * ab, int distance) const
 	return adjacents(ab->getPos().col,ab->getPos().row, distance);
 }
 
+void Foret::burnAdjacentsWind(Arbre* a)
+{
+	// 	for (list< Arbre* >::iterator a(old->begin()); a!=old->end(); ++a){
+		// 	for (list< Arbre* >::iterator a(onFire.begin()); a!=onFire.end(); ++a){
+	int row = a->getPos().row;
+	int col = a->getPos().col;
+	
+	// TODO renommer les variables h et l avec de vrais noms
+	int h = wind->getPower_h();
+	int l = wind->getPower_v();
+	
+	for(int i = 0; i < abs(wind->getPower_h()); ++i){
+		for(int j = 0; j < abs(wind->getPower_v()); ++j){
+			// On vérifie que la cellule spécifiée est dans la matrice IMPROVEIT ce n'est pas performant
+			if( ( (h+row-i) >= 0 ) && ( (h+row-i) < (lignes) ) && ( (l+col-j) >= 0 ) && ( (l+col-j) < (colonnes) ) ){
+				Cellule* cell = matrix[row + (h-i)][col + (l-j)];
+				
+				if(cell->getEtat() == 1)
+					enflammer(dynamic_cast < Arbre* >(cell));
+			}
+			
+		}
+	}
+	
+}
+
+
 // #############################
 // #		Avancée du temps		  #
 // ############################# 
@@ -619,6 +614,7 @@ std::list< Arbre* > Foret::adjacents(const Arbre * ab, int distance) const
  * Applique une transition de l'état t à l'état t+1 d'un arbre
  * @author Florian et Ugo
  * @param ab
+ * @deprecated
  */
 void Foret::transition(Arbre* ab)
 {
@@ -633,6 +629,23 @@ void Foret::transition(Arbre* ab)
 	else // quand un arbre ne brule plus (il devient cendres), on l'ajoute à la liste des arbres devenus cendres
 		carbonized.push_back(ab);
 }
+
+
+/**
+ * Parcours la liste des arbres en feu et emflamme les voisins en tenant compte de la direction du vent
+ * @author Ugo
+ * 
+ */
+void Foret::transitionWind(Arbre*  a)
+{
+	burnAdjacentsWind(a);
+	
+	if ( a->brule(burningCoef) )
+		onFire.push_back(a);
+	else // quand un arbre ne brule plus (il devient cendres), on l'ajoute à la liste des arbres devenus cendres
+		carbonized.push_back(a);
+}
+
 
 /**
  * passe de t à t+1 tous les arbres à l'aide de la liste d'arbres en feu
@@ -650,7 +663,7 @@ bool Foret::NextMove()
 // 		// TODO utiliser mapping ?
 		for (list< Arbre* >::iterator ab(old.begin()); ab!=old.end(); ++ab){
 // 			transition(*ab);
-			adjacents_vent(*ab);
+			transitionWind(*ab);
 		}
 	}
 	
