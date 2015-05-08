@@ -1,9 +1,8 @@
 #include "debug.h"
 
-// #include "vent.h"
 #include <QtGui/QApplication>
-#include "firescreen.h"
-#include "fwelcome.h"
+
+#include "Display/firescreen.h"
 
 using namespace std;
 

@@ -6,9 +6,11 @@ add_definitions(-Wall)
 
 include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR})
 
-set(Automate_SRCS Moteur/coordonnee.cpp Moteur/vent.cpp Moteur/cellule.cpp Moteur/essence.cpp Moteur/arbre.cpp Moteur/foret.cpp windcircle.cpp moc_windcircle.cpp windwidget.cpp moc_windwidget.cpp fwelcome.cpp moc_fwelcome.cpp firewidget.cpp moc_firewidget.cpp firescreen.cpp moc_firescreen.cpp main.cpp)
+set(Automate_SRCS Moteur/coordonnee.cpp Moteur/vent.cpp Moteur/cellule.cpp Moteur/essence.cpp Moteur/arbre.cpp Moteur/foret.cpp
+	Display/windcircle.cpp Display/mocs/moc_windcircle.cpp Display/windwidget.cpp Display/mocs/moc_windwidget.cpp Display/fwelcome.cpp Display/mocs/moc_fwelcome.cpp Display/firewidget.cpp Display/mocs/moc_firewidget.cpp Display/firescreen.cpp Display/mocs/moc_firescreen.cpp main.cpp)
 qt4_automoc(${Automate_SRCS})
 add_executable(Automate ${Automate_SRCS})
 target_link_libraries(Automate ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY})
 
 add_subdirectory(Moteur)
+add_subdirectory(Display)
