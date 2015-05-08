@@ -78,7 +78,7 @@ void WindWidget::initComponents()
 
 			// TODO comment : ajout "nom composant"
 			QHBoxLayout* h_lay2 = new QHBoxLayout(ww);
-				QLabel* unit_vitesse = new QLabel(" km/h");
+				QLabel* unit_vitesse = new QLabel("km/h");
 
 			// TODO comment ??
 			h_lay2->addWidget(unit_vitesse);
@@ -87,6 +87,7 @@ void WindWidget::initComponents()
 		// TODO comment ??
 		v_lay->addWidget(slider_vitesse);
 		v_lay->addWidget(ww);
+	
 	
 // TODO comment
 	QGridLayout* grid_lay = new QGridLayout(this);

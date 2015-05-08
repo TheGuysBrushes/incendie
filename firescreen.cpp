@@ -73,19 +73,47 @@ FireScreen::~FireScreen()
 	delete  timer;
 }
 
-void FireScreen::initForest(const Fwelcome* fwel)
+
+/**
+ * Definit les tailles maximales de la fenetre
+ * @author Florian et Ugo
+ * @param largeur nombre de cases de la matrice en largeur
+ * @param hauteur nombre de cases en hauteur
+ */
+void FireScreen::initSizes(int largeur, int hauteur)
 {
-	nb_tour = 0;
+	int largeurMenu= menus->sizeHint().width();
 	
-	int largeur = fwel->get_larg();
-	int hauteur = fwel->get_haut();
-	fWidget->initialise(largeur,hauteur,
-							  fwel->get_proba(),
-							  fwel->get_coef());
+	// Maximums
+	int freePixWidth= QApplication::desktop()->screenGeometry().width() -25; // les 25 pixels car il doit y avoir des marges (observé 14 puis 24 ??)
+	int freePixHeight= QApplication::desktop()->screenGeometry().height()-45 ; // 45 pixel à cause des marges et menu (observé 43)
 	
-	majTimer();
-	initSizes(largeur, hauteur);
+	int maxCellWidth= (freePixWidth - largeurMenu) / largeur;
+	int maxCellHeight= freePixHeight/hauteur; 
+	int tCellMax= std::min(maxCellWidth, maxCellHeight);
+	
+	setMaximumWidth( tCellMax * largeur +largeurMenu +25 );
+	setMaximumHeight( tCellMax * hauteur +45 );
+	
+	// 	resize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
+	// TODO mettre une largeur de base minimum, à partir de la hauteur du menu droite (calculer la taille d'une cellule si la hauteur de la fenetre est la hauteur du menu)
+	resize( (tCellMax+1)/2 * largeur + largeurMenu +25, (tCellMax + 1)/2 * hauteur +45 );
+	
+	/// ATTENTION les valeurs max sont redéfinies dans ce debug, il faut transposer les valeurs correctes au dessus (pour "performances")
+	#if DEBUG_DIMENSION
+	std::cout<< "taille cell max : "<< tCellMax<< std::endl;
+	
+	int maxLarg= tCellMax * largeur + largeurMenu +25;
+	setMaximumWidth( maxLarg);
+	std::cout<< "larg max window "<< maxLarg<< "px sur "<< freePixWidth	<< " dont "<< largeurMenu<< " menus, dispos"<<std::endl;
+	
+	int maxHaut= tCellMax * hauteur +45;
+	setMaximumHeight(maxHaut);
+	std::cout<< "haut max window "<< maxHaut<<	"px sur "<< freePixHeight	<<	" dispos"<<std::endl;
+	std::cout<< std::endl;
+	#endif
 }
+
 
 void FireScreen::initMenus(QHBoxLayout* HLayout)
 {
@@ -166,8 +194,8 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	
 	// CONNEXION DES BOUTONS AUX FONCTIONS
 	connect(next_btn,	SIGNAL(clicked()), 		fWidget,	SLOT(next()) );
-	connect(play_btn,	SIGNAL(clicked()), 		this,	SLOT( start_timer(bool)) );
-	connect(pause_btn,	SIGNAL(clicked()),	this,	SLOT( stop_timer(bool)) );
+	connect(play_btn,	SIGNAL(clicked()), 		this,	SLOT( start_timer()) );
+	connect(pause_btn,	SIGNAL(clicked()),	this,	SLOT( stop_timer()) );
 	connect(timer,		SIGNAL(timeout()), 		this,	SLOT( nextCompteur()) );
 	connect(next_btn,	SIGNAL(clicked()), 		this,	SLOT( nextCompteur()) );
 	
@@ -176,11 +204,15 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	connect(windWidget,	SIGNAL(modif_value(int)),	this, SLOT( updateWind(int)) );
 	
 	
-	QObject::connect(cut_btn,SIGNAL(clicked(bool)),this, SLOT(invertBtn(bool)));	
-	QObject::connect(delay_btn,SIGNAL(clicked(bool)),this, SLOT(invertBtn(bool)));
+	QObject::connect(cut_btn,	SIGNAL(clicked(bool)),		this, SLOT(invertBtn(bool)));	
+	QObject::connect(delay_btn,	SIGNAL(clicked(bool)),	this, SLOT(invertBtn(bool)));
 	
-	cut_btn->setEnabled(true);
-	delay_btn->setEnabled(false);
+// 	cut_btn->setEnabled(true);
+// 	delay_btn->setEnabled(false);
+	
+	cut_btn->setVisible(false);
+	delay_btn->setVisible(true);
+	
 	
 	/*** 	DEFINITTION DU STYLE DES ELEMENTS	***/
 	// Touches d'améliorations visuelles et d'initialisation de propriétés
@@ -193,23 +225,6 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	delai_lbl->setStyleSheet("QLabel { color : darkblue; }");
 	
 }
-/**
- * Cette fonction permet d'inverser les actions effectuées par le clic
- * droit.
- * @author Ugo
- */
-void FireScreen::invertBtn(bool )
-{
-	if(cut_btn->isEnabled()){
-		cut_btn->setDisabled(true);
-		delay_btn->setEnabled(true);
-	}else{
-		delay_btn->setDisabled(true);
-		cut_btn->setEnabled(true);
-	}
-}
-
-
 
 void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 {
@@ -238,59 +253,25 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 	
 }
 
-/**
- * Definit les tailles maximales de la fenetre
- * @author Florian et Ugo
- * @param largeur nombre de cases de la matrice en largeur
- * @param hauteur nombre de cases en hauteur
- */
-void FireScreen::initSizes(int largeur, int hauteur)
+void FireScreen::initForest(const Fwelcome* fwel)
 {
-	int largeurMenu= menus->sizeHint().width();
+	nb_tour = 0;
 	
-	// Maximums
-	int freePixWidth= QApplication::desktop()->screenGeometry().width() -25; // les 25 pixels car il doit y avoir des marges (observé 14 puis 24 ??)
-	int freePixHeight= QApplication::desktop()->screenGeometry().height()-45 ; // 45 pixel à cause des marges et menu (observé 43)
+	int largeur = fwel->get_larg();
+	int hauteur = fwel->get_haut();
+	fWidget->initialise(largeur,hauteur,
+							  fwel->get_proba(),
+							  fwel->get_coef());
 	
-	int maxCellWidth= (freePixWidth - largeurMenu) / largeur;
-	int maxCellHeight= freePixHeight/hauteur; 
-	int tCellMax= std::min(maxCellWidth, maxCellHeight);
-	
-	setMaximumWidth( tCellMax * largeur +largeurMenu +25 );
-	setMaximumHeight( tCellMax * hauteur +45 );
-	
-	// 	resize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
-	// TODO mettre une largeur de base minimum, à partir de la hauteur du menu droite (calculer la taille d'une cellule si la hauteur de la fenetre est la hauteur du menu)
-	resize( (tCellMax+1)/2 * largeur + largeurMenu +25, (tCellMax + 1)/2 * hauteur +45 );
-	
-	/// ATTENTION les valeurs max sont redéfinies dans ce debug, il faut transposer les valeurs correctes au dessus (pour "performances")
-	#if DEBUG_DIMENSION
-	std::cout<< "taille cell max : "<< tCellMax<< std::endl;
-	
-	int maxLarg= tCellMax * largeur + largeurMenu +25;
-	setMaximumWidth( maxLarg);
-	std::cout<< "larg max window "<< maxLarg<< "px sur "<< freePixWidth	<< " dont "<< largeurMenu<< " menus, dispos"<<std::endl;
-	
-	int maxHaut= tCellMax * hauteur +45;
-	setMaximumHeight(maxHaut);
-	std::cout<< "haut max window "<< maxHaut<<	"px sur "<< freePixHeight	<<	" dispos"<<std::endl;
-	std::cout<< std::endl;
-	#endif
+	majTimer();
+	initSizes(largeur, hauteur);
 }
 
 
-// ##############################
-/***		Autres methodes		***/
-// ##############################
 /**
- * Met à l'affichage du timer, utilise nb_tour
- * @author Florian et Ugo
+ * 
+ * 
  */
-void FireScreen::majTimer()
-{
-	cpt_lbl->setText(QString::number(nb_tour));
-}
-
 bool FireScreen::initialisation()
 {
 	initComponents();
@@ -303,6 +284,43 @@ bool FireScreen::initialisation()
 		return true;
 	}
 	return false;
+}
+
+
+// ##############################
+/***		Autres methodes		***/
+// ##############################
+/**
+ * Cette fonction permet d'inverser les actions effectuées par le clic
+ * droit.
+ * @author Ugo
+ */
+void FireScreen::invertBtn(bool )
+{
+	// 	if(cut_btn->isEnabled()){
+	// 		cut_btn->setDisabled(true);
+	// 		delay_btn->setEnabled(true);
+	// 	}else{
+	// 		delay_btn->setDisabled(true);
+	// 		cut_btn->setEnabled(true);
+	// 	}
+	
+	if(cut_btn->isVisible()){
+		cut_btn->setVisible(false);
+		delay_btn->setVisible(true);
+	} else {
+		delay_btn->setVisible(false);
+		cut_btn->setVisible(true);
+	}
+}
+
+/**
+ * Met à l'affichage du timer, utilise nb_tour
+ * @author Florian et Ugo
+ */
+void FireScreen::majTimer()
+{
+	cpt_lbl->setText(QString::number(nb_tour));
 }
 
 
