@@ -69,6 +69,10 @@ public slots:
 	void reset();
 	void invertBtn(bool);
 	void updateWind(int y);
+	void releaseOrdered();
+	
+signals:
+	void actionSender(int x);
 
 };
 
