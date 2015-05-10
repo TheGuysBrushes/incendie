@@ -207,12 +207,8 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	QObject::connect(cut_btn,	SIGNAL(clicked(bool)),		this, SLOT(invertBtn(bool)));	
 	QObject::connect(delay_btn,	SIGNAL(clicked(bool)),	this, SLOT(invertBtn(bool)));
 	
-// 	cut_btn->setEnabled(true);
-// 	delay_btn->setEnabled(false);
-	
-	cut_btn->setVisible(false);
-	delay_btn->setVisible(true);
-	
+	cut_btn->setEnabled(true);
+	delay_btn->setEnabled(false);
 	
 	/*** 	DEFINITTION DU STYLE DES ELEMENTS	***/
 	// Touches d'améliorations visuelles et d'initialisation de propriétés
@@ -297,21 +293,14 @@ bool FireScreen::initialisation()
  */
 void FireScreen::invertBtn(bool )
 {
-	// 	if(cut_btn->isEnabled()){
-	// 		cut_btn->setDisabled(true);
-	// 		delay_btn->setEnabled(true);
-	// 	}else{
-	// 		delay_btn->setDisabled(true);
-	// 		cut_btn->setEnabled(true);
-	// 	}
+		if(cut_btn->isEnabled()){
+			cut_btn->setDisabled(true);
+			delay_btn->setEnabled(true);
+		}else{
+			delay_btn->setDisabled(true);
+			cut_btn->setEnabled(true);
+		}
 	
-	if(cut_btn->isVisible()){
-		cut_btn->setVisible(false);
-		delay_btn->setVisible(true);
-	} else {
-		delay_btn->setVisible(false);
-		cut_btn->setVisible(true);
-	}
 }
 
 /**
