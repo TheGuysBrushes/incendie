@@ -286,8 +286,7 @@ void FireWidget::drawCell(int colonne, int ligne)
  * Imprime un arbre selon sa position, utilise la couleur courante.
  * @author Florian
  * @param ab arbre à dessiner
- * TODO Utilisation de drawCell pourquoi pas mais à toi de t'y coller ^^ 
- * TODO REPONSE : c'est tres facile(il y a deja la ligne), c'est juste un soucis de performance//clareté//modularité
+ * TODO Utilisation de drawCell : soucis de performance//clareté//modularité*
  */
 void FireWidget::drawTree(const Arbre* ab)
 {
@@ -374,7 +373,7 @@ void FireWidget::drawForest()
  * On réutilise les cellules non susceptibles d'avoir été modifiées
  * @author Florian and Ugo
  */
-// TODO faire une fonction qui prend une couleur et une liste d'arbres, qui "imprime" les arbres avec cette couleur
+// IMPROVEIT faire une fonction qui prend une couleur et une liste d'arbres, qui "imprime" les arbres avec cette couleur ?	
 void FireWidget::drawChanged()
 {
 	bufferPainter->begin(buffer);

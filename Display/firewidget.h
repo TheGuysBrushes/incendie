@@ -14,7 +14,6 @@
 #include "../Moteur/foret.h"
 #include "fwelcome.h"
 
-// TODO Modifier le nom de la fonction drawFire pour exprimer le dessin des cellules qui ont changé d'état +
 // 	TODO voir si on fait une liste unique pour les éléments qui ont changé d'état
 /**
  * Widget d'affichage de l'automate cellulaire. Ce composant
