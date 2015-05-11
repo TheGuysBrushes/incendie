@@ -31,6 +31,7 @@ using namespace std;
 FireWidget::FireWidget(int _largeur, int _hauteur, float proba, float coef_brulure): QWidget()
 {
 	initialise(_largeur, _hauteur, proba, coef_brulure);
+
 }
 
 FireWidget::FireWidget(): QWidget(){
@@ -43,6 +44,7 @@ FireWidget::~FireWidget(){
 	delete(color);
 	delete(bufferPainter);
 	delete(pictureForest);
+	
 }
 
 // ########################
@@ -421,10 +423,10 @@ void FireWidget::paintEvent(QPaintEvent* event){
 
 void FireWidget::resizeEvent(QResizeEvent* event){
 
-	float nbRow= forest->height();
-	float nbCol= forest->width();
+	int nbCol= forest->width();
+	int nbRow= forest->height();
 	tailleCell = min (event->size().width() / nbCol , event->size().height() / nbRow);
-	
+	resize(tailleCell * nbCol, tailleCell*nbRow);
 	#if DEBUG_DIMENSION
 	cout << nbCol<< " / "<< nbRow<< endl;
 	cout << "tW: "<< event->size().width()<< " tH: "<< event->size().height()<< endl;
@@ -454,8 +456,9 @@ void FireWidget::mousePressEvent(QMouseEvent* event)
 		if(!rubber)
 			rubber = new QRubberBand(QRubberBand::Rectangle, this);
 
-		rubber->setGeometry(QRect(origin, QSize()));
+		rubber->setGeometry(QRect(origin, QSize(0,0)));
 		rubber->show();
+		
 	}
 	
 	drawChanged();
@@ -488,6 +491,13 @@ void FireWidget::mouseReleaseEvent(QMouseEvent* event)
 	// Ne pas toucher
 	if(rubber){
 		rubber->hide();
+
+		#if DEBUG_SELECT
+		cout << "Taille du widget : " << this->size().width() << "; " << this->size().height()<< endl;
+		cout << "Coordonnée de l'origine : " << rubber->x()<< ";" << rubber->y() << endl;
+		cout << "Taille de la zone de selection : " <<		rubber->width() << ";" << rubber->height() << endl;
+		#endif
+
 		// Sauvegarde des points du rubber pour parcours de la matrice
 		
 		// Emission du signal pour récupérer l'action à effectuer
