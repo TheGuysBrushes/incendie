@@ -68,7 +68,7 @@ public slots:
 	void set_delai(int x );
 	void reset();
 	void invertBtn(bool);
-	void updateWind(int y);
+	void updateWind(int angle, int vitesse);
 	void releaseOrdered();
 	
 signals:

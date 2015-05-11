@@ -201,7 +201,7 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	
 	connect(slider,	SIGNAL(valueChanged(int)),		this, SLOT( set_delai(int)) );
 	connect(reset_btn,	SIGNAL(clicked()), 			this,	SLOT( reset()) );
-	connect(windWidget,	SIGNAL(modif_value(int)),	this, SLOT( updateWind(int)) );
+	connect(windWidget,	SIGNAL(modif_value(int, int)),	this, SLOT( updateWind(int, int)) );
 	
 	
 	QObject::connect(cut_btn,	SIGNAL(clicked(bool)),		this, SLOT(invertBtn(bool)));	
@@ -388,11 +388,9 @@ void FireScreen::nextCompteur()
 	else stop_timer();
 }
 
-void FireScreen::updateWind(int y){
+void FireScreen::updateWind(int angle, int vitesse){
 	// Les paramètres du vent ont été modifiés
 	// On doit récupérer les valeurs et mettre à jour le vent
-	int angle = windWidget->get_angle();
-	int vitesse = windWidget->get_vitesse();
 	float vertical;
 	
 	float horizontal;
@@ -413,7 +411,7 @@ void FireScreen::updateWind(int y){
 		horizontal*=2.0;
 		vertical*=2.0;
 	}
-	fWidget->setVent(horizontal,vertical);
+	fWidget->setWind(horizontal,vertical);
 	
 	#if DEBUG_VENT
 	std::cout << "Vitesse : "<< vitesse<< "; Angle : "<<angle<<" ; valeur horizontal : " << horizontal << " ; valeur vertical : " << vertical << std::endl;

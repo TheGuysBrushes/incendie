@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'windwidget.h'
 **
-** Created: Fri May 8 15:54:34 2015
+** Created: Mon May 11 15:57:15 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -31,18 +31,18 @@ static const uint qt_meta_data_WindWidget[] = {
        1,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
-      12,   11,   11,   11, 0x05,
+      14,   12,   11,   11, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      31,   29,   11,   11, 0x0a,
-      48,   46,   11,   11, 0x0a,
+      41,   35,   11,   11, 0x0a,
+      63,   55,   11,   11, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_WindWidget[] = {
-    "WindWidget\0\0modif_value(int)\0x\0"
-    "set_angle(int)\0y\0set_vitesse(int)\0"
+    "WindWidget\0\0,\0modif_value(int,int)\0"
+    "alpha\0majAngle(int)\0vitesse\0majSpeed(int)\0"
 };
 
 void WindWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -51,9 +51,9 @@ void WindWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         Q_ASSERT(staticMetaObject.cast(_o));
         WindWidget *_t = static_cast<WindWidget *>(_o);
         switch (_id) {
-        case 0: _t->modif_value((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 1: _t->set_angle((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 2: _t->set_vitesse((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 0: _t->modif_value((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 1: _t->majAngle((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 2: _t->majSpeed((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -99,9 +99,9 @@ int WindWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void WindWidget::modif_value(int _t1)
+void WindWidget::modif_value(int _t1, int _t2)
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_END_MOC_NAMESPACE

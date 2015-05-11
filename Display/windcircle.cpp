@@ -4,6 +4,7 @@
 
 using namespace std;
 #define PI 3.14159265
+#include <iostream>
 
 /*** Constructeur et destructeur ***/
 /**
@@ -11,9 +12,10 @@ using namespace std;
  * @param int Valeur de l'angle initial
  * @author Ugo
  */
-WindCircle::WindCircle(int x):angle(x){
+WindCircle::WindCircle()
+{
 	buffer = new QImage();
-	center = new QPointF((float)(width()/2.0),(float)(height()/2.0));
+	center = new QPointF(width()/2.0, height()/2.0);
 	direction = new QPointF();
 	setMinimumSize(100,100);
 }
@@ -23,6 +25,8 @@ WindCircle::~WindCircle(){
 	delete(center);
 	delete(direction);
 }
+
+
 /*** Getters and Setters ***/
 /**
  * Met à jour la valeur de l'angle
@@ -52,9 +56,11 @@ void WindCircle::setDirection(int angle){
  * @author Ugo
  */
 void WindCircle::drawCircle(){
-	QPainter paint(this->buffer);
+	QPainter paint(buffer);
+	
 	float rayon = height()/2.0 - 25.0;
-	paint.drawEllipse(*center,rayon, rayon);
+	
+	paint.drawEllipse(*center, rayon, rayon);
 	
 	// Dessin des 4 lignes cardinales
 	paint.drawLine(*center, QPointF(center->rx(), center->ry()+rayon+6)); // Sud
@@ -67,8 +73,8 @@ void WindCircle::drawCircle(){
 	paint.drawText(QPointF(center->rx()-4, center->ry()-rayon-10), QString("N"));
 	paint.drawText(QPointF(center->rx()+rayon+10, center->ry()+4), QString("E"));
 	paint.drawText(QPointF(center->rx()-rayon-20, center->ry()+4), QString("O"));
-	
 }
+
 /**
  * Méthode graphique permettant d'afficher la ligne 
  * directionnelle de la boussole
@@ -77,10 +83,11 @@ void WindCircle::drawCircle(){
 void WindCircle::drawDir(){
 	effaceBuffer();
 	setDirection(angle);
-	QPainter paint(this->buffer);
-	QPen pen(Qt::red);paint.setPen(pen);
+	
+	QPainter paint(buffer);
+	QPen pen(Qt::red); paint.setPen(pen);
 
-	paint.drawLine(*center, *direction);	
+	paint.drawLine(*center, *direction);
 }
 
 /**
@@ -98,12 +105,12 @@ void WindCircle::paintEvent(QPaintEvent* event){
 	paint.drawImage(0, 0, *buffer);
 }
 
+
 void WindCircle::resizeEvent(QResizeEvent* event){
     if (!buffer->isNull()){
 		delete(buffer);
-// 		bufferPainter->end();
 	}
-	buffer = new QImage(event->size().width(),event->size().height(), QImage::Format_ARGB32);
+	buffer = new QImage(event->size().width(), event->size().height(), QImage::Format_ARGB32);
 
 	center->setX(event->size().width()/2);
 	center->setY(event->size().height()/2);

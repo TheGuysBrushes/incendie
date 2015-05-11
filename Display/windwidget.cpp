@@ -5,6 +5,7 @@
 #include <QtCore/QString>
 #include <QtGui/QSlider>
 
+#include <iostream>
 
 /*** Constructeur et destructeur ***/
 /**
@@ -15,17 +16,20 @@
 WindWidget::WindWidget()
 {
 	// Initialisation des composants de la classe (TODO ajouter menus ?)
-	vitesse_lbl = new QLabel();
-	wind = new WindCircle(45);	// creer constructeur pour pouvoir initialiser sans parametre à vide et utiliser le connect du slider pour initialiser
-	angle_lbl = new QLabel(/* QString::number(wind->getAngle()).append("°")*/ );
+	speed_lbl = new QLabel();
+	
+	wind = new WindCircle();	// creer constructeur pour pouvoir initialiser sans parametre à vide et utiliser le connect du slider pour initialiser
+	std::cout << "test APRES creation windCircle"<< std::endl;
+	angle_lbl = new QLabel();
 	
 	initComponents();
+// 	std::cout << "test APRES initComponents"<< std::endl;
 }
 
 WindWidget::~WindWidget(){
 	delete(wind);
 	delete(angle_lbl);
-	delete(vitesse_lbl);
+	delete(speed_lbl);
 }
 
 /*** Composants ***/
@@ -36,7 +40,6 @@ WindWidget::~WindWidget(){
  */
 void WindWidget::initComponents()
 {
-	
 	/// REMOVEIT J'ai mis des tabulation pour mieux voir quels widgets/éléments sont à l'intérieur des autres
 	///				On pourrait mettre des accolades mais ca alourdirai le code ?
 	
@@ -82,7 +85,7 @@ void WindWidget::initComponents()
 
 			// TODO comment ??
 			h_lay2->addWidget(unit_vitesse);
-			h_lay2->addWidget(vitesse_lbl);
+			h_lay2->addWidget(speed_lbl);
 		
 		// TODO comment ??
 		v_lay->addWidget(slider_vitesse);
@@ -101,18 +104,29 @@ void WindWidget::initComponents()
 	
 	// Connexion des sliders avec les setters de la classe :
 	// 	permet de gérer dynamiquement les changements de valeurs
-	connect(slider_angle, SIGNAL(valueChanged(int)), this, SLOT(set_angle(int)) );
-	connect(slider_vitesse, SIGNAL(valueChanged(int)), this, SLOT(set_vitesse(int)));
+	connect(slider_angle, SIGNAL(valueChanged(int)),		this, SLOT(majAngle(int)) );
+	connect(slider_vitesse, SIGNAL(valueChanged(int)),	this, SLOT(majSpeed(int)));
+	
 	
 	slider_vitesse->setValue(10);	// Attention si on met la valeur minimale(5), il n'y a pas de changement de valeur donc le label n'est pas mis à jour ?
-	slider_angle->setValue(45);	// position initiale du slider IMPROVEIT est redondant avec le constructeur
+	std::cout << "WINDCIRCLE AVANT set"<< std::endl;
+	
 // TODO enlever code en dur
+	setAngle(45);
+}
+
+
+void WindWidget::setAngle(int angle)
+{
+	angle_lbl->setText(QString::number(angle) + "°");
+	wind->setAngle(angle);
 }
 
 
 /*** Events ***/
-void WindWidget::resizeEvent(QResizeEvent* Qevent){
-}
+
+void WindWidget::resizeEvent(QResizeEvent* Qevent)
+{}
 
 
 /*** Slots ***/
@@ -121,22 +135,21 @@ void WindWidget::resizeEvent(QResizeEvent* Qevent){
  * dessine la ligne directionnelle
  * @author Ugo
  */
-void WindWidget::set_angle(int x){
-
-	angle_lbl->setText(QString::number(x)+" degres");
-	wind->setAngle(x);
+void WindWidget::majAngle(int alpha)
+{
+	setAngle(alpha);
 	wind->drawDir();
 	update();
-	emit modif_value(x);
+	emit modif_value(alpha, speed);
 }
 
 /**
  * Met à jour la valeur de la vitesse choisie et l'affiche
  * @author Ugo
  */
-void WindWidget::set_vitesse(int y){
+void WindWidget::majSpeed(int vitesse){
 	
-	vitesse_lbl->setText(QString::number(y));
-	vitesse = y;
-	emit modif_value(y);
+	speed_lbl->setText(QString::number(vitesse));
+	speed = vitesse;
+	emit modif_value(wind->getAngle(), speed);
 }

@@ -25,9 +25,9 @@ private:
 
 public:
 	/* Constructeur et destructeur */
-	WindCircle(int x);
+	WindCircle();
 	virtual ~WindCircle();
-
+	
 	/* Méthodes graphiques */
 	void drawCircle();
 	void drawDir();
@@ -35,6 +35,7 @@ public:
 
 	/* Getters et Setters */
 	int getAngle() const { return angle; };
+	
 	void setAngle(int x);
 	void setDirection(int angle);
 

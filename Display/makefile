@@ -1,4 +1,4 @@
-mocs: firescreen.h
+mocs: firescreen.h firewidget.h fwelcome.h windcircle.h windcircle.h windwidget.h 
 	moc firescreen.h	-o ./mocs/moc_firescreen.cpp
 	moc firewidget.h	-o ./mocs/moc_firewidget.cpp
 	moc fwelcome.h 		-o ./mocs/moc_fwelcome.cpp
