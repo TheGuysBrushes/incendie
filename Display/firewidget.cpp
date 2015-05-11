@@ -488,21 +488,39 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 
 void FireWidget::mouseReleaseEvent(QMouseEvent* event)
 {
-	// Ne pas toucher
-	if(rubber){
-		rubber->hide();
+		// Ne pas toucher
+		if(rubber){
+// 			rubber->hide();
 
-		#if DEBUG_SELECT
-		cout << "Taille du widget : " << this->size().width() << "; " << this->size().height()<< endl;
-		cout << "Coordonnée de l'origine : " << rubber->x()<< ";" << rubber->y() << endl;
-		cout << "Taille de la zone de selection : " <<		rubber->width() << ";" << rubber->height() << endl;
-		#endif
+			#if DEBUG_SELECT
+			cout << "Taille du widget : " << this->size().width() << "; " << this->size().height()<< endl;
+			cout << "Coordonnée de l'origine : " << rubber->x()<< ";" << rubber->y() << endl;
+			cout << "Taille de la zone de selection : " <<	rubber->width() << ";" << rubber->height() << endl;
+			#endif
 
-		// Sauvegarde des points du rubber pour parcours de la matrice
-		
-		// Emission du signal pour récupérer l'action à effectuer
-		emit releaseSignal();
-	}
+			// Sauvegarde des points du rubber pour parcours de la matrice
+			origin.setX(rubber->x());
+			origin.setY(rubber->y());
+			/* Vérification du point d'origine du rubber
+			 * Celui étant toujours le point le plus en haut à gauche, il faut simplement vérifier 
+			 * qu'il n'est pas en dehors du cadre, auquel cas nous ramenons la (les) coordonnée(s) concernée(s)
+			 * à 0.
+			 */
+			int decalage_largeur = 0;
+			int decalage_hauteur = 0;
+			if(origin.x() < 0){
+				// Il faut mettre à jour la largeur et la longueur du rectangle
+				decalage_largeur = origin.x();
+				origin.setX(0);
+			}
+			if(origin.y() < 0){
+				decalage_hauteur = origin.y();
+				origin.setY(0);
+			}
+			// Ensuite, il faut également vérifier que la taille du rectangle ne dépasse pas du widget
+			// Emission du signal pour récupérer l'action à effectuer
+			emit releaseSignal();
+		}
 	
 }
 

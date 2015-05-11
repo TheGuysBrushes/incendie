@@ -33,7 +33,9 @@ private:
 	int tailleCell;
 
 	QPixmap* pictureForest;
+	
 	QPoint origin;
+	QPoint arrivee;
 	QRubberBand* rubber;
 	long temps;
 	bool running;
