@@ -363,6 +363,12 @@ void Foret::setValues(int largeur, int hauteur, float coef)
 	burningCoef = coef;
 }
 
+/**
+ * Définit la direction du vent
+ * @author Florian
+ * @param EO force du vent sur l'axe Est-Ouest
+ * @param NS force du vent sur l'axe Nord-Sud
+ */
 void Foret::setWind(int EO, int NS)
 {
 	wind->setPower_h(EO);
