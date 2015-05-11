@@ -82,6 +82,11 @@ public slots:
 	bool next();
 // 	void drawFire();
 // 	void transition(long x);
+	void actionReceived(int x);
+	
+signals:
+	void releaseSignal();
+	
 };
 
 #endif // FIREWIDGET_H

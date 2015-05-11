@@ -207,12 +207,13 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	QObject::connect(cut_btn,	SIGNAL(clicked(bool)),		this, SLOT(invertBtn(bool)));	
 	QObject::connect(delay_btn,	SIGNAL(clicked(bool)),	this, SLOT(invertBtn(bool)));
 	
-// 	cut_btn->setEnabled(true);
-// 	delay_btn->setEnabled(false);
+	// Connexion pour coupure et retardateur
+	QObject::connect(fWidget, SIGNAL(releaseSignal()), this, SLOT(releaseOrdered()));
+	QObject::connect(this, SIGNAL(actionSender(int)), fWidget, SLOT(actionReceived(int)));
 	
-	cut_btn->setVisible(false);
-	delay_btn->setVisible(true);
 	
+	cut_btn->setEnabled(true);
+	delay_btn->setEnabled(false);
 	
 	/*** 	DEFINITTION DU STYLE DES ELEMENTS	***/
 	// Touches d'améliorations visuelles et d'initialisation de propriétés
@@ -297,21 +298,14 @@ bool FireScreen::initialisation()
  */
 void FireScreen::invertBtn(bool )
 {
-	// 	if(cut_btn->isEnabled()){
-	// 		cut_btn->setDisabled(true);
-	// 		delay_btn->setEnabled(true);
-	// 	}else{
-	// 		delay_btn->setDisabled(true);
-	// 		cut_btn->setEnabled(true);
-	// 	}
+		if(cut_btn->isEnabled()){
+			cut_btn->setDisabled(true);
+			delay_btn->setEnabled(true);
+		}else{
+			delay_btn->setDisabled(true);
+			cut_btn->setEnabled(true);
+		}
 	
-	if(cut_btn->isVisible()){
-		cut_btn->setVisible(false);
-		delay_btn->setVisible(true);
-	} else {
-		delay_btn->setVisible(false);
-		cut_btn->setVisible(true);
-	}
 }
 
 /**
@@ -424,4 +418,23 @@ void FireScreen::updateWind(int y){
 	#if DEBUG_VENT
 	std::cout << "Vitesse : "<< vitesse<< "; Angle : "<<angle<<" ; valeur horizontal : " << horizontal << " ; valeur vertical : " << vertical << std::endl;
 	#endif
+}
+
+/**
+ * Slot mis en place afin de transmettre l'action sélectionnée à appliquer
+ * après une selection sur la matrice. Est connecté au signal émis lors du 
+ * releaseMouseEvent de fwidget lorsque le clic droit était enfoncé.
+ * Voir commentaire Slack pour mise en #define. Pour le moment, 
+ * le signal 0 correspond à une coupure, le 1 à un retardateur.
+ * @author Ugo
+ */
+void FireScreen::releaseOrdered()
+{
+	// L'action choisie est représenté par le fait que le boutton est désactivé
+	if(!cut_btn->isEnabled()){
+		emit actionSender(0);
+	}else if(!delay_btn->isEnabled()){
+		emit actionSender(1);
+	}
+	
 }

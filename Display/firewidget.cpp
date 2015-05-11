@@ -485,8 +485,15 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 
 void FireWidget::mouseReleaseEvent(QMouseEvent* event)
 {
-	if(rubber)
+	// Ne pas toucher
+	if(rubber){
 		rubber->hide();
+		// Sauvegarde des points du rubber pour parcours de la matrice
+		
+		// Emission du signal pour récupérer l'action à effectuer
+		emit releaseSignal();
+	}
+	
 }
 
 
@@ -535,4 +542,17 @@ void FireWidget::reset(int _larg, int _haut, float proba, float coef)
 	drawChanged();
 	update();
 }
+
+/**
+ * Slot permettant d'éxecuter l'action choisie par l'utilisateur
+ * sur la zone enregistrée après un releaseMouseEvent.
+ * 0 correspond à une coupure, 1 à un retardateur
+ * @author Ugo
+ */
+void FireWidget::actionReceived(int x)
+{
+	// Parcours de la zone de selection
 	
+	// application de l'effet choisi à toute cellule dont l'état est non-vide
+
+}

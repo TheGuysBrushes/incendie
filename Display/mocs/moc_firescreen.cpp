@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'firescreen.h'
 **
-** Created: Fri May 8 15:54:34 2015
+** Created: Sun May 10 14:56:02 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,29 +23,34 @@ static const uint qt_meta_data_FireScreen[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       9,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       1,       // signalCount
+
+ // signals: signature, parameters, type, tag, flags
+      14,   12,   11,   11, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      12,   11,   11,   11, 0x0a,
-      26,   11,   11,   11, 0x0a,
-      39,   11,   11,   11, 0x0a,
-      56,   54,   11,   11, 0x0a,
-      71,   11,   11,   11, 0x0a,
-      79,   11,   11,   11, 0x0a,
-      97,   95,   11,   11, 0x0a,
+      32,   11,   11,   11, 0x0a,
+      46,   11,   11,   11, 0x0a,
+      59,   11,   11,   11, 0x0a,
+      74,   12,   11,   11, 0x0a,
+      89,   11,   11,   11, 0x0a,
+      97,   11,   11,   11, 0x0a,
+     115,  113,   11,   11, 0x0a,
+     131,   11,   11,   11, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_FireScreen[] = {
-    "FireScreen\0\0start_timer()\0stop_timer()\0"
-    "nextCompteur()\0x\0set_delai(int)\0reset()\0"
-    "invertBtn(bool)\0y\0updateWind(int)\0"
+    "FireScreen\0\0x\0actionSender(int)\0"
+    "start_timer()\0stop_timer()\0nextCompteur()\0"
+    "set_delai(int)\0reset()\0invertBtn(bool)\0"
+    "y\0updateWind(int)\0releaseOrdered()\0"
 };
 
 void FireScreen::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -54,13 +59,15 @@ void FireScreen::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         Q_ASSERT(staticMetaObject.cast(_o));
         FireScreen *_t = static_cast<FireScreen *>(_o);
         switch (_id) {
-        case 0: _t->start_timer(); break;
-        case 1: _t->stop_timer(); break;
-        case 2: _t->nextCompteur(); break;
-        case 3: _t->set_delai((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 4: _t->reset(); break;
-        case 5: _t->invertBtn((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 6: _t->updateWind((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 0: _t->actionSender((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 1: _t->start_timer(); break;
+        case 2: _t->stop_timer(); break;
+        case 3: _t->nextCompteur(); break;
+        case 4: _t->set_delai((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 5: _t->reset(); break;
+        case 6: _t->invertBtn((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 7: _t->updateWind((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 8: _t->releaseOrdered(); break;
         default: ;
         }
     }
@@ -98,10 +105,17 @@ int FireScreen::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 9)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 9;
     }
     return _id;
+}
+
+// SIGNAL 0
+void FireScreen::actionSender(int _t1)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_END_MOC_NAMESPACE
