@@ -68,7 +68,6 @@ Foret::~Foret()
 	onFire.clear();
 	burned.clear();
 	carbonized.clear();
-	
 }
 
 
@@ -362,6 +361,12 @@ void Foret::setValues(int largeur, int hauteur, float coef)
 	lignes = hauteur;
 	colonnes = largeur;
 	burningCoef = coef;
+}
+
+void Foret::setWind(int EO, int NS)
+{
+	wind->setPower_h(EO);
+	wind->setPower_v(NS);
 }
 
 

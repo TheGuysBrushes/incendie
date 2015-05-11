@@ -120,6 +120,7 @@ void WindWidget::setAngle(int angle)
 {
 	angle_lbl->setText(QString::number(angle) + "°");
 	wind->setAngle(angle);
+	emit modif_value(angle, speed);
 }
 
 
@@ -140,7 +141,6 @@ void WindWidget::majAngle(int alpha)
 	setAngle(alpha);
 	wind->drawDir();
 	update();
-	emit modif_value(alpha, speed);
 }
 
 /**

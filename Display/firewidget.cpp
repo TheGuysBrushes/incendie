@@ -236,10 +236,9 @@ void FireWidget::setColor(int colorIndice)
 	}
 }
 
-void FireWidget::setVent(float _hor, float _ver){
-
-	forest->getVent()->setPower_h(_hor);
-	forest->getVent()->setPower_v(_ver);
+void FireWidget::setWind(float _hor, float _ver)
+{
+	forest->setWind(_hor, _ver);
 }
 
 

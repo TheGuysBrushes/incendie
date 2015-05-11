@@ -52,14 +52,15 @@ public:
 	void initialisation(float proba);
 	
 	void clean();
+
 	
 	void setValues(int largeur, int hauteur, float coef);
-	
+	void setWind(int EO, int NS);
 	
 	// 	Getters and Setters
 	int width()	const { return colonnes;};
 	int height()	const { return lignes;};
-	Vent* getVent() const { return wind; };
+	const Vent* getVent() const { return wind; };
 	std::vector< Cellule* >* operator[](int ligne) { return &(matrix[ligne]); };
 	
 	const std::list< Arbre* >* getOnFire() const	{ return &onFire; };

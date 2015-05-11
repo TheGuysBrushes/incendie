@@ -58,7 +58,7 @@ public:
 
 	/* Getters et Setters */
 	void setColor(int colorIndice);	
-	void setVent(float _hor, float _ver);
+	void setWind(float _hor, float _ver);
 	
 	/* Affichage */
 	void drawPicture();
