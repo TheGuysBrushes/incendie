@@ -595,29 +595,55 @@ std::list< Arbre* > Foret::adjacents(const Arbre * ab, int distance) const
 	return adjacents(ab->getPos().col,ab->getPos().row, distance);
 }
 
-void Foret::burnAdjacentsWind(Arbre* a)
-{
-	// 	for (list< Arbre* >::iterator a(old->begin()); a!=old->end(); ++a){
-		// 	for (list< Arbre* >::iterator a(onFire.begin()); a!=onFire.end(); ++a){
-	int row = a->getPos().row;
-	int col = a->getPos().col;
-	
-	// TODO renommer les variables h et l avec de vrais noms
-	int h = wind->getPower_h();
-	int l = wind->getPower_v();
-	
-	for(int i = 0; i <= abs( wind->getPower_h() ); ++i) {
-		for(int j = 0; j <= abs( wind->getPower_v() ); ++j) {
-			// On vérifie que la cellule spécifiée est dans la matrice IMPROVEIT ce n'est pas performant
-			if( ( (h+row-i) >= 0 ) && ( (h+row-i) < (lignes) ) && ( (l+col-j) >= 0 ) && ( (l+col-j) < (colonnes) ) ){
-				Cellule* cell = matrix[row + (h-i)][col + (l-j)];
+void Foret::burnAdjacentsWind(int posCol, int posRow, int hor, int vert){
+	for(int i = 0; i < abs( hor ); ++i) {
+		for(int j = 0; j < abs( vert ); ++j) {
+			// les arbres proches sont enflammées plusieurs fois TODO diminuer la force de la transmission pour compenser
+			burnAdjacentsWind(posCol, posRow, i, j);
+// 			if( ( (hor-i + posCol) >= 0 ) && ( (hor-i + posCol) < (lignes) ) && ( (vert-j + posRow) >= 0 ) && ( (vert-j + posRow) < (colonnes) ) ){
+// 				Cellule* cell = matrix[posRow + (vert -j)][posCol + (hor -i)];
+
+			if( ( (hor + posRow-i) >= 0 ) && ( (hor + posRow-i) < (lignes) ) && ( (vert + posCol-j) >= 0 ) && ( (vert +posCol-j) < (colonnes) ) ){
+				//	FIXIT hor/i et vert/j inverses ?
+				
+				#if DEBUG_VENT
+				cout << "transmission à cellule en "<< posRow + (hor -i)<< " ; "<< posCol + (vert -j)<< endl;
+				#endif
+				Cellule* cell = matrix[posRow + (hor -i)][posCol + (vert -j)];
 				
 				if(cell->getState() == 1)
 					spark(dynamic_cast < Arbre* >(cell));
 			}
-			
 		}
 	}
+}
+
+void Foret::burnAdjacentsWind(Arbre* a, const Vent* vent)
+{
+#if DEBUG_VENT
+cout<< endl<< "BRULE LES ADJACENTS DE "<< a->getPos().col<< ";" << a->getPos().row<< endl;
+#endif
+
+	burnAdjacentsWind(a->getPos().col, a->getPos().row,
+						vent->getPower_h(), vent->getPower_v() );
+	
+	// TODO renommer les variables h et l avec de vrais noms
+// 	int h = wind->getPower_h();
+// 	int l = wind->getPower_v();
+	
+// 	for(int i = 0; i <= abs( h ); ++i) {
+// 		for(int j = 0; j <= abs( l ); ++j) {
+// 			// On vérifie que la cellule spécifiée est dans la matrice IMPROVEIT ce n'est pas performant
+// 			if( ( (hor + row-i) >= 0 ) && ( (hor + row-i) < (lignes) ) && ( (vert + col-j) >= 0 ) && ( (vert +col-j) < (colonnes) ) ){
+// 				FIXIT hor/i et vert/j inverses ?
+// 				Cellule* cell = matrix[row + (hor -i)][col + (vert -j)];
+// 				
+// 				if(cell->getState() == 1)
+// 					spark(dynamic_cast < Arbre* >(cell));
+// 			}
+// 			
+// 		}
+// 	}
 	
 }
 
@@ -651,9 +677,9 @@ void Foret::transition(Arbre* ab)
  * @author Ugo
  * 
  */
-void Foret::transitionWind(Arbre*  a)
+void Foret::transitionWind(Arbre* a, const Vent* vent)
 {
-	burnAdjacentsWind(a);
+	burnAdjacentsWind(a, vent);
 	
 	if ( a->burn(burningCoef) )
 		onFire.push_back(a);
@@ -678,7 +704,7 @@ bool Foret::NextMove()
 // 		// TODO utiliser mapping ?
 		for (list< Arbre* >::iterator ab(old.begin()); ab!=old.end(); ++ab){
 // 			transition(*ab);
-			transitionWind(*ab);
+			transitionWind(*ab, wind);
 		}
 	}
 	
