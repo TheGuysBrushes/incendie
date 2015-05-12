@@ -1,5 +1,8 @@
 #ifndef FWELCOME_H
 #define FWELCOME_H
+
+#include "../debug.h"
+
 #include <QtGui/QDialog>
 #include <QtGui/QLabel>
 #include <QtGui/QPushButton>

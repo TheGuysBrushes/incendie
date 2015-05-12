@@ -1,4 +1,5 @@
 #include "fwelcome.h"
+
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QGridLayout>
@@ -14,10 +15,20 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	p_value = new QLabel();
 	c_value = new QLabel();
 	
+	#if FRENCH
 	valid_btn = new QPushButton("Valider");
+	#else 
+	valid_btn = new QPushButton("Confirm");
+	#endif
+	
 	valid_btn->setDefault(true);
 	
+	#if FRENCH
 	cancel_btn = new QPushButton("Annuler");
+	#else 
+	cancel_btn = new QPushButton("Cancel");
+	#endif
+	
 	cancel_btn->setVisible(false);
 	
 	initComponents();
@@ -43,11 +54,24 @@ void Fwelcome::initComponents(){
 	QHBoxLayout* h_lay = new QHBoxLayout(www);
 	
 	/* Initialisation des composants statiques (hors SpinBox ) */
-	QString s = " Bienvenue sur l'automate de simulation de feux de foret. \n Veuillez renseigner les differents parametres pour la simulation \n que vous allez effectuer, puis validez. \n";
+	#if FRENCH
+	QString s = " Bienvenue sur l'automate de simulation de feux de foret.\n";
+	s+= "Veuillez renseigner les differents parametres, puis validez.\n";
+	#else
+	QString s = "Welcome on the automaton of forest fire simulation. Please, enter parameters, then confirm\n";
+	#endif
+	
 	QLabel* present = new QLabel(s);
 	present->setWordWrap(true);
+	present->setAlignment(Qt::AlignCenter);
+	present->setMinimumSize(400, 60);
 	
+	#if FRENCH
 	QLabel* l_lbl = new QLabel("Largeur : ");
+	#else
+	QLabel* l_lbl = new QLabel("Width : ");
+	#endif
+	
 	larg_spin = new QSpinBox(ww);
 	larg_spin->setMinimum(100);
 	larg_spin->setMaximum(QApplication::desktop()->screenGeometry().width() -250-15);
@@ -55,19 +79,34 @@ void Fwelcome::initComponents(){
 	larg_spin->setSingleStep(25);
 	larg_spin->setAccelerated(1);
 	
+	#if FRENCH
 	QLabel* h_lbl = new QLabel("Hauteur : ");
+	#else
+	QLabel* h_lbl = new QLabel("Height : ");
+	#endif
+	
+	
 	haut_spin = new QSpinBox(ww);
 	haut_spin->setMinimum(100);
 	haut_spin->setMaximum(QApplication::desktop()->screenGeometry().height()-45-25 ); // 45 pixel à cause des marges et menu (observé 43)
 	haut_spin->setSingleStep(25);
 	haut_spin->setAccelerated(1);
 	
+	#if FRENCH
 	QLabel* p_lbl = new QLabel("Probabilite : ");
+	#else
+	QLabel* p_lbl = new QLabel("Probability : ");
+	#endif
+	
 	QSlider * slide_p = new QSlider(Qt::Horizontal, 0);
 	slide_p->setMaximum(100);
 	slide_p->setMinimum(1);
 
+// 	#if FRENCH
+// 	#else
+// 	#endif
 	QLabel* c_lbl = new QLabel("Coefficient : ");
+	
 	QSlider* slide_c = new QSlider(Qt::Horizontal, 0);
 	slide_c->setMaximum(100);
 	slide_c->setMinimum(1);
