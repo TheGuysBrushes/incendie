@@ -25,7 +25,7 @@ private:
 public:
 	// Constructeurs et destructeur
 	Arbre(int col, int row, const Essence* const _essence, unsigned int _age = 0, unsigned int _humidite = 20);
-	Arbre(Cellule* cell, int col, int row, const Essence*const _essence, unsigned int _age = 0, unsigned int _humidite = 20);
+	Arbre(Cellule* cell, int col, int row, const Essence* const _essence, unsigned int _age = 0, unsigned int _humidite = 20);
 		
 	// Getters 
 	virtual int getState()	const	{ return state; };

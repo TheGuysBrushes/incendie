@@ -148,19 +148,19 @@ bool Foret::loadEssences(const string& fileName)
 			// conversion du diametre en float
 			float x; istringstream(tokens[2])>> x;
 			essences.push_back( Essence(indice, tokens[0],
-												atoi(tokens[1].c_str()),
-												x,
-												atoi(tokens[3].c_str()),
-												atoi(tokens[4].c_str()),
-												atoi(tokens[5].c_str())			) );
+											atoi(tokens[1].c_str()),
+											x,
+											atoi(tokens[3].c_str()),
+											atoi(tokens[4].c_str()),
+											atoi(tokens[5].c_str())			) );
 			
 			indice +=1;
 // 			delete(tokens);
 		}
-		
 		#if DEBUG_FILE
 		showEssences();
 		#endif
+		
 		return true;
 	}
 	else {
@@ -208,6 +208,9 @@ unsigned Foret::essenceRandom(int col, int row, unsigned distOthers){
 	return ess;
 }
 
+/**
+ *	Inutilisé, car cela ne permet pas de vider les listes, TODO faire une fonction qui permet de les vider
+ */
 std::list< list< Arbre* > >* Foret::getChanged()
 {
 	list< list< Arbre* > >* listes= new list< list< Arbre* > >();
@@ -475,7 +478,7 @@ void Foret::blast(Arbre* ab)
  * @author Florian
  * @param ab arbre à enflammer
  */
-void Foret::burn(Arbre* ab)
+void Foret::spark(Arbre* ab)
 {
 // 	if (ab->getState==2){
 // // 		ab->brule();
@@ -495,7 +498,7 @@ void Foret::burn(Arbre* ab)
  * @param col colonne où est la cellule
  * @deprecated
  */
-void Foret::burn(int col, int row)
+void Foret::spark(int col, int row)
 {
 	Cellule* tmp= matrix[row][col];
 	
@@ -503,7 +506,7 @@ void Foret::burn(int col, int row)
 	
 	if (etat==1){
 		Arbre * ab = dynamic_cast<Arbre *>(tmp);
-		burn(ab);
+		spark(ab);
 	}
 // 	else if (etat==2){}
 }
@@ -603,14 +606,14 @@ void Foret::burnAdjacentsWind(Arbre* a)
 	int h = wind->getPower_h();
 	int l = wind->getPower_v();
 	
-	for(int i = 0; i < abs(wind->getPower_h()); ++i){
-		for(int j = 0; j < abs(wind->getPower_v()); ++j){
+	for(int i = 0; i <= abs( wind->getPower_h() ); ++i) {
+		for(int j = 0; j <= abs( wind->getPower_v() ); ++j) {
 			// On vérifie que la cellule spécifiée est dans la matrice IMPROVEIT ce n'est pas performant
 			if( ( (h+row-i) >= 0 ) && ( (h+row-i) < (lignes) ) && ( (l+col-j) >= 0 ) && ( (l+col-j) < (colonnes) ) ){
 				Cellule* cell = matrix[row + (h-i)][col + (l-j)];
 				
 				if(cell->getState() == 1)
-					burn(dynamic_cast < Arbre* >(cell));
+					spark(dynamic_cast < Arbre* >(cell));
 			}
 			
 		}
@@ -633,7 +636,7 @@ void Foret::transition(Arbre* ab)
 	unsigned distAdj= 1; // distance à laquelle les voisins seront enflammes ; IMPROVEIT dist 1= contact, dist 2= diagonaux, dist 3 = ...
 	list< Arbre* > voisins= adjacents(ab, distAdj);
 	for (list< Arbre* >::iterator a(voisins.begin()); a!=voisins.end(); ++a){
-		burn( (*a) );
+		spark( (*a) );
 	}
 	
 	if ( ab->burn(burningCoef) )

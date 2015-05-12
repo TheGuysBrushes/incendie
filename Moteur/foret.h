@@ -72,7 +72,6 @@ public:
 	
 	void clearCarbonized()	{ carbonized.clear(); };
 	void clearBurned()	{ burned.clear(); };
-
 	
 	// Manipulations d'arbre
 	void plantTree(int col, int row);
@@ -88,8 +87,8 @@ public:
 	void blast(Arbre* ab);
 // 	void eteindre(int row, int col);
 	
-	void burn(Arbre* ab);
-	void burn(int col, int row);
+	void spark(Arbre* ab);
+	void spark(int col, int row);
 
 	
 	// Autres méthodes

@@ -55,8 +55,7 @@ void Fwelcome::initComponents(){
 	
 	/* Initialisation des composants statiques (hors SpinBox ) */
 	#if FRENCH
-	QString s = " Bienvenue sur l'automate de simulation de feux de foret.\n";
-	s+= "Veuillez renseigner les differents parametres, puis validez.\n";
+	QString s = " Bienvenue sur l'automate de simulation de feux de foret. Veuillez renseigner les differents parametres, puis validez.\n";
 	#else
 	QString s = "Welcome on the automaton of forest fire simulation. Please, enter parameters, then confirm\n";
 	#endif
