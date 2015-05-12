@@ -39,11 +39,20 @@ FireScreen::FireScreen(): QMainWindow()
 	
 	timer = new QTimer();
 	
-	next_btn = new QPushButton("Next");
-	play_btn = new QPushButton("Play");
+#if FRENCH
+	next_btn = new QPushButton("Suivant");
+	play_btn = new QPushButton("Démarrer");
 	pause_btn = new QPushButton("Pause");
 	cut_btn = new QPushButton("Coupure");
 	delay_btn = new QPushButton("Retardateur");
+#else
+	next_btn = new QPushButton("Next");
+	play_btn = new QPushButton("Play");
+	pause_btn = new QPushButton("Pause");
+	cut_btn = new QPushButton("Cutting");
+	delay_btn = new QPushButton("Retardatorr");
+#endif
+
 	pause_btn->setDisabled(true);
 	
 	cpt_lbl = new QLabel();
@@ -140,19 +149,34 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	//ELEMENTS
 	
 	// Element du panneau de direction de l'automate
+#if FRENCH
 	QLabel* titre = new QLabel("Automate cellulaire");
 	QLabel* info_vent= new QLabel("Parametres du vent :");
 	
 	// Boutons
 	QLabel* trans_p2p = new QLabel("Transmission pas-a-pas : ");
 	
-	QPushButton* reset_btn = new QPushButton("Reset ! Be careful");
-	
-	int interTempsInit= 200;
+	QPushButton* reset_btn = new QPushButton("RAZ ! Attention");
 	
 	// Compteur de tours et Slider
 	QLabel* trans_con = new QLabel("Transmission continue : ");	
 	QLabel* tour_lbl = new QLabel("Nombre de tours :");
+#else 
+	QLabel* titre = new QLabel("Cellular automaton");
+	QLabel* info_vent= new QLabel("Wind's settings :");
+	
+	// Boutons
+	QLabel* trans_p2p = new QLabel("Step-to-step transmission : ");
+	
+	QPushButton* reset_btn = new QPushButton("Reset ! Be careful");
+	
+	// Compteur de tours et Slider
+	QLabel* trans_con = new QLabel("Continuous transmission : ");	
+	QLabel* tour_lbl = new QLabel("Number of turns :");
+#endif
+	
+	int interTempsInit= 200;
+	
 	// 	majTimer(); REMOVEIT ?
 	
 	// Ajouter la scrollbar horizontale

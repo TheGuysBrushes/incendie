@@ -1,6 +1,7 @@
 #include "arbre.h"
 
 #include <cmath>
+#include <cstdlib>
 #include <iostream>
 
 /*
@@ -100,9 +101,26 @@ void Arbre::initialise()
  */
 void Arbre::spark(float coef)
 {
-	if (humidity < seuil)
+	int taux= 15/humidity *100;
+	
+	int aleatoire= rand()%101;
+	
+	#if DEBUG_SPARK
+	cout<< "enflammer humidite "<< humidity<<" ? taux: "<< taux<< " rand "<< aleatoire<< " : ";
+	#endif
+	
+	if (taux > aleatoire){
 		state= 2;
-	else humidity -= 10.0*coef;
+		#if DEBUG_SPARK
+		cout<< "oui"<< endl;
+		#endif
+	}
+	else {
+		humidity -= 10.0*coef;
+		#if DEBUG_SPARK
+		cout<< "non"<< endl;
+		#endif
+	}
 }
 
 
