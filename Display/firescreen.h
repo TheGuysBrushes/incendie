@@ -64,7 +64,7 @@ protected:
 public slots:
 	void start_timer();
 	void stop_timer();
-	void nextCompteur();
+	void nextStep();
 	void set_delai(int x );
 	void reset();
 	void invertBtn(bool);

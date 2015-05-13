@@ -708,6 +708,10 @@ bool Foret::NextMove()
 		modif= true;
 		list< Arbre* > old= onFire;
 		onFire.clear();		
+		
+		#if DEBUG_SPARK
+		cout<< endl<< "TOUR DE TRANSMISSION"<< endl;
+		#endif
 // 		// TODO utiliser mapping ?
 		for (list< Arbre* >::iterator ab(old.begin()); ab!=old.end(); ++ab){
 // 			transition(*ab);

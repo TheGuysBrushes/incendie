@@ -217,11 +217,10 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	vert_lay1->setAlignment(titre,Qt::AlignHCenter);
 	
 	// CONNEXION DES BOUTONS AUX FONCTIONS
-	connect(next_btn,	SIGNAL(clicked()), 		fWidget,	SLOT(next()) );
 	connect(play_btn,	SIGNAL(clicked()), 		this,	SLOT( start_timer()) );
 	connect(pause_btn,	SIGNAL(clicked()),	this,	SLOT( stop_timer()) );
-	connect(timer,		SIGNAL(timeout()), 		this,	SLOT( nextCompteur()) );
-	connect(next_btn,	SIGNAL(clicked()), 		this,	SLOT( nextCompteur()) );
+	connect(timer,		SIGNAL(timeout()), 		this,	SLOT( nextStep()) );
+	connect(next_btn,	SIGNAL(clicked()), 		this,	SLOT( nextStep()) );
 	
 	connect(slider,	SIGNAL(valueChanged(int)),		this, SLOT( set_delai(int)) );
 	connect(reset_btn,	SIGNAL(clicked()), 			this,	SLOT( reset()) );
@@ -403,7 +402,7 @@ void FireScreen::reset()
 	}
 }
 
-void FireScreen::nextCompteur()
+void FireScreen::nextStep()
 {
 	if (fWidget->next()){
 		nb_tour += 1;
