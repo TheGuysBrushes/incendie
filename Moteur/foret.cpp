@@ -413,6 +413,16 @@ void Foret::uproot(int col, int row)
 	}
 }
 
+void Foret::cut(int xDep, int yDep, int xArr, int yArr)
+{
+
+}
+
+void Foret::delay(int xDep, int yDep, int xArr, int yArr)
+{
+
+}
+
 
 /**
  * Eteint un arbre en conservant ses points de vie courant
