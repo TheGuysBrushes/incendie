@@ -108,6 +108,8 @@ public:
 	
 	// Affichage attributs
 	void showEssences() const;
+	void cut(int xDep, int yDep, int xArr, int yArr);
+	void delay(int xDep, int yDep, int xArr, int yArr);
 };
 
 #endif // FORET_H

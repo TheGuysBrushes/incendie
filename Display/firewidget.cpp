@@ -601,11 +601,14 @@ void FireWidget::actionReceived(int x)
 	cout << "Coordonnée en cellule du départ : " << xDep << ";" << yDep << endl;
 	cout << "Coordonnée en cellule de l'arrivée : " << xArr << ";" << yArr << endl;
 	#endif
+	
+	// Appel à une fonction de forêt qui parcours la zone et effectue l'action
 
-	// Parcours de la zone de selection
-	for(int i = xDep; i<= xArr ; ++i){
-		
+	if(x == 0){
+		forest->cut(xDep, yDep, xArr, yArr);
+	}else if( x == 1){
+		forest->delay(xDep, yDep, xArr,yArr);
 	}
-	// application de l'effet choisi à toute cellule dont l'état est non-vide
+
 
 }
