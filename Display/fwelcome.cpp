@@ -74,7 +74,7 @@ void Fwelcome::initComponents(){
 	larg_spin = new QSpinBox(ww);
 	larg_spin->setMinimum(100);
 	larg_spin->setMaximum(QApplication::desktop()->screenGeometry().width() -250-15);
-	larg_spin->setValue(150);
+	larg_spin->setValue(450);
 	larg_spin->setSingleStep(25);
 	larg_spin->setAccelerated(1);
 	
@@ -88,6 +88,7 @@ void Fwelcome::initComponents(){
 	haut_spin = new QSpinBox(ww);
 	haut_spin->setMinimum(100);
 	haut_spin->setMaximum(QApplication::desktop()->screenGeometry().height()-45-25 ); // 45 pixel à cause des marges et menu (observé 43)
+	haut_spin->setValue(300);
 	haut_spin->setSingleStep(25);
 	haut_spin->setAccelerated(1);
 	

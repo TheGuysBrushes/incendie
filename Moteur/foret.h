@@ -4,6 +4,7 @@
 #include <vector>
 #include <list>
 #include <iostream>
+#include <fstream>
 
 #include "../debug.h"
 
@@ -70,6 +71,8 @@ public:
 	std::list< Arbre* >* getBurned()			{ return &burned; };
 	std::list< std::list< Arbre* > >* getChanged();
 	
+	void clearUprooted()	{ uprooted.clear(); };
+	void clearExtinguished()	{ extinguished.clear(); };
 	void clearCarbonized()	{ carbonized.clear(); };
 	void clearBurned()	{ burned.clear(); };
 	
@@ -87,8 +90,8 @@ public:
 	void blast(Arbre* ab);
 // 	void eteindre(int row, int col);
 	
-	void spark(Arbre* ab);
-	void spark(int col, int row);
+	void spark(Arbre* ab, int intensite);
+	void spark(int col, int row, int intensite);
 
 	
 	// Autres méthodes
@@ -105,6 +108,9 @@ public:
 	void transitionWind(Arbre* a, const Vent* vent);
 	
 	bool NextMove();
+	
+	// Persistance des donnees
+	bool saveMatrix(std::string fileName= "save_forest.png");
 	
 	// Affichage attributs
 	void showEssences() const;

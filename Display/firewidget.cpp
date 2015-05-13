@@ -374,22 +374,27 @@ void FireWidget::drawForest()
  * @author Florian and Ugo
  */
 // IMPROVEIT faire une fonction qui prend une couleur et une liste d'arbres, qui "imprime" les arbres avec cette couleur ?	
+// IMPROVEIT faire un fonction de firewidget qui vide toutes les listes?
 void FireWidget::drawChanged()
 {
 	bufferPainter->begin(buffer);
 	
 	setColor(RED_TRANSPARENT);
 	drawList(forest->getBurned());
+	forest->clearBurned();
 	
 	setColor(GRAY);
-// 	setColor(ANTI_RED_TRANSPARENT);
+	// 	setColor(ANTI_RED_TRANSPARENT);
 	drawList(forest->getCarbonized());
+	forest->clearCarbonized();
 	
 	color->setNamedColor("blue");
 	drawList(forest->getExtinguished());
+	forest->clearUprooted();
 	
 	color->setNamedColor("black");
 	drawList(forest->getUprooted());
+	forest->clearUprooted();
 	
 	bufferPainter->end();
 }

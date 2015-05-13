@@ -177,7 +177,7 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	
 	int interTempsInit= 200;
 	
-	// 	majTimer(); REMOVEIT ?
+	// 	majCompteur(); REMOVEIT ?
 	
 	// Ajouter la scrollbar horizontale
 	set_delai(interTempsInit);
@@ -288,7 +288,7 @@ void FireScreen::initForest(const Fwelcome* fwel)
 							  fwel->get_proba(),
 							  fwel->get_coef());
 	
-	majTimer();
+	majCompteur();
 	initSizes(largeur, hauteur);
 }
 
@@ -336,7 +336,7 @@ void FireScreen::invertBtn(bool )
  * Met à l'affichage du timer, utilise nb_tour
  * @author Florian et Ugo
  */
-void FireScreen::majTimer()
+void FireScreen::majCompteur()
 {
 	cpt_lbl->setText(QString::number(nb_tour));
 }
@@ -407,7 +407,7 @@ void FireScreen::nextCompteur()
 {
 	if (fWidget->next()){
 		nb_tour += 1;
-		majTimer();
+		majCompteur();
 	}
 	else stop_timer();
 }
