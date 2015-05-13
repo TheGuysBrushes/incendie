@@ -101,6 +101,7 @@ void WindWidget::initComponents()
 	grid_lay->addWidget(slider_angle, 1,0);
 	grid_lay->addWidget(w1, 2,0);
 	
+	slider_angle->setValue(45);
 	
 	// Connexion des sliders avec les setters de la classe :
 	// 	permet de gérer dynamiquement les changements de valeurs
@@ -118,9 +119,9 @@ void WindWidget::initComponents()
 
 void WindWidget::setAngle(int angle)
 {
-	angle_lbl->setText(QString::number(angle) + "°");
-	wind->setAngle(angle);
-	emit modif_value(angle, speed);
+	angle_lbl->setText(QString::number(angle) + "degres");
+	wind->setAngle(angle+270);
+	emit modif_value(angle+270, speed);
 }
 
 

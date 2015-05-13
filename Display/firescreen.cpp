@@ -418,7 +418,7 @@ void FireScreen::updateWind(int angle, int vitesse){
 	float vertical;
 	
 	float horizontal;
-	if( (angle >= 90 && angle <180) || (angle >=270 && angle < 360)){
+	if( (angle >= 360 && angle <450) || (angle >=540 && angle < 630)){
 		vertical = sin(PI*(float)(angle+180.0)/180.0);
 		horizontal = cos(PI*(float)(angle+180)/180.0);
 	}else{
