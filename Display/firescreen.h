@@ -70,6 +70,7 @@ public slots:
 	void invertBtn(bool);
 	void updateWind(int angle, int vitesse);
 	void releaseOrdered();
+	void save() const;
 	
 signals:
 	void actionSender(int x);

@@ -74,9 +74,15 @@ void FireWidget::initialise(int _largeur, int _hauteur, float proba, float coef_
  * Méthodes de destruction de la forêt pour gérer la 
  * ré-initialisation de la matrice
  */
-void FireWidget::delForet(){
+void FireWidget::delForest(){
 	delete(forest);
 }
+
+void FireWidget::save() const
+{
+	forest->saveMatrix("foret1");
+}
+
 
 /**
  * Fonction à commenter par son auteur :p

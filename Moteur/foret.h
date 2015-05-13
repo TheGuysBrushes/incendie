@@ -59,8 +59,8 @@ public:
 	void setWind(int EO, int NS);
 	
 	// 	Getters and Setters
-	int width()	const { return colonnes;};
-	int height()	const { return lignes;};
+	int width()	const { return colonnes; };
+	int height()	const { return lignes; };
 	const Vent* getVent() const { return wind; };
 	std::vector< Cellule* >* operator[](int ligne) { return &(matrix[ligne]); };
 	

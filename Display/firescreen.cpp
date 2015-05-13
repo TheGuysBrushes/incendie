@@ -26,9 +26,13 @@ FireScreen::FireScreen(): QMainWindow()
 {
 	QAction* exit = new QAction(this);
 	exit->setText( "Quitter" );
+	menuBar()/*->addMenu( "Menu" )*/->addAction(exit);
+	connect(exit, 	SIGNAL(triggered()), SLOT(close()) );
 	
 	QAction* save = new QAction(this);
 	save->setText( "Save" );
+	menuBar()->addAction(save);
+	connect(save,	SIGNAL(triggered()), SLOT( save()) );
 	
 	fWidget= new FireWidget();
 	windWidget = new WindWidget();
@@ -394,7 +398,7 @@ void FireScreen::reset()
 	fwel->show();
 	
 	if( fwel->exec() == QDialog::Accepted ){
-		fWidget->delForet();
+		fWidget->delForest();
 		
 		initForest(fwel);
 		
@@ -461,3 +465,9 @@ void FireScreen::releaseOrdered()
 	}
 	
 }
+
+void FireScreen::save() const
+{
+	fWidget->save();
+}
+	

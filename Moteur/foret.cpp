@@ -68,6 +68,8 @@ Foret::~Foret()
 	onFire.clear();
 	burned.clear();
 	carbonized.clear();
+	uprooted.clear();
+	extinguished.clear();
 }
 
 
@@ -736,19 +738,53 @@ bool Foret::NextMove()
 }
 
 
+#include <ios>
 // ################################
 //		Persistance des donnees
 // ################################
 bool Foret::saveMatrix(string fileName)
 {
-// 	si
-	string chemin= "resources/"+fileName;
-	ofstream file(chemin.c_str());
-// 	file.
-	
+	// 	si
+	string chemin= "./Resources/"+fileName+".dat";
+	ofstream file(chemin.c_str(), ios::out|ios::binary);
+	// 	file.
+	if (!file.is_open())
+		cout<< "Echec ouverture fichier de sauvegarde"<< endl;
+	else {
+		cout<< "Fichier ouvert"<< endl;
+		
+		for (int i= 0; i< lignes; ++i){
+			for(vector< Cellule* >::const_iterator a(matrix[i].begin()); a != matrix[i].end() ; ++a ){
+					if ( (*a)->getState()>0){
+						Arbre * ab= dynamic_cast< Arbre * >(*a);
+#if DEBUG_SAVE
+cout<< "Enregistrement de l'arbre "<< ab->getPos().col<< "; "<< ab->getPos().row<< endl; 
+#endif
+							
+						// Position
+// 						file<< ab->getPos().col << ab->getPos().row;
+						
+						// PV
+// 						file<< ab->getPv();
+						
+						// Position
+					file.write( (char *)&(ab->getPos().col), sizeof(int));
+					file.write( (char *)&(ab->getPos().row), sizeof(int));
+					
+					// PV
+// 					file.write( (char *)ab->getPv(), sizeof(int));
+					
+					// 
+// 					file.write(ab->getEssence(), sizeof(Essence));
+				}
+			}
+// 			file<< endl;
+		}
+		
+	}
+					
 	return true;
 }
-
 
 // #########################
 // #	Affichage attributs	#
