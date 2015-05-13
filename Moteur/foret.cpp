@@ -405,9 +405,7 @@ void Foret::uproot(int col, int row)
 {
 	Cellule* tmp= matrix[row][col];
 	
-	int etat= tmp->getState();
-	
-	if (etat>0){	// si il s'agit un arbre
+	if (tmp->getState()>0){	// si il s'agit un arbre
 		Arbre * ab = dynamic_cast<Arbre *>(tmp);
 		uproot(ab);
 	}
@@ -415,12 +413,27 @@ void Foret::uproot(int col, int row)
 
 void Foret::cut(int xDep, int yDep, int xArr, int yArr)
 {
-
+	for(int i= xDep; i < xArr; ++i){
+		
+		for(int j= yDep; j < yArr; ++j){
+			matrix[j][i]->setState(-2);
+		}
+	}
 }
 
 void Foret::delay(int xDep, int yDep, int xArr, int yArr)
 {
-
+	for(int i= xDep; i < xArr; ++i){
+		
+		for(int j= yDep; j < yArr; ++j){
+			// Le retardateur ne s'applique que sur les arbres
+			if(matrix[j][i]->getState() > 0){
+				Arbre* ab = dynamic_cast<Arbre *>(matrix[j][i]);
+				// Réduit le coefficient de combustion personnel de l'arbre à 0.5
+				ab->setCoefficient(0.5);
+			}			
+		}
+	}
 }
 
 

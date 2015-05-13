@@ -453,8 +453,10 @@ void FireScreen::releaseOrdered()
 {
 	// L'action choisie est représenté par le fait que le boutton est désactivé
 	if(!cut_btn->isEnabled()){
+		std::cout << "demande de coupure" << std::endl;
 		emit actionSender(0);
 	}else if(!delay_btn->isEnabled()){
+		std::cout << "demande de retardateur" << std::endl;
 		emit actionSender(1);
 	}
 	

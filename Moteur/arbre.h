@@ -34,6 +34,9 @@ public:
 	float getHumidity()	const		{ return humidity; };
 	const Coordonnee& getPos()		const	{ return pos; };
 	const Essence* getEssence()	const	{ return essence; };
+	
+	// Setters
+	void setCoefficient(float x);
 
 	// Autres méthodes
 	void spark	(float coef=1.0);

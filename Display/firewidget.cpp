@@ -4,6 +4,8 @@
 #define GRAY 	5
 #define RED_TRANSPARENT 	6
 #define ANTI_RED_TRANSPARENT	7
+#define BLUE 8
+#define ORANGE 9
 
 using namespace std;
 
@@ -230,6 +232,12 @@ void FireWidget::setColor(int colorIndice)
 		case ANTI_RED_TRANSPARENT:
 			this->color->setRgb(00,75,75,	 180);
 			break;
+		case BLUE:
+			this->color->setRgb(25,25,250);
+			break;
+		case ORANGE:
+			this->color->setRgb(255,127,37);
+			break;
 			
 		default :
 			this->color->setRgb(255,255,255,	100);
@@ -334,13 +342,16 @@ void FireWidget::drawForest()
 			else if(cell->getState() == 1){
 				// Il faut ici vérifier l'essence de l'arbre pour lui attribuer une variante de vert
 				Arbre* ab= dynamic_cast < Arbre* >(cell);
-				
-				//				Pour changer la couleur de l'arbre en train d'etre enflammé 
-				// 				int brulure= ab->getEssence()->get;
-				
 				unsigned indice= ab->getEssence()->getIndice();
 				setColor(indice);
 				drawCell(current_largeur, current_hauteur);
+				// On vérifie ici si l'arbre a recu un retardateur
+				// i.e son coefficient est différent de 1
+				if(ab->getCoeff() != 1){
+					setColor(BLUE);
+					bufferPainter->drawEllipse(current_largeur,current_hauteur,tailleCell-2,tailleCell-2);
+					
+				}
 			}
 			else if (cell->getState() == 2){
 				setColor(RED_TRANSPARENT);
@@ -350,6 +361,10 @@ void FireWidget::drawForest()
 				setColor(GRAY);
 // 				setColor(ANTI_RED_TRANSPARENT);
 				drawCell(current_largeur, current_hauteur);
+			}
+			else if(cell->getState() == -2){
+				setColor(ORANGE);
+				drawCell(current_largeur,current_hauteur);
 			}
 			
 			// Incrémentations des positions des cellules
@@ -491,24 +506,16 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 
 void FireWidget::mouseReleaseEvent(QMouseEvent* event)
 {
-		// Ne pas toucher
 		if(rubber){
 			rubber->hide();
-
-
 			// Sauvegarde des points du rubber pour parcours de la matrice
 			depart.setX(rubber->x());
 			depart.setY(rubber->y());
-			
-
-			
 			/* Vérification du point d'origine du rubber
 			 * Celui étant toujours le point le plus en haut à gauche, il faut simplement vérifier 
 			 * qu'il n'est pas en dehors du cadre, auquel cas nous ramenons la (les) coordonnée(s) concernée(s)
 			 * à 0.
 			 */
-			int largeur = 0;
-			int hauteur = 0;
 			if(depart.x() < 0){
 				depart.setX(0);
 			}
@@ -615,5 +622,5 @@ void FireWidget::actionReceived(int x)
 		forest->delay(xDep, yDep, xArr,yArr);
 	}
 
-
+	redraw();
 }

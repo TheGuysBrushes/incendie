@@ -85,9 +85,14 @@ void Arbre::initialise()
 	#endif
 	// L'initialisation du coefficient sera faite plus tard puisqu'il dépend des paramètres extérieurs à l'arbre 
 	// Humidité ambiante, force du vent etc
-	// 	coefficient = 0.5;
+	 coefficient = 1.0;
 	
 	seuil= 30.0; // TODO changer seuil par défaut, mettre dans tableau d'essence?
+}
+/*** Setter ***/
+void Arbre::setCoefficient(float x)
+{
+	coefficient = x;
 }
 
 // ###############
@@ -133,7 +138,7 @@ bool Arbre::burn(float coef)
 	// On va déterminer le nombre de points de vie à enlever en fonction des paramètres :
 	// - DID des caractères discrets de l'arbre
 	// - TODO determiner le nombre de points de vie à enlever en fonction des parametres exterieurs
-	int decrementation = 100.0*coef;
+	int decrementation = 100.0*coef*coefficient;
 	
 	decrementation *= 1.0/( (float)humidity );
 	#if DEBUG_DECRE
