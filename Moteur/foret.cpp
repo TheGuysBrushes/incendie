@@ -712,7 +712,7 @@ bool Foret::NextMove()
 		#if DEBUG_SPARK
 		cout<< endl<< "TOUR DE TRANSMISSION"<< endl;
 		#endif
-// 		// TODO utiliser mapping ?
+		// TODO utiliser mapping ?
 		for (list< Arbre* >::iterator ab(old.begin()); ab!=old.end(); ++ab){
 // 			transition(*ab);
 			transitionWind(*ab, wind);
