@@ -110,7 +110,8 @@ public:
 	bool NextMove();
 	
 	// Persistance des donnees
-	bool saveMatrix(std::string fileName= "save_forest.png");
+	bool loadMatrix(std::string fileName= "save_forest");
+	bool saveMatrix(std::string fileName= "save_forest");
 	
 	// Affichage attributs
 	void showEssences() const;
