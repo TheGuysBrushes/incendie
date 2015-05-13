@@ -600,16 +600,13 @@ void Foret::burnAdjacentsWind(int posCol, int posRow, int hor, int vert){
 		for(int j = 0; j < abs( vert ); ++j) {
 			// les arbres proches sont enflammées plusieurs fois TODO diminuer la force de la transmission pour compenser
 			burnAdjacentsWind(posCol, posRow, i, j);
-// 			if( ( (hor-i + posCol) >= 0 ) && ( (hor-i + posCol) < (lignes) ) && ( (vert-j + posRow) >= 0 ) && ( (vert-j + posRow) < (colonnes) ) ){
-// 				Cellule* cell = matrix[posRow + (vert -j)][posCol + (hor -i)];
 
-			if( ( (hor + posRow-i) >= 0 ) && ( (hor + posRow-i) < (lignes) ) && ( (vert + posCol-j) >= 0 ) && ( (vert +posCol-j) < (colonnes) ) ){
-				//	FIXIT hor/i et vert/j inverses ?
+			if( ( (hor + posCol-i) >= 0 ) && ( (hor + posCol-i) < (colonnes) ) && ( (vert + posRow-j) >= 0 ) && ( (vert +posRow-j) < (lignes) ) ){
 				
 				#if DEBUG_VENT
 				cout << "transmission à cellule en "<< posRow + (hor -i)<< " ; "<< posCol + (vert -j)<< endl;
 				#endif
-				Cellule* cell = matrix[posRow + (hor -i)][posCol + (vert -j)];
+				Cellule* cell = matrix[posRow +  (vert -j)][posCol + (hor -i)];
 				
 				if(cell->getState() == 1)
 					spark(dynamic_cast < Arbre* >(cell));
