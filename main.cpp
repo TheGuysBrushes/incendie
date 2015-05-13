@@ -14,7 +14,6 @@ int main(int argc, char** argv)
 	QApplication app(argc, argv);
 	
 	FireScreen* screen = new FireScreen();
-	cout<< "test avant init screen"<< endl;
 	if ( screen->initialisation() )
 		screen->show();
 	

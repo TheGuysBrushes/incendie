@@ -17,9 +17,7 @@ WindWidget::WindWidget()
 {
 	// Initialisation des composants de la classe (TODO ajouter menus ?)
 	speed_lbl = new QLabel();
-	
 	wind = new WindCircle();	// creer constructeur pour pouvoir initialiser sans parametre à vide et utiliser le connect du slider pour initialiser
-	std::cout << "test APRES creation windCircle"<< std::endl;
 	angle_lbl = new QLabel();
 	
 	initComponents();
@@ -110,7 +108,6 @@ void WindWidget::initComponents()
 	
 	
 	slider_vitesse->setValue(10);	// Attention si on met la valeur minimale(5), il n'y a pas de changement de valeur donc le label n'est pas mis à jour ?
-	std::cout << "WINDCIRCLE AVANT set"<< std::endl;
 	
 // TODO enlever code en dur
 	setAngle(45);

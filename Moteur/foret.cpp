@@ -598,7 +598,6 @@ std::list< Arbre* > Foret::adjacents(const Arbre * ab, int distance) const
 void Foret::burnAdjacentsWind(int posCol, int posRow, int hor, int vert){
 	for(int i = 0; i < abs( hor ); ++i) {
 		for(int j = 0; j < abs( vert ); ++j) {
-			// les arbres proches sont enflammées plusieurs fois TODO diminuer la force de la transmission pour compenser
 			burnAdjacentsWind(posCol, posRow, i, j);
 
 			if( ( (hor + posCol-i) >= 0 ) && ( (hor + posCol-i) < (colonnes) ) && ( (vert + posRow-j) >= 0 ) && ( (vert +posRow-j) < (lignes) ) ){
@@ -637,7 +636,7 @@ cout<< endl<< "BRULE LES ADJACENTS DE "<< a->getPos().col<< ";" << a->getPos().r
 // 				
 // 				if(cell->getState() == 1)
 // 					spark(dynamic_cast < Arbre* >(cell));
-// 			}
+// 			}u
 // 			
 // 		}
 // 	}
