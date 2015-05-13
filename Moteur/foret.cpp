@@ -478,13 +478,13 @@ void Foret::blast(Arbre* ab)
  * @author Florian
  * @param ab arbre à enflammer
  */
-void Foret::spark(Arbre* ab)
+void Foret::spark(Arbre* ab, int intensite)
 {
 // 	if (ab->getState==2){
 // // 		ab->brule();
 // 	}
 // 	else {
-	ab->spark(burningCoef);
+	ab->spark(burningCoef*intensite);
 	if (ab->isOnFire()){
 		onFire.push_back(ab);
 		burned.push_back(ab);
@@ -498,7 +498,7 @@ void Foret::spark(Arbre* ab)
  * @param col colonne où est la cellule
  * @deprecated
  */
-void Foret::spark(int col, int row)
+void Foret::spark(int col, int row, int intensite)
 {
 	Cellule* tmp= matrix[row][col];
 	
@@ -506,7 +506,7 @@ void Foret::spark(int col, int row)
 	
 	if (etat==1){
 		Arbre * ab = dynamic_cast<Arbre *>(tmp);
-		spark(ab);
+		spark(ab, intensite);
 	}
 // 	else if (etat==2){}
 }
@@ -598,7 +598,7 @@ std::list< Arbre* > Foret::adjacents(const Arbre * ab, int distance) const
 void Foret::burnAdjacentsWind(int posCol, int posRow, int hor, int vert){
 	for(int i = 0; i < abs( hor ); ++i) {
 		for(int j = 0; j < abs( vert ); ++j) {
-			burnAdjacentsWind(posCol, posRow, i, j);
+// 			burnAdjacentsWind(posCol, posRow, i, j);
 
 			if( ( (hor + posCol-i) >= 0 ) && ( (hor + posCol-i) < (colonnes) ) && ( (vert + posRow-j) >= 0 ) && ( (vert +posRow-j) < (lignes) ) ){
 				
@@ -608,7 +608,7 @@ void Foret::burnAdjacentsWind(int posCol, int posRow, int hor, int vert){
 				Cellule* cell = matrix[posRow +  (vert -j)][posCol + (hor -i)];
 				
 				if(cell->getState() == 1)
-					spark(dynamic_cast < Arbre* >(cell));
+					spark(dynamic_cast < Arbre* >(cell), (i+1)*(j+1) );
 			}
 		}
 	}
@@ -636,7 +636,7 @@ cout<< endl<< "BRULE LES ADJACENTS DE "<< a->getPos().col<< ";" << a->getPos().r
 // 				
 // 				if(cell->getState() == 1)
 // 					spark(dynamic_cast < Arbre* >(cell));
-// 			}u
+// 			}
 // 			
 // 		}
 // 	}
@@ -658,7 +658,8 @@ void Foret::transition(Arbre* ab)
 	unsigned distAdj= 1; // distance à laquelle les voisins seront enflammes ; IMPROVEIT dist 1= contact, dist 2= diagonaux, dist 3 = ...
 	list< Arbre* > voisins= adjacents(ab, distAdj);
 	for (list< Arbre* >::iterator a(voisins.begin()); a!=voisins.end(); ++a){
-		spark( (*a) );
+		// intensite fixe		
+		spark( (*a), 5 );
 	}
 	
 	if ( ab->burn(burningCoef) )
@@ -706,6 +707,21 @@ bool Foret::NextMove()
 	
 	return modif;
 }
+
+
+// ################################
+//		Persistance des donnees
+// ################################
+bool Foret::saveMatrix(string fileName)
+{
+// 	si
+	string chemin= "resources/"+fileName;
+	ofstream file(chemin.c_str());
+// 	file.
+	
+	return true;
+}
+
 
 // #########################
 // #	Affichage attributs	#

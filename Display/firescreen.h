@@ -52,7 +52,7 @@ public:
 	void initComponents();
 	void initSizes(int largeur, int hauteur);
 	
-	void majTimer();
+	void majCompteur();
 	bool initialisation();
 		
 protected:

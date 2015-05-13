@@ -97,11 +97,10 @@ void Arbre::initialise()
 /**
  * L'arbre reçoit des flammes et risque de s'enflammer
  * @author Florian
- * TODO ajouter aléatoire
  */
 void Arbre::spark(float coef)
 {
-	int taux= 10/humidity *100;
+	int taux= 10*coef/humidity *100;
 	
 	int aleatoire= rand()%101;
 	
@@ -116,7 +115,7 @@ void Arbre::spark(float coef)
 		#endif
 	}
 	else {
-		humidity -= 5.0*coef;
+		humidity -= coef;
 		#if DEBUG_SPARK
 		cout<< "non"<< endl;
 		#endif
