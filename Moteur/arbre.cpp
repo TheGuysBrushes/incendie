@@ -101,7 +101,7 @@ void Arbre::initialise()
  */
 void Arbre::spark(float coef)
 {
-	int taux= 15/humidity *100;
+	int taux= 10/humidity *100;
 	
 	int aleatoire= rand()%101;
 	
@@ -116,7 +116,7 @@ void Arbre::spark(float coef)
 		#endif
 	}
 	else {
-		humidity -= 10.0*coef;
+		humidity -= 5.0*coef;
 		#if DEBUG_SPARK
 		cout<< "non"<< endl;
 		#endif
@@ -135,12 +135,13 @@ bool Arbre::burn(float coef)
 	// - DID des caractères discrets de l'arbre
 	// - TODO determiner le nombre de points de vie à enlever en fonction des parametres exterieurs
 	int decrementation = 100.0*coef;
+	
+	decrementation *= 1.0/( (float)humidity );
 	#if DEBUG_DECRE
 	cout << coef<< ",decre init: "<< decrementation << "|";
 	cout << "type  : " << essence->getType();
 	#endif
 	
-	decrementation *= 1.0/( (float)humidity );
 	if(essence->getType() == 0){
 		// On considère qu'un épineux brule plus vite qu'un feuillu
 		decrementation *= 1.20;
