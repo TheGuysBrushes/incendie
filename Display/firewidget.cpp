@@ -581,6 +581,7 @@ void FireWidget::reset(int _larg, int _haut, float proba, float coef)
 	update();
 }
 
+
 /**
  * Slot permettant d'éxecuter l'action choisie par l'utilisateur
  * sur la zone enregistrée après un releaseMouseEvent.
@@ -589,8 +590,22 @@ void FireWidget::reset(int _larg, int _haut, float proba, float coef)
  */
 void FireWidget::actionReceived(int x)
 {
-	// Parcours de la zone de selection
+	// Transformation des QPoints depart et arrivée en coordonnée cellulaire
+	int xDep = depart.x() / tailleCell;
+	int yDep = depart.y() / tailleCell;
 	
+	int xArr = arrivee.x() / tailleCell;
+	int yArr = arrivee.y() / tailleCell;
+	
+	#if DEBUG_RETARD
+	cout << "Coordonnée en cellule du départ : " << xDep << ";" << yDep << endl;
+	cout << "Coordonnée en cellule de l'arrivée : " << xArr << ";" << yArr << endl;
+	#endif
+
+	// Parcours de la zone de selection
+	for(int i = xDep; i<= xArr ; ++i){
+		
+	}
 	// application de l'effet choisi à toute cellule dont l'état est non-vide
 
 }

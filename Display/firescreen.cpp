@@ -416,8 +416,8 @@ void FireScreen::updateWind(int angle, int vitesse){
 	// Les paramètres du vent ont été modifiés
 	// On doit récupérer les valeurs et mettre à jour le vent
 	float vertical;
-	
 	float horizontal;
+	
 	if( (angle >= 360 && angle <450) || (angle >=540 && angle < 630)){
 		vertical = sin(PI*(float)angle/180.0);
 		horizontal = cos(PI*(float)angle/180.0);
