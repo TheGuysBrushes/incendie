@@ -55,8 +55,8 @@ Foret::Foret(int n_colonnes, int n_lignes, float proba, float coefFire)
 
 Foret::Foret(string& filename) :burningCoef(0.5)
 {
-	initEmpty();
 	load("foret1");
+	initEmpty();
 // 	randomMatrix(0.60);
 	
 	wind = new Vent(2.0,2.0);
