@@ -1,6 +1,5 @@
 #include "foret.h"
 
-#include <fstream>
 #include <cstdlib>
 #include <ctime>
 
@@ -43,17 +42,27 @@ using namespace std;
 Foret::Foret(int n_colonnes, int n_lignes, float proba, float coefFire)
 : lignes(n_lignes), colonnes(n_colonnes), burningCoef(coefFire)
 {
-	loadMatrix("foret1");
 	initialisation(proba);
 // TODO Ugo : faire des constructeur qui permettent de créer un vent inital en accord avec la valeur initiale du curseur
 	wind = new Vent(2.0,2.0);
 }
 
-Foret::Foret(Foret& other, float proba)
- : lignes(other.lignes), colonnes(other.colonnes), burningCoef(other.burningCoef)
+// Foret::Foret(Foret& other, float proba)
+//  : lignes(other.lignes), colonnes(other.colonnes), burningCoef(other.burningCoef)
+// {
+// 	initialisation(proba);
+// }
+
+Foret::Foret(string& filename) :burningCoef(0.5)
 {
-	initialisation(proba);
+	initEmpty();
+	load("foret1");
+// 	randomMatrix(0.60);
+	
+	wind = new Vent(2.0,2.0);
 }
+
+
 
 /**
  * On vide également les listes, mêmes si c'est fait automatiquement TODO verifier si ca n'empeche pas un probleme de "double libération" des arbres  et l'ordre libérer-vider
@@ -208,6 +217,7 @@ unsigned Foret::essenceRandom(int col, int row, unsigned distOthers){
 		index -= probaEss[ess];
 		++ess;
 	}
+	
 	return ess;
 }
 
@@ -739,12 +749,60 @@ bool Foret::NextMove()
 }
 
 
-
-
 // ################################
 //		Persistance des donnees
 // ################################
-bool Foret::loadMatrix(string fileName)
+
+void Foret::loadEssences(ifstream* file)
+{
+	int nbEssences;
+	file->read( (char*)&(nbEssences), sizeof(int));
+#if DEBUG_LOAD
+	cout<< "Nombre essences : " << nbEssences<< endl;
+#endif
+	
+	for(int i=0; i<nbEssences; ++i){
+		int matur;
+		int diam;
+		int mass;
+		int haut;
+		
+		file->read( (char*)&(matur), sizeof(int));
+		file->read( (char*)&(diam), sizeof(int));
+		file->read( (char*)&(mass), sizeof(int));
+		file->read( (char*)&(haut), sizeof(int));
+	}
+}
+
+
+void Foret::loadMatrix(ifstream* file)
+{
+	cout<< "Chargement ..."<< endl;
+	file->read( (char *)&(colonnes), sizeof(int));
+	file->read( (char *)&(lignes), sizeof(int));
+	#if DEBUG_LOAD
+	cout<< "Taille : " << colonnes<< " en largeur "<<lignes<< " en hauteur" <<endl;
+	#endif
+// 	randomMatrix(0.60);
+	
+	// Arbres
+	while(!file->eof()){
+		int col='a', row='b';
+		file->read((char *)&col, sizeof(int));
+		file->read((char *)&row, sizeof(int));
+
+		unsigned indice;
+		
+		file->read( (char*)&(indice), sizeof(unsigned));
+		
+		#if DEBUG_LOAD
+// 		cout<< "arbre en : "<< col<< "; "<< row << " essence indice : " << indice<<endl;
+		#endif
+	}
+// 		int progression= 0;
+}
+
+bool Foret::load(string fileName)
 {
 	string chemin= "./Resources/"+fileName+".dat";
 	ifstream file(chemin.c_str(), ios::in|ios::binary);
@@ -754,48 +812,87 @@ bool Foret::loadMatrix(string fileName)
 		return false;
 	}
 	else {
-		cout<< "Chargement ..."<< endl;
+		loadEssences(&file);
+		loadEssences("../Moteur/essence_data.txt");
+		loadMatrix(&file);
 		
-// 		// Essences
-// 		int matur;
-// 		int diam;
-// 		int mass;
-// 		int haut;
-// 		
-// 		file.read( (char*)&(matur), sizeof(int));
-// 		file.read( (char*)&(diam), sizeof(int));
-// 		file.read( (char*)&(mass), sizeof(int));
-// 		file.read( (char*)&(haut), sizeof(int));
-// 		
+		file.close();
 		
-		// Arbres
-		while(!file.eof()){
-			int col='a', row='b';
-			file.read((char *)&col, sizeof(int));
-			file.read((char *)&row, sizeof(int));
-
-			unsigned indice;
-			
-			file.read( (char*)&(indice), sizeof(unsigned));
-			
-			#if DEBUG_LOAD
-			cout<< "arbre en : "<< col<< "; "<< row << " essence indice : " << indice<<endl;
-			#endif
-		}
-// 		int progression= 0;
+		return true;
 	}
-	file.close();
-		
-	return true;
 }
 
 
-bool Foret::saveMatrix(string fileName)
+void Foret::saveEssences(ofstream* file)
 {
-	// 	si
+	int taille= essences.size();
+	file->write( (char*)&(taille), sizeof(int));
+	
+	for (vector<Essence>::iterator e(essences.begin()); e != essences.end(); ++e){
+
+		int matur= e->getAgeMaturite();
+		int diam= e->getDiametre();
+		int mass= e->getMasse();
+		int haut= e->getHauteur();
+		
+		file->write( (char*)&(matur), sizeof(int));
+		file->write( (char*)&(diam), sizeof(int));
+		file->write( (char*)&(mass), sizeof(int));
+		file->write( (char*)&(haut), sizeof(int));
+
+	}
+}
+
+void Foret::saveMatrix(ofstream* file)
+{
+	file->write( (char *)&(colonnes), sizeof(int));
+	file->write( (char *)&(lignes), sizeof(int));
+	
+	int progression= 0;
+	
+	for (int i= 0; i< lignes; ++i){
+		for(vector< Cellule* >::const_iterator a(matrix[i].begin()); a != matrix[i].end() ; ++a ){
+			if ( (*a)->getState()>0){
+				Arbre * ab= dynamic_cast< Arbre * >(*a);
+#if DEBUG_SAVE
+cout<< "Enregistrement de l'arbre "<< ab->getPos().col<< "; "<< ab->getPos().row<< endl; 
+#endif
+					
+				// Position
+// 						file<< ab->getPos().col << ab->getPos().row;
+				
+				// PV
+// 						file<< ab->getPv();
+				
+				// Position
+				file->write( (char *)&(ab->getPos().col), sizeof(int));
+				file->write( (char *)&(ab->getPos().row), sizeof(int));
+				
+				// PV
+// 					file.write( (char *)ab->getPv(), sizeof(int));
+				
+				unsigned indice= ab->getEssence()->getIndice();
+				
+				file->write( (char*)&(indice), sizeof(unsigned));
+			}
+		}
+		
+		int newProgression= i*100 / lignes;
+		while (newProgression>progression){
+			cout<< "=";
+			progression++;
+		}
+		cout.flush();
+	}
+	cout<< endl<< progression<<"%"<< endl;
+
+}
+
+bool Foret::save(string fileName)
+{
 	string chemin= "./Resources/"+fileName+".dat";
 	ofstream file(chemin.c_str(), ios::out|ios::binary);
-	// 	file.
+	
 	if (!file.is_open()){
 		cout<< "Echec ouverture fichier de sauvegarde"<< endl;
 		return false;
@@ -803,62 +900,15 @@ bool Foret::saveMatrix(string fileName)
 	else {
 		cout<< "Sauvegarde ..."<< endl;
 		
-		int progression= 0;
-		
-		for (int i= 0; i< lignes; ++i){
-			for(vector< Cellule* >::const_iterator a(matrix[i].begin()); a != matrix[i].end() ; ++a ){
-				if ( (*a)->getState()>0){
-					Arbre * ab= dynamic_cast< Arbre * >(*a);
-#if DEBUG_SAVE
-cout<< "Enregistrement de l'arbre "<< ab->getPos().col<< "; "<< ab->getPos().row<< endl; 
-#endif
-						
-					// Position
-// 						file<< ab->getPos().col << ab->getPos().row;
-					
-					// PV
-// 						file<< ab->getPv();
-					
-					// Position
-					file.write( (char *)&(ab->getPos().col), sizeof(int));
-					file.write( (char *)&(ab->getPos().row), sizeof(int));
-					
-					// PV
-	// 					file.write( (char *)ab->getPv(), sizeof(int));
-					
-					
-					unsigned indice= ab->getEssence()->getIndice();
-					
-					file.write( (char*)&(indice), sizeof(unsigned));
-				}
-			}
-			
-			int newProgression= i*100 / lignes;
-			while (newProgression>progression){
-				cout<< "=";
-				progression++;
-			}
-			cout.flush();
-		}
-		cout<< endl<< progression<<"%"<< endl;
-		
-		// Essences
-		// 					const Essence* e= ();
-		// 					int matur= e->getAgeMaturite();
-		// 					int diam= e->getDiametre();
-		// 					int mass= e->getMasse();
-		// 					int haut= e->getHauteur();
-		// 					
-		// 					file.write( (char*)&(matur), sizeof(int));
-		// 					file.write( (char*)&(diam), sizeof(int));
-		// 					file.write( (char*)&(mass), sizeof(int));
-		// 					file.write( (char*)&(haut), sizeof(int));
+		saveEssences(&file);
+		saveMatrix(&file);
 		
 		file.close();
+		
+		return true;
 	}
-					
-	return true;
 }
+
 
 // #########################
 // #	Affichage attributs	#

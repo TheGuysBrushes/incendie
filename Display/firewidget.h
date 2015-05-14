@@ -49,8 +49,10 @@ public:
 
 	/* Autres Méthodes */
 	void initialise(int _largeur, int _hauteur, float proba = 0.60, float coef_brulure=1.0);
+	void initialise(std::string& filename);
+	
 	void delForest();
-	void save() const;
+	void saveForest() const;
 
 	bool loadPicture(QString filename);
 	bool eteindreFeu(int colonne, int ligne);

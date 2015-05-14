@@ -281,18 +281,34 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 	
 }
 
+using namespace std;
 void FireScreen::initForest(const Fwelcome* fwel)
 {
 	nb_tour = 0;
-	
-	int largeur = fwel->get_larg();
-	int hauteur = fwel->get_haut();
-	fWidget->initialise(largeur,hauteur,
-							  fwel->get_proba(),
-							  fwel->get_coef());
-	
-	majCompteur();
-	initSizes(largeur, hauteur);
+
+	string filename= fwel->getDirectory();
+	if ( filename != ""){
+		cout<< "Chargement d'une foret à partir du fichier "<< fwel->getDirectory()<< endl;
+		sleep(1);
+		
+		fWidget->initialise(filename);
+		
+// 		TODO rajouter un initSizes
+	}
+	else {
+		cout<< "Pas de fichier, création d'une foret aléatoirement"<< endl;
+		sleep(1);
+		
+		int largeur = fwel->get_larg();
+		int hauteur = fwel->get_haut();
+		fWidget->initialise(largeur,hauteur,
+								  fwel->get_proba(),
+								  fwel->get_coef());
+		majCompteur();
+		initSizes(largeur, hauteur);
+	}
+		
+// 	}
 }
 
 
@@ -393,7 +409,7 @@ void FireScreen::reset()
 	stop_timer();
 	
 	Fwelcome* fwel = new Fwelcome(this);
-	fwel->get_cancel()->setVisible(true);
+	fwel->addCancel();
 	fwel->setModal(true);
 	fwel->show();
 	
@@ -468,6 +484,6 @@ void FireScreen::releaseOrdered()
 
 void FireScreen::save() const
 {
-	fWidget->save();
+	fWidget->saveForest();
 }
 	

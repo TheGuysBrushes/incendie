@@ -17,14 +17,16 @@ class Fwelcome : public QDialog
 {
 Q_OBJECT
 private:
-	QPushButton* valid_btn;
 	QSpinBox* haut_spin;
 	QSpinBox* larg_spin;
 	QLabel* p_value;
 	QLabel* c_value;
+// 	QPushButton* valid_btn;
+	QPushButton* cancel_btn;
+	
 	float proba;
 	float coef_brulure;
-	QPushButton* cancel_btn;
+	std::string directory; 
 
 public:
 	/* Constructeur et destructeur */
@@ -33,18 +35,20 @@ public:
 
 	/* Autres Méthodes */
 	void initComponents();
+	void addCancel() const;
 
 	/* Getters */
 	int get_haut() const{ return haut_spin->value(); };
 	int get_larg() const{ return larg_spin->value(); };
 	float get_proba() const{ return proba; };
 	float get_coef() const{ return coef_brulure; };
-	QPushButton* get_cancel() const { return cancel_btn; };
+	std::string getDirectory() const { return directory; };
 
 public slots:
 	/* Setters */
 	void set_proba(int x);
 	void set_coef(int x);
+	void load(/*std::string filename*/);
 };
 
 #endif // FWELCOME_H

@@ -14,37 +14,36 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	// Initialisation des composants dynamiques (SpinBox exceptées)
 	p_value = new QLabel();
 	c_value = new QLabel();
-	
-	#if FRENCH
-	valid_btn = new QPushButton("Valider");
-	#else 
-	valid_btn = new QPushButton("Confirm");
-	#endif
-	
-	valid_btn->setDefault(true);
-	
-	#if FRENCH
-	cancel_btn = new QPushButton("Annuler");
-	#else 
-	cancel_btn = new QPushButton("Cancel");
-	#endif
-	
-	cancel_btn->setVisible(false);
-	
+	directory= "";
+
 	initComponents();
 }
 
 Fwelcome::~Fwelcome(){
-	delete(valid_btn);
 	delete(haut_spin);
 	delete(larg_spin);
 	delete(p_value);
 	delete(c_value);
-	delete(cancel_btn);
+// 	delete(valid_btn);
+// 	delete(cancel_btn);
 }
 
 /*** Autres Méthodes ***/
 void Fwelcome::initComponents(){
+
+	#if FRENCH
+	QPushButton* valid_btn = new QPushButton("Valider");
+	cancel_btn = new QPushButton("Annuler");
+	QPushButton* load_btn= new QPushButton("Charger une foret", this);
+	#else 
+	QPushButton* valid_btn = new QPushButton("Confirm");
+	// TODO placement du bouton de chargemetn
+	cancel_btn = new QPushButton("Cancel");
+	QPushButton* load_btn= new QPushButton("Load forest", this);
+	#endif
+	
+	valid_btn->setDefault(true);
+	cancel_btn->setVisible(false);
 
 	/* Conteneurs */
 	QVBoxLayout* lay = new QVBoxLayout(this);
@@ -136,13 +135,39 @@ void Fwelcome::initComponents(){
 	/* Connexion entre les différents éléments */
 	connect(slide_p,	SIGNAL(valueChanged(int)), this, SLOT(set_proba(int)) );
 	connect(slide_c,	SIGNAL(valueChanged(int)), this, SLOT(set_coef(int)) );
-	connect(valid_btn, SIGNAL(clicked()), this, SLOT(accept()) );
-	connect(cancel_btn, SIGNAL(clicked()), this, SLOT(reject()) );
+	
+	connect(valid_btn,	SIGNAL(clicked()), this, SLOT(accept()) );
+	connect(cancel_btn,	SIGNAL(clicked()), this, SLOT(reject()) );
+	connect(load_btn,	SIGNAL(clicked()), this, SLOT(load()) );
 
 	// Appel à setValue pour déclencer l'affichage de la valeur à la construction du widget
 	slide_c->setValue(50);
 	slide_p->setValue(50);
 }
+
+void Fwelcome::addCancel() const
+{
+	cancel_btn->setVisible(true);
+}
+
+#include <fstream>
+#include <iostream>
+void Fwelcome::load()
+{
+	std::string filename= "./Resources/foret1.dat";
+	
+	std::ifstream file(filename.c_str(), std::ios::in|std::ios::binary);
+	if (!file.is_open()){
+		std::cout<< "Echec ouverture fichier de sauvegarde"<< std::endl;
+	}
+	else {
+		file.close();
+		directory= filename;
+		accept();
+	}
+}
+
+
 
 /*** SLOTS ***/
 /**

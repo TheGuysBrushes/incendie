@@ -43,7 +43,8 @@ public:
 	
 	// Constructeur et destructeur
 	Foret(int n_colonnes, int n_lignes, float proba = 0.60, float coefFire = 1.0);
-	Foret(Foret& other, float proba=0.60);
+// 	Foret(Foret& other, float proba=0.60);
+	Foret(std::string& filename);
 	virtual ~Foret();
 	
 	// Initialisations
@@ -110,8 +111,15 @@ public:
 	bool NextMove();
 	
 	// Persistance des donnees
-	bool loadMatrix(std::string fileName= "save_forest");
-	bool saveMatrix(std::string fileName= "save_forest");
+	void loadEssences(std::ifstream* file);
+	void loadMatrix(std::ifstream* file);
+	
+	void saveEssences(std::ofstream* file);
+	void saveMatrix(std::ofstream* file);
+	
+	bool load(std::string fileName= "save_forest");
+	bool save(std::string fileName= "save_forest");
+	
 	
 	// Affichage attributs
 	void showEssences() const;

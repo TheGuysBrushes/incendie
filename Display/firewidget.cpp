@@ -34,9 +34,20 @@ FireWidget::FireWidget(int _largeur, int _hauteur, float proba, float coef_brulu
 {
 	initialise(_largeur, _hauteur, proba, coef_brulure);
 
+	buffer = new QImage();
+	color = new QColor(Qt::black);
+	bufferPainter= new QPainter();
+	loadPicture("../foret_pay.png");
+	rubber = NULL;
 }
 
 FireWidget::FireWidget(): QWidget(){
+	
+	buffer = new QImage();
+	color = new QColor(Qt::black);
+	bufferPainter= new QPainter();
+	loadPicture("../foret_pay.png");
+	rubber = NULL;
 }
 
 FireWidget::~FireWidget(){
@@ -55,20 +66,23 @@ FireWidget::~FireWidget(){
 /**
  * Fonction agissant comme le constructeur. Permet de gérer la 
  * ré-initialisation de la matrice
- * @author Florian et Ugo ?
+ * @author Florian et Ugo
  * @param identique_constructeur
  */
 void FireWidget::initialise(int _largeur, int _hauteur, float proba, float coef_brulure)
 {
-	forest = new Foret(_largeur, _hauteur, proba, coef_brulure);
-	buffer = new QImage();
-	color = new QColor(Qt::black);
-	bufferPainter= new QPainter();
-	loadPicture("../foret_pay.png");
-	rubber = NULL;
+	forest= new Foret(_largeur, _hauteur, proba, coef_brulure);
 	
 	setMinimumSize(_largeur, _hauteur);
 }
+
+void FireWidget::initialise(string& filename)
+{
+	forest= new Foret(filename);
+	
+// 	TODO ajouter un setMinimumSize, extraire largeur et hauteur dans firescreen plutot que dans foret ? => passer un fichier plutot qu'un chemin
+}
+
 
 /**
  * Méthodes de destruction de la forêt pour gérer la 
@@ -78,9 +92,9 @@ void FireWidget::delForest(){
 	delete(forest);
 }
 
-void FireWidget::save() const
+void FireWidget::saveForest() const
 {
-	forest->saveMatrix("foret1");
+	forest->save("foret1");
 }
 
 
