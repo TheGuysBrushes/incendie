@@ -804,11 +804,14 @@ void Foret::loadMatrix(ifstream* file)
 	#if DEBUG_LOAD
 	cout<< "Taille : " << colonnes<< " en largeur "<<lignes<< " en hauteur" <<endl;
 	#endif
-
+	
 	initEmpty();
+	cout<< "=";
+	
+	int progression= 2;
 	
 	// Arbres
-	while(!file->eof()){
+	for (int i= 0; i<lignes; ++i){
 		int col='a', row='b';
 		file->read((char *)&col, sizeof(int));
 		file->read((char *)&row, sizeof(int));
@@ -821,6 +824,13 @@ void Foret::loadMatrix(ifstream* file)
 		#if DEBUG_LOAD
 // 		cout<< "arbre en : "<< col<< "; "<< row << " essence indice : " << indice<<endl;
 		#endif
+		
+		int newProgression= i*100 / lignes;
+		while (newProgression>progression){
+			cout<< "=";
+			progression++;
+		}
+		cout.flush();
 	}
 // 		int progression= 0;
 }
