@@ -818,7 +818,6 @@ void Foret::loadMatrix(ifstream* file)
 		file->read( (char*)&(indice), sizeof(unsigned));
 		
 		plantTree(col, row, indice);
-		
 		#if DEBUG_LOAD
 // 		cout<< "arbre en : "<< col<< "; "<< row << " essence indice : " << indice<<endl;
 		#endif
@@ -880,25 +879,19 @@ void Foret::saveMatrix(ofstream* file)
 	int progression= 0;
 	
 	for (int i= 0; i< lignes; ++i){
-		for(vector< Cellule* >::const_iterator a(matrix[i].begin()); a != matrix[i].end() ; ++a ){
-			if ( (*a)->getState()>0){
-				Arbre * ab= dynamic_cast< Arbre * >(*a);
+		for(vector< Cellule* >::const_iterator cell(matrix[i].begin()); cell != matrix[i].end() ; ++cell ){
+			if ( (*cell)->getState()>0){
+				Arbre * ab= dynamic_cast< Arbre * >(*cell);
 #if DEBUG_SAVE
 cout<< "Enregistrement de l'arbre "<< ab->getPos().col<< "; "<< ab->getPos().row<< endl; 
 #endif
 					
 				// Position
-// 						file<< ab->getPos().col << ab->getPos().row;
-				
-				// PV
-// 						file<< ab->getPv();
+// 				file<< ab->getPos().col << ab->getPos().row;
 				
 				// Position
-				file->write( (char *)&(ab->getPos().col), sizeof(int));
-				file->write( (char *)&(ab->getPos().row), sizeof(int));
-				
-				// PV
-// 					file.write( (char *)ab->getPv(), sizeof(int));
+// 				file->write( (char *)&(ab->getPos().col), sizeof(int));
+// 				file->write( (char *)&(ab->getPos().row), sizeof(int));
 				
 				unsigned indice= ab->getEssence()->getIndice();
 				
