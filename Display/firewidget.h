@@ -49,7 +49,7 @@ public:
 
 	/* Autres Méthodes */
 	void initialise(int _largeur, int _hauteur, float proba = 0.60, float coef_brulure=1.0);
-	void initialise(std::string& filename);
+	void initialise(std::string& filename, QProgressBar* PB);
 	
 	void delForest();
 	void saveForest() const;

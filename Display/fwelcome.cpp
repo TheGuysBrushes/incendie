@@ -15,7 +15,12 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	p_value = new QLabel();
 	c_value = new QLabel();
 	directory= "";
-
+	
+	PB_load= new QProgressBar();
+	PB_load->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+	PB_load->setFixedHeight(20);
+	PB_load->setHidden(true);
+	
 	initComponents();
 }
 
@@ -31,28 +36,12 @@ Fwelcome::~Fwelcome(){
 /*** Autres Méthodes ***/
 void Fwelcome::initComponents(){
 
-	#if FRENCH
-	QPushButton* valid_btn = new QPushButton("Valider");
-	cancel_btn = new QPushButton("Annuler");
-	QPushButton* load_btn= new QPushButton("Charger une foret", this);
-	#else 
-	QPushButton* valid_btn = new QPushButton("Confirm");
-	// TODO placement du bouton de chargemetn
-	cancel_btn = new QPushButton("Cancel");
-	QPushButton* load_btn= new QPushButton("Load forest", this);
-	#endif
-	
-	valid_btn->setDefault(true);
-	cancel_btn->setVisible(false);
-
 	/* Conteneurs */
 	QVBoxLayout* lay = new QVBoxLayout(this);
-	QWidget* ww = new QWidget(this);
-	QWidget* www = new QWidget(this);
-	QGridLayout* grid_lay = new QGridLayout(ww);
-	QHBoxLayout* h_lay = new QHBoxLayout(www);
 	
 	/* Initialisation des composants statiques (hors SpinBox ) */
+	
+	// TEXTE
 	#if FRENCH
 	QString s = " Bienvenue sur l'automate de simulation de feux de foret. Veuillez renseigner les differents parametres, puis validez.\n";
 	#else
@@ -64,52 +53,62 @@ void Fwelcome::initComponents(){
 	present->setAlignment(Qt::AlignCenter);
 	present->setMinimumSize(400, 60);
 	
-	#if FRENCH
-	QLabel* l_lbl = new QLabel("Largeur : ");
-	#else
-	QLabel* l_lbl = new QLabel("Width : ");
-	#endif
+// REGLAGES
+	QWidget* WSettings = new QWidget();
 	
-	larg_spin = new QSpinBox(ww);
-	larg_spin->setMinimum(100);
-	larg_spin->setMaximum(QApplication::desktop()->screenGeometry().width() -250-15);
-	larg_spin->setValue(450);
-	larg_spin->setSingleStep(25);
-	larg_spin->setAccelerated(1);
+	QGridLayout* grid_lay = new QGridLayout(WSettings);
 	
-	#if FRENCH
-	QLabel* h_lbl = new QLabel("Hauteur : ");
-	#else
-	QLabel* h_lbl = new QLabel("Height : ");
-	#endif
+	// SPINBOXS
+		// SpinBox largeur
+		#if FRENCH
+		QLabel* l_lbl = new QLabel("Largeur : ");
+		#else
+		QLabel* l_lbl = new QLabel("Width : ");
+		#endif
+		
+		larg_spin = new QSpinBox(WSettings);
+			larg_spin->setMinimum(100);
+			larg_spin->setMaximum(QApplication::desktop()->screenGeometry().width() -250-15);
+			larg_spin->setValue(450);
+			larg_spin->setSingleStep(25);
+			larg_spin->setAccelerated(1);
+		
+		// SpinBox Hauteur
+		#if FRENCH
+		QLabel* h_lbl = new QLabel("Hauteur : ");
+		#else
+		QLabel* h_lbl = new QLabel("Height : ");
+		#endif
+		
+		haut_spin = new QSpinBox(WSettings);
+			haut_spin->setMinimum(100);
+			haut_spin->setMaximum(QApplication::desktop()->screenGeometry().height()-45-25 ); // 45 pixel à cause des marges et menu (observé 43)
+			haut_spin->setValue(300);
+			haut_spin->setSingleStep(25);
+			haut_spin->setAccelerated(1);
 	
-	
-	haut_spin = new QSpinBox(ww);
-	haut_spin->setMinimum(100);
-	haut_spin->setMaximum(QApplication::desktop()->screenGeometry().height()-45-25 ); // 45 pixel à cause des marges et menu (observé 43)
-	haut_spin->setValue(300);
-	haut_spin->setSingleStep(25);
-	haut_spin->setAccelerated(1);
-	
-	#if FRENCH
-	QLabel* p_lbl = new QLabel("Probabilite : ");
-	#else
-	QLabel* p_lbl = new QLabel("Probability : ");
-	#endif
-	
-	QSlider * slide_p = new QSlider(Qt::Horizontal, 0);
-	slide_p->setMaximum(100);
-	slide_p->setMinimum(1);
+	// SLIDERS
+		// Probabilite
+		#if FRENCH
+		QLabel* p_lbl = new QLabel("Probabilite : ");
+		#else
+		QLabel* p_lbl = new QLabel("Probability : ");
+		#endif
+		
+		QSlider * slide_p = new QSlider(Qt::Horizontal, 0);
+		slide_p->setMaximum(100);
+		slide_p->setMinimum(1);
 
-// 	#if FRENCH
-// 	#else
-// 	#endif
-	QLabel* c_lbl = new QLabel("Coefficient : ");
-	
-	QSlider* slide_c = new QSlider(Qt::Horizontal, 0);
-	slide_c->setMaximum(100);
-	slide_c->setMinimum(1);
-
+		// Coefficient
+	// 	#if FRENCH
+	// 	#else
+	// 	#endif
+		QLabel* c_lbl = new QLabel("Coefficient : ");
+		
+		QSlider* slide_c = new QSlider(Qt::Horizontal, 0);
+		slide_c->setMaximum(100);
+		slide_c->setMinimum(1);
+				
 	/* Emboitements */
 	grid_lay->addWidget(l_lbl, 0,0);
 	grid_lay->addWidget(larg_spin, 0,1);
@@ -120,17 +119,39 @@ void Fwelcome::initComponents(){
 	grid_lay->addWidget(p_lbl,2,0);
 	grid_lay->addWidget(slide_p,2,1);
 	grid_lay->addWidget(p_value,2,2);
-
+	
 	grid_lay->addWidget(c_lbl,3,0);
 	grid_lay->addWidget(slide_c,3,1);
 	grid_lay->addWidget(c_value,3,2);
+			
+	
+	// BOUTONS
+	QWidget* WButtons= new QWidget();
+		QHBoxLayout* h_lay = new QHBoxLayout(WButtons);
+		
+			#if FRENCH
+			QPushButton* valid_btn = new QPushButton("Valider");
+			cancel_btn = new QPushButton("Annuler");
+			QPushButton* load_btn= new QPushButton("Charger une foret", this);
+			#else 
+			QPushButton* valid_btn = new QPushButton("Confirm");
+			// TODO placement du bouton de chargemetn
+			cancel_btn = new QPushButton("Cancel");
+			QPushButton* load_btn= new QPushButton("Load forest", this);
+			#endif
+			
+				valid_btn->setDefault(true);
+				cancel_btn->setVisible(false);
+			
+		h_lay->addWidget(valid_btn);
+		h_lay->addWidget(cancel_btn);
 
-	h_lay->addWidget(valid_btn);
-	h_lay->addWidget(cancel_btn);
-
+		
 	lay->addWidget(present);
-	lay->addWidget(ww);
-	lay->addWidget(www);
+	lay->addWidget(WSettings);
+	lay->addWidget(WButtons);
+	lay->addWidget(PB_load);
+
 
 	/* Connexion entre les différents éléments */
 	connect(slide_p,	SIGNAL(valueChanged(int)), this, SLOT(set_proba(int)) );

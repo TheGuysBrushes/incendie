@@ -63,13 +63,6 @@ FireScreen::FireScreen(): QMainWindow()
 	delai_lbl = new QLabel();
 }
 
-// FireScreen::FireScreen(int hauteur, int largeur, float proba, long nTemps, float coef_brulure/*, QWidget* parent, Qt::WindowFlags flags*/)
-// :	/*QMainWindow(parent, flags),*/	delai(nTemps)
-// {
-// 	initialiseFixes();
-// 	initialiseParametres(hauteur, largeur, proba, nTemps, coef_brulure);
-// }
-
 FireScreen::~FireScreen()
 {
 	delete(fWidget);	
@@ -290,8 +283,16 @@ void FireScreen::initForest(const Fwelcome* fwel)
 	if ( filename != ""){
 		cout<< "Chargement d'une foret à partir du fichier "<< fwel->getDirectory()<< endl;
 		sleep(1);
-		
-		fWidget->initialise(filename);
+// 		QProgressBar* PB= fwel->getProgressBar();
+		QMainWindow* loadWindow= new QMainWindow;
+		QWidget* w(loadWindow);
+		PB_load= new QProgressBar(w);
+// 		QLabel* txtLoad("Chargement de la foret", w);
+		QProgressBar* PB= PB_load;
+		loadWindow->show();
+		// TODO voir si il faut que foret fasse emit d'un signal à connecter à la progressbar
+		fWidget->initialise(filename, PB);
+		loadWindow->hide();
 		
 // 		TODO rajouter un initSizes
 	}
@@ -324,7 +325,9 @@ bool FireScreen::initialisation()
 	fwel->show();
 	
 	if( fwel->exec() == QDialog::Accepted ){
+		fwel->show();
 		initForest(fwel);
+		fwel->hide();
 		return true;
 	}
 	return false;

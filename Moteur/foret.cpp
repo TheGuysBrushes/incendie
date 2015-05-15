@@ -53,9 +53,9 @@ Foret::Foret(int n_colonnes, int n_lignes, float proba, float coefFire)
 // 	initialisation(proba);
 // }
 
-Foret::Foret(string& filename) :burningCoef(0.5)
+Foret::Foret(string& filename, QProgressBar* PB) :burningCoef(0.5)
 {
-	load("foret1");
+	load("foret1", PB);
 // 	randomMatrix(0.60);
 	
 	wind = new Vent(2.0,2.0);
@@ -796,7 +796,7 @@ void Foret::loadEssences(ifstream* file)
 }
 
 
-void Foret::loadMatrix(ifstream* file)
+void Foret::loadMatrix(ifstream* file, QProgressBar* PB)
 {
 	cout<< "Chargement ..."<< endl;
 	file->read( (char *)&(colonnes), sizeof(int));
@@ -806,9 +806,6 @@ void Foret::loadMatrix(ifstream* file)
 	#endif
 	
 	initEmpty();
-	cout<< "=";
-	
-	int progression= 2;
 	
 	// Arbres
 	for (int i= 0; i<lignes; ++i){
@@ -826,16 +823,12 @@ void Foret::loadMatrix(ifstream* file)
 		#endif
 		
 		int newProgression= i*100 / lignes;
-		while (newProgression>progression){
-			cout<< "=";
-			progression++;
-		}
-		cout.flush();
+		PB->setValue(newProgression);
 	}
 // 		int progression= 0;
 }
 
-bool Foret::load(string fileName)
+bool Foret::load(string fileName, QProgressBar* PB)
 {
 	string chemin= "./Resources/"+fileName+".dat";
 	ifstream file(chemin.c_str(), ios::in|ios::binary);
@@ -847,7 +840,7 @@ bool Foret::load(string fileName)
 	else {
 		loadEssences(&file);
 // 		loadEssences("../Moteur/essence_data.txt");
-		loadMatrix(&file);
+		loadMatrix(&file, PB);
 		
 		file.close();
 		

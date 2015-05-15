@@ -8,6 +8,7 @@
 #include <QtGui/QPushButton>
 #include <QtGui/QSpinBox>
 #include <QtGui/QSlider>
+#include <QtGui/QProgressBar>
 /**
  * Classe représentant le panneau de dialogue
  * pour la sélection des paramètres de l'automate
@@ -23,6 +24,7 @@ private:
 	QLabel* c_value;
 // 	QPushButton* valid_btn;
 	QPushButton* cancel_btn;
+	QProgressBar* PB_load;
 	
 	float proba;
 	float coef_brulure;
@@ -38,11 +40,12 @@ public:
 	void addCancel() const;
 
 	/* Getters */
-	int get_haut() const{ return haut_spin->value(); };
-	int get_larg() const{ return larg_spin->value(); };
-	float get_proba() const{ return proba; };
-	float get_coef() const{ return coef_brulure; };
+	int get_haut() const	{ return haut_spin->value(); };
+	int get_larg() const	{ return larg_spin->value(); };
+	float get_proba() const	{ return proba; };
+	float get_coef() const	{ return coef_brulure; };
 	std::string getDirectory() const { return directory; };
+// 	QProgressBar* getProgressBar() const	{ return PB_load; };
 
 public slots:
 	/* Setters */

@@ -13,6 +13,8 @@
 #include "essence.h"
 #include "vent.h"
 
+#include <QtGui/QProgressBar> // IMPROVEIT
+
 #define MAXI 1000 
 
 class Foret
@@ -44,7 +46,7 @@ public:
 	// Constructeur et destructeur
 	Foret(int n_colonnes, int n_lignes, float proba = 0.60, float coefFire = 1.0);
 // 	Foret(Foret& other, float proba=0.60);
-	Foret(std::string& filename);
+	Foret(std::string& filename, QProgressBar* PB);
 	virtual ~Foret();
 	
 	// Initialisations
@@ -116,12 +118,12 @@ public:
 	
 	// Persistance des donnees
 	void loadEssences(std::ifstream* file);
-	void loadMatrix(std::ifstream* file);
+	void loadMatrix(std::ifstream* file, QProgressBar* PB);
 	
 	void saveEssences(std::ofstream* file);
 	void saveMatrix(std::ofstream* file);
 	
-	bool load(std::string fileName= "save_forest");
+	bool load(std::string fileName, QProgressBar* PB);
 	bool save(std::string fileName= "save_forest");
 	
 	

@@ -37,6 +37,8 @@ private:
 	QPushButton* cut_btn;
 	QPushButton* delay_btn;
 	
+	QProgressBar* PB_load;
+	
 	QTimer* timer;
 	int nb_tour;
 	long delai;
