@@ -56,7 +56,6 @@ Foret::Foret(int n_colonnes, int n_lignes, float proba, float coefFire)
 Foret::Foret(string& filename) :burningCoef(0.5)
 {
 	load("foret1");
-	initEmpty();
 // 	randomMatrix(0.60);
 	
 	wind = new Vent(2.0,2.0);
@@ -259,6 +258,15 @@ void Foret::plantTree(int col, int row)
 	Arbre* ab= new Arbre(matrix[row][col], col,row, pEss, rand()%ecartAgeMax +pEss->getAgeMaturite(), rand()%ecartHMax +hMin );
 	matrix[row][col]= ab;
 }
+
+void Foret::plantTree(int col, int row, unsigned int numEss)
+{
+	const Essence* pEss= &(essences[numEss]);
+	// pour l'instant, on considere que tous les arbres ont atteint leur maturite
+	Arbre* ab= new Arbre(matrix[row][col], col,row, pEss, rand()%ecartAgeMax +pEss->getAgeMaturite(), rand()%ecartHMax +hMin );
+	matrix[row][col]= ab;
+}
+
 
 
 /**
@@ -762,15 +770,28 @@ void Foret::loadEssences(ifstream* file)
 #endif
 	
 	for(int i=0; i<nbEssences; ++i){
+		char nom[40];
 		int matur;
 		int diam;
 		int mass;
 		int haut;
+		unsigned age;
+		bool type;
 		
+		file->read( (char*)&(nom), 40*sizeof(char));
 		file->read( (char*)&(matur), sizeof(int));
 		file->read( (char*)&(diam), sizeof(int));
 		file->read( (char*)&(mass), sizeof(int));
 		file->read( (char*)&(haut), sizeof(int));
+		file->read( (char*)&(age), sizeof(unsigned));
+		file->read( (char*)&(type), sizeof(bool));
+		
+		string name(nom);
+		
+		Essence e(i, nom, mass, diam, haut, age, type);
+		cout<< e.toString()<< endl;
+		
+		essences.push_back(e);
 	}
 }
 
@@ -783,7 +804,8 @@ void Foret::loadMatrix(ifstream* file)
 	#if DEBUG_LOAD
 	cout<< "Taille : " << colonnes<< " en largeur "<<lignes<< " en hauteur" <<endl;
 	#endif
-// 	randomMatrix(0.60);
+
+	initEmpty();
 	
 	// Arbres
 	while(!file->eof()){
@@ -794,6 +816,8 @@ void Foret::loadMatrix(ifstream* file)
 		unsigned indice;
 		
 		file->read( (char*)&(indice), sizeof(unsigned));
+		
+		plantTree(col, row, indice);
 		
 		#if DEBUG_LOAD
 // 		cout<< "arbre en : "<< col<< "; "<< row << " essence indice : " << indice<<endl;
@@ -813,7 +837,7 @@ bool Foret::load(string fileName)
 	}
 	else {
 		loadEssences(&file);
-		loadEssences("../Moteur/essence_data.txt");
+// 		loadEssences("../Moteur/essence_data.txt");
 		loadMatrix(&file);
 		
 		file.close();
@@ -830,16 +854,21 @@ void Foret::saveEssences(ofstream* file)
 	
 	for (vector<Essence>::iterator e(essences.begin()); e != essences.end(); ++e){
 
+		const char* nom(e->getName().c_str());
 		int matur= e->getAgeMaturite();
 		int diam= e->getDiametre();
 		int mass= e->getMasse();
 		int haut= e->getHauteur();
+		unsigned age;
+		bool type;
 		
+		file->write( (char*)&(nom), 40*sizeof(char));
 		file->write( (char*)&(matur), sizeof(int));
 		file->write( (char*)&(diam), sizeof(int));
 		file->write( (char*)&(mass), sizeof(int));
 		file->write( (char*)&(haut), sizeof(int));
-
+		file->write( (char*)&(age), sizeof(unsigned));
+		file->write( (char*)&(type), sizeof(bool));		
 	}
 }
 

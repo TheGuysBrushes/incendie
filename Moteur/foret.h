@@ -54,7 +54,6 @@ public:
 	void initialisation(float proba);
 	
 	void clean();
-
 	
 	void setValues(int largeur, int hauteur, float coef);
 	void setWind(int EO, int NS);
@@ -72,32 +71,37 @@ public:
 	std::list< Arbre* >* getBurned()			{ return &burned; };
 	std::list< std::list< Arbre* > >* getChanged();
 	
-	void clearUprooted()	{ uprooted.clear(); };
-	void clearExtinguished()	{ extinguished.clear(); };
-	void clearCarbonized()	{ carbonized.clear(); };
-	void clearBurned()	{ burned.clear(); };
-	
 	// Manipulations d'arbre
 	void plantTree(int col, int row);
-
+	void plantTree(int col, int row, unsigned numEss);
+	
 	void uproot(Arbre* ab);
 	void uproot(int col, int row);
 	
 	void water(Arbre* ab);
-
+	
 	void kindle(Arbre* ab);
 	void kindle(int col, int row);
 	
 	void blast(Arbre* ab);
-// 	void eteindre(int row, int col);
+	// 	void eteindre(int row, int col);
 	
 	void spark(Arbre* ab, int intensite);
 	void spark(int col, int row, int intensite);
+	
+	// Vidage des listes
+	void clearUprooted()	{ uprooted.clear(); };
+	void clearExtinguished()	{ extinguished.clear(); };
+	void clearCarbonized()	{ carbonized.clear(); };
+	void clearBurned()	{ burned.clear(); };
+
 
 	
 	// Autres méthodes
 	std::list< Arbre* > adjacents(int col, int row, int distance) const;
 	std::list< Arbre* > adjacents(const Arbre * ab, int distance) const;
+	void cut(int xDep, int yDep, int xArr, int yArr);
+	void delay(int xDep, int yDep, int xArr, int yArr);
 	
 	
 	void burnAdjacentsWind(int posCol, int posRow, int hor, int vert);
@@ -123,8 +127,6 @@ public:
 	
 	// Affichage attributs
 	void showEssences() const;
-	void cut(int xDep, int yDep, int xArr, int yArr);
-	void delay(int xDep, int yDep, int xArr, int yArr);
 };
 
 #endif // FORET_H

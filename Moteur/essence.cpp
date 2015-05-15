@@ -2,8 +2,8 @@
 
 using namespace std;
 // Constructors
-Essence::Essence(unsigned int i, string nom, int masse, float d, float h, unsigned int age, bool t):
-indice(i),name(nom),masse_V(masse),hauteur(h),diametre(d),ageMaturite(age),type(t)
+Essence::Essence(unsigned int i, string nom, int masse, float _diametre, float _hauteur, unsigned int age, bool t):
+indice(i),name(nom),masse_V(masse),hauteur(_hauteur),diametre(_diametre),ageMaturite(age),type(t)
 {}
 
 Essence::Essence(const Essence& other):

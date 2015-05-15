@@ -17,7 +17,7 @@ private:
 	
 public:
 	// Constructors
-	Essence(unsigned i,std::string nom, int masse, float d, float h, unsigned age, bool t);
+	Essence(unsigned int i, std::string nom, int masse, float _diametre, float _hauteur, unsigned int age, bool t);
 	Essence(const Essence& other);
 	
 	// Getters and setters
