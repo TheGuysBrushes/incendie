@@ -7,6 +7,8 @@
 
 #include <iostream>
 
+using namespace std;
+
 /*** Constructeur et destructeur ***/
 /**
  * Constructeur de classe. Par défaut, la vitesse est 
@@ -70,8 +72,8 @@ void WindWidget::initComponents()
 		//ELEMENTS DE v_lay
 		// Curseur vitesse
 		QSlider* slider_vitesse = new QSlider(Qt::Vertical);
-		slider_vitesse->setMinimum(5);
-		slider_vitesse->setMaximum(130);
+		slider_vitesse->setMinimum(10);
+		slider_vitesse->setMaximum(100);
 // 		slider_vitesse->setValue(vitesse);
 		
 		// TODO comment : ajout "nom composant" et renommer www  explicitement
@@ -107,7 +109,7 @@ void WindWidget::initComponents()
 	connect(slider_vitesse, SIGNAL(valueChanged(int)),	this, SLOT(majSpeed(int)));
 	
 	
-	slider_vitesse->setValue(10);	// Attention si on met la valeur minimale(5), il n'y a pas de changement de valeur donc le label n'est pas mis à jour ?
+	slider_vitesse->setValue(15);	// Attention si on met la valeur minimale(5), il n'y a pas de changement de valeur donc le label n'est pas mis à jour ?
 	
 // TODO enlever code en dur
 	setAngle(45);
@@ -118,7 +120,10 @@ void WindWidget::setAngle(int angle)
 {
 	angle_lbl->setText(QString::number(angle) + "degres");
 	wind->setAngle(angle+270);
-	emit modif_value(angle+270, speed);
+	#if DEBUG_VENT
+	cout << "angle de windwidget envoyé a windcircle" << angle+270 << endl;
+	#endif
+	emit modif_value(wind->getAngle(), speed);
 }
 
 
@@ -136,6 +141,9 @@ void WindWidget::resizeEvent(QResizeEvent* Qevent)
  */
 void WindWidget::majAngle(int alpha)
 {
+	#if DEBUG_VENT
+	cout << "angle de windwidget par appel de majAngle" << alpha << endl;
+	#endif
 	setAngle(alpha);
 	wind->drawDir();
 	update();

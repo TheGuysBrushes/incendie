@@ -63,6 +63,7 @@ public:
 	/* Getters et Setters */
 	void setColor(int colorIndice);	
 	void setWind(float _hor, float _ver);
+	int getTailleCell() const { return tailleCell; };
 	
 	/* Affichage */
 	void drawPicture();

@@ -4,6 +4,7 @@
 #include <QtGui/QWidget>
 #include <QtGui/QLabel>
 
+#include "../debug.h"
 #include "windcircle.h"
 
 /**

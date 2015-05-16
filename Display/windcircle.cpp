@@ -83,7 +83,9 @@ void WindCircle::drawCircle(){
 void WindCircle::drawDir(){
 	effaceBuffer();
 	setDirection(angle);
-	
+	#if DEBUG_VENT
+	cout << "angle de windcircle" << angle << endl;
+	#endif
 	QPainter paint(buffer);
 	QPen pen(Qt::red); paint.setPen(pen);
 

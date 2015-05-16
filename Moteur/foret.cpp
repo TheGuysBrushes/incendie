@@ -397,6 +397,10 @@ void Foret::setWind(int EO, int NS)
 {
 	wind->setPower_h(EO);
 	wind->setPower_v(NS);
+#if DEBUG_VENT
+	cout << "valeur power h" << EO << endl;
+	cout << "valeur power v" << NS << endl;
+#endif
 }
 
 
@@ -640,13 +644,13 @@ std::list< Arbre* > Foret::adjacents(const Arbre * ab, int distance) const
 }
 
 void Foret::burnAdjacentsWind(int posCol, int posRow, int hor, int vert){
-	for(int i = 0; i < abs( hor ); ++i) {
-		for(int j = 0; j < abs( vert ); ++j) {
+	for(int i = 0; i <= abs( hor ); ++i) {
+		for(int j = 0; j <= abs( vert ); ++j) {
 // 			burnAdjacentsWind(posCol, posRow, i, j);
 
 			if( ( (hor + posCol-i) >= 0 ) && ( (hor + posCol-i) < (colonnes) ) && ( (vert + posRow-j) >= 0 ) && ( (vert +posRow-j) < (lignes) ) ){
 				
-				#if DEBUG_VENT
+				#if DEBUG_VENT2
 				cout << "transmission à cellule en "<< posRow + (hor -i)<< " ; "<< posCol + (vert -j)<< endl;
 				#endif
 				Cellule* cell = matrix[posRow +  (vert -j)][posCol + (hor -i)];
@@ -660,7 +664,7 @@ void Foret::burnAdjacentsWind(int posCol, int posRow, int hor, int vert){
 
 void Foret::burnAdjacentsWind(Arbre* a, const Vent* vent)
 {
-#if DEBUG_VENT
+#if DEBUG_VENT2
 cout<< endl<< "BRULE LES ADJACENTS DE "<< a->getPos().col<< ";" << a->getPos().row<< endl;
 #endif
 

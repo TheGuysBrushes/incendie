@@ -16,7 +16,7 @@
 #include <math.h>
 #define PI 3.14159265
 
-// using namespace std; // REMOVEIT ? : utilisé seulement pour les debug
+using namespace std; // REMOVEIT ? : utilisé seulement pour les debug
 
 
 /*		
@@ -439,29 +439,40 @@ void FireScreen::updateWind(int angle, int vitesse){
 	// On doit récupérer les valeurs et mettre à jour le vent
 	float vertical;
 	float horizontal;
-	
+	#if DEBUG_VENT
+	cout << "valeur de l'angle dans firescreen : " << angle << endl;
+	#endif
+	/*
 	if( (angle >= 360 && angle <450) || (angle >=540 && angle < 630)){
 		vertical = sin(PI*(float)angle/180.0);
 		horizontal = cos(PI*(float)angle/180.0);
-	}else{
-		vertical = sin(PI*(float)(angle+180.0)/180.0);
-		horizontal = cos(PI*(float)(angle+180)/180.0);
-	}
-	if(vitesse >50 && vitesse <=100){
-		horizontal *= 3.0;
-		vertical *= 3.0;
-	}else if(vitesse > 100){
-		horizontal *= 4.0;
-		vertical *= 4.0;
-	}else{
-		horizontal*=2.0;
-		vertical*=2.0;
-	}
-	fWidget->setWind(horizontal,vertical);
-	
-	#if DEBUG_VENT
-	std::cout << "Vitesse : "<< vitesse<< "; Angle : "<<angle<<" ; valeur horizontal : " << horizontal << " ; valeur vertical : " << vertical << std::endl;
+	}else{*/
+		vertical = sin(PI*(float)(angle)/180.0);
+		horizontal = cos(PI*(float)(angle)/180.0);
+
+	//}
+	#if DEBUG_HYPO
+	cout <<"cosinus de l'angle envoyé : " << horizontal << endl;
+	cout <<"sinus de l'angle envoyé : " << vertical << endl;
 	#endif
+	vertical *= vitesse;
+	horizontal *= vitesse;
+	/*
+	 * Arret temporaire : reste à faire :
+	 * 
+	 * Déterminer une fonction à croissance de type exponentiel afin de diviser vitesse dans 
+	 * le but d'obtenir des valeurs de transmission minimale et maximale.
+	 * A l'heure actuelle, à vent minimal, on obtient des transmissions entre ( [-10;10] ; [-10;10] ) en faisant 
+	 * varier l'angle. A vent maximum, on obtient des résultats entre ( [-100;100] ; [-100;100] ).
+	 * 
+	 */
+	
+	#if DEBUG_HYPO
+	cout <<"deplacement horizontal en pixel: " << horizontal << endl;
+	cout <<"deplacement vertical en pixel : " << vertical << endl;
+	#endif
+	fWidget->setWind((int)horizontal,(int)vertical);
+	
 }
 
 /**
@@ -476,10 +487,14 @@ void FireScreen::releaseOrdered()
 {
 	// L'action choisie est représenté par le fait que le boutton est désactivé
 	if(!cut_btn->isEnabled()){
+		#if DEBUG_RETARD
 		std::cout << "demande de coupure" << std::endl;
+		#endif
 		emit actionSender(0);
 	}else if(!delay_btn->isEnabled()){
+		#if DEBUG_RETARD
 		std::cout << "demande de retardateur" << std::endl;
+		#endif
 		emit actionSender(1);
 	}
 	
