@@ -60,7 +60,7 @@ Foret::Foret(int _largeur, int _hauteur, ifstream * file, QProgressBar* PB) :lig
 
 
 /**
- * On vide également les listes, mêmes si c'est fait automatiquement TODO verifier si ca n'empeche pas un probleme de "double libération" des arbres  et l'ordre libérer-vider
+ * On vide également les listes, mêmes si c'est fait automatiquement TODO-SE RENSEIGNER si ca n'empeche pas un probleme de "double libération" des arbres  et l'ordre libérer-vider
  */
 Foret::~Foret()
 {
@@ -404,9 +404,9 @@ void Foret::setWind(int EO, int NS)
 // 	Modification des éléments
 // ##################################
 
-// IMPROVEIT couper un arbre : supprimer arbre puis créer cellule ?, laisser l'arbre ?
+// IMPROVEIT couper un arbre : supprimer arbre puis créer cellule ?, laisser l'arbre ? (pour l'instant l'arbre est laissé)
 /**
- * Coupe ou déracine un arbre (IMPROVEIT pour l'instant l'arbre est laissé)
+ * Coupe ou déracine un arbre
  * @author Florian
  * @param ab arbre à supprimer
  */
@@ -562,7 +562,7 @@ void Foret::clearChanged()
  * @param col indice de la colonne de la cellule
  * @param row indice de la ligne de la cellule
  * @param distance distance sur laquelle s'effectue la recherche de voisins
- * @return list de pointeurs sur arbres // IMPROVEIT ajout attribut distance ?
+ * @return list de pointeurs sur arbres // IMPROVEIT ajout attribut distance ? : fait dans adjacentsWind
  */
 std::list< Arbre* > Foret::adjacents(int col, int row, int distance) const
 {
@@ -671,25 +671,6 @@ cout<< endl<< "BRULE LES ADJACENTS DE "<< a->getPos().col<< ";" << a->getPos().r
 
 	burnAdjacentsWind(a->getPos().col, a->getPos().row,
 						vent->getPower_h(), vent->getPower_v() );
-	
-	// TODO renommer les variables h et l avec de vrais noms
-// 	int h = wind->getPower_h();
-// 	int l = wind->getPower_v();
-	
-// 	for(int i = 0; i <= abs( h ); ++i) {
-// 		for(int j = 0; j <= abs( l ); ++j) {
-// 			// On vérifie que la cellule spécifiée est dans la matrice IMPROVEIT ce n'est pas performant
-// 			if( ( (hor + row-i) >= 0 ) && ( (hor + row-i) < (lignes) ) && ( (vert + col-j) >= 0 ) && ( (vert +col-j) < (colonnes) ) ){
-// 				FIXIT hor/i et vert/j inverses ?
-// 				Cellule* cell = matrix[row + (hor -i)][col + (vert -j)];
-// 				
-// 				if(cell->getState() == 1)
-// 					spark(dynamic_cast < Arbre* >(cell));
-// 			}
-// 			
-// 		}
-// 	}
-	
 }
 
 
@@ -704,7 +685,7 @@ cout<< endl<< "BRULE LES ADJACENTS DE "<< a->getPos().col<< ";" << a->getPos().r
  */
 void Foret::transition(Arbre* ab)
 {
-	unsigned distAdj= 1; // distance à laquelle les voisins seront enflammes ; IMPROVEIT dist 1= contact, dist 2= diagonaux, dist 3 = ...
+	unsigned distAdj= 1; // distance à laquelle les voisins seront enflammes VOIR adjacents
 	list< Arbre* > voisins= adjacents(ab, distAdj);
 	for (list< Arbre* >::iterator a(voisins.begin()); a!=voisins.end(); ++a){
 		// intensite fixe		
@@ -716,7 +697,6 @@ void Foret::transition(Arbre* ab)
 	else // quand un arbre ne brule plus (il devient cendres), on l'ajoute à la liste des arbres devenus cendres
 		carbonized.push_back(ab);
 }
-
 
 /**
  * Parcours la liste des arbres en feu et emflamme les voisins en tenant compte de la direction du vent
@@ -904,7 +884,7 @@ void Foret::saveMatrix(ofstream* file)
 		for(vector< Cellule* >::const_iterator cell(matrix[i].begin()); cell != matrix[i].end() ; ++cell ){
 			if ( (*cell)->getState()>0){
 				Arbre * ab= dynamic_cast< Arbre * >(*cell);
-#if DEBUG_SAVE
+#if DEBUG_SAVE_POS
 cout<< "Enregistrement de l'arbre "<< ab->getPos().col<< "; "<< lignes<< endl;
 #endif
 

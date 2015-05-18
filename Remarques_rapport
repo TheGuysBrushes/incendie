@@ -4,4 +4,4 @@
 	-> Non, j'ai préféré faire des listes séparées pour pouvoir traiter/afficher(1 sélection de couleur avant d'afficher la liste) et debugger plus facilement, en affichant seulement l'élément qui nous interesse.
 	 Une liste par état ; les listes représentent les nouveaux éléments dans cet état
 	
-- 
+- extraire largeur et hauteur dans (-firescreen-) firewidget plutot que dans foret => passer un fichier plutot qu'un chemin

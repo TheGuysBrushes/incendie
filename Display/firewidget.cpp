@@ -82,8 +82,6 @@ void FireWidget::initialise(int largeur, int hauteur, ifstream * file, QProgress
 	forest= new Foret(largeur, hauteur, file, PB);
 	
 	setMinimumSize(largeur, hauteur);
-	
-// 	TODO ajouter un setMinimumSize, extraire largeur et hauteur dans firescreen plutot que dans foret ? => passer un fichier plutot qu'un chemin
 }
 
 
@@ -323,7 +321,7 @@ void FireWidget::drawCell(int colonne, int ligne)
  * Imprime un arbre selon sa position, utilise la couleur courante.
  * @author Florian
  * @param ab arbre à dessiner
- * TODO Utilisation de drawCell : soucis de performance//clareté//modularité*
+ * TODO Utilisation de drawCell ? : soucis de performance//clareté//modularité
  */
 void FireWidget::drawTree(const Arbre* ab)
 {
@@ -504,7 +502,6 @@ void FireWidget::mousePressEvent(QMouseEvent* event)
 
 		rubber->setGeometry(QRect(origin, QSize(0,0)));
 		rubber->show();
-		
 	}
 	
 	drawChanged();
