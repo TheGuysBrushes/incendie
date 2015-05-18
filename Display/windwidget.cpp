@@ -43,7 +43,7 @@ void WindWidget::initComponents()
 	QWidget* angle_container = new QWidget(this);
 
 		QLabel* info_angle = new QLabel("Angle du vent : ");
-		
+
 		// Layout contenant les informations liées à l'angle
 		QHBoxLayout* h_lay = new QHBoxLayout(angle_container);
 		h_lay->addWidget(info_angle);
@@ -76,8 +76,7 @@ void WindWidget::initComponents()
 		QVBoxLayout* v_lay = new QVBoxLayout(speed_container);
 		v_lay->addWidget(slider_vitesse);
 		v_lay->addWidget(speed_label_container);
-	
-	
+
 	// Conteneur général de l'ensemble des autres éléments
 	QGridLayout* grid_lay = new QGridLayout(this);
 	grid_lay->addWidget(wind, 0,0);
@@ -91,11 +90,10 @@ void WindWidget::initComponents()
 	// 	permet de gérer dynamiquement les changements de valeurs
 	connect(slider_angle, SIGNAL(valueChanged(int)),		this, SLOT(majAngle(int)) );
 	connect(slider_vitesse, SIGNAL(valueChanged(int)),	this, SLOT(majSpeed(int)));
-	
-	
-	slider_vitesse->setValue(2);	// Attention si on met la valeur minimale(5), il n'y a pas de changement de valeur donc le label n'est pas mis à jour ?
-	
-// TODO enlever code en dur
+
+	slider_vitesse->setValue(2);
+
+	// Appel à la fonction setAngle pour que l'initialisation des composants se fasse parfaitement
 	setAngle(45);
 }
 
