@@ -29,7 +29,6 @@ private:
 	std::vector< Essence > essences;
 	std::vector<std::vector< Cellule* > > matrix;
 	std::list< Arbre* >	onFire;
-	/* IMPROVEIT ou TODO remove it : "Pour l'instant"
 	std::list< Arbre* >	uprooted;
 	std::list< Arbre* >	extinguished;
 	std::list< Arbre* >	burned;
