@@ -72,7 +72,7 @@ void WindWidget::initComponents()
 		//ELEMENTS DE v_lay
 		// Curseur vitesse
 		QSlider* slider_vitesse = new QSlider(Qt::Vertical);
-		slider_vitesse->setMinimum(10);
+		slider_vitesse->setMinimum(1);
 		slider_vitesse->setMaximum(100);
 // 		slider_vitesse->setValue(vitesse);
 		
@@ -109,7 +109,7 @@ void WindWidget::initComponents()
 	connect(slider_vitesse, SIGNAL(valueChanged(int)),	this, SLOT(majSpeed(int)));
 	
 	
-	slider_vitesse->setValue(15);	// Attention si on met la valeur minimale(5), il n'y a pas de changement de valeur donc le label n'est pas mis à jour ?
+	slider_vitesse->setValue(2);	// Attention si on met la valeur minimale(5), il n'y a pas de changement de valeur donc le label n'est pas mis à jour ?
 	
 // TODO enlever code en dur
 	setAngle(45);
