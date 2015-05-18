@@ -210,14 +210,21 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	vert_lay1->addWidget(ww3);
 	vert_lay1->addWidget(reset_btn);
 	
+	QPushButton* save_btn = new QPushButton("Save");
+	vert_lay1->addWidget(save_btn);
+	
 	vert_lay1->addStretch(2);
 	vert_lay1->setAlignment(titre,Qt::AlignHCenter);
+	
+	
 	
 	// CONNEXION DES BOUTONS AUX FONCTIONS
 	connect(play_btn,	SIGNAL(clicked()), 		this,	SLOT( start_timer()) );
 	connect(pause_btn,	SIGNAL(clicked()),	this,	SLOT( stop_timer()) );
 	connect(timer,		SIGNAL(timeout()), 		this,	SLOT( nextStep()) );
 	connect(next_btn,	SIGNAL(clicked()), 		this,	SLOT( nextStep()) );
+	
+	connect(save_btn,	SIGNAL(clicked()), SLOT( save()) );
 	
 	connect(slider,	SIGNAL(valueChanged(int)),		this, SLOT( set_delai(int)) );
 	connect(reset_btn,	SIGNAL(clicked()), 			this,	SLOT( reset()) );

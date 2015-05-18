@@ -812,15 +812,17 @@ void Foret::loadMatrix(ifstream* file, QProgressBar* PB)
 	initEmpty();
 	
 	// Arbres
+	int nbAb= 0;
 	while(!file->eof()){
 		int col, row;
 		file->read((char *)&col, sizeof(int));
 		file->read((char *)&row, sizeof(int));
 
 		unsigned indice;
-		
 		file->read( (char*)&(indice), sizeof(unsigned));
 		
+		++nbAb;
+
 		plantTree(col, row, indice);
 		#if DEBUG_LOAD
 // 		cout<< "arbre en : "<< col<< "; "<< row << " essence indice : " << indice<<endl;
@@ -890,15 +892,15 @@ void Foret::saveMatrix(ofstream* file)
 			if ( (*cell)->getState()>0){
 				Arbre * ab= dynamic_cast< Arbre * >(*cell);
 #if DEBUG_SAVE
-cout<< "Enregistrement de l'arbre "<< ab->getPos().col<< "; "<< ab->getPos().row<< endl; 
+cout<< "Enregistrement de l'arbre "<< ab->getPos().col<< "; "<< lignes<< endl;
 #endif
-					
+
 				// Position
 // 				file<< ab->getPos().col << ab->getPos().row;
 				
 				// Position
-// 				file->write( (char *)&(ab->getPos().col), sizeof(int));
-// 				file->write( (char *)&(ab->getPos().row), sizeof(int));
+				file->write( (char *)&(ab->getPos().col), sizeof(int));
+				file->write( (char *)&(ab->getPos().row), sizeof(int));
 				
 				unsigned indice= ab->getEssence()->getIndice();
 				
