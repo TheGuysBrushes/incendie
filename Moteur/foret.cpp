@@ -653,7 +653,11 @@ void Foret::burnAdjacentsWind(int posCol, int posRow, int hor, int vert){
 				#if DEBUG_VENT2
 				cout << "transmission à cellule en "<< posRow + (hor -i)<< " ; "<< posCol + (vert -j)<< endl;
 				#endif
-				Cellule* cell = matrix[posRow +  (vert -j)][posCol + (hor -i)];
+				Cellule* cell;
+				if(hor < 0)
+					cell = matrix[posRow + (vert -j)][posCol + (hor +i)];
+				else
+					cell= matrix[posRow +  (vert -j)][posCol + (hor -i)];
 				
 				if(cell->getState() == 1)
 					spark(dynamic_cast < Arbre* >(cell), (i+1)*(j+1) );
