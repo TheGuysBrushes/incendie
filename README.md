@@ -97,19 +97,52 @@
 <h2> Semaine 5 </h2>
 
 <h3> Lundi </h3>
-  - Ugo : Correction des bugs sur le vents, détection de nouveaux bugs
+  - Ugo : Correction des bugs sur le vents, détection de nouveaux bugs, clarification du code
   - Florian : Travaux sur la matrice d'arbres avec des images<h3> Lundi </h3>
     
 <h3> Mardi </h3>
   - Florian  : Ajouts et modif pour les couleurs d'arbres et les dimensions de la fenetre, commentaires et corrections.
+  - Ugo : Nettoyage du code, réflexion sur le système de coupure.
+  
+<h3> Mercredi </h3>
+  - Florian
+  - Ugo : Mise en place de la zone de selection et des bouttons coupure/retardateur
+    
+<h3> Jeudi </h3>
+  - Ugo : Liaison couche graphique/matrice pour la coupure (point à détailler dans le rapport SIGNALS/SLOTS ) 
+  - Florian :
+  
+<h3> Vendredi </h3>
+- Ugo : Réflexion sur implémentation coupure/retardateur au sein du moteur (férié)
+
+<h2> Semaine 6 </h2>
+
+<h3> Lundi </h3>
+- Ugo : Mise en place coupure/retardateur dans moteur
+
+<h3> Mardi </h3>
+- Ugo : Reprise du système d'orientation du vent, mise du 0 au Nord.
 
 <h3> Mercredi </h3>
-  -Florian
+- Ugo : Correction différents bugs, tests graphiques pour coupure/retardateur
+    
+<h3> Jeudi </h3>
+- Ugo : férié, indisponible
+<h3> Vendredi </h3>
+- Ugo : indisponible
+
+<h2> Semaine 7 </h2>
+
+<h3> Lundi </h3>
+- Ugo : Validation coupure/retardateur, correction "problème" KDev (TODO et autres)
+
+<h3> Mardi </h3>
+    
+<h3> Mercredi </h3>
     
 <h3> Jeudi </h3>
     
 <h3> Vendredi </h3>
-
 
 
 <h2> Semaine X </h2>
