@@ -14,7 +14,6 @@
 #include "../Moteur/foret.h"
 #include "fwelcome.h"
 
-// 	TODO voir si on fait une liste unique pour les éléments qui ont changé d'état
 /**
  * Widget d'affichage de l'automate cellulaire. Ce composant
  * permet de suivre graphiquement l'évolution de l'automate. 

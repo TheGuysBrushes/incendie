@@ -808,7 +808,6 @@ void Foret::loadMatrix(ifstream* file, QProgressBar* PB)
 	initEmpty();
 	
 	// Arbres
-	int nbAb= 0;
 	while(!file->eof()){
 		int col, row;
 		file->read((char *)&col, sizeof(int));
@@ -817,14 +816,12 @@ void Foret::loadMatrix(ifstream* file, QProgressBar* PB)
 		unsigned indice;
 		file->read( (char*)&(indice), sizeof(unsigned));
 		
-		++nbAb;
-
 		plantTree(col, row, indice);
 		#if DEBUG_LOAD
 // 		cout<< "arbre en : "<< col<< "; "<< row << " essence indice : " << indice<<endl;
 		#endif
 		
-		int newProgression= (col*row)*100 / (lignes*colonnes);
+		int newProgression= (colonnes*row)*100 / (lignes*colonnes);
 		PB->setValue(newProgression);
 	}
 // 		int progression= 0;
