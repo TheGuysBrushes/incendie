@@ -5,7 +5,8 @@
 #define RED_TRANSPARENT 	6
 #define ANTI_RED_TRANSPARENT	7
 #define BLUE 8
-#define ORANGE 9
+#define PURPLE 9
+#define RED 10
 
 using namespace std;
 
@@ -244,21 +245,23 @@ void FireWidget::setColor(int colorIndice)
 			this->color->setRgb(46,139,87,	100);
 			break;
 		case GRAY:
-			this->color->setRgb(80,80,80,		255);
+			this->color->setRgb(80,80,80,200);
 			break;
 		case RED_TRANSPARENT:
 			this->color->setRgb(255,00,00,	180);
 			break;
 		case ANTI_RED_TRANSPARENT:
-			this->color->setRgb(00,75,75,	 180);
+			this->color->setRgb(00,75,75,180);
 			break;
 		case BLUE:
-			this->color->setRgb(25,25,250);
+			this->color->setRgb(25,25,250,50);
 			break;
-		case ORANGE:
-			this->color->setRgb(255,127,37);
+		case PURPLE:
+			this->color->setRgb(148,0,211);
 			break;
-			
+		case RED:
+			this->color->setRgb(255,0,0);
+			break;
 		default :
 			this->color->setRgb(255,255,255,	100);
 	}
@@ -267,6 +270,10 @@ void FireWidget::setColor(int colorIndice)
 void FireWidget::setWind(float _hor, float _ver)
 {
 	forest->setWind(_hor, _ver);
+}
+
+void FireWidget::razRubber(){
+	rubber = NULL;
 }
 
 
@@ -361,20 +368,19 @@ void FireWidget::drawForest()
 			}
 			else if(cell->getState() == 1){
 				// Il faut ici vérifier l'essence de l'arbre pour lui attribuer une variante de vert
-				Arbre* ab= dynamic_cast < Arbre* >(cell);
-				unsigned indice= ab->getEssence()->getIndice();
+				unsigned indice= dynamic_cast < Arbre* >(cell)->getEssence()->getIndice();
 				setColor(indice);
-				drawCell(current_largeur, current_hauteur);
 				// On vérifie ici si l'arbre a recu un retardateur
 				// i.e son coefficient est différent de 1
-				if(ab->getCoeff() != 1){
-					setColor(BLUE);
-					bufferPainter->drawEllipse(current_largeur,current_hauteur,tailleCell-2,tailleCell-2);
-					
-				}
+				if(dynamic_cast < Arbre* >(cell)->getCoeff() != 1)
+					setColor(BLUE);					
+				drawCell(current_largeur, current_hauteur);
+				
 			}
 			else if (cell->getState() == 2){
-				setColor(RED_TRANSPARENT);
+				setColor(RED);
+				if(dynamic_cast < Arbre* >(cell)->getCoeff() != 1)
+					setColor(RED_TRANSPARENT);		
 				drawCell(current_largeur, current_hauteur);
 			}
 			else if (cell->getState() == -1){
@@ -383,7 +389,7 @@ void FireWidget::drawForest()
 				drawCell(current_largeur, current_hauteur);
 			}
 			else if(cell->getState() == -2){
-				setColor(ORANGE);
+				setColor(PURPLE);
 				drawCell(current_largeur,current_hauteur);
 			}
 			

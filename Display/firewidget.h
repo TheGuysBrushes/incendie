@@ -63,6 +63,7 @@ public:
 	void setColor(int colorIndice);	
 	void setWind(float _hor, float _ver);
 	int getTailleCell() const { return tailleCell; };
+	void razRubber();
 	
 	/* Affichage */
 	void drawPicture();

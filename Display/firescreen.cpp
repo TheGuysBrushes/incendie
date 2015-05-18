@@ -427,7 +427,7 @@ void FireScreen::reset()
 		fWidget->delForest();
 		
 		initForest(fwel);
-		
+		fWidget->razRubber();
 		fWidget->redraw();
 	}
 }
