@@ -6,15 +6,17 @@
 #include <QApplication>
 #include <qdesktopwidget.h>
 /*
- * - BUG Les sliders/labels changent de dimension lorsqu'il y a un nombre à 2 chiffres après la virgule
+ * - BUG Ugo : Les sliders/labels changent de dimension lorsqu'il y a un nombre à 2 chiffres après la virgule
  */
+
+using namespace std;
 
 Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 {
 	// Initialisation des composants dynamiques (SpinBox exceptées)
 	p_value = new QLabel();
 	c_value = new QLabel();
-	directory= "";
+// 	directory= ""; TODO removeit
 	
 	PB_load= new QProgressBar();
 	PB_load->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -22,6 +24,8 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	PB_load->setHidden(true);
 	
 	initComponents();
+	
+	file= new ifstream;
 }
 
 Fwelcome::~Fwelcome(){
@@ -152,7 +156,6 @@ void Fwelcome::initComponents(){
 	lay->addWidget(WButtons);
 	lay->addWidget(PB_load);
 
-
 	/* Connexion entre les différents éléments */
 	connect(slide_p,	SIGNAL(valueChanged(int)), this, SLOT(set_proba(int)) );
 	connect(slide_c,	SIGNAL(valueChanged(int)), this, SLOT(set_coef(int)) );
@@ -177,13 +180,29 @@ void Fwelcome::load()
 {
 	std::string filename= "./Resources/foret1.dat";
 	
-	std::ifstream file(filename.c_str(), std::ios::in|std::ios::binary);
-	if (!file.is_open()){
+// 	file= new ifstream(filename.c_str(), ios::in|ios::binary);
+	
+	file->open(filename.c_str(), ios::in|ios::binary);
+	if (!file->is_open()){
 		std::cout<< "Echec ouverture fichier de sauvegarde"<< std::endl;
 	}
 	else {
-		file.close();
-		directory= filename;
+		int x; // x est utilisé pour la largeur ET la hauteur
+		
+		file->read( (char *)&(x), sizeof(int));
+		larg_spin->setValue(x);
+		#if DEBUG_LOAD
+		cout<< "Taille : " << x<< " en largeur ";
+		#endif
+		
+		file->read( (char *)&(x), sizeof(int));
+		haut_spin->setValue(x);
+		#if DEBUG_LOAD
+		cout<<x<< " en hauteur" <<endl;
+		#endif
+		
+// 		file->close();
+// 		directory= filename;
 		accept();
 	}
 }

@@ -10,8 +10,8 @@ private:
 	unsigned indice;
 	std::string name;
 	unsigned masse_V;
-	float hauteur;
 	float diametre;
+	float hauteur;
 	unsigned ageMaturite;
 	bool type; // 0 pour résineux, 1 pour feuillu
 	
@@ -21,13 +21,13 @@ public:
 	Essence(const Essence& other);
 	
 	// Getters and setters
-	std::string getName()	const {return name;};
-	int	getMasse()		const	{return masse_V;};
-	float	getHauteur()	const {return hauteur;};
-	float	getDiametre()	const {return diametre;};
-	bool	getType()		const {return type;};
 	unsigned	getIndice()	const {return indice;};
+	std::string getName()	const {return name;};
+	unsigned	getMasse()		const	{return masse_V;};
+	float	getDiametre()	const {return diametre;};
+	float	getHauteur()	const {return hauteur;};
 	unsigned	getAgeMaturite()	const {return ageMaturite;};
+	bool	getType()		const {return type;};
 	
 	void	setName(std::string x);
 	void	setMasse(int x);

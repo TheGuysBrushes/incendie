@@ -70,16 +70,18 @@ FireWidget::~FireWidget(){
  * @author Florian et Ugo
  * @param identique_constructeur
  */
-void FireWidget::initialise(int _largeur, int _hauteur, float proba, float coef_brulure)
+void FireWidget::initialise(int largeur, int hauteur, float proba, float coef_brulure)
 {
-	forest= new Foret(_largeur, _hauteur, proba, coef_brulure);
+	forest= new Foret(largeur, hauteur, proba, coef_brulure);
 	
-	setMinimumSize(_largeur, _hauteur);
+	setMinimumSize(largeur, hauteur);
 }
 
-void FireWidget::initialise(string& filename, QProgressBar* PB) 
+void FireWidget::initialise(int largeur, int hauteur, ifstream * file, QProgressBar* PB) 
 {
-	forest= new Foret(filename, PB);
+	forest= new Foret(largeur, hauteur, file, PB);
+	
+	setMinimumSize(largeur, hauteur);
 	
 // 	TODO ajouter un setMinimumSize, extraire largeur et hauteur dans firescreen plutot que dans foret ? => passer un fichier plutot qu'un chemin
 }

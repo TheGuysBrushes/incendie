@@ -3,12 +3,11 @@
 using namespace std;
 // Constructors
 Essence::Essence(unsigned int i, string nom, int masse, float _diametre, float _hauteur, unsigned int age, bool t):
-indice(i),name(nom),masse_V(masse),hauteur(_hauteur),diametre(_diametre),ageMaturite(age),type(t)
+indice(i), name(nom), masse_V(masse), diametre(_diametre), hauteur(_hauteur), ageMaturite(age), type(t)
 {}
 
 Essence::Essence(const Essence& other):
-indice(other.indice),name(other.name),masse_V(other.masse_V),hauteur(other.hauteur),diametre(other.diametre),
-ageMaturite(other.ageMaturite),type(other.type)
+indice(other.indice), name(other.name), masse_V(other.masse_V), diametre(other.diametre), hauteur(other.hauteur), ageMaturite(other.ageMaturite), type(other.type)
 {}
 
 Essence& Essence::operator=(const Essence& other)

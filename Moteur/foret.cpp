@@ -50,10 +50,9 @@ Foret::Foret(int n_colonnes, int n_lignes, float proba, float coefFire)
 // 	initialisation(proba);
 // }
 
-Foret::Foret(string& filename, QProgressBar* PB) :burningCoef(0.5)
+Foret::Foret(int _largeur, int _hauteur, ifstream * file, QProgressBar* PB) :lignes(_hauteur), colonnes(_largeur), burningCoef(0.5)
 {
-	load("foret1", PB);
-// 	randomMatrix(0.60);
+	load(file, PB);
 	
 	wind = new Vent(2.0,2.0);
 }
@@ -154,11 +153,12 @@ bool Foret::loadEssences(const string& fileName)
 			}
 			
 			// conversion du diametre en float
-			float x; istringstream(tokens[2])>> x;
+			float diam; istringstream(tokens[2])>> diam;
+			float	haut;	istringstream(tokens[3])>> haut;
 			essences.push_back( Essence(indice, tokens[0],
 											atoi(tokens[1].c_str()),
-											x,
-											atoi(tokens[3].c_str()),
+											diam,
+											haut,
 											atoi(tokens[4].c_str()),
 											atoi(tokens[5].c_str())			) );
 			
@@ -218,7 +218,7 @@ unsigned Foret::essenceRandom(int col, int row, unsigned distOthers){
 }
 
 /**
- *	Inutilisé, car cela ne permet pas de vider les listes, TODO faire une fonction qui permet de les vider
+ *	IMPROVEIT ? Inutilisé, car il faudrait regarder pour chaque élément avec quelle couleur l'afficher au lieu d'une couleur par liste
  */
 std::list< list< Arbre* > >* Foret::getChanged()
 {
@@ -263,7 +263,6 @@ void Foret::plantTree(int col, int row, unsigned int numEss)
 	Arbre* ab= new Arbre(matrix[row][col], col,row, pEss, rand()%ecartAgeMax +pEss->getAgeMaturite(), rand()%ecartHMax +hMin );
 	matrix[row][col]= ab;
 }
-
 
 
 /**
@@ -651,6 +650,7 @@ void Foret::burnAdjacentsWind(int posCol, int posRow, int hor, int vert){
 				cout << "transmission à cellule en "<< posRow + (hor -i)<< " ; "<< posCol + (vert -j)<< endl;
 				#endif
 				Cellule* cell;
+				
 				if(hor < 0)
 					cell = matrix[posRow + (vert -j)][posCol + (hor +i)];
 				else
@@ -766,6 +766,18 @@ bool Foret::NextMove()
 //		Persistance des donnees
 // ################################
 
+// TODO FLorian : Doc des fonctions de chargement et sauvegarde
+
+void Foret::loadSizes(ifstream* file)
+{
+	file->read( (char *)&(colonnes), sizeof(int));
+	file->read( (char *)&(lignes), sizeof(int));
+	#if DEBUG_LOAD
+	cout<< "Taille : " << colonnes<< " en largeur "<<lignes<< " en hauteur" <<endl;
+	#endif
+}
+
+
 void Foret::loadEssences(ifstream* file)
 {
 	int nbEssences;
@@ -775,25 +787,26 @@ void Foret::loadEssences(ifstream* file)
 #endif
 	
 	for(int i=0; i<nbEssences; ++i){
+		unsigned indice;
 		char nom[40];
-		int matur;
-		int diam;
-		int mass;
-		int haut;
-		unsigned age;
+// 		const char* nom;
+		unsigned mass;
+		float diam;
+		float haut;
+		unsigned ageMatur;
 		bool type;
 		
-		file->read( (char*)&(nom), 40*sizeof(char));
-		file->read( (char*)&(matur), sizeof(int));
-		file->read( (char*)&(diam), sizeof(int));
-		file->read( (char*)&(mass), sizeof(int));
-		file->read( (char*)&(haut), sizeof(int));
-		file->read( (char*)&(age), sizeof(unsigned));
-		file->read( (char*)&(type), sizeof(bool));
+		file->read( (char*)&(indice),	sizeof(unsigned));
+		file->read( (char*)&(nom),		40*sizeof(char));
+		file->read( (char*)&(mass),	sizeof(int));
+		file->read( (char*)&(diam),	sizeof(float));
+		file->read( (char*)&(haut),	sizeof(float));
+		file->read( (char*)&(ageMatur),	sizeof(unsigned));
+		file->read( (char*)&(type),	sizeof(bool));
 		
 		string name(nom);
 		
-		Essence e(i, nom, mass, diam, haut, age, type);
+		Essence e(indice, nom, mass, diam, haut, ageMatur, type);
 		cout<< e.toString()<< endl;
 		
 		essences.push_back(e);
@@ -804,13 +817,9 @@ void Foret::loadEssences(ifstream* file)
 void Foret::loadMatrix(ifstream* file, QProgressBar* PB)
 {
 	cout<< "Chargement ..."<< endl;
-	file->read( (char *)&(colonnes), sizeof(int));
-	file->read( (char *)&(lignes), sizeof(int));
-	#if DEBUG_LOAD
-	cout<< "Taille : " << colonnes<< " en largeur "<<lignes<< " en hauteur" <<endl;
-	#endif
 	
 	initEmpty();
+	cout<< "fin init foret"<< endl;
 	
 	// Arbres
 	while(!file->eof()){
@@ -822,8 +831,8 @@ void Foret::loadMatrix(ifstream* file, QProgressBar* PB)
 		file->read( (char*)&(indice), sizeof(unsigned));
 		
 		plantTree(col, row, indice);
-		#if DEBUG_LOAD
-// 		cout<< "arbre en : "<< col<< "; "<< row << " essence indice : " << indice<<endl;
+		#if DEBUG_LOAD_POS
+		cout<< "arbre en : "<< col<< "; "<< row << " essence indice : " << indice<<endl;
 		#endif
 		
 		int newProgression= (colonnes*row)*100 / (lignes*colonnes);
@@ -832,24 +841,32 @@ void Foret::loadMatrix(ifstream* file, QProgressBar* PB)
 // 		int progression= 0;
 }
 
-bool Foret::load(string fileName, QProgressBar* PB)
+bool Foret::load(ifstream * file, QProgressBar* PB)
 {
-	string chemin= "./Resources/"+fileName+".dat";
-	ifstream file(chemin.c_str(), ios::in|ios::binary);
+// 	string chemin= "./Resources/"+fileName+".dat";
+// 	ifstream* file= new ifstream(chemin.c_str(), ios::in|ios::binary);
 	// 	file.
-	if (!file.is_open()){
+	if (!file->is_open()){
 		cout<< "Echec ouverture fichier de sauvegarde"<< endl;
 		return false;
 	}
 	else {
-		loadEssences(&file);
+// 		loadSizes(file); // le chargement des tailles est déja fait dans fwlcome
+		loadEssences(file);
 // 		loadEssences("../Moteur/essence_data.txt");
-		loadMatrix(&file, PB);
+		loadMatrix(file, PB);
 		
-		file.close();
+		file->close();
 		
 		return true;
 	}
+}
+
+
+void Foret::saveSizes(ofstream* file)
+{
+	file->write( (char *)&(colonnes), sizeof(int));
+	file->write( (char *)&(lignes), sizeof(int));
 }
 
 
@@ -860,29 +877,27 @@ void Foret::saveEssences(ofstream* file)
 	
 	for (vector<Essence>::iterator e(essences.begin()); e != essences.end(); ++e){
 
+		unsigned indice= e->getIndice();
+// 		char nom[40];
 		const char* nom(e->getName().c_str());
-		int matur= e->getAgeMaturite();
-		int diam= e->getDiametre();
-		int mass= e->getMasse();
-		int haut= e->getHauteur();
-		unsigned age;
+		unsigned mass= e->getMasse();
+		float diam= e->getDiametre();
+		float haut= e->getHauteur();
+		unsigned ageMatur= e->getAgeMaturite();
 		bool type;
 		
-		file->write( (char*)&(nom), 40*sizeof(char));
-		file->write( (char*)&(matur), sizeof(int));
-		file->write( (char*)&(diam), sizeof(int));
-		file->write( (char*)&(mass), sizeof(int));
-		file->write( (char*)&(haut), sizeof(int));
-		file->write( (char*)&(age), sizeof(unsigned));
-		file->write( (char*)&(type), sizeof(bool));		
+		file->write( (char*)&(indice),	sizeof(unsigned));
+		file->write( (char*)&(nom),		40*sizeof(char));
+		file->write( (char*)&(mass),	sizeof(int));
+		file->write( (char*)&(diam),	sizeof(float));
+		file->write( (char*)&(haut),	sizeof(float));
+		file->write( (char*)&(ageMatur),	sizeof(unsigned));
+		file->write( (char*)&(type),	sizeof(bool));		
 	}
 }
 
 void Foret::saveMatrix(ofstream* file)
 {
-	file->write( (char *)&(colonnes), sizeof(int));
-	file->write( (char *)&(lignes), sizeof(int));
-	
 	int progression= 0;
 	
 	for (int i= 0; i< lignes; ++i){
@@ -920,19 +935,20 @@ cout<< "Enregistrement de l'arbre "<< ab->getPos().col<< "; "<< lignes<< endl;
 bool Foret::save(string fileName)
 {
 	string chemin= "./Resources/"+fileName+".dat";
-	ofstream file(chemin.c_str(), ios::out|ios::binary);
+	ofstream* file= new ofstream(chemin.c_str(), std::ios::out|std::ios::binary);
 	
-	if (!file.is_open()){
+	if (!file->is_open()){
 		cout<< "Echec ouverture fichier de sauvegarde"<< endl;
 		return false;
 	}
 	else {
 		cout<< "Sauvegarde ..."<< endl;
 		
-		saveEssences(&file);
-		saveMatrix(&file);
+		saveSizes(file);
+		saveEssences(file);
+		saveMatrix(file);
 		
-		file.close();
+		file->close();
 		
 		return true;
 	}

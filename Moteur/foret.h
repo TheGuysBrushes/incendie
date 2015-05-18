@@ -34,7 +34,6 @@ private:
 	std::list< Arbre* >	burned;
 	std::list< Arbre* >	carbonized;
 	
-	
 // METHODES
 private:
 	unsigned essenceRandom(int col, int row, unsigned int distOthers);
@@ -44,7 +43,7 @@ public:
 	// Constructeur et destructeur
 	Foret(int n_colonnes, int n_lignes, float proba = 0.60, float coefFire = 1.0);
 // 	Foret(Foret& other, float proba=0.60);
-	Foret(std::string& filename, QProgressBar* PB);
+	Foret(int _largeur, int _hauteur, std::ifstream* file, QProgressBar* PB);
 	virtual ~Foret();
 	
 	// Initialisations
@@ -114,14 +113,17 @@ public:
 	
 	bool NextMove();
 	
+	
 	// Persistance des donnees
+	void loadSizes(std::ifstream* file);
 	void loadEssences(std::ifstream* file);
 	void loadMatrix(std::ifstream* file, QProgressBar* PB);
 	
+	void saveSizes(std::ofstream* file);
 	void saveEssences(std::ofstream* file);
 	void saveMatrix(std::ofstream* file);
 	
-	bool load(std::string fileName, QProgressBar* PB);
+	bool load(std::ifstream* file, QProgressBar* PB);
 	bool save(std::string fileName= "save_forest");
 	
 	

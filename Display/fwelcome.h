@@ -9,6 +9,9 @@
 #include <QtGui/QSpinBox>
 #include <QtGui/QSlider>
 #include <QtGui/QProgressBar>
+
+#include <fstream>
+
 /**
  * Classe représentant le panneau de dialogue
  * pour la sélection des paramètres de l'automate
@@ -28,7 +31,8 @@ private:
 	
 	float proba;
 	float coef_brulure;
-	std::string directory; 
+// 	std::string directory; // TODO removeit
+	std::ifstream* file;
 
 public:
 	/* Constructeur et destructeur */
@@ -44,7 +48,8 @@ public:
 	int get_larg() const	{ return larg_spin->value(); };
 	float get_proba() const	{ return proba; };
 	float get_coef() const	{ return coef_brulure; };
-	std::string getDirectory() const { return directory; };
+// 	std::string getDirectory() const { return directory; }; TODO removeit
+	std::ifstream* getFile() { return file; };
 // 	QProgressBar* getProgressBar() const	{ return PB_load; };
 
 public slots:

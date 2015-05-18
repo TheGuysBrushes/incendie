@@ -49,7 +49,7 @@ public:
 // 									QWidget* parent = 0, Qt::WindowFlags flags = 0);
 	virtual ~FireScreen();
 		
-	void initForest(const Fwelcome* fwel);
+	void initForest(Fwelcome* fwel);
 	void initMenus(QHBoxLayout* HLayout) /*const*/;
 	void initComponents();
 	void initSizes(int largeur, int hauteur);

@@ -251,7 +251,6 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	tour_lbl->setStyleSheet("QLabel {  color : darkblue; }");
 	cpt_lbl->setStyleSheet("QLabel { color : darkblue; }");
 	delai_lbl->setStyleSheet("QLabel { color : darkblue; }");
-
 }
 
 void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
@@ -282,23 +281,33 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 }
 
 using namespace std;
-void FireScreen::initForest(const Fwelcome* fwel)
+void FireScreen::initForest(Fwelcome * fwel)
 {
 	nb_tour = 0;
+	int largeur= fwel->get_larg();
+	int hauteur= fwel->get_haut();
+	
 
-	string filename= fwel->getDirectory();
-	if ( filename != ""){
-		cout<< "Chargement d'une foret à partir du fichier "<< fwel->getDirectory()<< endl;
+	ifstream* file= fwel->getFile();
+	
+// 	string filename= fwel->getDirectory();
+// 	if ( filename != ""){
+	if ( file->is_open()){	
+		cout<< "Chargement d'une foret à partir d'un fichier "<< endl;
 		sleep(1);
 // 		QProgressBar* PB= fwel->getProgressBar();
 		QMainWindow* loadWindow= new QMainWindow;
 		QWidget* w(loadWindow);
+		w->resize(400, 30);
 		PB_load= new QProgressBar(w);
+		PB_load->resize(390, 25);
+		
 // 		QLabel* txtLoad("Chargement de la foret", w);
 		QProgressBar* PB= PB_load;
 		loadWindow->show();
+		
 		// TODO voir si il faut que foret fasse emit d'un signal à connecter à la progressbar
-		fWidget->initialise(filename, PB);
+		fWidget->initialise(largeur,hauteur, file, PB);
 		loadWindow->hide();
 		
 // 		TODO rajouter un initSizes
@@ -307,14 +316,13 @@ void FireScreen::initForest(const Fwelcome* fwel)
 		cout<< "Pas de fichier, création d'une foret aléatoirement"<< endl;
 		sleep(1);
 		
-		int largeur = fwel->get_larg();
-		int hauteur = fwel->get_haut();
 		fWidget->initialise(largeur,hauteur,
 								  fwel->get_proba(),
 								  fwel->get_coef());
 		majCompteur();
-		initSizes(largeur, hauteur);
 	}
+	
+	initSizes(largeur, hauteur);
 		
 // 	}
 }
