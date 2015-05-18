@@ -18,8 +18,6 @@ private:
 	int age;
 	float humidity;
 	float coefficient;
-	
-	int seuil;	// à partir de essence
 	int hp;	// calculés lors de la création
 	
 public:

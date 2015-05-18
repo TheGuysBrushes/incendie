@@ -17,13 +17,12 @@ using namespace std;
  */
 WindWidget::WindWidget()
 {
-	// Initialisation des composants de la classe (TODO ajouter menus ?)
+	// Initialisation des composants de la classe (TODO ajouter menus ? pas compris, à voir par Flo)
 	speed_lbl = new QLabel();
-	wind = new WindCircle();	// creer constructeur pour pouvoir initialiser sans parametre à vide et utiliser le connect du slider pour initialiser
+	wind = new WindCircle();
 	angle_lbl = new QLabel();
 	
 	initComponents();
-// 	std::cout << "test APRES initComponents"<< std::endl;
 }
 
 WindWidget::~WindWidget(){
@@ -40,66 +39,51 @@ WindWidget::~WindWidget(){
  */
 void WindWidget::initComponents()
 {
-	/// REMOVEIT J'ai mis des tabulation pour mieux voir quels widgets/éléments sont à l'intérieur des autres
-	///				On pourrait mettre des accolades mais ca alourdirai le code ?
-	
-	// TODO comment :  ajout "nom composant" (position x,y) et renommer w explicitement
-	QWidget* w1 = new QWidget(this);
+	// QWidget conteneur des éléments concernant l'angle du vent
+	QWidget* angle_container = new QWidget(this);
 
-		// TODO comment : ajout "nom composant"
-		QHBoxLayout* h_lay = new QHBoxLayout(w1);
-	
-			// TODO comment ??
-			QLabel* info_angle = new QLabel("Angle du vent : ");
+		QLabel* info_angle = new QLabel("Angle du vent : ");
 		
-		// TODO comment ??
+		// Layout contenant les informations liées à l'angle
+		QHBoxLayout* h_lay = new QHBoxLayout(angle_container);
 		h_lay->addWidget(info_angle);
 		h_lay->addWidget(angle_lbl);
-	
-	
-	// Curseur angle (position x,y)
-	QSlider* slider_angle = new QSlider(Qt::Horizontal);
-		slider_angle->setMinimum(0);
-		slider_angle->setMaximum(360);
-	
-	
-	// TODO comment : ajout "nom composant" (position x,y) et renommer ww explicitement
-	QWidget* w2 = new QWidget(this);
-	
-		// TODO comment : ajout "nom composant"
-		QVBoxLayout* v_lay = new QVBoxLayout(w2);
-	
-		//ELEMENTS DE v_lay
+
+		// QSlider permettant de faire varier l'angle du vent
+		QSlider* slider_angle = new QSlider(Qt::Horizontal);
+			slider_angle->setMinimum(0);
+			slider_angle->setMaximum(360);
+
+	// QWidget conteneur général des éléments de la vitesse du vent
+	QWidget* speed_container = new QWidget(this);
+
 		// Curseur vitesse
 		QSlider* slider_vitesse = new QSlider(Qt::Vertical);
 		slider_vitesse->setMinimum(1);
 		slider_vitesse->setMaximum(100);
-// 		slider_vitesse->setValue(vitesse);
-		
-		// TODO comment : ajout "nom composant" et renommer www  explicitement
-		QWidget* ww = new QWidget();
 
-			// TODO comment : ajout "nom composant"
-			QHBoxLayout* h_lay2 = new QHBoxLayout(ww);
-				QLabel* unit_vitesse = new QLabel("km/h");
 
-			// TODO comment ??
+		// QWidget conteneur des éléments d'informations sur la vitesse duvent
+		QWidget* speed_label_container = new QWidget();
+			QLabel* unit_vitesse = new QLabel("km/h");
+
+			// Layout contenant les labels sur la vitesse du vent
+			QHBoxLayout* h_lay2 = new QHBoxLayout(speed_label_container);
 			h_lay2->addWidget(unit_vitesse);
 			h_lay2->addWidget(speed_lbl);
-		
-		// TODO comment ??
+
+		// Layout vertical contenant le QSlider vitesse et le QWidget d'information 
+		QVBoxLayout* v_lay = new QVBoxLayout(speed_container);
 		v_lay->addWidget(slider_vitesse);
-		v_lay->addWidget(ww);
+		v_lay->addWidget(speed_label_container);
 	
 	
-// TODO comment
+	// Conteneur général de l'ensemble des autres éléments
 	QGridLayout* grid_lay = new QGridLayout(this);
-	
-	// TODO comment ??
 	grid_lay->addWidget(wind, 0,0);
-	grid_lay->addWidget(w2, 0,1, 1,1);
+	grid_lay->addWidget(speed_container, 0,1, 1,1);
 	grid_lay->addWidget(slider_angle, 1,0);
-	grid_lay->addWidget(w1, 2,0);
+	grid_lay->addWidget(angle_container, 2,0);	
 	
 	slider_angle->setValue(45);
 	
