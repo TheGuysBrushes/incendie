@@ -496,13 +496,9 @@ void Foret::kindle(Arbre* ab)
  * @param col_row position de l'arbre à allumer
  */
 void Foret::kindle(int col, int row)
-{
-	Cellule* tmp= matrix[row][col];
-	
-	int etat= tmp->getState();
-	
-	if (etat==1){
-		Arbre * ab = dynamic_cast<Arbre *>(tmp);
+{	
+	if (matrix[row][col]->getState() ==1){
+		Arbre * ab = dynamic_cast<Arbre *>(matrix[row][col]);
 		kindle(ab);
 	}
 }
@@ -547,13 +543,9 @@ void Foret::spark(Arbre* ab, int intensite)
  * @deprecated
  */
 void Foret::spark(int col, int row, int intensite)
-{
-	Cellule* tmp= matrix[row][col];
-	
-	int etat= tmp->getState();
-	
-	if (etat==1){
-		Arbre * ab = dynamic_cast<Arbre *>(tmp);
+{	
+	if (matrix[row][col]->getState()==1){
+		Arbre * ab = dynamic_cast<Arbre *>(matrix[row][col]);
 		spark(ab, intensite);
 	}
 // 	else if (etat==2){}
