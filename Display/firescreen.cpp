@@ -455,8 +455,8 @@ void FireScreen::updateWind(int angle, int vitesse){
 	cout <<"cosinus de l'angle envoyé : " << horizontal << endl;
 	cout <<"sinus de l'angle envoyé : " << vertical << endl;
 	#endif
-	vertical *= vitesse;
-	horizontal *= vitesse;
+	vertical *= vitesse/20.0;
+	horizontal *= vitesse/20.0;
 	/*
 	 * Arret temporaire : reste à faire :
 	 * 
@@ -471,6 +471,15 @@ void FireScreen::updateWind(int angle, int vitesse){
 	cout <<"deplacement horizontal en pixel: " << horizontal << endl;
 	cout <<"deplacement vertical en pixel : " << vertical << endl;
 	#endif
+	if(horizontal < 1 && horizontal > 0)
+		horizontal = 1;
+	if(horizontal > -1 && horizontal < 0)
+		horizontal = -1;
+	if(vertical < 0 && vertical > -1)
+		vertical = -1;
+	if(vertical > 0 && vertical < 1)
+		vertical =1;
+	
 	fWidget->setWind((int)horizontal,(int)vertical);
 	
 }
