@@ -29,8 +29,7 @@ private:
 	std::vector< Essence > essences;
 	std::vector<std::vector< Cellule* > > matrix;
 	std::list< Arbre* >	onFire;
-	// IMPROVEIT ? on pourrait faire une seule liste avec tous les arbres qui ont changé d'état
-	/* IMPROVEIT ou TODO remove it : "Pour l'instant" Une liste par état ; les listes représentent les nouveaux éléments dans cet état */
+	/* IMPROVEIT ou TODO remove it : "Pour l'instant"
 	std::list< Arbre* >	uprooted;
 	std::list< Arbre* >	extinguished;
 	std::list< Arbre* >	burned;
@@ -96,7 +95,7 @@ public:
 	void clearExtinguished()	{ extinguished.clear(); };
 	void clearCarbonized()	{ carbonized.clear(); };
 	void clearBurned()	{ burned.clear(); };
-
+	void clearChanged();
 
 	
 	// Autres méthodes

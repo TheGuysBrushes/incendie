@@ -22,7 +22,7 @@ int ecartHMax= 50;
 // DID	4	: Prise en compte des PV
 // DID	5	: Gérer arbres adjacents diagonaux ET avec plus de 1 de distance
 //			5 bis	: reduire la transmission selon la distance ?, creer classe ? (Arbre+distance)
-// TODO	6	: EN PARTIE	; Prise en compte coefs
+// DID	6	: Prise en compte coefs
 //	TODO	7	: EN PARTIE	; Ajout des vents
 
 //	DID	8	: Implementation de Qt
@@ -30,10 +30,7 @@ int ecartHMax= 50;
 
 //	TODO	10	: Jeux d'essais
 
-//  IMPROVEIT si plusieurs arbres se touchent, le feu est plus fort?
-
 using namespace std;
-
 
 // ###################################
 //		Constructeurs et destructeur
@@ -549,6 +546,14 @@ void Foret::spark(int col, int row, int intensite)
 		spark(ab, intensite);
 	}
 // 	else if (etat==2){}
+}
+
+void Foret::clearChanged()
+{
+	uprooted.clear();
+	extinguished.clear();
+	burned.clear();
+	carbonized.clear();
 }
 
 

@@ -131,7 +131,6 @@ void Arbre::spark(float coef)
 /**
  * Retire un nombre de points de vie à l'arbre
  * @author Florian
- * TODO Prendre en compte paramètres pour le nombre de points à enlever * 
  */
 bool Arbre::burn(float coef)
 {
