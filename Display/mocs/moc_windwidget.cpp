@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'windwidget.h'
 **
-** Created: Thu May 14 18:11:45 2015
+** Created: Tue May 19 15:40:57 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
