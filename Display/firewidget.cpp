@@ -10,11 +10,8 @@
 
 using namespace std;
 
-/* TODO 	1- Création de la zone de selection clics souris
- * TODO 	2- Sur le release, confirmation de la zone et application de l'effet choisi
- * TODO 	3- Pour les effets, deux boutons ( coupure et retardateur ) dont un par défaut activé
- * 
- * TODO	4- utiliser des Qrgba pour définir les couleurs
+/* 
+ * TODO		4- utiliser des Qrgba pour définir les couleurs
  * TODO 	4_bis- utiliser buffer->pixel(i, 0); pour changer couleur ?
  */
 
@@ -482,6 +479,7 @@ void FireWidget::resizeEvent(QResizeEvent* event){
 }
 
 // TODO faire une fonction qui prend le "button" de l'event et fait les instructions en conséquences
+// DID extraction de l'initialisation du rubber
 void FireWidget::mousePressEvent(QMouseEvent* event)
 {
 	int colonne= event->x()/tailleCell;
@@ -491,21 +489,21 @@ void FireWidget::mousePressEvent(QMouseEvent* event)
 		allumerFeu(colonne, ligne);
 	else if (event->button()==Qt::MiddleButton)
 		finirFeu(colonne, ligne);
-	else if (event->button()==Qt::RightButton){
-		/* TODO voir en haut */
-// 		eteindreFeu(colonne, ligne);
-// 		drawForest();
-		origin = event->pos();
-		
-		if(!rubber)
-			rubber = new QRubberBand(QRubberBand::Rectangle, this);
+	else if (event->button()==Qt::RightButton)
+		initRubber(event);
 
-		rubber->setGeometry(QRect(origin, QSize(0,0)));
-		rubber->show();
-	}
-	
 	drawChanged();
 	update();
+}
+void FireWidget::initRubber(QMouseEvent* event)
+{
+	origin = event->pos();
+	
+	if(!rubber)
+		rubber = new QRubberBand(QRubberBand::Rectangle, this);
+
+	rubber->setGeometry(QRect(origin, QSize(0,0)));
+	rubber->show();
 }
 
 void FireWidget::mouseMoveEvent(QMouseEvent* event)
@@ -518,9 +516,6 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 	else if (event->buttons().testFlag(Qt::MiddleButton) )
 		finirFeu(colonne, ligne);
 	else if (event->buttons().testFlag(Qt::RightButton) ){
-		 //TODO voir en haut 
-// 		eteindreFeu(colonne, ligne);
-// 		drawForest();
 		if(rubber)
 			rubber->setGeometry(QRect(origin,event->pos()).normalized());
 	}
