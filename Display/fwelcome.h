@@ -27,6 +27,7 @@ private:
 	QLabel* c_value;
 // 	QPushButton* valid_btn;
 	QPushButton* cancel_btn;
+	QPushButton* load_btn;
 	QProgressBar* PB_load;
 	
 	float proba;
@@ -48,6 +49,7 @@ public:
 	float get_proba() const	{ return proba; };
 	float get_coef() const	{ return coef_brulure; };
 	std::ifstream* getFile() { return file; };
+	QPushButton* getLoadBtn() { return load_btn; };
 // 	QProgressBar* getProgressBar() const	{ return PB_load; };
 
 public slots:

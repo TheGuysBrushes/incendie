@@ -2,6 +2,8 @@
 #include <QtGui/qevent.h>
 #include <qcolormap.h>
 
+#include "../Moteur/actions.h"
+
 #define GRAY 	5
 #define RED_TRANSPARENT 	6
 #define ANTI_RED_TRANSPARENT	7
@@ -468,7 +470,7 @@ void FireWidget::redraw()
 	drawPicture();
 	drawForest();
 	drawChanged();
-// 	update();	// TODO apparemment non utile
+	update();	// TODO apparemment non utile
 }
 
 // ###################
@@ -491,7 +493,7 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 	tailleCell = min (event->size().width() / nbCol , event->size().height() / nbRow);
 	
 	// TODO voir comment modifier la taille de de FireWidget sans repasser par resizeEvent, vraiment utile (ajouté pour rubberband, le modifier pour s'adapter?)
-	// resize(tailleCell * nbCol, tailleCell*nbRow); // Fait lagger
+	resize(tailleCell * nbCol, tailleCell*nbRow); // Fait lagger
 	
 	#if DEBUG_CURRENT
 // 	cout << "test apres resize dans resizeEvent (ligne 488 firewidget)"<< endl;
@@ -664,9 +666,9 @@ void FireWidget::actionReceived(int x)
 	
 	// Appel à une fonction de forêt qui parcours la zone et effectue l'action
 
-	if(x == 0){
+	if(x == CUT){
 		forest->cut(xDep, yDep, xArr, yArr);
-	}else if( x == 1){
+	}else if( x == DELAY){
 		forest->delay(xDep, yDep, xArr,yArr);
 	}
 

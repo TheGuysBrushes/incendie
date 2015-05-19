@@ -16,7 +16,6 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	// Initialisation des composants dynamiques (SpinBox exceptées)
 	p_value = new QLabel();
 	c_value = new QLabel();
-// 	directory= ""; TODO removeit
 	
 	PB_load= new QProgressBar();
 	PB_load->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -33,8 +32,8 @@ Fwelcome::~Fwelcome(){
 	delete(larg_spin);
 	delete(p_value);
 	delete(c_value);
-// 	delete(valid_btn);
-// 	delete(cancel_btn);
+	delete(load_btn);
+	delete(cancel_btn);
 }
 
 /*** Autres Méthodes ***/
@@ -141,7 +140,7 @@ void Fwelcome::initComponents(){
 			QPushButton* valid_btn = new QPushButton("Confirm");
 			// TODO placement du bouton de chargemetn
 			cancel_btn = new QPushButton("Cancel");
-			QPushButton* load_btn= new QPushButton("Load forest", this);
+			load_btn= new QPushButton("Load forest");
 			#endif
 			
 				valid_btn->setDefault(true);
@@ -149,6 +148,7 @@ void Fwelcome::initComponents(){
 			
 		h_lay->addWidget(valid_btn);
 		h_lay->addWidget(cancel_btn);
+		h_lay->addWidget(load_btn);
 
 		
 	lay->addWidget(present);

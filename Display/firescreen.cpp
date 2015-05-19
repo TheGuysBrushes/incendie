@@ -136,9 +136,11 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	QWidget* ww1 = new QWidget(menus);
 	QWidget* ww2 = new QWidget(menus);
 	QWidget* ww3 = new QWidget(menus);
+	QWidget* ww4 = new QWidget(menus);
 	
 	QGridLayout* grid_lay1 = new QGridLayout(ww1);
-	QGridLayout* grid_lay2 = new QGridLayout(ww2); 
+	QGridLayout* grid_lay2 = new QGridLayout(ww2);
+	QGridLayout* grid_lay3 = new QGridLayout(ww4);
 	
 	QWidget* www = new QWidget(ww2);
 	
@@ -156,10 +158,12 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	QLabel* trans_p2p = new QLabel("Transmission pas-a-pas : ");
 	
 	QPushButton* reset_btn = new QPushButton("RAZ ! Attention");
-	
+	QPushButton* save_btn = new QPushButton("Sauvegarder");
+	QPushButton* load_btn = new QPushButton("Charger");
 	// Compteur de tours et Slider
 	QLabel* trans_con = new QLabel("Transmission continue : ");	
 	QLabel* tour_lbl = new QLabel("Nombre de tours :");
+	
 #else 
 	QLabel* titre = new QLabel("Cellular automaton");
 	QLabel* info_vent= new QLabel("Wind's settings :");
@@ -168,6 +172,8 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	QLabel* trans_p2p = new QLabel("Step-to-step transmission : ");
 	
 	QPushButton* reset_btn = new QPushButton("Reset ! Be careful");
+	QPushButton* save_btn = new QPushButton("Save");
+	QPushButton* load_btn = new QPushButton("Load");
 	
 	// Compteur de tours et Slider
 	QLabel* trans_con = new QLabel("Continuous transmission : ");	
@@ -195,6 +201,10 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	grid_lay2->addWidget(slider,1,0);
 	grid_lay2->addWidget(delai_lbl,1,1);
 	
+	grid_lay3->addWidget(load_btn,0,0);
+	grid_lay3->addWidget(save_btn,0,1);
+	grid_lay3->addWidget(reset_btn,1,0,1,0);
+	
 	h_lay1->addWidget(tour_lbl);
 	h_lay1->addWidget(cpt_lbl);
 	
@@ -210,10 +220,8 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	vert_lay1->addWidget(ww2);
 	vert_lay1->addWidget(www);
 	vert_lay1->addWidget(ww3);
-	vert_lay1->addWidget(reset_btn);
+	vert_lay1->addWidget(ww4);
 	
-	QPushButton* save_btn = new QPushButton("Save");
-	vert_lay1->addWidget(save_btn);
 	
 	vert_lay1->addStretch(2);
 	vert_lay1->setAlignment(titre,Qt::AlignHCenter);
@@ -431,6 +439,7 @@ void FireScreen::reset()
 	Fwelcome* fwel = new Fwelcome(this);
 	fwel->addCancel();
 	fwel->setModal(true);
+	fwel->getLoadBtn()->setVisible(false);
 	fwel->show();
 	
 	if( fwel->exec() == QDialog::Accepted ){
@@ -459,15 +468,10 @@ void FireScreen::updateWind(int angle, int vitesse){
 	#if DEBUG_VENT
 	cout << "valeur de l'angle dans firescreen : " << angle << endl;
 	#endif
-	/*
-	if( (angle >= 360 && angle <450) || (angle >=540 && angle < 630)){
-		vertical = sin(PI*(float)angle/180.0);
-		horizontal = cos(PI*(float)angle/180.0);
-	}else{*/
-		vertical = sin(PI*(float)(angle)/180.0);
-		horizontal = cos(PI*(float)(angle)/180.0);
 
-	//}
+	vertical = sin(PI*(float)(angle)/180.0);
+	horizontal = cos(PI*(float)(angle)/180.0);
+
 	#if DEBUG_HYPO
 	cout <<"cosinus de l'angle envoyé : " << horizontal << endl;
 	cout <<"sinus de l'angle envoyé : " << vertical << endl;
@@ -516,12 +520,12 @@ void FireScreen::releaseOrdered()
 		#if DEBUG_RETARD
 		std::cout << "demande de coupure" << std::endl;
 		#endif
-		emit actionSender(0);
+		emit actionSender(CUT);
 	}else if(!delay_btn->isEnabled()){
 		#if DEBUG_RETARD
 		std::cout << "demande de retardateur" << std::endl;
 		#endif
-		emit actionSender(1);
+		emit actionSender(DELAY);
 	}
 	
 }
