@@ -120,18 +120,24 @@ bool FireWidget::loadForest(std::string filename)
  * @author Florian
  * @param QString ?
  */
-bool FireWidget::loadPicture(QString filename){
-	
-	
+bool FireWidget::loadPicture(QString filename)
+{
 	QImage img;
 // 	img.fill(qRgba(50, 50, 50, 255));
 	img.load(filename);
 	
-	QColor* pix= new QColor(img.pixel(0,0));
-	cout << "qté vert en 0;0 : "<< pix->green();
-	
+	QColor* pix= new QColor();
+
+	for (int i= 0; i< img.height(); ++i){
+		for (int j= 0; j< img.width(); ++j){
+			pix->setRgba(img.pixel(j, i));
+		#if DEBUG_IMAGE
+			cout << "qté vert en "<< j<< " ; "<< i<<" : "<< pix->green()<< endl;
+		#endif
+		}
+	}
+			
 // 	QColormap map(img.color());
-	
 // 	img.trueMatrix()
 	
 	pictureForest= new QPixmap();
