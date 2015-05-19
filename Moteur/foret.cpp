@@ -768,7 +768,7 @@ void Foret::loadEssences(ifstream* file)
 	
 	for(int i=0; i<nbEssences; ++i){
 		unsigned indice;
-		char nom[40];
+		char nom[50];
 // 		const char* nom;
 		unsigned mass;
 		float diam;
@@ -777,17 +777,19 @@ void Foret::loadEssences(ifstream* file)
 		bool type;
 		
 		file->read( (char*)&(indice),	sizeof(unsigned));
-		file->read( (char*)&(nom),		40*sizeof(char));
 		file->read( (char*)&(mass),	sizeof(int));
+		file->read( (char*)&(nom),		50*sizeof(char));
 		file->read( (char*)&(diam),	sizeof(float));
 		file->read( (char*)&(haut),	sizeof(float));
 		file->read( (char*)&(ageMatur),	sizeof(unsigned));
 		file->read( (char*)&(type),	sizeof(bool));
 		
-		string name(nom);
+		cout << "nom : "<< nom<< ";end"<< endl;
 		
-		Essence e(indice, nom, mass, diam, haut, ageMatur, type);
+		Essence e(indice, (string)nom, mass, diam, haut, ageMatur, type);
+		#if DEBUG_LOAD
 		cout<< e.toString()<< endl;
+		#endif
 		
 		essences.push_back(e);
 	}
@@ -859,16 +861,31 @@ void Foret::saveEssences(ofstream* file)
 
 		unsigned indice= e->getIndice();
 // 		char nom[40];
-		const char* nom(e->getName().c_str());
+// 		const char* nom(e->getName().c_str());
+// 		name.assign(e->getName().c_str(), 40);
+
+		string name(e->getName().c_str());
+		char* nom= new char[50];
+		unsigned i;
+		for (i= 0; i<name.length(); ++i ){
+			nom[i]= name[i];
+		}
+		for ( ; i<49; ++i)
+			nom[i]=' ';
+			
+		nom[49]= '\0';
+		cout << nom<< "; end"<< endl;
+		
 		unsigned mass= e->getMasse();
 		float diam= e->getDiametre();
 		float haut= e->getHauteur();
 		unsigned ageMatur= e->getAgeMaturite();
-		bool type;
+		bool type= e->getType();
 		
 		file->write( (char*)&(indice),	sizeof(unsigned));
-		file->write( (char*)&(nom),		40*sizeof(char));
+// 		file->write( (char*)&(name),	sizeof(string));
 		file->write( (char*)&(mass),	sizeof(int));
+		file->write( (char*)&(nom),		50*sizeof(char));
 		file->write( (char*)&(diam),	sizeof(float));
 		file->write( (char*)&(haut),	sizeof(float));
 		file->write( (char*)&(ageMatur),	sizeof(unsigned));
