@@ -98,6 +98,22 @@ void FireWidget::saveForest() const
 	forest->save("foret1");
 }
 
+bool FireWidget::loadForest(std::string filename)
+{	
+	ifstream* file = new ifstream(filename.c_str(), ios::in|ios::binary);
+
+	if (!file->is_open()){
+		std::cout<< "Echec ouverture fichier de sauvegarde"<< std::endl;
+		return false;
+	}
+	else {
+		forest->loadSizes(file);
+		forest->load(file,NULL);
+		return true;
+		
+	}
+}
+
 
 /**
  * Fonction à commenter par son auteur :p

@@ -247,7 +247,8 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	// Connexion pour coupure et retardateur
 	QObject::connect(fWidget, SIGNAL(releaseSignal()), this, SLOT(releaseOrdered()));
 	QObject::connect(this, SIGNAL(actionSender(int)), fWidget, SLOT(actionReceived(int)));
-	
+	// Temporaire, à revoir lors de la création de l'explorateur de fichier
+	QObject::connect(load_btn, SIGNAL(clicked(bool)), this, SLOT(reloadForest(bool)));
 	
 	cut_btn->setEnabled(true);
 	delay_btn->setEnabled(false);
@@ -280,7 +281,6 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 	lay->addWidget(fWidget);
 	lay->setStretchFactor(fWidget, 1);
 	lay->minimumHeightForWidth(1);
-	
 	// Partie droite, menus
 	initMenus(lay);
 	
@@ -530,8 +530,13 @@ void FireScreen::releaseOrdered()
 	
 }
 
-void FireScreen::save() const
-{
+void FireScreen::save() const{
 	fWidget->saveForest();
+}
+
+void FireScreen::reloadForest(bool){
+	// TODO valeur statique par défaut, à modifier avec explorateur
+	string file = "Resources/foret1.dat";
+	fWidget->loadForest(file);
 }
 	

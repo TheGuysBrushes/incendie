@@ -48,7 +48,6 @@ void WindWidget::initComponents()
 		QHBoxLayout* h_lay = new QHBoxLayout(angle_container);
 		h_lay->addWidget(info_angle);
 		h_lay->addWidget(angle_lbl);
-
 		// QSlider permettant de faire varier l'angle du vent
 		QSlider* slider_angle = new QSlider(Qt::Horizontal);
 			slider_angle->setMinimum(0);

@@ -881,7 +881,6 @@ void Foret::saveEssences(ofstream* file)
 		float haut= e->getHauteur();
 		unsigned ageMatur= e->getAgeMaturite();
 		bool type= e->getType();
-		
 		file->write( (char*)&(indice),	sizeof(unsigned));
 // 		file->write( (char*)&(name),	sizeof(string));
 		file->write( (char*)&(mass),	sizeof(int));

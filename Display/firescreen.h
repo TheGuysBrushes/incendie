@@ -73,6 +73,7 @@ public slots:
 	void updateWind(int angle, int vitesse);
 	void releaseOrdered();
 	void save() const;
+	void reloadForest(bool);
 	
 signals:
 	void actionSender(int x);

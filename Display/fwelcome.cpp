@@ -202,7 +202,6 @@ void Fwelcome::load()
 		#endif
 		
 // 		file->close();
-// 		directory= filename;
 		accept();
 	}
 }

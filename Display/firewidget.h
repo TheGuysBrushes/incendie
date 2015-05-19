@@ -13,6 +13,7 @@
 #include <QtGui/QRubberBand>
 #include "../Moteur/foret.h"
 #include "fwelcome.h"
+#include <fstream>
 
 /**
  * Widget d'affichage de l'automate cellulaire. Ce composant
@@ -55,6 +56,7 @@ public:
 	
 	void delForest();
 	void saveForest() const;
+	bool loadForest(std::string filename);
 
 	bool loadPicture(QString filename);
 	bool eteindreFeu(int colonne, int ligne);
