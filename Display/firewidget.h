@@ -64,6 +64,7 @@ public:
 	void setColor(int colorIndice);	
 	void setWind(float _hor, float _ver);
 	int getTailleCell() const { return tailleCell; };
+	Foret* getForet() const { return forest; };
 	void razRubber();
 	
 	/* Affichage */

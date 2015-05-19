@@ -318,7 +318,7 @@ void FireWidget::drawPicture(){
 /**
  * Imprime une cellule à une position donnée, utilise la couleur courante
  * @author Florian
- * @param int col,row indices de la colonne et de la ligne de la cellue
+ * @param int col,row indices de la colonne et de la ligne de la cellules
  */
 void FireWidget::drawCell(int colonne, int ligne)
 {
@@ -332,20 +332,21 @@ void FireWidget::drawCell(int colonne, int ligne)
  * Imprime un arbre selon sa position, utilise la couleur courante.
  * @author Florian
  * @param ab arbre à dessiner
- * TODO Utilisation de drawCell ? : soucis de performance//clareté//modularité
+ * @deprecated
  */
 void FireWidget::drawTree(const Arbre* ab)
 {
 // 	drawCell(ab->getPos().col, ab->getPos().row);
 	bufferPainter->fillRect(tailleCell* ab->getPos().col, tailleCell* ab->getPos().row, tailleCell, tailleCell, *(color));
 	#if DEBUG_TMATRICE
-	cout <<"draw tree ; ";
+	cout <<"draw tree ; "<< ab->getPos().col << ab->getPos().row ;
 	#endif
 }
 /**
  * Dessine l'ensemble des arbres de la liste passée en paramètre
  * @param list<Arbre*> liste des arbres à dessiner
  * @author Florian et Ugo (commentaires :p )
+ * @deprecated
  */
 void FireWidget::drawList( list< Arbre* > * arbres){
 
@@ -384,7 +385,7 @@ void FireWidget::drawForest()
 				// On vérifie ici si l'arbre a recu un retardateur
 				// i.e son coefficient est différent de 1
 				if(dynamic_cast < Arbre* >(cell)->getCoeff() != 1)
-					setColor(BLUE);					
+					setColor(BLUE);
 				drawCell(current_largeur, current_hauteur);
 				
 			}
@@ -495,7 +496,7 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 	tailleCell = min (event->size().width() / nbCol , event->size().height() / nbRow);
 	
 	// TODO voir comment modifier la taille de de FireWidget sans repasser par resizeEvent, vraiment utile (ajouté pour rubberband, le modifier pour s'adapter?)
-// 	resize(tailleCell * nbCol, tailleCell*nbRow);
+	// resize(tailleCell * nbCol, tailleCell*nbRow); // Fait lagger
 	
 	#if DEBUG_CURRENT
 // 	cout << "test apres resize dans resizeEvent (ligne 488 firewidget)"<< endl;
@@ -645,7 +646,7 @@ void FireWidget::reset(int _larg, int _haut, float proba, float coef)
 	drawPicture();
 	drawForest();
 	drawChanged();
-// 	update();IMPROVEIT apparemment pas utile, par contre TODO redimensionnement
+//  update();IMPROVEIT apparemment pas utile, par contre TODO redimensionnement
 }
 
 

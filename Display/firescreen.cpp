@@ -383,7 +383,7 @@ void FireScreen::majCompteur()
 void FireScreen::resizeEvent(QResizeEvent* Qevent)
 {
 	QWidget::resizeEvent(Qevent);
-	
+
 	#if DEBUG_DIMENSION
 	std::cout << "WWindow: "<< Qevent->size().width()<< " HWindow: "<< Qevent->size().height()<< std::endl;
 	std::cout << "WMenu: "<< menus->sizeHint().width()<< " HMenu: "<<menus->sizeHint().height()<< std::endl;
