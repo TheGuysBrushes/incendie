@@ -292,24 +292,28 @@ void FireScreen::initForest(Fwelcome * fwel)
 
 	ifstream* file= fwel->getFile();
 	
-// 	string filename= fwel->getDirectory();
-// 	if ( filename != ""){
 	if ( file->is_open()){	
 		cout<< "Chargement d'une foret à partir d'un fichier "<< endl;
 		sleep(1);
 // 		QProgressBar* PB= fwel->getProgressBar();
 		QMainWindow* loadWindow= new QMainWindow;
-		QWidget* w(loadWindow);
+		QWidget* w= new QWidget(loadWindow);
 		w->resize(400, 30);
-		PB_load= new QProgressBar(w);
-		PB_load->resize(390, 25);
+		QVBoxLayout* layLoad= new QVBoxLayout(w);
 		
-// 		QLabel* txtLoad("Chargement de la foret", w);
-		QProgressBar* PB= PB_load;
+			QLabel* txtLoad= new QLabel("Chargement de la foret");
+			PB_load= new QProgressBar();
+			PB_load->resize(390, 25);
+		
+		layLoad->addWidget(txtLoad);
+		layLoad->addWidget(PB_load);
+		
+		
+		loadWindow->setCentralWidget(w);
 		loadWindow->show();
 		
 		// TODO voir si il faut que foret fasse emit d'un signal à connecter à la progressbar
-		fWidget->initialise(largeur,hauteur, file, PB);
+		fWidget->initialise(largeur,hauteur, file, PB_load);
 		loadWindow->hide();
 	}
 	else {
@@ -323,8 +327,6 @@ void FireScreen::initForest(Fwelcome * fwel)
 	}
 	
 	initSizes(largeur, hauteur);
-		
-// 	}
 }
 
 
