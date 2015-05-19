@@ -38,7 +38,11 @@ FireWidget::FireWidget(int _largeur, int _hauteur, float proba, float coef_brulu
 	buffer = new QImage();
 	color = new QColor(Qt::black);
 	bufferPainter= new QPainter();
+	
+	pictureForest= new QImage();
+	cout << "test init";
 	loadPicture("../foret_pay.tif");
+	
 	rubber = NULL;
 }
 
@@ -47,7 +51,11 @@ FireWidget::FireWidget(): QWidget(){
 	buffer = new QImage();
 	color = new QColor(Qt::black);
 	bufferPainter= new QPainter();
+	
+	pictureForest= new QImage();
+	cout << "test init";
 	loadPicture("../foret_pay.tif");
+	
 	rubber = NULL;
 }
 
@@ -84,6 +92,75 @@ void FireWidget::initialise(int largeur, int hauteur, ifstream * file, QProgress
 	setMinimumSize(largeur, hauteur);
 }
 
+// #################################
+/*** 	Gestion des sauvegardes 	***/
+// #################################
+/**
+ * Fonction à commenter par son auteur :p
+ * @author Florian
+ * @param QString ?
+ */
+bool FireWidget::loadPicture(QString filename)
+{
+// 	QImage img;
+	// 	img.fill(qRgba(50, 50, 50, 255));
+	pictureForest->load(filename);
+	
+	QColor* pix= new QColor();
+	
+// 	pictureForest= new QPixmap();
+// 	if (pictureForest->convertFromImage(img)){
+	if (!pictureForest->isNull()){
+		#if DEBUG_IMAGE
+		cout<< "image chargée"<< endl;
+		#endif
+		
+		for (int i= 0; i< pictureForest->height(); ++i){
+			for (int j= 0; j< pictureForest->width(); ++j){
+				pix->setRgba(pictureForest->pixel(j, i));
+				#if DEBUG_IMAGE_POS
+				cout << "qté vert en "<< j<< " ; "<< i<<" : "<< pix->green()<< endl;
+				#endif
+				
+				
+			}
+		}
+		// 	QColormap map(img.color());
+		// 	img.trueMatrix()
+
+		return true;
+	}
+	else {
+		#if DEBUG_IMAGE
+		cout<< "image non chargée"<< endl;
+		#endif
+
+		return false;
+	}
+}
+	
+bool FireWidget::loadForest(std::string filename)
+{	
+	ifstream* file = new ifstream(filename.c_str(), std::ios::in|std::ios::binary);
+
+	if (!file->is_open()){
+		std::cout<< "Echec ouverture fichier de sauvegarde"<< std::endl;
+		return false;
+	}
+	else {
+		// Réinitialisation des tailles de la matrice...
+		forest->loadSizes(file);
+		// ... puis chargement de la nouvelle matrice
+		forest->load(file,NULL);
+		return true;
+		
+	}
+}
+
+void FireWidget::saveForest() const
+{
+	forest->save("foret1");
+}
 
 /**
  * Méthodes de destruction de la forêt pour gérer la 
@@ -93,70 +170,6 @@ void FireWidget::delForest(){
 	delete(forest);
 }
 
-void FireWidget::saveForest() const
-{
-	forest->save("foret1");
-}
-
-bool FireWidget::loadForest(std::string filename)
-{	
-	ifstream* file = new ifstream(filename.c_str(), ios::in|ios::binary);
-
-	if (!file->is_open()){
-		std::cout<< "Echec ouverture fichier de sauvegarde"<< std::endl;
-		return false;
-	}
-	else {
-		forest->loadSizes(file);
-		forest->load(file,NULL);
-		return true;
-		
-	}
-}
-
-
-/**
- * Fonction à commenter par son auteur :p
- * @author Florian
- * @param QString ?
- */
-bool FireWidget::loadPicture(QString filename)
-{
-	QImage img;
-// 	img.fill(qRgba(50, 50, 50, 255));
-	img.load(filename);
-	
-	QColor* pix= new QColor();
-
-	for (int i= 0; i< img.height(); ++i){
-		for (int j= 0; j< img.width(); ++j){
-			pix->setRgba(img.pixel(j, i));
-		#if DEBUG_IMAGE
-			cout << "qté vert en "<< j<< " ; "<< i<<" : "<< pix->green()<< endl;
-		#endif
-		}
-	}
-			
-// 	QColormap map(img.color());
-// 	img.trueMatrix()
-	
-	pictureForest= new QPixmap();
-	if (pictureForest->convertFromImage(img)){
-// 	if (!img.isNull()){
-		#if DEBUG_IMAGE
-		cout<< "image chargée"<< endl;
-		#endif
-// 
-		return true;
-	}
-	else {
-		#if DEBUG_IMAGE
-		cout<< "image non chargée"<< endl;
-		#endif
-// 
-		return false;
-	}
-}
 
 /**
  * Eteint un arbre à une position donnée
@@ -308,7 +321,6 @@ void FireWidget::razRubber(){
 	rubber = NULL;
 }
 
-
 /* TODO creation matrice à partir d'image dans forest ou dans firewidget ? ou les deux
  */
 // 	Pour créer la matrice
@@ -322,7 +334,6 @@ void FireWidget::razRubber(){
 // 		}
 // 	}
 
-
 // ########################
 /***		Affichages	***/
 // ########################
@@ -332,7 +343,7 @@ void FireWidget::razRubber(){
  */
 void FireWidget::drawPicture(){
 	bufferPainter->begin(buffer);
-	bufferPainter->drawPixmap(0, 0, *pictureForest);
+	bufferPainter->drawImage(0, 0, *pictureForest);
 	bufferPainter->end();
 }
 
@@ -679,7 +690,12 @@ void FireWidget::actionReceived(int x)
 	int yDep = depart.y() / tailleCell;
 	
 	int xArr = arrivee.x() / tailleCell;
+	if (xArr>= forest->width())
+		xArr= forest->width()-1;
+	
 	int yArr = arrivee.y() / tailleCell;
+	if (yArr>= forest->height())
+		yArr= forest->height()-1;
 	
 	#if DEBUG_RETARD
 	cout << "Coordonnée en cellule du départ : " << xDep << ";" << yDep << endl;

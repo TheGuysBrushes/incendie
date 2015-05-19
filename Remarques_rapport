@@ -1,3 +1,9 @@
+Général : 
+	Création d'un systeme de logs à partir d'un fichier debug.h inclus dans tous les fichiers cpp,
+permettant d'afficher les informations de suivi de l'exécution de chaque partie indépendemment, 
+en activant les debugs concernés, sans ralentir l'exécution du programme en "mode release", sans debug.
+	Cela facilite également la finalisation du projet, car il n'y pas de code de débuggage inutile.
+
 
 // Florian :
 - voir si on fait une liste unique pour les éléments qui ont changé d'état ?

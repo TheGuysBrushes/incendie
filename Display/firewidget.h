@@ -31,7 +31,8 @@ private:
 	QPainter* bufferPainter;
 	int tailleCell;
 
-	QPixmap* pictureForest;
+// 	QPixmap* pictureForest; remplacé
+	QImage* pictureForest;
 	
 	QPoint origin;
 	QRubberBand* rubber;
@@ -54,11 +55,11 @@ public:
 	void initialise(int largeur, int hauteur, float proba = 0.60, float coef_brulure=1.0);
 	void initialise(int largeur, int hauteur, std::ifstream* file, QProgressBar* PB);
 	
-	void delForest();
-	void saveForest() const;
-	bool loadForest(std::string filename);
-
 	bool loadPicture(QString filename);
+	bool loadForest(std::string filename);
+	void saveForest() const;
+	void delForest();
+
 	bool eteindreFeu(int colonne, int ligne);
 	bool allumerFeu(int colonne, int ligne);
 	bool finirFeu(int colonne, int ligne);

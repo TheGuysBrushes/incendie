@@ -521,7 +521,7 @@ void FireScreen::releaseOrdered()
 		std::cout << "demande de coupure" << std::endl;
 		#endif
 		emit actionSender(CUT);
-	}else if(!delay_btn->isEnabled()){
+	} else if(!delay_btn->isEnabled()){
 		#if DEBUG_RETARD
 		std::cout << "demande de retardateur" << std::endl;
 		#endif
@@ -534,9 +534,11 @@ void FireScreen::save() const{
 	fWidget->saveForest();
 }
 
-void FireScreen::reloadForest(bool){
-	// TODO valeur statique par défaut, à modifier avec explorateur
-	string file = "Resources/foret1.dat";
-	fWidget->loadForest(file);
+// BUG FIXIT l'application plante lorsqu'on appuie le bouton load, appelant reloadForest, surement car aucune image n'est rechargée
+void FireScreen::reloadForest(bool)
+{
+	// TODO valeur par défaut, à modifier avec explorateur
+	string filename = "Resources/foret1.dat";
+	fWidget->loadForest(filename);
 }
 	
