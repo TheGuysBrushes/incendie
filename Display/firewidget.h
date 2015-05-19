@@ -39,8 +39,10 @@ private:
 	QPoint arrivee;
 	long temps;
 	bool running;
+	
 private:
 	void initRubber(QMouseEvent* event);
+	
 public:
 	/* Constructeur et desctructeur */
 	FireWidget(int _largeur, int _hauteur, float proba = 0.60, float coef_brulure=1.0);
