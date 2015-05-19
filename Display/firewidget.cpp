@@ -115,25 +115,26 @@ bool FireWidget::loadPicture(QString filename){
 	QColor* pix= new QColor(img.pixel(0,0));
 	cout << "qté vert en 0;0 : "<< pix->green();
 	
-	QColormap map(img.color());
+// 	QColormap map(img.color());
 	
 // 	img.trueMatrix()
 	
 // 	pictureForest= new QPixmap();
 // 	if (pictureForest->convertFromImage(img)){
-// 		#if DEBUG_IMAGE
-// 		cout<< "image chargée"<< endl;
-// 		#endif
+	if (!img.isNull()){
+		#if DEBUG_IMAGE
+		cout<< "image chargée"<< endl;
+		#endif
 // 
-// 		return true;
-// 	}
-// 	else {
-// 		#if DEBUG_IMAGE
-// 		cout<< "image non chargée"<< endl;
-// 		#endif
+		return true;
+	}
+	else {
+		#if DEBUG_IMAGE
+		cout<< "image non chargée"<< endl;
+		#endif
 // 
-// 		return false;
-// 	}
+		return false;
+	}
 }
 
 /**
