@@ -116,9 +116,9 @@ bool FireWidget::loadPicture(QString filename){
 	
 // 	img.trueMatrix()
 	
-// 	pictureForest= new QPixmap();
-// 	if (pictureForest->convertFromImage(img)){
-	if (!img.isNull()){
+	pictureForest= new QPixmap();
+	if (pictureForest->convertFromImage(img)){
+// 	if (!img.isNull()){
 		#if DEBUG_IMAGE
 		cout<< "image chargée"<< endl;
 		#endif
