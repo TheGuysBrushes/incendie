@@ -512,7 +512,7 @@ void FireWidget::mousePressEvent(QMouseEvent* event)
 		initRubber(event);
 
 	drawChanged();
-	update(); // TODO voir si utile (pas sur du tout)
+	update(); 
 }
 void FireWidget::initRubber(QMouseEvent* event)
 {
@@ -540,7 +540,7 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 	}
 	
 	drawChanged();
-	update(); // TODO voir si utile (pas sur du tout)
+	update();
 }
 
 void FireWidget::mouseReleaseEvent(QMouseEvent* event)
