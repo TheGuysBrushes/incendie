@@ -562,7 +562,7 @@ void Foret::clearChanged()
  * @param col indice de la colonne de la cellule
  * @param row indice de la ligne de la cellule
  * @param distance distance sur laquelle s'effectue la recherche de voisins
- * @return list de pointeurs sur arbres // IMPROVEIT ajout attribut distance ? : fait dans adjacentsWind
+ * @return list de pointeurs sur arbres 
  */
 std::list< Arbre* > Foret::adjacents(int col, int row, int distance) const
 {

@@ -11,10 +11,7 @@
 
 using namespace std;
 
-/* TODO 	1- Création de la zone de selection clics souris
- * TODO 	2- Sur le release, confirmation de la zone et application de l'effet choisi
- * TODO 	3- Pour les effets, deux boutons ( coupure et retardateur ) dont un par défaut activé
- * 
+/* 
  * TODO	4- utiliser des Qrgba pour définir les couleurs
  * TODO 	4_bis- utiliser buffer->pixel(i, 0); pour changer couleur ?
  */
@@ -303,7 +300,7 @@ void FireWidget::razRubber(){
 
 
 // ########################
-/***		Affichages		***/
+/***		Affichages	***/
 // ########################
 /**
  * Fonction à commenter par son auteur :p
@@ -397,7 +394,6 @@ void FireWidget::drawForest()
 			}
 			else if (cell->getState() == -1){
 				setColor(GRAY);
-// 				setColor(ANTI_RED_TRANSPARENT);
 				drawCell(current_largeur, current_hauteur);
 			}
 			else if(cell->getState() == -2){
@@ -405,7 +401,7 @@ void FireWidget::drawForest()
 				drawCell(current_largeur,current_hauteur);
 			}
 			
-			// Incrémentations des positions des cellules
+			// Incrémentation des positions des cellules
 			current_largeur += tailleCell;
 		}
 		#if DEBUG_TMATRICE
@@ -467,7 +463,6 @@ void FireWidget::redraw()
 	
 	if (!buffer->isNull()){
 		delete(buffer);
-		// 		bufferPainter->end();
 	}
 	buffer = new QImage(tailleCell*forest->width(), tailleCell*forest->height(), QImage::Format_ARGB32);
 	drawPicture();
@@ -512,7 +507,6 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 	redraw();
 }
 
-// TODO faire une fonction qui prend le "button" de l'event et fait les instructions en conséquences
 void FireWidget::mousePressEvent(QMouseEvent* event)
 {
 	int colonne= event->x()/tailleCell;
@@ -522,22 +516,23 @@ void FireWidget::mousePressEvent(QMouseEvent* event)
 		allumerFeu(colonne, ligne);
 	else if (event->button()==Qt::MiddleButton)
 		finirFeu(colonne, ligne);
-	else if (event->button()==Qt::RightButton){
-		/* TODO voir en haut */
-// 		eteindreFeu(colonne, ligne);
-// 		drawForest();
-		origin = event->pos();
-		
-		if(!rubber)
-			rubber = new QRubberBand(QRubberBand::Rectangle, this);
+	else if (event->button()==Qt::RightButton)
+		initRubber(event);
 
-		rubber->setGeometry(QRect(origin, QSize(0,0)));
-		rubber->show();
-	}
-	
 	drawChanged();
 	update();
 }
+
+void FireWidget::initRubber(QMouseEvent* event){
+	origin = event->pos();
+	
+	if(!rubber)
+		rubber = new QRubberBand(QRubberBand::Rectangle, this);
+
+	rubber->setGeometry(QRect(origin, QSize(0,0)));
+	rubber->show();
+}
+
 
 void FireWidget::mouseMoveEvent(QMouseEvent* event)
 {
@@ -549,9 +544,6 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 	else if (event->buttons().testFlag(Qt::MiddleButton) )
 		finirFeu(colonne, ligne);
 	else if (event->buttons().testFlag(Qt::RightButton) ){
-		 //TODO voir en haut 
-// 		eteindreFeu(colonne, ligne);
-// 		drawForest();
 		if(rubber)
 			rubber->setGeometry(QRect(origin,event->pos()).normalized());
 	}
@@ -646,7 +638,7 @@ void FireWidget::reset(int _larg, int _haut, float proba, float coef)
 	drawPicture();
 	drawForest();
 	drawChanged();
-//  update();IMPROVEIT apparemment pas utile, par contre TODO redimensionnement
+//  update();
 }
 
 
@@ -678,5 +670,5 @@ void FireWidget::actionReceived(int x)
 		forest->delay(xDep, yDep, xArr,yArr);
 	}
 
-	redraw(); // TODO Ugo véridier utilité (a priori utile)
+	redraw();
 }
