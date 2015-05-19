@@ -46,8 +46,8 @@ string Essence::toString() const
 	if (type)
 		s_type= "Feuillu";
 	
-	s <<  "nom :" << name << " ; type " << s_type <<
-	" ; masse " << masse_V << " ; hauteur : " << hauteur << " ; diametre : " << diametre;
+	s <<  "nom :" << name <<
+	" ; masse " << masse_V << " ; diametre : " << diametre << " ; hauteur : " << hauteur << " age de maturite : " << ageMaturite  << " ; type " << s_type;
 	return s.str();
 }
 
