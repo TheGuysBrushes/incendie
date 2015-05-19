@@ -31,7 +31,6 @@ private:
 	
 	float proba;
 	float coef_brulure;
-// 	std::string directory; // TODO removeit
 	std::ifstream* file;
 
 public:
@@ -48,7 +47,6 @@ public:
 	int get_larg() const	{ return larg_spin->value(); };
 	float get_proba() const	{ return proba; };
 	float get_coef() const	{ return coef_brulure; };
-// 	std::string getDirectory() const { return directory; }; TODO removeit
 	std::ifstream* getFile() { return file; };
 // 	QProgressBar* getProgressBar() const	{ return PB_load; };
 

@@ -17,7 +17,7 @@ using namespace std;
  */
 WindWidget::WindWidget()
 {
-	// Initialisation des composants de la classe (TODO ajouter menus ? pas compris, à voir par Flo)
+	// Initialisation des composants de la classe
 	speed_lbl = new QLabel();
 	wind = new WindCircle();
 	angle_lbl = new QLabel();
@@ -63,7 +63,7 @@ void WindWidget::initComponents()
 		slider_vitesse->setMaximum(100);
 
 
-		// QWidget conteneur des éléments d'informations sur la vitesse duvent
+		// QWidget conteneur des éléments d'informations sur la vitesse du vent
 		QWidget* speed_label_container = new QWidget();
 			QLabel* unit_vitesse = new QLabel("km/h");
 

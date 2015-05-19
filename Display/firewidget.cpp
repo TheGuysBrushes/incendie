@@ -1,5 +1,6 @@
 #include "firewidget.h"
 #include <QtGui/qevent.h>
+#include <qcolormap.h>
 
 #define GRAY 	5
 #define RED_TRANSPARENT 	6
@@ -38,7 +39,7 @@ FireWidget::FireWidget(int _largeur, int _hauteur, float proba, float coef_brulu
 	buffer = new QImage();
 	color = new QColor(Qt::black);
 	bufferPainter= new QPainter();
-	loadPicture("../foret_pay.png");
+	loadPicture("../foret_pay.tif");
 	rubber = NULL;
 }
 
@@ -47,7 +48,7 @@ FireWidget::FireWidget(): QWidget(){
 	buffer = new QImage();
 	color = new QColor(Qt::black);
 	bufferPainter= new QPainter();
-	loadPicture("../foret_pay.png");
+	loadPicture("../foret_pay.tif");
 	rubber = NULL;
 }
 
@@ -106,24 +107,33 @@ void FireWidget::saveForest() const
  */
 bool FireWidget::loadPicture(QString filename){
 	
+	
 	QImage img;
 // 	img.fill(qRgba(50, 50, 50, 255));
 	img.load(filename);
-	pictureForest= new QPixmap();
-	if (pictureForest->convertFromImage(img)){
-		#if DEBUG_IMAGE
-		cout<< "image chargée"<< endl;
-		#endif
-
-		return true;
-	}
-	else {
-		#if DEBUG_IMAGE
-		cout<< "image non chargée"<< endl;
-		#endif
-
-		return false;
-	}
+	
+	QColor* pix= new QColor(img.pixel(0,0));
+	cout << "qté vert en 0;0 : "<< pix->green();
+	
+	QColormap map(img.color());
+	
+// 	img.trueMatrix()
+	
+// 	pictureForest= new QPixmap();
+// 	if (pictureForest->convertFromImage(img)){
+// 		#if DEBUG_IMAGE
+// 		cout<< "image chargée"<< endl;
+// 		#endif
+// 
+// 		return true;
+// 	}
+// 	else {
+// 		#if DEBUG_IMAGE
+// 		cout<< "image non chargée"<< endl;
+// 		#endif
+// 
+// 		return false;
+// 	}
 }
 
 /**
@@ -524,7 +534,7 @@ void FireWidget::mousePressEvent(QMouseEvent* event)
 	}
 	
 	drawChanged();
-	update(); // TODO voir si utile (pas sur du tout)
+	update();
 }
 
 void FireWidget::mouseMoveEvent(QMouseEvent* event)
@@ -545,48 +555,48 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 	}
 	
 	drawChanged();
-	update(); // TODO voir si utile (pas sur du tout)
+	update();
 }
 
 void FireWidget::mouseReleaseEvent(QMouseEvent* event)
 {
-		if(rubber){
-			rubber->hide();
-			// Sauvegarde des points du rubber pour parcours de la matrice
-			depart.setX(rubber->x());
-			depart.setY(rubber->y());
-			/* Vérification du point d'origine du rubber
-			 * Celui étant toujours le point le plus en haut à gauche, il faut simplement vérifier 
-			 * qu'il n'est pas en dehors du cadre, auquel cas nous ramenons la (les) coordonnée(s) concernée(s)
-			 * à 0.
-			 */
-			if(depart.x() < 0){
-				depart.setX(0);
-			}
-			if(depart.y() < 0){
-				depart.setY(0);
-			}
-			
-			arrivee.setX(rubber->width()+depart.x());
-			arrivee.setY(rubber->height()+depart.y());
-			
-			if(arrivee.x() > size().width() ){
-				arrivee.setX(size().width());
-			}
-			if(arrivee.y() > size().height() ){
-				arrivee.setY(size().height());
-			}
-
-			#if DEBUG_SELECT
-			cout << "Taille du widget : " << this->size().width() << "; " << this->size().height()<< endl;
-			cout << "Coordonnée de l'origine : " << rubber->x() << "; " << rubber->y() << endl;
-			cout << "Coordonnée de départ : " << depart.x()<< ";" << depart.y() << endl;
-			cout << "Coordonnée de l'arrivée : " << arrivee.x()<< ";" << arrivee.y() << endl;
-			cout << "Taille de la zone de selection : " <<	rubber->width() << ";" << rubber->height() << endl;
-			#endif
-			// Emission du signal pour récupérer l'action à effectuer
-			emit releaseSignal();
+	if(rubber){
+		rubber->hide();
+		// Sauvegarde des points du rubber pour parcours de la matrice
+		depart.setX(rubber->x());
+		depart.setY(rubber->y());
+		/* Vérification du point d'origine du rubber
+			* Celui étant toujours le point le plus en haut à gauche, il faut simplement vérifier 
+			* qu'il n'est pas en dehors du cadre, auquel cas nous ramenons la (les) coordonnée(s) concernée(s)
+			* à 0.
+			*/
+		if(depart.x() < 0){
+			depart.setX(0);
 		}
+		if(depart.y() < 0){
+			depart.setY(0);
+		}
+		
+		arrivee.setX(rubber->width()+depart.x());
+		arrivee.setY(rubber->height()+depart.y());
+		
+		if(arrivee.x() > size().width() ){
+			arrivee.setX(size().width());
+		}
+		if(arrivee.y() > size().height() ){
+			arrivee.setY(size().height());
+		}
+
+		#if DEBUG_SELECT
+		cout << "Taille du widget : " << this->size().width() << "; " << this->size().height()<< endl;
+		cout << "Coordonnée de l'origine : " << rubber->x() << "; " << rubber->y() << endl;
+		cout << "Coordonnée de départ : " << depart.x()<< ";" << depart.y() << endl;
+		cout << "Coordonnée de l'arrivée : " << arrivee.x()<< ";" << arrivee.y() << endl;
+		cout << "Taille de la zone de selection : " <<	rubber->width() << ";" << rubber->height() << endl;
+		#endif
+		// Emission du signal pour récupérer l'action à effectuer
+		emit releaseSignal();
+	}
 	
 }
 

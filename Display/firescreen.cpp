@@ -309,8 +309,6 @@ void FireScreen::initForest(Fwelcome * fwel)
 		// TODO voir si il faut que foret fasse emit d'un signal à connecter à la progressbar
 		fWidget->initialise(largeur,hauteur, file, PB);
 		loadWindow->hide();
-		
-// 		TODO rajouter un initSizes
 	}
 	else {
 		cout<< "Pas de fichier, création d'une foret aléatoirement"<< endl;
