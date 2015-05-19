@@ -5,3 +5,9 @@
 	 Une liste par état ; les listes représentent les nouveaux éléments dans cet état
 	
 - extraire largeur et hauteur dans (-firescreen-) firewidget plutot que dans foret => passer un fichier plutot qu'un chemin
+
+Souris FireWidget (Ugo): 
+-/* 1- Création de la zone de selection clics souris
+- * 2- Sur le release, confirmation de la zone et application de l'effet choisi
+- * 3- Pour les effets, deux boutons ( coupure et retardateur ) dont un par défaut activé
+- * 4- utiliser des Qrgba pour définir les couleurs
