@@ -419,7 +419,7 @@ void FireWidget::drawChanged()
 	
 	setColor(RED_TRANSPARENT);
 	drawList(forest->getBurned());
-	forest->clearBurned();
+// 	forest->clearBurned();
 	
 	setColor(GRAY);
 	// 	setColor(ANTI_RED_TRANSPARENT);
@@ -437,12 +437,19 @@ void FireWidget::drawChanged()
 	bufferPainter->end();
 }
 
+int num_redraw= 0;
+
 /**
  * Vide le buffer et rafraichit l'affichage
  * @author Florian et Ugo
  */
 void FireWidget::redraw()
 {
+	++num_redraw;
+#if DEBUG_CURRENT
+	cout << "test redraw "<< num_redraw<< " TO DELETE (ligne 449 firewidget)"<< endl;
+#endif
+	
 	if (!buffer->isNull()){
 		delete(buffer);
 		// 		bufferPainter->end();
@@ -451,23 +458,35 @@ void FireWidget::redraw()
 	drawPicture();
 	drawForest();
 	drawChanged();
-	update();
+// 	update();	// TODO apparemment non utile
 }
 
 // ###################
 /*** 		Events 	***/
 // ##################
-void FireWidget::paintEvent(QPaintEvent* event){
+void FireWidget::paintEvent(QPaintEvent* event)
+{
 	QPainter paint(this);
 	paint.drawImage(0, 0, *buffer);
 }
 
-void FireWidget::resizeEvent(QResizeEvent* event){
-
+void FireWidget::resizeEvent(QResizeEvent* event)
+{
+	#if DEBUG_CURRENT
+	cout << "test resizeEvent TO DELETE (ligne 471 firewidget)"<< endl;
+	#endif
+	
 	int nbCol= forest->width();
 	int nbRow= forest->height();
 	tailleCell = min (event->size().width() / nbCol , event->size().height() / nbRow);
-	resize(tailleCell * nbCol, tailleCell*nbRow);
+	
+	// TODO voir comment modifier la taille de de FireWidget sans repasser par resizeEvent, vraiment utile (ajouté pour rubberband, le modifier pour s'adapter?)
+// 	resize(tailleCell * nbCol, tailleCell*nbRow);
+	
+	#if DEBUG_CURRENT
+// 	cout << "test apres resize dans resizeEvent (ligne 488 firewidget)"<< endl;
+	#endif
+	
 	#if DEBUG_DIMENSION
 	cout << nbCol<< " / "<< nbRow<< endl;
 	cout << "tW: "<< event->size().width()<< " tH: "<< event->size().height()<< endl;
@@ -493,7 +512,7 @@ void FireWidget::mousePressEvent(QMouseEvent* event)
 		initRubber(event);
 
 	drawChanged();
-	update();
+	update(); // TODO voir si utile (pas sur du tout)
 }
 void FireWidget::initRubber(QMouseEvent* event)
 {
@@ -521,7 +540,7 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 	}
 	
 	drawChanged();
-	update();
+	update(); // TODO voir si utile (pas sur du tout)
 }
 
 void FireWidget::mouseReleaseEvent(QMouseEvent* event)
@@ -610,7 +629,7 @@ void FireWidget::reset(int _larg, int _haut, float proba, float coef)
 	drawPicture();
 	drawForest();
 	drawChanged();
-	update();
+// 	update();IMPROVEIT apparemment pas utile, par contre TODO redimensionnement
 }
 
 
@@ -642,5 +661,5 @@ void FireWidget::actionReceived(int x)
 		forest->delay(xDep, yDep, xArr,yArr);
 	}
 
-	redraw();
+	redraw(); // TODO Ugo véridier utilité (a priori utile)
 }
