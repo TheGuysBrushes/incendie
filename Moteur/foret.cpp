@@ -39,9 +39,9 @@ using namespace std;
 Foret::Foret(int n_colonnes, int n_lignes, float proba, float coefFire)
 : lignes(n_lignes), colonnes(n_colonnes), burningCoef(coefFire)
 {
+	wind = new Vent(1,-1);
 	initialisation(proba);
 // TODO Ugo : faire des constructeur qui permettent de créer un vent inital en accord avec la valeur initiale du curseur
-	wind = new Vent(2.0,2.0);
 }
 
 // Foret::Foret(Foret& other, float proba)
@@ -52,9 +52,9 @@ Foret::Foret(int n_colonnes, int n_lignes, float proba, float coefFire)
 
 Foret::Foret(int _largeur, int _hauteur, ifstream * file, QProgressBar* PB) :lignes(_hauteur), colonnes(_largeur), burningCoef(0.5)
 {
-	load(file, PB);
 	
-	wind = new Vent(2.0,2.0);
+	wind = new Vent(1,-1);
+	load(file, PB);
 }
 
 

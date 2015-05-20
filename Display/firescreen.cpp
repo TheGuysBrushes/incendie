@@ -221,9 +221,7 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	vert_lay1->addWidget(www);
 	vert_lay1->addWidget(ww3);
 	vert_lay1->addWidget(ww4);
-	
-	
-	vert_lay1->addStretch(2);
+
 	vert_lay1->setAlignment(titre,Qt::AlignHCenter);
 	
 	

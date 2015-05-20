@@ -3,6 +3,8 @@
 
 #include <QtGui/QWidget>
 #include <QtGui/QLabel>
+#include <QSlider>
+#include <QtCore/QTimer>
 
 #include "../debug.h"
 #include "windcircle.h"
@@ -20,8 +22,11 @@ private:
 	WindCircle* wind;
 	QLabel* angle_lbl;
 	QLabel* speed_lbl;
+	QTimer* timer;
+	QSlider* slider_angle;
 
 	int speed;
+	bool activeVar;
 
 public:
 	/* Constructeur et destructeur */
@@ -45,6 +50,8 @@ protected:
 public slots:
 	void majAngle(int alpha);
 	void majSpeed(int vitesse);
+	void startTimer(bool);
+	void varWind();
 	
 signals:
 	void modif_value(int, int);

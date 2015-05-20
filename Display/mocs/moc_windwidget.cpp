@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'windwidget.h'
 **
-** Created: Tue May 19 15:40:57 2015
+** Created: Wed May 20 14:34:36 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_WindWidget[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -36,6 +36,8 @@ static const uint qt_meta_data_WindWidget[] = {
  // slots: signature, parameters, type, tag, flags
       41,   35,   11,   11, 0x0a,
       63,   55,   11,   11, 0x0a,
+      77,   11,   11,   11, 0x0a,
+      94,   11,   11,   11, 0x0a,
 
        0        // eod
 };
@@ -43,6 +45,7 @@ static const uint qt_meta_data_WindWidget[] = {
 static const char qt_meta_stringdata_WindWidget[] = {
     "WindWidget\0\0,\0modif_value(int,int)\0"
     "alpha\0majAngle(int)\0vitesse\0majSpeed(int)\0"
+    "startTimer(bool)\0varWind()\0"
 };
 
 void WindWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -54,6 +57,8 @@ void WindWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 0: _t->modif_value((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 1: _t->majAngle((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 2: _t->majSpeed((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 3: _t->startTimer((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 4: _t->varWind(); break;
         default: ;
         }
     }
@@ -91,9 +96,9 @@ int WindWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 5;
     }
     return _id;
 }

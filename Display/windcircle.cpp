@@ -18,6 +18,7 @@ WindCircle::WindCircle()
 	center = new QPointF(width()/2.0, height()/2.0);
 	direction = new QPointF();
 	setMinimumSize(100,100);
+	
 }
 
 WindCircle::~WindCircle(){
