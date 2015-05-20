@@ -40,8 +40,7 @@ FireWidget::FireWidget(int _largeur, int _hauteur, float proba, float coef_brulu
 	bufferPainter= new QPainter();
 	
 	pictureForest= new QImage();
-	cout << "test init";
-	loadPicture("../foret_pay.tif");
+// 	loadFromPicture("../foret_pay.tif");
 	
 	rubber = NULL;
 }
@@ -53,9 +52,9 @@ FireWidget::FireWidget(): QWidget(){
 	bufferPainter= new QPainter();
 	
 	pictureForest= new QImage();
-	cout << "test init";
-	loadPicture("../foret_pay.tif");
-	
+	if ( !initialise("../foret_pay.tif") )
+// 	TODO prévenir l'utilisateur ou faire une fonction par défaut en cas d'echec de chargement à partir d'une image
+		cout << "Echec de création d'une foret à partir de l'image"<< endl;
 	rubber = NULL;
 }
 
@@ -73,10 +72,9 @@ FireWidget::~FireWidget(){
 /*** 	Autres Méthodes 	***/
 // ########################
 /**
- * Fonction agissant comme le constructeur. Permet de gérer la 
- * ré-initialisation de la matrice
+ * Fonction de création d'une foret ALEATOIRE lors de la (ré)initialisation
  * @author Florian et Ugo
- * @param identique_constructeur
+ * @param all identiques au constructeur de Foret aléatoire
  */
 void FireWidget::initialise(int largeur, int hauteur, float proba, float coef_brulure)
 {
@@ -85,12 +83,49 @@ void FireWidget::initialise(int largeur, int hauteur, float proba, float coef_br
 	setMinimumSize(largeur, hauteur);
 }
 
+/**
+ * Fonction de création d'une foret A PARTIR D'UNE SAUVEGARDE lors de la (ré)initialisation
+ * @author Florian et Ugo
+ * @param all identiques au constructeur de Foret par chargement de sauvegarde
+ */
 void FireWidget::initialise(int largeur, int hauteur, ifstream * file, QProgressBar* PB) 
 {
 	forest= new Foret(largeur, hauteur, file, PB);
 	
 	setMinimumSize(largeur, hauteur);
 }
+
+/**
+ * Fonction de création d'une foret ALEATOIRE lors de la (ré)initialisation
+ * @author Florian et Ugo
+ * @param all identiques au constructeur de Foret aléatoire
+ */
+bool FireWidget::initialise(QString filename)
+{
+	pictureForest->load(filename);
+	
+	if (!pictureForest->isNull()){
+		#if DEBUG_IMAGE
+		cout<< "image chargée"<< endl;
+		#endif
+		
+		int largeur= pictureForest->width();
+		int hauteur= pictureForest->height();
+
+		setMinimumSize(largeur, hauteur);
+		loadFromPicture(largeur, hauteur);
+		
+		return true;
+	}
+	else {
+		#if DEBUG_IMAGE
+		cout<< "image non chargée"<< endl;
+		#endif
+		
+		return false;
+	}
+}
+
 
 // #################################
 /*** 	Gestion des sauvegardes 	***/
@@ -100,53 +135,30 @@ void FireWidget::initialise(int largeur, int hauteur, ifstream * file, QProgress
  * @author Florian
  * @param QString ?
  */
-bool FireWidget::loadPicture(QString filename)
+void FireWidget::loadFromPicture(int largeurImage, int hauteurImage)
 {
-// 	QImage img;
-	// 	img.fill(qRgba(50, 50, 50, 255));
-	pictureForest->load(filename);
-	
+	cout<< "Creation à partir d'image ..."<< endl;
+	vector< vector<char> >* matrice= new vector< vector<char> >;
 	QColor* pix= new QColor();
 	
-// 	pictureForest= new QPixmap();
-// 	if (pictureForest->convertFromImage(img)){
-	if (!pictureForest->isNull()){
-		#if DEBUG_IMAGE
-		cout<< "image chargée"<< endl;
-		#endif
+	for (int i= 0; i< hauteurImage; ++i){
+		vector<char> ligne;
 		
-		int largeurImage= pictureForest->width();
-		int hauteurImage= pictureForest->height();
-		vector< vector<char> >* matrice= new vector< vector<char> >;
-		
-		for (int i= 0; i< hauteurImage; ++i){
-			vector<char> ligne;
+		for (int j= 0; j< largeurImage; ++j){
+			pix->setRgba(pictureForest->pixel(j, i));
+			#if DEBUG_IMAGE_POS
+			cout << "qté vert en "<< j<< " ; "<< i<<" : "<< pix->green()<< endl;
+			#endif
+			ligne.push_back( pix->green() );
 			
-			for (int j= 0; j< largeurImage; ++j){
-				pix->setRgba(pictureForest->pixel(j, i));
-				#if DEBUG_IMAGE_POS
-				cout << "qté vert en "<< j<< " ; "<< i<<" : "<< pix->green()<< endl;
-				#endif
-				ligne.push_back( pix->green() );
-				
-			}
-			matrice->push_back(ligne);
 		}
-		
-		forest->create(largeurImage, hauteurImage, matrice);
-		
+		matrice->push_back(ligne);
+	}
+	
+	forest->create(largeurImage, hauteurImage, matrice);
+	
 // 		QColormap map(pictureForest->tr);
-		// 	img.trueMatrix()
-
-		return true;
-	}
-	else {
-		#if DEBUG_IMAGE
-		cout<< "image non chargée"<< endl;
-		#endif
-
-		return false;
-	}
+	// 	img.trueMatrix()
 }
 	
 /**
@@ -357,9 +369,12 @@ void FireWidget::razRubber(){
  * @author Florian
  */
 void FireWidget::drawPicture(){
-	bufferPainter->begin(buffer);
-	bufferPainter->drawImage(0, 0, *pictureForest);
-	bufferPainter->end();
+	
+	if (!pictureForest->isNull()){
+		bufferPainter->begin(buffer);
+		bufferPainter->drawImage(0, 0, *pictureForest);
+		bufferPainter->end();
+	}
 }
 
 /**

@@ -54,8 +54,9 @@ public:
 	/* Autres Méthodes */
 	void initialise(int largeur, int hauteur, float proba = 0.60, float coef_brulure=1.0);
 	void initialise(int largeur, int hauteur, std::ifstream* file, QProgressBar* PB);
+	bool initialise(QString filename);
 	
-	bool loadPicture(QString filename);
+	void loadFromPicture(int largeurImage, int hauteurImage);
 	bool loadForest(std::string filename);
 	void saveForest() const;
 	void delForest();
