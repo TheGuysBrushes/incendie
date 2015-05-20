@@ -137,9 +137,11 @@
 - Ugo : Validation coupure/retardateur, correction "problème" KDev (TODO et autres)
 
 <h3> Mardi </h3>
-    
+- Ugo : Correction marqueurs KDev (TODO, IMPROVE_IT Etc)
+
 <h3> Mercredi </h3>
-    
+- Ugo : Mise en place varation automatique du vent avec bouton d'activation. Début rapport
+
 <h3> Jeudi </h3>
     
 <h3> Vendredi </h3>
