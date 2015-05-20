@@ -290,7 +290,50 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 	
 }
 
-using namespace std;
+
+void FireScreen::createForest(int largeur, int hauteur, ifstream* file)
+{
+	cout<< "Chargement d'une foret à partir d'un fichier "<< endl;
+	sleep(1);
+	// 		QProgressBar* PB= fwel->getProgressBar();
+	QMainWindow* loadWindow= new QMainWindow;
+	QWidget* w= new QWidget(loadWindow);
+	w->resize(400, 30);
+	QVBoxLayout* layLoad= new QVBoxLayout(w);
+	
+	QLabel* txtLoad= new QLabel("Chargement de la foret");
+	PB_load= new QProgressBar();
+	PB_load->resize(390, 25);
+	
+	layLoad->addWidget(txtLoad);
+	layLoad->addWidget(PB_load);
+	
+	
+	loadWindow->setCentralWidget(w);
+	loadWindow->show();
+	
+	// TODO voir si il faut que foret fasse emit d'un signal à connecter à la progressbar
+	fWidget->initialise(largeur,hauteur, file, PB_load);
+	loadWindow->hide();
+}
+
+void FireScreen::createForest(ifstream* file)
+{
+	int largeur, hauteur;
+	
+	file->read( (char *)&(largeur), sizeof(int));
+	#if DEBUG_LOAD
+	cout<< "Taille : " << largeur<< " en largeur ";
+	#endif
+	
+	file->read( (char *)&(hauteur), sizeof(int));
+	#if DEBUG_LOAD
+	cout<< hauteur<< " en hauteur" <<endl;
+	#endif
+	
+	createForest(largeur, hauteur, file);
+}
+
 void FireScreen::initForest(Fwelcome * fwel)
 {
 	nb_tour = 0;
@@ -301,28 +344,7 @@ void FireScreen::initForest(Fwelcome * fwel)
 	ifstream* file= fwel->getFile();
 	
 	if ( file->is_open()){	
-		cout<< "Chargement d'une foret à partir d'un fichier "<< endl;
-		sleep(1);
-// 		QProgressBar* PB= fwel->getProgressBar();
-		QMainWindow* loadWindow= new QMainWindow;
-		QWidget* w= new QWidget(loadWindow);
-		w->resize(400, 30);
-		QVBoxLayout* layLoad= new QVBoxLayout(w);
-		
-			QLabel* txtLoad= new QLabel("Chargement de la foret");
-			PB_load= new QProgressBar();
-			PB_load->resize(390, 25);
-		
-		layLoad->addWidget(txtLoad);
-		layLoad->addWidget(PB_load);
-		
-		
-		loadWindow->setCentralWidget(w);
-		loadWindow->show();
-		
-		// TODO voir si il faut que foret fasse emit d'un signal à connecter à la progressbar
-		fWidget->initialise(largeur,hauteur, file, PB_load);
-		loadWindow->hide();
+		createForest(largeur, hauteur, file);
 	}
 	else {
 		cout<< "Pas de fichier, création d'une foret aléatoirement"<< endl;
@@ -400,7 +422,6 @@ void FireScreen::resizeEvent(QResizeEvent* Qevent)
 	std::cout << "WWindow: "<< Qevent->size().width()<< " HWindow: "<< Qevent->size().height()<< std::endl;
 	std::cout << "WMenu: "<< menus->sizeHint().width()<< " HMenu: "<<menus->sizeHint().height()<< std::endl;
 	std::cout << "WDispo: "<<  Qevent->size().width() - menus->sizeHint().width()<< " HDispo: "<< Qevent->size().height() - menus->sizeHint().height()<< std::endl;
-	
 	#endif
 }
 
@@ -431,7 +452,6 @@ void FireScreen::set_delai(int x)
 }
 
 
-
 void FireScreen::reset()
 {
 	stop_timer();
@@ -450,6 +470,26 @@ void FireScreen::reset()
 		fWidget->redraw();
 	}
 }
+
+void FireScreen::reloadForest(bool)
+{
+	// TODO valeur par défaut, à modifier avec explorateur
+	string filename = "Resources/foret1.dat";
+	ifstream* file= new ifstream(filename.c_str(),  ios::in|ios::binary);
+	
+	fWidget->razRubber();
+	fWidget->delForest();
+	
+	createForest(file);
+	
+	fWidget->redraw();
+// 	fWidget->loadForest(filename);
+}
+
+void FireScreen::save() const{
+	fWidget->saveForest();
+}
+
 
 void FireScreen::nextStep()
 {
@@ -525,20 +565,7 @@ void FireScreen::releaseOrdered()
 		#if DEBUG_RETARD
 		std::cout << "demande de retardateur" << std::endl;
 		#endif
-		emit actionSender(DELAY);
+		emit actionSender(/*DELAY*/1);
 	}
 	
 }
-
-void FireScreen::save() const{
-	fWidget->saveForest();
-}
-
-// BUG FIXIT l'application plante lorsqu'on appuie le bouton load, appelant reloadForest, surement car aucune image n'est rechargée
-void FireScreen::reloadForest(bool)
-{
-	// TODO valeur par défaut, à modifier avec explorateur
-	string filename = "Resources/foret1.dat";
-	fWidget->loadForest(filename);
-}
-	

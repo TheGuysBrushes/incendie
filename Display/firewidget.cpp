@@ -139,6 +139,11 @@ bool FireWidget::loadPicture(QString filename)
 	}
 }
 	
+/**
+ * Charge une foret à partir d'un nom de fichier
+ * @author Ugo et Florian
+ * @deprecated
+ */
 bool FireWidget::loadForest(std::string filename)
 {	
 	ifstream* file = new ifstream(filename.c_str(), std::ios::in|std::ios::binary);
@@ -692,10 +697,14 @@ void FireWidget::actionReceived(int x)
 	int xArr = arrivee.x() / tailleCell;
 	if (xArr> forest->width())
 		xArr= forest->width();
+	else if (xArr< 0)
+		xArr= 0;
 	
 	int yArr = arrivee.y() / tailleCell;
 	if (yArr> forest->height())
 		yArr= forest->height();
+	else if (yArr< 0)
+		yArr= 0;
 	
 	#if DEBUG_RETARD
 	cout << "Coordonnée en cellule du départ : " << xDep << ";" << yDep << endl;

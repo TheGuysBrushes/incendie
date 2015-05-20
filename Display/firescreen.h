@@ -48,7 +48,10 @@ public:
 // 	/*explicit */FireScreen(int hauteur, int largeur, float proba, long int nTemps = 0.60, float coef_brulure=1.0, bool t = 0,
 // 									QWidget* parent = 0, Qt::WindowFlags flags = 0);
 	virtual ~FireScreen();
-		
+	
+	void createForest(int largeur, int hauteur, std::ifstream* file);
+	void createForest(std::ifstream* file);
+	
 	void initForest(Fwelcome* fwel);
 	void initMenus(QHBoxLayout* HLayout) /*const*/;
 	void initComponents();
