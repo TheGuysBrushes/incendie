@@ -115,17 +115,27 @@ bool FireWidget::loadPicture(QString filename)
 		cout<< "image chargée"<< endl;
 		#endif
 		
-		for (int i= 0; i< pictureForest->height(); ++i){
-			for (int j= 0; j< pictureForest->width(); ++j){
+		int largeurImage= pictureForest->width();
+		int hauteurImage= pictureForest->height();
+		vector< vector<char> >* matrice= new vector< vector<char> >;
+		
+		for (int i= 0; i< hauteurImage; ++i){
+			vector<char> ligne;
+			
+			for (int j= 0; j< largeurImage; ++j){
 				pix->setRgba(pictureForest->pixel(j, i));
 				#if DEBUG_IMAGE_POS
 				cout << "qté vert en "<< j<< " ; "<< i<<" : "<< pix->green()<< endl;
 				#endif
-				
+				ligne.push_back( pix->green() );
 				
 			}
+			matrice->push_back(ligne);
 		}
-		// 	QColormap map(img.color());
+		
+		forest->create(largeurImage, hauteurImage, matrice);
+		
+// 		QColormap map(pictureForest->tr);
 		// 	img.trueMatrix()
 
 		return true;

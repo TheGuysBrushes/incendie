@@ -28,6 +28,7 @@ private:
 	Vent* wind;
 	std::vector< Essence > essences;
 	std::vector<std::vector< Cellule* > > matrix;
+	
 	std::list< Arbre* >	onFire;
 	std::list< Arbre* >	uprooted;
 	std::list< Arbre* >	extinguished;
@@ -44,13 +45,15 @@ public:
 	Foret(int n_colonnes, int n_lignes, float proba = 0.60, float coefFire = 1.0);
 // 	Foret(Foret& other, float proba=0.60);
 	Foret(int _largeur, int _hauteur, std::ifstream* file, QProgressBar* PB);
+	Foret(int _largeur, int _hauteur, std::vector< std::vector<char> >* matrice);
 	virtual ~Foret();
 	
 	// Initialisations
 	void initEmpty();
-	void randomMatrix(float probabilite);
 	bool loadEssences(const std::string& fileName);
-	void initialisation(float proba);
+	
+	void create(int largeur, int hauteur, std::vector< std::vector< char > >* matrice);
+	void randomMatrix(float probabilite);
 	
 	void clean();
 	

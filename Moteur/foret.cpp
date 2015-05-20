@@ -39,15 +39,17 @@ using namespace std;
 Foret::Foret(int n_colonnes, int n_lignes, float proba, float coefFire)
 : lignes(n_lignes), colonnes(n_colonnes), burningCoef(coefFire)
 {
-	wind = new Vent(1,-1);
-	initialisation(proba);
-// TODO Ugo : faire des constructeur qui permettent de créer un vent inital en accord avec la valeur initiale du curseur
+	loadEssences("../Moteur/essence_data.txt");
+	randomMatrix(proba);
+	// TODO Ugo : faire des constructeur qui permettent de créer un vent inital en accord avec la valeur initiale du curseur
+	wind = new Vent(2.0,2.0);
 }
 
 // Foret::Foret(Foret& other, float proba)
 //  : lignes(other.lignes), colonnes(other.colonnes), burningCoef(other.burningCoef)
 // {
-// 	initialisation(proba);
+// 	loadEssences("../Moteur/essence_data.txt");
+// 	randomMatrix(proba);
 // }
 
 Foret::Foret(int _largeur, int _hauteur, ifstream * file, QProgressBar* PB) :lignes(_hauteur), colonnes(_largeur), burningCoef(0.5)
@@ -57,6 +59,11 @@ Foret::Foret(int _largeur, int _hauteur, ifstream * file, QProgressBar* PB) :lig
 	load(file, PB);
 }
 
+Foret::Foret(int _largeur, int _hauteur, vector< std::vector< char > >* matrice)
+{
+	loadEssences("../Moteur/essence_data.txt");
+	create(_largeur, _hauteur, matrice);
+}
 
 
 /**
@@ -78,9 +85,9 @@ Foret::~Foret()
 }
 
 
-// ###################################
-//		Fonctions Utiles
-// ################################### 
+// ########################
+//		Initialisations
+// ########################
 
 /**
  * Découpe une chaine de caractères en sous-chaine et place chaque élément dans un vecteur de string
@@ -108,10 +115,6 @@ vector< string >& explode(const string& str)
 	return *tokens;
 }
 
-
-// ########################
-//		Initialisations
-// ########################
 
 /**
  * Charge des essences dans le tableau d'essences à partir d'un fichier texte
@@ -160,7 +163,7 @@ bool Foret::loadEssences(const string& fileName)
 											diam,
 											haut,
 											atoi(tokens[4].c_str()),
-											atoi(tokens[5].c_str())			) );
+											atoi(tokens[5].c_str())		) );
 			
 			indice +=1;
 // 			delete(tokens);
@@ -284,6 +287,21 @@ void Foret::initEmpty()
 	}
 }
 
+/**
+ * Crée une foret à partir d'une matrice de niveau de couleur de vert
+ * @author Florian
+ */
+void Foret::create(int largeur, int hauteur, vector< vector< char > >* matrice)
+{
+	for(int ligne= 0; ligne< hauteur; ++ligne)
+	{
+		for (int colonne; colonne< largeur; ++colonne){
+			if ( (*matrice)[ligne][colonne] > 80)
+				plantTree(colonne, ligne);
+		}
+	}
+}
+
 
 /**
  * Initialise une matrice vide puis ajoute des arbre dans la Foret
@@ -340,17 +358,6 @@ void Foret::randomMatrix(float probabilite)
 	#endif
 }
 
-
-/**
- * Initialise les différentes essences et la matrice de l'automate
- * @author Ugo and Florian
- * @param proba chance qu'un arbre soit placé sur chaque case
- */
-void Foret::initialisation(float proba)
-{
-	loadEssences("../Moteur/essence_data.txt");
-	randomMatrix(proba);
-}
 
 /**
  * Met la foret à l'état vierge : aucun arbre
