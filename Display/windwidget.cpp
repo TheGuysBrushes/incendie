@@ -19,8 +19,10 @@ WindWidget::WindWidget()
 {
 	// Initialisation des composants de la classe
 	speed_lbl = new QLabel();
+	speed_lbl->setFixedWidth(30);
 	wind = new WindCircle();
 	angle_lbl = new QLabel();
+	angle_lbl->setFixedWidth(100);
 	
 	initComponents();
 }
@@ -68,8 +70,8 @@ void WindWidget::initComponents()
 
 			// Layout contenant les labels sur la vitesse du vent
 			QHBoxLayout* h_lay2 = new QHBoxLayout(speed_label_container);
-			h_lay2->addWidget(unit_vitesse);
 			h_lay2->addWidget(speed_lbl);
+			h_lay2->addWidget(unit_vitesse);
 
 		// Layout vertical contenant le QSlider vitesse et le QWidget d'information 
 		QVBoxLayout* v_lay = new QVBoxLayout(speed_container);
@@ -99,7 +101,7 @@ void WindWidget::initComponents()
 
 void WindWidget::setAngle(int angle)
 {
-	angle_lbl->setText(QString::number(angle) + "degres");
+	angle_lbl->setText(QString::number(angle) + " degres");
 	wind->setAngle(angle+270);
 	#if DEBUG_VENT
 	cout << "angle de windwidget envoyé a windcircle" << angle+270 << endl;

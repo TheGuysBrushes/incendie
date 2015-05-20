@@ -531,7 +531,7 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 	tailleCell = min (event->size().width() / nbCol , event->size().height() / nbRow);
 	
 	// TODO voir comment modifier la taille de de FireWidget sans repasser par resizeEvent, vraiment utile (ajouté pour rubberband, le modifier pour s'adapter?)
-// 	resize(tailleCell * nbCol, tailleCell*nbRow); // Fait lagger
+	resize(tailleCell * nbCol, tailleCell*nbRow); // Fait lagger
 	
 	#if DEBUG_CURRENT
 // 	cout << "test apres resize dans resizeEvent (ligne 488 firewidget)"<< endl;
@@ -695,17 +695,19 @@ void FireWidget::actionReceived(int x)
 	int yDep = depart.y() / tailleCell;
 	
 	int xArr = arrivee.x() / tailleCell;
+	/*
 	if (xArr> forest->width())
 		xArr= forest->width();
 	else if (xArr< 0)
 		xArr= 0;
-	
+	*/
 	int yArr = arrivee.y() / tailleCell;
+	/*
 	if (yArr> forest->height())
 		yArr= forest->height();
 	else if (yArr< 0)
 		yArr= 0;
-	
+	*/
 	#if DEBUG_RETARD
 	cout << "Coordonnée en cellule du départ : " << xDep << ";" << yDep << endl;
 	cout << "Coordonnée en cellule de l'arrivée : " << xArr << ";" << yArr << endl;
