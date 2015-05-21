@@ -52,6 +52,7 @@ Foret::Foret(int n_colonnes, int n_lignes, float proba, float coefFire)
 // 	randomMatrix(proba);
 // }
 
+// TODO modifier initialisation burningCoef
 Foret::Foret(int _largeur, int _hauteur, ifstream * file, QProgressBar* PB) :lignes(_hauteur), colonnes(_largeur), burningCoef(0.5)
 {
 	
@@ -59,7 +60,8 @@ Foret::Foret(int _largeur, int _hauteur, ifstream * file, QProgressBar* PB) :lig
 	load(file, PB);
 }
 
-Foret::Foret(int _largeur, int _hauteur, vector< std::vector< char > >* matrice)
+// TODO modifier initialisation burningCoef
+Foret::Foret(int _largeur, int _hauteur, vector< std::vector< char > >* matrice):lignes(_hauteur), colonnes(_largeur), burningCoef(0.5)
 {
 	loadEssences("../Moteur/essence_data.txt");
 	create(_largeur, _hauteur, matrice);
@@ -293,6 +295,7 @@ void Foret::initEmpty()
  */
 void Foret::create(int largeur, int hauteur, vector< vector< char > >* matrice)
 {
+	initEmpty();
 	for(int ligne= 0; ligne< hauteur; ++ligne)
 	{
 		for (int colonne; colonne< largeur; ++colonne){

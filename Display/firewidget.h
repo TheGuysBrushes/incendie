@@ -47,7 +47,7 @@ private:
 	
 public:
 	/* Constructeur et desctructeur */
-	FireWidget(int _largeur, int _hauteur, float proba = 0.60, float coef_brulure=1.0);
+// 	FireWidget(int _largeur, int _hauteur, float proba = 0.60, float coef_brulure=1.0);
 	FireWidget();
 	virtual ~FireWidget();
 

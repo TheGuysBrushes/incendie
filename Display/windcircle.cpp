@@ -15,6 +15,7 @@ using namespace std;
 WindCircle::WindCircle()
 {
 	buffer = new QImage();
+	// TODO Ugo : Corriger le constructeur (on ne peut pas utiliser les tailles du widget lors de sa construction car il n'est pas crée), modifier center dans resizeEvent?
 	center = new QPointF(width()/2.0, height()/2.0);
 	direction = new QPointF();
 	setMinimumSize(100,100);

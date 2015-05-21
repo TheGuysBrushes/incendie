@@ -1,0 +1,21 @@
+Général : 
+	Création d'un systeme de logs à partir d'un fichier debug.h inclus dans tous les fichiers cpp,
+permettant d'afficher les informations de suivi de l'exécution de chaque partie indépendemment, 
+en activant les debugs concernés, sans ralentir l'exécution du programme en "mode release", sans debug.
+	Cela facilite également la finalisation du projet, car il n'y pas de code de débuggage inutile.
+
+ Moteur indépendant de l'affichage.
+ 
+
+// Florian :
+- voir si on fait une liste unique pour les éléments qui ont changé d'état ?
+	-> Non, j'ai préféré faire des listes séparées pour pouvoir traiter/afficher(1 sélection de couleur avant d'afficher la liste) et debugger plus facilement, en affichant seulement l'élément qui nous interesse.
+	 Une liste par état ; les listes représentent les nouveaux éléments dans cet état
+	
+- extraire largeur et hauteur dans (-firescreen-) firewidget plutot que dans foret => passer un fichier plutot qu'un chemin
+
+Souris FireWidget (Ugo): 
+-/* 1- Création de la zone de selection clics souris
+- * 2- Sur le release, confirmation de la zone et application de l'effet choisi
+- * 3- Pour les effets, deux boutons ( coupure et retardateur ) dont un par défaut activé
+- * 4- utiliser des Qrgba pour définir les couleurs

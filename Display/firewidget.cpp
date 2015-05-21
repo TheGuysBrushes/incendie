@@ -29,22 +29,31 @@ using namespace std;
  * @param float _proba : probabilité qu'une cellule deviennent un arbre
  * @param float _coef : coefficient de combustion de l'incendie
  * @author Ugo et Florian
+ * @deprecated
+ */
+// FireWidget::FireWidget(int _largeur, int _hauteur, float proba, float coef_brulure): QWidget()
+// {
+// 	initialise(_largeur, _hauteur, proba, coef_brulure);
+// 
+// 	buffer = new QImage();
+// 	color = new QColor(Qt::black);
+// 	bufferPainter= new QPainter();
+// 	
+// 	pictureForest= new QImage();
+// // 	loadFromPicture("../foret_pay.tif");
+// 	
+// 	rubber = NULL;
+// }
+/**
+ * Constructeur de classe. Initialise les différents pointeurs
+ * et fixe la taille minimale du widget
+ * @param int _largeur : nombre de colonnes de la matrice 
+ * @param int _hauteur : nombre de lignes de la matrice
+ * @param float _proba : probabilité qu'une cellule deviennent un arbre
+ * @param float _coef : coefficient de combustion de l'incendie
+ * @author Ugo et Florian
  * 
  */
-FireWidget::FireWidget(int _largeur, int _hauteur, float proba, float coef_brulure): QWidget()
-{
-	initialise(_largeur, _hauteur, proba, coef_brulure);
-
-	buffer = new QImage();
-	color = new QColor(Qt::black);
-	bufferPainter= new QPainter();
-	
-	pictureForest= new QImage();
-// 	loadFromPicture("../foret_pay.tif");
-	
-	rubber = NULL;
-}
-
 FireWidget::FireWidget(): QWidget(){
 	
 	buffer = new QImage();
@@ -52,20 +61,19 @@ FireWidget::FireWidget(): QWidget(){
 	bufferPainter= new QPainter();
 	
 	pictureForest= new QImage();
-	if ( !initialise("../foret_pay.tif") )
+// 	if ( !initialise("../foret_pay.tif") )
 // 	TODO prévenir l'utilisateur ou faire une fonction par défaut en cas d'echec de chargement à partir d'une image
 		cout << "Echec de création d'une foret à partir de l'image"<< endl;
 	rubber = NULL;
 }
 
-FireWidget::~FireWidget(){
-	
+FireWidget::~FireWidget()
+{
 	delete(forest);
 	delete(buffer);
 	delete(color);
 	delete(bufferPainter);
 	delete(pictureForest);
-	
 }
 
 // ########################
@@ -149,13 +157,13 @@ void FireWidget::loadFromPicture(int largeurImage, int hauteurImage)
 			#if DEBUG_IMAGE_POS
 			cout << "qté vert en "<< j<< " ; "<< i<<" : "<< pix->green()<< endl;
 			#endif
-			ligne.push_back( pix->green() );
 			
+			ligne.push_back( pix->green() );
 		}
 		matrice->push_back(ligne);
 	}
-	
-	forest->create(largeurImage, hauteurImage, matrice);
+	forest= new Foret(largeurImage, hauteurImage, matrice);
+// 	forest->create(largeurImage, hauteurImage, matrice);
 	
 // 		QColormap map(pictureForest->tr);
 	// 	img.trueMatrix()
@@ -488,7 +496,6 @@ void FireWidget::drawForest()
  * @author Florian and Ugo
  */
 // IMPROVEIT faire une fonction qui prend une couleur et une liste d'arbres, qui "imprime" les arbres avec cette couleur ?	
-// IMPROVEIT faire un fonction de firewidget qui vide toutes les listes?
 void FireWidget::drawChanged()
 {
 	bufferPainter->begin(buffer);

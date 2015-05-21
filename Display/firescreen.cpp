@@ -348,9 +348,14 @@ void FireScreen::initForest(Fwelcome * fwel)
 		cout<< "Pas de fichier, création d'une foret aléatoirement"<< endl;
 		sleep(1);
 		
-		fWidget->initialise(largeur,hauteur,
-								  fwel->get_proba(),
-								  fwel->get_coef());
+		// BUG IMPROVEIT echec creation en utilisant l'image (fwidget noir, foret vide?)
+		if (! fWidget->initialise("../foret_payTODEL.tif"))	{
+			cout << "Echec creation foret à partir fichier image, creation foret à partir des parametres de fwelcome"<< endl;
+			fWidget->initialise(largeur,hauteur,
+									  fwel->get_proba(),
+									  fwel->get_coef()	);
+		}
+	
 		majCompteur();
 	}
 	
