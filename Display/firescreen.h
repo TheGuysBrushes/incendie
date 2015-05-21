@@ -27,17 +27,16 @@ private:
 	WindWidget* windWidget;
 	FireWidget* fWidget;
 	
-	QWidget* menus;
+	QWidget* menus; // utile pour connaitre sa largeur
 	
 	QLabel* cpt_lbl;
 	QLabel* delai_lbl;
-	QPushButton* pause_btn;
-	QPushButton* play_btn;
-	QPushButton* next_btn;
-	QPushButton* cut_btn;
-	QPushButton* delay_btn;
-	
-	QProgressBar* PB_load;
+	// TODO vérifier si on utilise les signaux directement sur les boutons pour griser les boutons ?
+	QPushButton* pause_btn;	// pour pouvoir le griser, on pourrait utiliser un signal
+	QPushButton* play_btn;	// pour pouvoir le griser, on pourrait utiliser un signal
+	QPushButton* next_btn;	// pour pouvoir le griser, on pourrait utiliser un signal
+	QPushButton* cut_btn;	// pour pouvoir le griser, on pourrait utiliser un signal
+	QPushButton* delay_btn;	// pour pouvoir le griser, on pourrait utiliser un signal
 	
 	QTimer* timer;
 	int nb_tour;
@@ -67,16 +66,20 @@ protected:
 // 	void mouseReleaseEvent(QMouseEvent* event);
 	
 public slots:
+	/* Timer	*/
 	void start_timer();
 	void stop_timer();
-	void nextStep();
 	void set_delai(int x );
+	/*	Boutons	*/
+	void nextStep();
 	void reset();
-	void invertBtn(bool);
-	void updateWind(int angle, int vitesse);
-	void releaseOrdered();
 	void save() const;
-	void reloadForest(bool);
+	
+	void invertActionRightMouse();
+	void updateWind(int angle, int vitesse);
+	void reloadForestFromFile();
+	
+	void releaseOrdered();
 	
 signals:
 	void actionSender(int x);

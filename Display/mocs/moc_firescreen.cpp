@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'firescreen.h'
 **
-** Created: Wed May 20 14:34:36 2015
+** Created: Thu May 21 16:17:36 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -36,24 +36,25 @@ static const uint qt_meta_data_FireScreen[] = {
  // slots: signature, parameters, type, tag, flags
       32,   11,   11,   11, 0x0a,
       46,   11,   11,   11, 0x0a,
-      59,   11,   11,   11, 0x0a,
-      70,   12,   11,   11, 0x0a,
+      59,   12,   11,   11, 0x0a,
+      74,   11,   11,   11, 0x0a,
       85,   11,   11,   11, 0x0a,
       93,   11,   11,   11, 0x0a,
-     123,  109,   11,   11, 0x0a,
-     143,   11,   11,   11, 0x0a,
-     160,   11,   11,   11, 0x0a,
-     167,   11,   11,   11, 0x0a,
+     100,   11,   11,   11, 0x0a,
+     139,  125,   11,   11, 0x0a,
+     159,   11,   11,   11, 0x0a,
+     182,   11,   11,   11, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_FireScreen[] = {
     "FireScreen\0\0x\0actionSender(int)\0"
-    "start_timer()\0stop_timer()\0nextStep()\0"
-    "set_delai(int)\0reset()\0invertBtn(bool)\0"
-    "angle,vitesse\0updateWind(int,int)\0"
-    "releaseOrdered()\0save()\0reloadForest(bool)\0"
+    "start_timer()\0stop_timer()\0set_delai(int)\0"
+    "nextStep()\0reset()\0save()\0"
+    "invertActionRightMouse()\0angle,vitesse\0"
+    "updateWind(int,int)\0reloadForestFromFile()\0"
+    "releaseOrdered()\0"
 };
 
 void FireScreen::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -65,14 +66,14 @@ void FireScreen::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 0: _t->actionSender((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 1: _t->start_timer(); break;
         case 2: _t->stop_timer(); break;
-        case 3: _t->nextStep(); break;
-        case 4: _t->set_delai((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 3: _t->set_delai((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 4: _t->nextStep(); break;
         case 5: _t->reset(); break;
-        case 6: _t->invertBtn((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 7: _t->updateWind((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 8: _t->releaseOrdered(); break;
-        case 9: _t->save(); break;
-        case 10: _t->reloadForest((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 6: _t->save(); break;
+        case 7: _t->invertActionRightMouse(); break;
+        case 8: _t->updateWind((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 9: _t->reloadForestFromFile(); break;
+        case 10: _t->releaseOrdered(); break;
         default: ;
         }
     }

@@ -15,7 +15,6 @@ using namespace std;
 
 /* 
  * TODO	4- utiliser des Qrgba pour définir les couleurs
- * TODO 	4_bis- utiliser buffer->pixel(i, 0); pour changer couleur ?
  */
 
 // ##################################

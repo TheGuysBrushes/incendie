@@ -18,16 +18,20 @@
 #include <math.h>
 #define PI 3.14159265
 
-using namespace std; // REMOVEIT ? : utilisé seulement pour les debug
+using namespace std;
 
+/* - TODO voir pour choisir une meilleur taille initiale */
 
-/*		
- * - TODO voir pour choisir une meilleur taille initiale
+/**
+ * On initialise les composant graphiques de la classe (foret et menus, boutons), la barre des menus
+ * @author Ugo et Florian
  */
 FireScreen::FireScreen(): QMainWindow()
 {
+	// TODO Version anglaise
+	// Elements de la barre de menus
 	QAction* exit = new QAction(this);
-	exit->setText( "Quitter" );
+	exit->setText( "Quit" );
 	menuBar()/*->addMenu( "Menu" )*/->addAction(exit);
 	connect(exit, 	SIGNAL(triggered()), SLOT(close()) );
 	
@@ -35,14 +39,11 @@ FireScreen::FireScreen(): QMainWindow()
 	save->setText( "Save" );
 	menuBar()->addAction(save);
 	connect(save,	SIGNAL(triggered()), SLOT( save()) );
-	
+
+	// Composants Qt de la classe
 	fWidget= new FireWidget();
 	windWidget = new WindWidget();
-	
-	menuBar()/*->addMenu( "Menu" )*/->addAction(exit);
-	menuBar()->addAction(save);
-	connect(exit, SIGNAL(triggered()), SLOT(close()) );
-	
+	menus = new QWidget();
 	timer = new QTimer();
 	
 #if FRENCH
@@ -60,6 +61,8 @@ FireScreen::FireScreen(): QMainWindow()
 #endif
 
 	pause_btn->setDisabled(true);
+	cut_btn->setEnabled(true);
+	delay_btn->setEnabled(false);
 	
 	cpt_lbl = new QLabel();
 	delai_lbl = new QLabel();
@@ -67,18 +70,16 @@ FireScreen::FireScreen(): QMainWindow()
 
 FireScreen::~FireScreen()
 {
-	delete(fWidget);	
-	
-	delete menus;
-
 	delete delai_lbl;
 	delete cpt_lbl;
 	
 	delete pause_btn;
 	delete play_btn;
 	delete next_btn;
-	
-	delete  timer;
+
+	delete timer;
+	delete menus;
+	delete fWidget;
 }
 
 
@@ -122,10 +123,13 @@ void FireScreen::initSizes(int largeur, int hauteur)
 	#endif
 }
 
-
+/**
+ * Crée les menus sur la droite de la fenêtre et les place dans un layout
+ * @author Ugo (organisation Florian)
+ * @param HLayout layout horizontal dans lequel on place les menus
+ */
 void FireScreen::initMenus(QHBoxLayout* HLayout)
 {
-	/*QWidget* */menus = new QWidget();
 	HLayout->addWidget(menus);
 	// Propriétés utiles?
 		menus->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Minimum);
@@ -224,34 +228,35 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 
 	vert_lay1->setAlignment(titre,Qt::AlignHCenter);
 	
-	
-	
-	// CONNEXION DES BOUTONS AUX FONCTIONS
-	connect(play_btn,	SIGNAL(clicked()), 		this,	SLOT( start_timer()) );
-	connect(pause_btn,	SIGNAL(clicked()),	this,	SLOT( stop_timer()) );
-	connect(timer,		SIGNAL(timeout()), 		this,	SLOT( nextStep()) );
-	connect(next_btn,	SIGNAL(clicked()), 		this,	SLOT( nextStep()) );
-	
-	connect(save_btn,	SIGNAL(clicked()), SLOT( save()) );
-	
+/***	SIGNAUX	***/
+
+	// Sliders
 	connect(slider,	SIGNAL(valueChanged(int)),		this, SLOT( set_delai(int)) );
-	connect(reset_btn,	SIGNAL(clicked()), 			this,	SLOT( reset()) );
 	connect(windWidget,	SIGNAL(modif_value(int, int)),	this, SLOT( updateWind(int, int)) );
 	
+	// Boutons
+		/* Gestion foret */
+	connect(reset_btn,	SIGNAL(clicked()), 	this,	SLOT( reset()) );
+	// IMPROVEIT Temporaire, à revoir lors de la création de l'explorateur de fichier
+	connect(load_btn, SIGNAL(clicked()),	this,	SLOT(reloadForestFromFile()));
+	connect(save_btn,	SIGNAL(clicked()),	this, SLOT( save()) );	
+		/* Clic droit */
+	connect(cut_btn,	SIGNAL(clicked()),		this, SLOT(invertActionRightMouse()));	
+	connect(delay_btn,	SIGNAL(clicked()),	this, SLOT(invertActionRightMouse()));
+		/* Déroulement*/
+	connect(next_btn,	SIGNAL(clicked()), 		this,	SLOT( nextStep()) );
+	connect(play_btn,	SIGNAL(clicked()), 		this,	SLOT( start_timer()) );
+	connect(pause_btn,	SIGNAL(clicked()),	this,	SLOT( stop_timer()) );
 	
-	QObject::connect(cut_btn,	SIGNAL(clicked(bool)),		this, SLOT(invertBtn(bool)));	
-	QObject::connect(delay_btn,	SIGNAL(clicked(bool)),	this, SLOT(invertBtn(bool)));
+	// Autres signaux déroulement
+	connect(timer,	SIGNAL(timeout()), this,	SLOT( nextStep()) );
 	
-	// Connexion pour coupure et retardateur
-	QObject::connect(fWidget, SIGNAL(releaseSignal()), this, SLOT(releaseOrdered()));
-	QObject::connect(this, SIGNAL(actionSender(int)), fWidget, SLOT(actionReceived(int)));
-	// Temporaire, à revoir lors de la création de l'explorateur de fichier
-	QObject::connect(load_btn, SIGNAL(clicked(bool)), this, SLOT(reloadForest(bool)));
+	// Coupure et retardateur
+	connect(fWidget,	SIGNAL(releaseSignal()),	this, SLOT(releaseOrdered()));
+	connect(this,	SIGNAL(actionSender(int)),		fWidget, SLOT(actionReceived(int)));
 	
-	cut_btn->setEnabled(true);
-	delay_btn->setEnabled(false);
 	
-	/*** 	DEFINITTION DU STYLE DES ELEMENTS	***/
+/*** 	DEFINITTION DU STYLE DES ELEMENTS	***/
 	// Touches d'améliorations visuelles et d'initialisation de propriétés
 	titre->setStyleSheet("color : darkblue; font : bold italic 20px;");
 	trans_con->setStyleSheet("text-decoration : underline; color : darkblue ; font : italic 14px");
@@ -262,6 +267,10 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	delai_lbl->setStyleSheet("QLabel { color : darkblue; }");
 }
 
+/**
+ * Crée les menus et place tous les composants dans fenêtre
+ * @author Ugo et Florian
+ */
 void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 {
 /*** 	BOUTONS ET INTERFACE		***/
@@ -285,10 +294,16 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 // 	Definition de la taille selon les éléments
 	setMinimumHeight(lay->sizeHint().height() + menuBar()->sizeHint().height());
 // 	setMinimumWidth(vert_lay1->sizeHint().width());
-	
 }
 
 
+/**
+ * Restaure une forêt à partir d'un fichier ouvert, dont les tailles ont déjà été lues
+ * @author Florian
+ * @param largeur de la nouvelle forêt
+ * @param hauteur de la nouvelle forêt
+ * @param file fichier binaire ouvert contenant la sauvegarde de la forêt (essences-arbres)
+ */
 void FireScreen::createForest(int largeur, int hauteur, ifstream* file)
 {
 	cout<< "Chargement d'une foret à partir d'un fichier "<< endl;
@@ -300,7 +315,7 @@ void FireScreen::createForest(int largeur, int hauteur, ifstream* file)
 	QVBoxLayout* layLoad= new QVBoxLayout(w);
 	
 	QLabel* txtLoad= new QLabel("Chargement de la foret");
-	PB_load= new QProgressBar();
+	QProgressBar* PB_load= new QProgressBar();
 	PB_load->resize(390, 25);
 	
 	layLoad->addWidget(txtLoad);
@@ -315,6 +330,11 @@ void FireScreen::createForest(int largeur, int hauteur, ifstream* file)
 	loadWindow->hide();
 }
 
+/**
+ * Restaure une forêt à partir d'un fichier ouvert
+ * @author Florian
+ * @param file fichier binaire ouvert contenant la sauvegarde de la forêt (taille-essences-arbres)
+ */
 void FireScreen::createForest(ifstream* file)
 {
 	int largeur, hauteur;
@@ -332,6 +352,11 @@ void FireScreen::createForest(ifstream* file)
 	createForest(largeur, hauteur, file);
 }
 
+/**
+ * Crée une nouvelle forêt à partir d'une fenêtre de paramétrage
+ * @author Florian
+ * @param fwel fenêtre qui a été appelée et contient les paramètres de la nouvelle forêt
+ */
 void FireScreen::initForest(Fwelcome * fwel)
 {
 	nb_tour = 0;
@@ -349,13 +374,12 @@ void FireScreen::initForest(Fwelcome * fwel)
 		sleep(1);
 		
 		// BUG IMPROVEIT echec creation en utilisant l'image (fwidget noir, foret vide?)
-		if (! fWidget->initialise("../foret_payTODEL.tif"))	{
+		if (! fWidget->initialise("../foret_payTOD_ELETEE.tif"))	{
 			cout << "Echec creation foret à partir fichier image, creation foret à partir des parametres de fwelcome"<< endl;
 			fWidget->initialise(largeur,hauteur,
 									  fwel->get_proba(),
 									  fwel->get_coef()	);
 		}
-	
 		majCompteur();
 	}
 	
@@ -364,8 +388,8 @@ void FireScreen::initForest(Fwelcome * fwel)
 
 
 /**
- * 
- * 
+ * Crée une nouvelle forêt à partir d'une fenêtre de paramétrage
+ * @author Florian et Ugo
  */
 bool FireScreen::initialisation()
 {
@@ -378,35 +402,20 @@ bool FireScreen::initialisation()
 		fwel->show();
 		initForest(fwel);
 		fwel->hide();
+		
 		return true;
 	}
 	return false;
 }
 
 
-// ##############################
-/***		Autres methodes		***/
-// ##############################
-/**
- * Cette fonction permet d'inverser les actions effectuées par le clic
- * droit.
- * @author Ugo
- */
-void FireScreen::invertBtn(bool )
-{
-		if(cut_btn->isEnabled()){
-			cut_btn->setDisabled(true);
-			delay_btn->setEnabled(true);
-		}else{
-			delay_btn->setDisabled(true);
-			cut_btn->setEnabled(true);
-		}
-	
-}
+	// ##############################
+	/***		Autres methodes		***/
+	// ##############################
 
 /**
  * Met à l'affichage du timer, utilise nb_tour
- * @author Florian et Ugo
+ * @author Florian
  */
 void FireScreen::majCompteur()
 {
@@ -417,6 +426,11 @@ void FireScreen::majCompteur()
 // #############
 // 	Events
 // #############
+/**
+ * Redéfinition de resizeEvent, utilisée seulement pour le debuggage,
+ * pour connaitre la taille de la fenetre et des menus
+ * @author Florian
+ */
 void FireScreen::resizeEvent(QResizeEvent* Qevent)
 {
 	QWidget::resizeEvent(Qevent);
@@ -428,25 +442,17 @@ void FireScreen::resizeEvent(QResizeEvent* Qevent)
 	#endif
 }
 
-// ########################
-/***			Slots			***/
-// ########################
-void FireScreen::start_timer()
-{
-	timer->start(delai);
-	next_btn->setEnabled(false);
-	play_btn->setEnabled(false);
-	pause_btn->setEnabled(true);
-}
 
-void FireScreen::stop_timer()
-{
-	timer->stop();
-	next_btn->setEnabled(true);
-	play_btn->setEnabled(true);
-	pause_btn->setEnabled(false);
-}
+	//################################
+	/***				Slots				***/
+	//################################
 
+/*** 	Sliders	***/
+
+/**
+ * Définit le nouveau pas utilisée lors de l'avancement continue
+ * @author Ugo
+ */
 void FireScreen::set_delai(int x)
 {
 	delai = (long)x;
@@ -454,7 +460,58 @@ void FireScreen::set_delai(int x)
 	timer->setInterval(delai);
 }
 
+/**
+ * Les paramètres du vent ont été modifiés 
+ * On doit récupérer les valeurs et mettre à jour le vent
+ */
+void FireScreen::updateWind(int angle, int vitesse)
+{
+	#if DEBUG_VENT
+	cout << "valeur de l'angle dans firescreen : " << angle << endl;
+	#endif
+	
+	float vertical = sin(PI*(float)(angle)/180.0);
+	float horizontal = cos(PI*(float)(angle)/180.0);
+	#if DEBUG_HYPO
+	cout <<"cosinus de l'angle envoyé : " << horizontal << endl;
+	cout <<"sinus de l'angle envoyé : " << vertical << endl;
+	#endif
+	/*
+	 * TODO Arret temporaire :
+	 * 
+	 * Déterminer une fonction à croissance de type exponentiel afin de diviser vitesse dans 
+	 * le but d'obtenir des valeurs de transmission minimale et maximale.
+	 * A l'heure actuelle, à vent minimal, on obtient des transmissions entre ( [-10;10] ; [-10;10] ) en faisant 
+	 * varier l'angle. A vent maximum, on obtient des résultats entre ( [-100;100] ; [-100;100] ).
+	 */
+	
+	vertical *= vitesse/20.0;
+	horizontal *= vitesse/20.0;
+	#if DEBUG_HYPO
+	cout <<"deplacement horizontal en pixel: " << horizontal << endl;
+	cout <<"deplacement vertical en pixel : " << vertical << endl;
+	#endif
+	
+	if(horizontal < 1 && horizontal > 0)
+		horizontal = 1;
+	if(horizontal > -1 && horizontal < 0)
+		horizontal = -1;
+	if(vertical < 0 && vertical > -1)
+		vertical = -1;
+	if(vertical > 0 && vertical < 1)
+		vertical =1;
+	
+	fWidget->setWind((int)horizontal,(int)vertical);
+}
 
+/*** 	Boutons	***/
+
+/**
+ * Appelle une nouvelle fenêtre de paramétrage de forêt.
+ * Si l'utilisateur valide, alors une nouvelle forêt,
+ * sinon, l'ancienne forêt est conservée
+ * @author Florian et Ugo
+ */
 void FireScreen::reset()
 {
 	stop_timer();
@@ -474,7 +531,12 @@ void FireScreen::reset()
 	}
 }
 
-void FireScreen::reloadForest(bool)
+/**
+ * Charge une nouvelle foret depuis un fichier
+ * @author Florian
+ * TODO ajouter l'explorateur plutôt qu'une valeur par défaut
+ */
+void FireScreen::reloadForestFromFile()
 {
 	// TODO valeur par défaut, à modifier avec explorateur
 	string filename = "Resources/foret1.dat";
@@ -486,14 +548,39 @@ void FireScreen::reloadForest(bool)
 	createForest(file);
 	
 	fWidget->redraw();
-// 	fWidget->loadForest(filename);
+	// 	fWidget->loadForest(filename);
 }
 
-void FireScreen::save() const{
+/**
+ * Appelle la sauvegarde de la foret de fWidget 
+ * @author Florian
+ */
+void FireScreen::save() const
+{
 	fWidget->saveForest();
 }
 
+/**
+ * Cette fonction permet d'inverser les actions effectuées par le clic droit.
+ * @author Ugo
+ */
+void FireScreen::invertActionRightMouse()
+{
+	if(cut_btn->isEnabled()){
+		cut_btn->setDisabled(true);
+		delay_btn->setEnabled(true);
+	}else{
+		delay_btn->setDisabled(true);
+		cut_btn->setEnabled(true);
+	}
+	
+}
 
+	/* Déroulement */
+/**
+ * Avance la progression de l'incendie d'un tour (t+1)
+ * @author Florian
+ */
 void FireScreen::nextStep()
 {
 	if (fWidget->next()){
@@ -503,50 +590,23 @@ void FireScreen::nextStep()
 	else stop_timer();
 }
 
-void FireScreen::updateWind(int angle, int vitesse){
-	// Les paramètres du vent ont été modifiés
-	// On doit récupérer les valeurs et mettre à jour le vent
-	float vertical;
-	float horizontal;
-	#if DEBUG_VENT
-	cout << "valeur de l'angle dans firescreen : " << angle << endl;
-	#endif
-
-	vertical = sin(PI*(float)(angle)/180.0);
-	horizontal = cos(PI*(float)(angle)/180.0);
-
-	#if DEBUG_HYPO
-	cout <<"cosinus de l'angle envoyé : " << horizontal << endl;
-	cout <<"sinus de l'angle envoyé : " << vertical << endl;
-	#endif
-	vertical *= vitesse/20.0;
-	horizontal *= vitesse/20.0;
-	/*
-	 * Arret temporaire : reste à faire :
-	 * 
-	 * Déterminer une fonction à croissance de type exponentiel afin de diviser vitesse dans 
-	 * le but d'obtenir des valeurs de transmission minimale et maximale.
-	 * A l'heure actuelle, à vent minimal, on obtient des transmissions entre ( [-10;10] ; [-10;10] ) en faisant 
-	 * varier l'angle. A vent maximum, on obtient des résultats entre ( [-100;100] ; [-100;100] ).
-	 * 
-	 */
-	
-	#if DEBUG_HYPO
-	cout <<"deplacement horizontal en pixel: " << horizontal << endl;
-	cout <<"deplacement vertical en pixel : " << vertical << endl;
-	#endif
-	if(horizontal < 1 && horizontal > 0)
-		horizontal = 1;
-	if(horizontal > -1 && horizontal < 0)
-		horizontal = -1;
-	if(vertical < 0 && vertical > -1)
-		vertical = -1;
-	if(vertical > 0 && vertical < 1)
-		vertical =1;
-	
-	fWidget->setWind((int)horizontal,(int)vertical);
-	
+void FireScreen::start_timer()
+{
+	timer->start(delai);
+	next_btn->setEnabled(false);
+	play_btn->setEnabled(false);
+	pause_btn->setEnabled(true);
 }
+
+void FireScreen::stop_timer()
+{
+	timer->stop();
+	next_btn->setEnabled(true);
+	play_btn->setEnabled(true);
+	pause_btn->setEnabled(false);
+}
+
+/*** Coupure et retardateur ***/
 
 /**
  * Slot mis en place afin de transmettre l'action sélectionnée à appliquer

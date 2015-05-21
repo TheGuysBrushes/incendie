@@ -19,3 +19,15 @@ Souris FireWidget (Ugo):
 - * 2- Sur le release, confirmation de la zone et application de l'effet choisi
 - * 3- Pour les effets, deux boutons ( coupure et retardateur ) dont un par défaut activé
 - * 4- utiliser des Qrgba pour définir les couleurs
+
+
+A VOIR : 
+Size Hints and Size Policies
+
+When implementing a new widget, it is almost always useful to reimplement sizeHint() to provide a reasonable default size for the widget and to set the correct size policy with setSizePolicy().
+
+By default, composite widgets which do not provide a size hint will be sized according to the space requirements of their child widgets.
+
+The size policy lets you supply good default behavior for the layout management system, so that other widgets can contain and manage yours easily. The default size policy indicates that the size hint represents the preferred size of the widget, and this is often good enough for many widgets.
+
+Note: The size of top-level widgets are constrained to 2/3 of the desktop's height and width. You can resize() the widget manually if these bounds are inadequate.
