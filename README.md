@@ -96,53 +96,95 @@
     
 <h2> Semaine 5 </h2>
 
-<h3> Lundi </h3>
+<h3> Lundi (4/05) </h3>
   - Ugo : Correction des bugs sur le vents, détection de nouveaux bugs, clarification du code
   - Florian : Travaux sur la matrice d'arbres avec des images<h3> Lundi </h3>
     
-<h3> Mardi </h3>
-  - Florian  : Ajouts et modif pour les couleurs d'arbres et les dimensions de la fenetre, commentaires et corrections.
+<h3> Mardi (5/05) </h3>
+  - Florian : Ajouts et modif pour les couleurs d'arbres et les dimensions de la fenetre, commentaires et corrections.
   - Ugo : Nettoyage du code, réflexion sur le système de coupure.
   
-<h3> Mercredi </h3>
-  - Florian
+<h3> Mercredi (6/05) </h3>
   - Ugo : Mise en place de la zone de selection et des bouttons coupure/retardateur
+  - Florian : homogenisation de la langue du code (anglais pour variables et méthodes de classes) et modif diverses
     
-<h3> Jeudi </h3>
+<h3> Jeudi (7/05) </h3>
   - Ugo : Liaison couche graphique/matrice pour la coupure (point à détailler dans le rapport SIGNALS/SLOTS ) 
-  - Florian :
+  - Florian : Angliscisation du code et ajout possibilité de suppression des arbres.
   
-<h3> Vendredi </h3>
-- Ugo : Réflexion sur implémentation coupure/retardateur au sein du moteur (férié)
+<h3> Vendredi (8/05) (férié) </h3>
+- Ugo : Réflexion sur implémentation coupure/retardateur au sein du moteur
+- Florian : Organisation des fichiers en dossiers et essais d'amélioration DES CMakeLists, moteur indépendant de l'affichage.
 
 <h2> Semaine 6 </h2>
 
-<h3> Lundi </h3>
+<h3> Lundi (11/05) </h3>
 - Ugo : Mise en place coupure/retardateur dans moteur
+- Florian :
+  + Modification des setteurs et signaux de vents (angle et force)
+  + commentaires et TODOS
 
-<h3> Mardi </h3>
+<h3> Mardi (12/05) </h3>
 - Ugo : Reprise du système d'orientation du vent, mise du 0 au Nord.
+- Florian :
+  + Mode français/anglais de l'interface.
+  + Ajout de l'aléatoire dans la transimission du feu, probabilité selon l'humidité de l'arbre.
+  + Correction de la transmission aux arbres en contact direct et ajout d'une décrémentation de la valeur de transmission du feu proportionnelement à la distance à l'arbre en feu à partir d'une récursion, ATTENTION coûteux en ressources, retiré ensuite en attendant de vérifier la pertinence.
 
-<h3> Mercredi </h3>
+<h3> Mercredi (13/05) </h3>
 - Ugo : Correction différents bugs, tests graphiques pour coupure/retardateur
+- Florian :
+  + Corrections : quelques inversions colonne/ligne (burnAdjacentsWind), signaux doubles, et intensité de la transmission du feu selon distance (avec i*j)
+  + Recherche de possibilité et première ébauche d'enregistrement d'une foret dans un fichier(binaire).
     
-<h3> Jeudi </h3>
+<h3> Jeudi (14/05)(férié) </h3>
 - Ugo : férié, indisponible
-<h3> Vendredi </h3>
+- Florian : Ajout ébauche de chargement d'une forêt.
+
+<h3> Vendredi (15/05)(pont) </h3>
 - Ugo : indisponible
+- Florian : Première version de la sauvegarde et du chargement de la fôret finalisée, ajout d'une barre de progression triviale. (Je laisse à Ugo le soin de s'occuper d'implémenter proprement dans l'interface les boutons de saave/load)
+
+<h3> Samedi (16/05) </h3>
+- Ugo : Amélioration direction vent,comment pour TODOs
 
 <h2> Semaine 7 </h2>
 
-<h3> Lundi </h3>
+<h3> Lundi (18/05) </h3>
 - Ugo : Validation coupure/retardateur, correction "problème" KDev (TODO et autres)
+- Florian : Commentaires, corrections d'erreurs, TODOs de fais, optimisation pour performances et ajout d'un fichier avec ajout de remarques pour le rapport.
 
-<h3> Mardi </h3>
+<h3> Mardi (19/05) </h3>
+- Ugo : Correction marqueurs KDev (TODOs, IMPROVE_IT Etc)
+- Florian :
+  + Autres TODOs de fais, corrections diverses
+  + Essai de sauvegarde/chargement de la chaine de caractère du nom de l'Essence
+  + Reprise des recherches pour création d'une forêt à partir d'une image et lecture de l'intensité de vert pour chaque pixel.
+
+<h3> Mercredi (20/05) </h3>
+- Ugo : Mise en place varation automatique du vent avec bouton d'activation. Début rapport
+- Florian :
+  + Correction QProgressBar
+  + Début de création d'une fôret à partir d'une image.
+
+<h3> Jeudi (21/05) </h3>
+- Florian : Mise à jour du Readme et ajouts pour commencer le rapport.
     
-<h3> Mercredi </h3>
+<h3> Vendredi (22/05) </h3>
+
+<h2> Semaine 8 </h2>
+
+<h3> Lundi (25/05)(férié) </h3>
     
-<h3> Jeudi </h3>
+<h3> Mardi (26/05) </h3>
     
-<h3> Vendredi </h3>
+<h3> Mercredi (27/05) </h3>
+    
+<h3> Jeudi (28/05) </h3>
+    
+<h3> Vendredi (29/05) </h3>
+
+
 
 
 <h2> Semaine X </h2>
