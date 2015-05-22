@@ -1,3 +1,27 @@
+Programme :
+
+// un arbre hérite de cellule
+// - les cellules/arbres sont stockés par pointeurs dans le vecteur de vecteurs
+// - la cellule ne contient qu'un état, si c'est un arbre (dynamic_cast) il a des attributs spécifiques
+// - faire une sous-classe de arbre : arbre en cendres ? ou alors sous-classe de cellule ou seulement arbre dans état brulé (3) : plus simpe
+
+/* foret	*/
+//	DID : 1	: utiliser les coordonnées des arbres dans les méthodes plutôt que de les passer en arguments
+// 			+ code nettoyé (commentaires ...)
+//	DID	2	: revérifier les arguments des méthodes et les algorithmes pour prendre en compte les modif
+//	DID	3	: faire des accesseurs et setters plus propres et explicites, supprimer attributs protected ?
+// DID	4	: Prise en compte des PV
+// DID	5	: Gérer arbres adjacents diagonaux ET avec plus de 1 de distance
+//			5 bis	: reduire la transmission selon la distance ?, creer classe ? (Arbre+distance)
+// DID	6	: Prise en compte coefs
+//	TODO	7	: EN PARTIE	; Ajout des vents
+
+//	DID	8	: Implementation de Qt
+// DID	9	: Debut d'interface de configuration (taille, vitesse ...)
+
+//	TODO	10	: Jeux d'essais
+
+
 Général : 
 	Création d'un systeme de logs à partir d'un fichier debug.h inclus dans tous les fichiers cpp,
 permettant d'afficher les informations de suivi de l'exécution de chaque partie indépendemment, 

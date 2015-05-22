@@ -14,5 +14,5 @@
  * @author Ugo
  */
 
-#define CUT 0
-#define DELAY 1
+#define CUT		0
+#define DELAY	1
