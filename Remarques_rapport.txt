@@ -22,6 +22,13 @@ Programme :
 //	TODO	10	: Jeux d'essais
 
 
+/* (FireWidget)
+ * TODO	4- utiliser des Qrgba pour définir les couleurs
+ * 		 4_bis-	lecture pixel par pixel de l'image
+ */
+
+
+
 Général : 
 	Création d'un systeme de logs à partir d'un fichier debug.h inclus dans tous les fichiers cpp,
 permettant d'afficher les informations de suivi de l'exécution de chaque partie indépendemment, 

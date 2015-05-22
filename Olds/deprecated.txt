@@ -1,9 +1,41 @@
+22/05
+###############################	#
+#			firewidget				#
+# constructeur avec crea foret	#
+###############################	#
+.h :
+// 	FireWidget(int _largeur, int _hauteur, float proba = 0.60, float coef_brulure=1.0);
+
+.cpp :
+/**
+ * Constructeur de classe. Initialise les différents pointeurs
+ * et fixe la taille minimale du widget
+ * @param int _largeur : nombre de colonnes de la matrice 
+ * @param int _hauteur : nombre de lignes de la matrice
+ * @param float _proba : probabilité qu'une cellule deviennent un arbre
+ * @param float _coef : coefficient de combustion de l'incendie
+ * @author Ugo et Florian
+ * @deprecated
+ */
+// FireWidget::FireWidget(int _largeur, int _hauteur, float proba, float coef_brulure): QWidget()
+// {
+// 	buffer = new QImage();
+// 	color = new QColor(Qt::black);
+// 	bufferPainter= new QPainter(); 	
+// 	pictureForest= new QImage();
+// 
+// 	initialise(_largeur, _hauteur, proba, coef_brulure);
+// // 	loadFromPicture("../foret_pay.tif");
+// 	
+// 	rubber = NULL;
+// }
+
 
 22/04
-################################
-#			firewidget.cpp			#
-#	drawForest/Variable();		#
-################################
+###############################	#
+#			firewidget.cpp				#
+#	drawForest/Variable();			#
+###############################	#
 /**
  * IMPROVEIT
  * J'ai essayé de créer une fonction qui dessinerai les cellules grâce à l'appel d'une autre fonction donné en paramètre,
