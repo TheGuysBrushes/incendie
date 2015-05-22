@@ -25,6 +25,8 @@ WindWidget::WindWidget():activeVar(true)
 	angle_lbl = new QLabel();
 	angle_lbl->setFixedWidth(100);
 	
+	this->setMaximumHeight(300);
+	
 	timer = new QTimer();
 	
 	initComponents();
@@ -55,6 +57,7 @@ void WindWidget::initComponents()
 		h_lay->addWidget(angle_lbl);
 		// QSlider permettant de faire varier l'angle du vent
 		slider_angle = new QSlider(Qt::Horizontal);
+			slider_angle->setMaximumWidth(180);
 			slider_angle->setMinimum(0);
 			slider_angle->setMaximum(360);
 
