@@ -45,6 +45,14 @@ en activant les debugs concernés, sans ralentir l'exécution du programme en "m
 	
 - extraire largeur et hauteur dans (-firescreen-) firewidget plutot que dans foret => passer un fichier plutot qu'un chemin
 
+- 3 Création de Forêt différentes : 
+	1) Création aléatoire de la forêt à partir de paramètres choisis par l'utilisateur (paramètres de fwelcome)
+	2) Création d'une forêt à partir d'une image d'une forêt (en cours), pour l'instant grâce aux niveaux de vert
+	3) Restauration d'une forêt enregistrée précédement
+
+	-> FireWidget est crée vide, puis il y a une initialisation par type de création de forêt voulue
+
+
 Souris FireWidget (Ugo): 
 -/* 1- Création de la zone de selection clics souris
 - * 2- Sur le release, confirmation de la zone et application de l'effet choisi
