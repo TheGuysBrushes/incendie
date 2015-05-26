@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'windcircle.h'
 **
-** Created: Tue May 26 14:36:54 2015
+** Created: Tue May 26 15:26:49 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

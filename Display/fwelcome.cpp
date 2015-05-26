@@ -133,27 +133,27 @@ void Fwelcome::initComponents(){
 	
 	// BOUTONS
 	QWidget* WButtons= new QWidget();
-		QHBoxLayout* h_lay = new QHBoxLayout(WButtons);
+		gridLay = new QGridLayout(WButtons);
 		
+			// TODO remettre dans le constructeur
 			#if FRENCH
-			QPushButton* valid_btn = new QPushButton("Valider");
+			valid_btn = new QPushButton("Valider");
 			cancel_btn = new QPushButton("Annuler");
 			QPushButton* load_btn= new QPushButton("Charger une foret", this);
 			#else 
-			QPushButton* valid_btn = new QPushButton("Confirm");
-			// TODO placement du bouton de chargemetn
+			valid_btn = new QPushButton("Confirm");
+			// TODO placement du bouton de chargement
 			cancel_btn = new QPushButton("Cancel");
 			load_btn= new QPushButton("Load forest");
+			loadFromImgBtn = new QPushButton("Create from image");
 			#endif
 			
-				valid_btn->setDefault(true);
-				cancel_btn->setVisible(false);
+			cancel_btn->setVisible(false);
 			
-		h_lay->addWidget(valid_btn);
-		h_lay->addWidget(cancel_btn);
-		h_lay->addWidget(load_btn);
+		gridLay->addWidget(load_btn,0,0);
+		gridLay->addWidget(loadFromImgBtn,0,1);
+		gridLay->addWidget(valid_btn,1,0, 1,0);
 
-		
 	lay->addWidget(present);
 	lay->addWidget(WSettings);
 	lay->addWidget(WButtons);
@@ -174,6 +174,9 @@ void Fwelcome::initComponents(){
 
 void Fwelcome::addCancel() const
 {
+	gridLay->removeWidget(valid_btn);
+	gridLay->addWidget(valid_btn,1,0);
+	gridLay->addWidget(cancel_btn,1,1);
 	cancel_btn->setVisible(true);
 }
 

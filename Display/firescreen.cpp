@@ -167,7 +167,6 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	
 	QPushButton* reset_btn = new QPushButton("Reset ! Be careful");
 	QPushButton* save_btn = new QPushButton("Save");
-	QPushButton* load_btn = new QPushButton("Load");
 	
 	// Compteur de tours et Slider
 	QLabel* trans_con = new QLabel("Continuous transmission : ");	
@@ -195,9 +194,9 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	grid_lay2->addWidget(slider,1,0);
 	grid_lay2->addWidget(delai_lbl,1,1);
 	
-	grid_lay3->addWidget(load_btn,0,0);
-	grid_lay3->addWidget(save_btn,0,1);
-	grid_lay3->addWidget(reset_btn,1,0,1,0);
+
+	grid_lay3->addWidget(save_btn,0,0);
+	grid_lay3->addWidget(reset_btn,1,0);
 	
 	h_lay1->addWidget(tour_lbl);
 	h_lay1->addWidget(cpt_lbl);
@@ -228,7 +227,7 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 		/* Gestion foret */
 	connect(reset_btn,	SIGNAL(clicked()), 	this,	SLOT( reset()) );
 	// IMPROVEIT Temporaire, à revoir lors de la création de l'explorateur de fichier
-	connect(load_btn, SIGNAL(clicked()),	this,	SLOT(reloadForestFromFile()));
+
 	connect(save_btn,	SIGNAL(clicked()),	this, SLOT( save()) );	
 		/* Clic droit */
 	connect(cut_btn,	SIGNAL(clicked()),		this, SLOT(invertActionRightMouse()));	
@@ -473,7 +472,6 @@ void FireScreen::reset()
 	Fwelcome* fwel = new Fwelcome(this);
 	fwel->addCancel();
 	fwel->setModal(true);
-	fwel->getLoadBtn()->setVisible(false);
 	fwel->show();
 	
 	if( fwel->exec() == QDialog::Accepted ){
@@ -483,26 +481,6 @@ void FireScreen::reset()
 		fWidget->razRubber();
 		fWidget->redraw();
 	}
-}
-
-/**
- * Charge une nouvelle foret depuis un fichier
- * @author Florian
- * TODO ajouter l'explorateur plutôt qu'une valeur par défaut
- */
-void FireScreen::reloadForestFromFile()
-{
-	// TODO valeur par défaut, à modifier avec explorateur
-	string filename = "Resources/foret1.dat";
-	ifstream* file= new ifstream(filename.c_str(),  ios::in|ios::binary);
-	
-	fWidget->razRubber();
-	fWidget->delForest();
-	
-	createForest(file);
-	
-	fWidget->redraw();
-	// 	fWidget->loadForest(filename);
 }
 
 /**

@@ -86,7 +86,6 @@ public slots:
 	
 	void invertActionRightMouse();
 	void updateWind(int angle, int vitesse);
-	void reloadForestFromFile();
 	
 	void releaseOrdered();
 	

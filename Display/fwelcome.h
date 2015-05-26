@@ -7,6 +7,7 @@
 #include <QtGui/QSpinBox>
 #include <QtGui/QSlider>
 #include <QtGui/QProgressBar>
+#include <QtGui/QGridLayout>
 // Pour les valeurs max des SpinBox
 #include <QtGui/QDesktopWidget>
 #include <QtGui/QApplication>
@@ -24,12 +25,14 @@ class Fwelcome : public QDialog
 {
 Q_OBJECT
 private:
+	QGridLayout* gridLay;
 	QSpinBox* haut_spin;
 	QSpinBox* larg_spin;
 	QLabel* p_value;
 	QLabel* c_value;
-// 	QPushButton* valid_btn;
+	QPushButton* valid_btn;
 	QPushButton* cancel_btn;
+	QPushButton* loadFromImgBtn;
 	QPushButton* load_btn;
 	QProgressBar* PB_load;
 	
