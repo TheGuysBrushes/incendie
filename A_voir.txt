@@ -1,0 +1,30 @@
+Barichard : 
+	OK Barre de réduction/redimensionnement du menu de droite (qq chose comme Kdev ou AllInOne sidebar) :
+		Disable ou  Hide avec 
+	
+	OK Upscaling/Downscaling du dessin de la foret :
+		scale() de Qpainter
+	
+	OK Ugo : Dimension du FireWidget, pour qu'il ait la même taille que le dessin de la foret : 
+		scale on maximum size(redefinit si on change de palier ?)
+		
+		
+	+ Redefinir QDialog pour qu'elle retourne plus de 2 valeurs différentes possible : http://doc.qt.io/qt-4.8/qdialog.html#DialogCode-enum
+		On a plusieurs cas dde figure pour la création d'une foret
+		
+		
+		
+		
+		
+	
+Voir : QProgressBar dans foret.h pour faire varier sa valeur
+
+Créer une classe de création de foret au lieu de le faire dans fwelcome
+
+
+Voir pour activer la variation quand on fait un nextStep
+
+
+Lardeux :
+	Chargement/sauvegarde dans une classe séparée ?
+	fwelcome initilialise une foret ou donne les paramètres pour la crée ?
