@@ -389,9 +389,7 @@ bool FireScreen::initialisation()
 	fwel->show();
 	
 	if( fwel->exec() == QDialog::Accepted ){
-		fwel->show();
 		initForest(fwel);
-		fwel->hide();
 		
 		return true;
 	}
