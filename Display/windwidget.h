@@ -28,6 +28,7 @@ private:
 	QTimer* timer;
 	QSlider* slider_angle;
 
+	bool varWind;
 	int speed;
 
 public:
@@ -53,7 +54,7 @@ public slots:
 	void majAngle(int alpha);
 	void majSpeed(int vitesse);
 	void startTimer(bool);
-	void varWind();
+	void changeWindDir();
 	
 signals:
 	void modif_value(int, int);

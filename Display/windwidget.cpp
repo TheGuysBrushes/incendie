@@ -14,7 +14,7 @@ using namespace std;
  * initialisée à 5km/h.
  *@author Ugo 
  */
-WindWidget::WindWidget()
+WindWidget::WindWidget() : varWind(false)
 {
 	// Initialisation des composants de la classe
 	speed_lbl = new QLabel();
@@ -99,7 +99,7 @@ void WindWidget::initComponents()
 	connect(slider_angle,	SIGNAL(valueChanged(int)),		this, SLOT(majAngle(int)) );
 	connect(slider_vitesse,	SIGNAL(valueChanged(int)),		this, SLOT(majSpeed(int)));
 	connect(varButton,	SIGNAL(clicked(bool)),	this, SLOT(startTimer(bool)));
-	connect(timer,	SIGNAL(timeout()),	this, SLOT(varWind()));
+// 	connect(timer,	SIGNAL(timeout()),	this, SLOT(varWind()));
 	slider_vitesse->setValue(2);
 
 	// Appel à la fonction setAngle pour que l'initialisation des composants se fasse parfaitement
@@ -158,11 +158,17 @@ void WindWidget::majSpeed(int vitesse){
 // TODO Ugo : Renommer avec un nom pour comprendre que cela influe sur le vent et sans start, qqch comme toggleWindVar
 void WindWidget::startTimer(bool )
 {
-	// on effectue l'action correspondante au nouvel état
-	if(!timer->isActive()){
-		timer->start(500);
+// 	// on effectue l'action correspondante au nouvel état
+// 	if(!timer->isActive()){
+// 		timer->start(500);
+// 	} else {
+// 		timer->stop();
+// 	}
+	
+	if(varWind) {
+		varWind= false;
 	} else {
-		timer->stop();
+		varWind= true;
 	}
 }
 
@@ -172,18 +178,23 @@ void WindWidget::startTimer(bool )
  * @author Ugo
  * 
  */
-void WindWidget::varWind()
+void WindWidget::changeWindDir()
 {
-	int coef = rand()%11 - 5;
-	int angle = wind->getAngle()*(1.0+(coef/100.0));
-	if(angle > 630)
-		angle = 630;
-	if(angle < 270)
-		angle = 270;
-	#if DEBUG_VAR
-	cout << "angle de wind : " << wind->getAngle() << " ; " << endl;
-	cout << "coefficient de variation " << coef << " ; " << endl;
-	cout << "angle après modif " << angle << endl;
-	#endif
-	slider_angle->setValue(angle-270);
+	int variation= 2;
+	if (varWind){
+		float coef = rand()%(2*variation +1) - variation;
+		int angle = wind->getAngle()*(1.0+(coef/100.0));
+		
+		if(angle > 630)
+			angle -= 360;
+		if(angle < 270)
+			angle += 360;
+		#if DEBUG_VAR
+		cout << "angle de wind : " << wind->getAngle() << " ; " << endl;
+		cout << "coefficient de variation " << coef << " ; " << endl;
+		cout << "angle après modif " << angle << endl;
+		#endif
+		
+		slider_angle->setValue(angle-270);
+	}
 }

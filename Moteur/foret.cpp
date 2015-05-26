@@ -32,14 +32,6 @@ Foret::Foret(int _largeur, int _hauteur, float proba, float _coefFeu)
 	wind = new Vent(2.0,2.0);
 }
 
-// Foret::Foret(Foret& other, float proba)
-//  : lignes(other.lignes), colonnes(other.colonnes), burningCoef(other.burningCoef)
-// {
-// 	loadEssences("../Moteur/essence_data.txt");
-// 	randomMatrix(proba);
-// }
-
-
 /**
  * Constructeurs de forêt aléatoirement, à partir d'un fichier de sauvegarde
  * @author Florian

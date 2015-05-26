@@ -90,8 +90,9 @@ void FireScreen::initSizes(int largeur, int hauteur)
 	int maxCellHeight= freePixHeight/hauteur; 
 	int tCellMax= std::min(maxCellWidth, maxCellHeight);
 	
-	setMaximumWidth( tCellMax * largeur +largeurMenu +25 );
-	setMaximumHeight( tCellMax * hauteur +45 );
+// 	setMaximumWidth( tCellMax * largeur +largeurMenu +25 );
+// 	setMaximumHeight( tCellMax * hauteur +45 );
+// 	setMaximumHeight( freePixHeight );
 	
 	// 	resize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
 	// TODO mettre une largeur de base minimum, à partir de la hauteur du menu droite (calculer la taille d'une cellule si la hauteur de la fenetre est la hauteur du menu)
@@ -456,7 +457,6 @@ void FireScreen::set_delai(int x)
 // TODO mettre dans le .h ?
 void FireScreen::updateWind(int angle, int vitesse)
 {
-	
 	fWidget->setWind(angle, vitesse);
 }
 
@@ -542,6 +542,7 @@ void FireScreen::nextStep()
 	if (fWidget->next()){
 		nb_tour += 1;
 		majCompteur();
+		windWidget->changeWindDir();
 	}
 	else stop_timer();
 }

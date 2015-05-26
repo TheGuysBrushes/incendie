@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'windwidget.h'
 **
-** Created: Fri May 22 16:09:33 2015
+** Created: Tue May 26 14:36:54 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -45,7 +45,7 @@ static const uint qt_meta_data_WindWidget[] = {
 static const char qt_meta_stringdata_WindWidget[] = {
     "WindWidget\0\0,\0modif_value(int,int)\0"
     "alpha\0majAngle(int)\0vitesse\0majSpeed(int)\0"
-    "startTimer(bool)\0varWind()\0"
+    "startTimer(bool)\0changeWindDir()\0"
 };
 
 void WindWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -58,7 +58,7 @@ void WindWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 1: _t->majAngle((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 2: _t->majSpeed((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 3: _t->startTimer((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 4: _t->varWind(); break;
+        case 4: _t->changeWindDir(); break;
         default: ;
         }
     }
