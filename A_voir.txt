@@ -21,10 +21,6 @@ Voir : QProgressBar dans foret.h pour faire varier sa valeur
 
 Créer une classe de création de foret au lieu de le faire dans fwelcome
 
-
-Voir pour activer la variation quand on fait un nextStep
-
-
 Lardeux :
 	Chargement/sauvegarde dans une classe séparée ?
-	fwelcome initilialise une foret ou donne les paramètres pour la crée ?
+	fwelcome initilialise une foret OU donne les paramètres pour la crée OU redéfinir le comportement de QDialog avec plus que 2 retours possibles?
