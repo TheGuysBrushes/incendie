@@ -29,7 +29,6 @@ private:
 	QSlider* slider_angle;
 
 	int speed;
-	bool activeVar;
 
 public:
 	/* Constructeur et destructeur */

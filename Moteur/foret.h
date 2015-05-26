@@ -44,7 +44,7 @@ private:
 public:
 	
 	// Constructeur et destructeur
-	Foret(int _colonnes, int _lignes, float proba = 0.60, float _coefFeu = 1.0);
+	Foret(int _largeur, int _hauteur, float proba = 0.60, float _coefFeu = 1.0);
 // 	Foret(Foret& other, float proba=0.60);
 	Foret(int _largeur, int _hauteur, std::ifstream* file, QProgressBar* PB);
 	Foret(int _largeur, int _hauteur, std::vector< std::vector<char> >* matrice);
@@ -60,7 +60,7 @@ public:
 	void clean();
 	
 	void setValues(int largeur, int hauteur, float coef);
-	void setWind(int EO, int NS);
+	void setWind(int angle, int vitesse);
 	
 	// 	Getters and Setters
 	int width()	const { return colonnes; };

@@ -316,10 +316,13 @@ void FireWidget::setColor(int colorIndice)
 	}
 }
 
-void FireWidget::setWind(float _hor, float _ver)
-{
-	forest->setWind(_hor, _ver);
-}
+/**
+ * @deprecated opération faite dans le .h
+ */
+// void FireWidget::setWind(float _hor, float _ver)
+// {
+// 	forest->setWind(_hor, _ver);
+// }
 
 // ########################
 /***		Affichages	***/

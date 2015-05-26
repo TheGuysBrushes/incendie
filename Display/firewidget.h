@@ -16,6 +16,7 @@
 
 // Macros
 #include "../Moteur/actions.h"
+#include "../debug.h"
 
 #include "../Moteur/foret.h"
 #include "fwelcome.h"
@@ -63,7 +64,7 @@ public:
 
 	/* Getters et Setters */
 	void setColor(int colorIndice);	
-	void setWind(float _hor, float _ver);
+	void setWind(float angle, float vitesse)	{ forest->setWind(angle, vitesse); };
 	int getTailleCell() const { return tailleCell; };
 	Foret* getForet() const { return forest; };
 	void razRubber() 	{ rubber= NULL; };

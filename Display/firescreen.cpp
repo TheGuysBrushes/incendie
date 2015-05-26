@@ -7,9 +7,6 @@
 #include <QtGui/QAction>
 #include <QtGui/QMenuBar>
 
-// Valeur du nombre pi, utilisée pour les calcul de trigonométrie
-#define PI 3.14159265
-
 using namespace std;
 
 /* - TODO voir pour choisir une meilleur taille initiale */
@@ -453,47 +450,14 @@ void FireScreen::set_delai(int x)
 }
 
 /**
- * Les paramètres du vent ont été modifiés 
+ * Les paramètres du vent ont été modifiés.
  * On doit récupérer les valeurs et mettre à jour le vent
  */
+// TODO mettre dans le .h ?
 void FireScreen::updateWind(int angle, int vitesse)
 {
-	#if DEBUG_VENT
-	cout << "valeur de l'angle dans firescreen : " << angle << endl;
-	#endif
 	
-	float vertical = sin(PI*(float)(angle)/180.0);
-	float horizontal = cos(PI*(float)(angle)/180.0);
-	#if DEBUG_HYPO
-	cout <<"cosinus de l'angle envoyé : " << horizontal << endl;
-	cout <<"sinus de l'angle envoyé : " << vertical << endl;
-	#endif
-	/*
-	 * TODO Arret temporaire :
-	 * 
-	 * Déterminer une fonction à croissance de type exponentiel afin de diviser vitesse dans 
-	 * le but d'obtenir des valeurs de transmission minimale et maximale.
-	 * A l'heure actuelle, à vent minimal, on obtient des transmissions entre ( [-10;10] ; [-10;10] ) en faisant 
-	 * varier l'angle. A vent maximum, on obtient des résultats entre ( [-100;100] ; [-100;100] ).
-	 */
-	
-	vertical *= vitesse/20.0;
-	horizontal *= vitesse/20.0;
-	#if DEBUG_HYPO
-	cout <<"deplacement horizontal en pixel: " << horizontal << endl;
-	cout <<"deplacement vertical en pixel : " << vertical << endl;
-	#endif
-	
-	if(horizontal < 1 && horizontal > 0)
-		horizontal = 1;
-	if(horizontal > -1 && horizontal < 0)
-		horizontal = -1;
-	if(vertical < 0 && vertical > -1)
-		vertical = -1;
-	if(vertical > 0 && vertical < 1)
-		vertical =1;
-	
-	fWidget->setWind((int)horizontal,(int)vertical);
+	fWidget->setWind(angle, vitesse);
 }
 
 /*** 	Boutons	***/

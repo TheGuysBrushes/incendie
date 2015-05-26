@@ -14,7 +14,7 @@ using namespace std;
  * initialisée à 5km/h.
  *@author Ugo 
  */
-WindWidget::WindWidget():activeVar(true)
+WindWidget::WindWidget()
 {
 	// Initialisation des composants de la classe
 	speed_lbl = new QLabel();
@@ -96,10 +96,10 @@ void WindWidget::initComponents()
 	
 	// Connexion des sliders avec les setters de la classe :
 	// 	permet de gérer dynamiquement les changements de valeurs
-	connect(slider_angle, SIGNAL(valueChanged(int)),		this, SLOT(majAngle(int)) );
-	connect(slider_vitesse, SIGNAL(valueChanged(int)),	this, SLOT(majSpeed(int)));
-	connect(varButton, SIGNAL(clicked(bool)), this, SLOT(startTimer(bool)));
-	connect(timer, SIGNAL(timeout()),this,SLOT(varWind()));
+	connect(slider_angle,	SIGNAL(valueChanged(int)),		this, SLOT(majAngle(int)) );
+	connect(slider_vitesse,	SIGNAL(valueChanged(int)),		this, SLOT(majSpeed(int)));
+	connect(varButton,	SIGNAL(clicked(bool)),	this, SLOT(startTimer(bool)));
+	connect(timer,	SIGNAL(timeout()),	this, SLOT(varWind()));
 	slider_vitesse->setValue(2);
 
 	// Appel à la fonction setAngle pour que l'initialisation des composants se fasse parfaitement
@@ -155,15 +155,14 @@ void WindWidget::majSpeed(int vitesse){
  * la variation de l'angle du vent
  * @author Ugo
  */
+// TODO Ugo : Renommer avec un nom pour comprendre que cela influe sur le vent et sans start, qqch comme toggleWindVar
 void WindWidget::startTimer(bool )
 {
-	// On modifie la valeur de activeVar et on effectue l'action correspondante au nouvel état
-	if(activeVar){
+	// on effectue l'action correspondante au nouvel état
+	if(!timer->isActive()){
 		timer->start(500);
-		activeVar = false;
-	}else{
+	} else {
 		timer->stop();
-		activeVar = true;
 	}
 }
 

@@ -1,5 +1,7 @@
 #include "foret.h"
 
+// Valeur du nombre pi, utilisée pour les calcul de trigonométrie
+#define PI 3.14159265
 
 // ages et humidité min et max
 int hMin= 20;
@@ -16,13 +18,13 @@ using namespace std;
  * Constructeurs de forêt aléatoirement, à partir de paramètres
  * @author Florian
  * 
- * @param _colonnes nombre de colonnes de la matrice représentant la forêt, sa largeur
- * @param _lignes nombre de lignes de la matrice, la hauteur
+ * @param _largeur nombre de colonnes de la matrice représentant la forêt, sa largeur
+ * @param _hauteur nombre de lignes de la matrice, la hauteur
  * @param proba, probabilite qu'il y ait un arbre, pour chaque case de la matrice. C'est environ le pourcentage d'arbres
  * @param _coefFeu coefficient de propagation du feu : 1 forêt "classique"; <1 progression plus lente (humidité...); >1 progression plus rapide (sécheresse ?)
  */
-Foret::Foret(int _colonnes, int _lignes, float proba, float _coefFeu)
-: lignes(_lignes), colonnes(_colonnes), burningCoef(_coefFeu)
+Foret::Foret(int _largeur, int _hauteur, float proba, float _coefFeu)
+: lignes(_hauteur), colonnes(_largeur), burningCoef(_coefFeu)
 {
 	loadEssences("../Moteur/essence_data.txt");
 	randomMatrix(proba);
@@ -39,8 +41,13 @@ Foret::Foret(int _colonnes, int _lignes, float proba, float _coefFeu)
 
 
 /**
- * Constructeurs de forêt aléatoirement, à partir de paramètres
+ * Constructeurs de forêt aléatoirement, à partir d'un fichier de sauvegarde
  * @author Florian
+ * 
+ * @param _largeur nombre de colonnes de la matrice représentant la forêt, sa largeur
+ * @param _hauteur nombre de lignes de la matrice, la hauteur
+ * @param file fichier de sauvegarde d'une foret précédente, contenant les essences et l'emplacement des arbres et leur indice d'essence
+ * @param PB barre de progression Qt, pour afficher l'avancement du chargement
  */
 // TODO modifier initialisation burningCoef
 Foret::Foret(int _largeur, int _hauteur, ifstream * file, QProgressBar* PB)
@@ -53,8 +60,12 @@ Foret::Foret(int _largeur, int _hauteur, ifstream * file, QProgressBar* PB)
 
 
 /**
- * Constructeurs de forêt aléatoirement, à partir de paramètres
+ * Constructeurs de forêt aléatoirement, à partir d'une image
  * @author Florian
+ * 
+ * @param _largeur nombre de colonnes de la matrice représentant la forêt, sa largeur
+ * @param _hauteur nombre de lignes de la matrice, la hauteur
+ * @param matrice matrice d'intensités de couleur verte selon l'emplacement dans l'image
  */
 // TODO modifier initialisation burningCoef
 Foret::Foret(int _largeur, int _hauteur, vector< std::vector< char > >* matrice)
@@ -295,6 +306,7 @@ void Foret::initEmpty()
 void Foret::create(int largeur, int hauteur, vector< vector< char > >* matrice)
 {
 	initEmpty();
+	
 	for(int ligne= 0; ligne< hauteur; ++ligne)
 	{
 		for (int colonne; colonne< largeur; ++colonne){
@@ -398,13 +410,48 @@ void Foret::setValues(int largeur, int hauteur, float coef)
  * @param EO force du vent sur l'axe Est-Ouest
  * @param NS force du vent sur l'axe Nord-Sud
  */
-void Foret::setWind(int EO, int NS)
+void Foret::setWind(int angle, int vitesse)
 {
-	wind->setPower_h(EO);
-	wind->setPower_v(NS);
+	#if DEBUG_VENT
+	cout << "valeur de l'angle dans firescreen : " << angle << endl;
+	#endif
+	
+	float vertical = sin(PI*(float)(angle)/180.0);
+	float horizontal = cos(PI*(float)(angle)/180.0);
+	#if DEBUG_HYPO
+	cout <<"cosinus de l'angle envoyé : " << horizontal << endl;
+	cout <<"sinus de l'angle envoyé : " << vertical << endl;
+	#endif
+	/*
+	 * TODO Arret temporaire :
+	 * 
+	 * Déterminer une fonction à croissance de type exponentiel afin de diviser vitesse dans 
+	 * le but d'obtenir des valeurs de transmission minimale et maximale.
+	 * A l'heure actuelle, à vent minimal, on obtient des transmissions entre ( [-10;10] ; [-10;10] ) en faisant 
+	 * varier l'angle. A vent maximum, on obtient des résultats entre ( [-100;100] ; [-100;100] ).
+	 */
+	
+	vertical *= vitesse/20.0;
+	horizontal *= vitesse/20.0;
+	#if DEBUG_HYPO
+	cout <<"deplacement horizontal en pixel: " << horizontal << endl;
+	cout <<"deplacement vertical en pixel : " << vertical << endl;
+	#endif
+	
+	if(horizontal < 1 && horizontal > 0)
+		horizontal = 1;
+	if(horizontal > -1 && horizontal < 0)
+		horizontal = -1;
+	if(vertical < 0 && vertical > -1)
+		vertical = -1;
+	if(vertical > 0 && vertical < 1)
+		vertical =1;
+		
+	wind->setPower_h(horizontal);
+	wind->setPower_v(vertical);
 #if DEBUG_VENT
-	cout << "valeur power h" << EO << endl;
-	cout << "valeur power v" << NS << endl;
+	cout << "valeur power h" << horizontal << endl;
+	cout << "valeur power v" << vertical << endl;
 #endif
 }
 
