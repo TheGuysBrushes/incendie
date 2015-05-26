@@ -1,34 +1,10 @@
 #include "foret.h"
 
-#include <cstdlib>
-#include <ctime>
 
+// ages et humidité min et max
 int hMin= 20;
-int ecartAgeMax= 80;
 int ecartHMax= 50;
-
-// -- A mettre dans le readme ?
-
-// un arbre hérite de cellule
-// - les cellules/arbres sont stockés par pointeurs dans le vecteur de vecteurs
-// - la cellule ne contient qu'un état, si c'est un arbre (dynamic_cast) il a des attributs spécifiques
-// - faire une sous-classe de arbre : arbre en cendres ? ou alors sous-classe de cellule ou seulement arbre dans état brulé (3) : plus simpe
-
-/* foret	*/
-//	DID : 1	: utiliser les coordonnées des arbres dans les méthodes plutôt que de les passer en arguments
-// 			+ code nettoyé (commentaires ...)
-//	DID	2	: revérifier les arguments des méthodes et les algorithmes pour prendre en compte les modif
-//	DID	3	: faire des accesseurs et setters plus propres et explicites, supprimer attributs protected ?
-// DID	4	: Prise en compte des PV
-// DID	5	: Gérer arbres adjacents diagonaux ET avec plus de 1 de distance
-//			5 bis	: reduire la transmission selon la distance ?, creer classe ? (Arbre+distance)
-// DID	6	: Prise en compte coefs
-//	TODO	7	: EN PARTIE	; Ajout des vents
-
-//	DID	8	: Implementation de Qt
-// DID	9	: Debut d'interface de configuration (taille, vitesse ...)
-
-//	TODO	10	: Jeux d'essais
+int ecartAgeMax= 80;
 
 using namespace std;
 
@@ -36,8 +12,17 @@ using namespace std;
 //		Constructeurs et destructeur
 // ################################### 
 
-Foret::Foret(int n_colonnes, int n_lignes, float proba, float coefFire)
-: lignes(n_lignes), colonnes(n_colonnes), burningCoef(coefFire)
+/**
+ * Constructeurs de forêt aléatoirement, à partir de paramètres
+ * @author Florian
+ * 
+ * @param _colonnes nombre de colonnes de la matrice représentant la forêt, sa largeur
+ * @param _lignes nombre de lignes de la matrice, la hauteur
+ * @param proba, probabilite qu'il y ait un arbre, pour chaque case de la matrice. C'est environ le pourcentage d'arbres
+ * @param _coefFeu coefficient de propagation du feu : 1 forêt "classique"; <1 progression plus lente (humidité...); >1 progression plus rapide (sécheresse ?)
+ */
+Foret::Foret(int _colonnes, int _lignes, float proba, float _coefFeu)
+: lignes(_lignes), colonnes(_colonnes), burningCoef(_coefFeu)
 {
 	loadEssences("../Moteur/essence_data.txt");
 	randomMatrix(proba);
@@ -52,17 +37,31 @@ Foret::Foret(int n_colonnes, int n_lignes, float proba, float coefFire)
 // 	randomMatrix(proba);
 // }
 
+
+/**
+ * Constructeurs de forêt aléatoirement, à partir de paramètres
+ * @author Florian
+ */
 // TODO modifier initialisation burningCoef
-Foret::Foret(int _largeur, int _hauteur, ifstream * file, QProgressBar* PB) :lignes(_hauteur), colonnes(_largeur), burningCoef(0.5)
+Foret::Foret(int _largeur, int _hauteur, ifstream * file, QProgressBar* PB)
+	:lignes(_hauteur), colonnes(_largeur), burningCoef(0.5)
 {
-	
+	// TODO Ugo : faire des constructeur qui permettent de créer un vent inital en accord avec la valeur initiale du curseur
 	wind = new Vent(1,-1);
 	load(file, PB);
 }
 
+
+/**
+ * Constructeurs de forêt aléatoirement, à partir de paramètres
+ * @author Florian
+ */
 // TODO modifier initialisation burningCoef
-Foret::Foret(int _largeur, int _hauteur, vector< std::vector< char > >* matrice):lignes(_hauteur), colonnes(_largeur), burningCoef(0.5)
+Foret::Foret(int _largeur, int _hauteur, vector< std::vector< char > >* matrice)
+	: lignes(_hauteur), colonnes(_largeur), burningCoef(0.5)
 {
+	// TODO Ugo : faire des constructeur qui permettent de créer un vent inital en accord avec la valeur initiale du curseur
+	wind = new Vent(3,-2);
 	loadEssences("../Moteur/essence_data.txt");
 	create(_largeur, _hauteur, matrice);
 }

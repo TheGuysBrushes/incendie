@@ -1,7 +1,8 @@
 #include "essence.h"
 
 using namespace std;
-// Constructors
+
+// Constructeurs
 Essence::Essence(unsigned int i, string nom, int masse, float _diametre, float _hauteur, unsigned int age, bool t):
 indice(i), name(nom), masse_V(masse), diametre(_diametre), hauteur(_hauteur), ageMaturite(age), type(t)
 {}

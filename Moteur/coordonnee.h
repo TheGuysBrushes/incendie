@@ -4,14 +4,14 @@
 class Coordonnee
 {
 
-public: //utile de mettre en proteger
+public:
 	int col;
 	int row;
 
 public:
-Coordonnee(int _x, int _y);
-Coordonnee(const Coordonnee& other);
-virtual bool operator==(const Coordonnee& other) const;
+	Coordonnee(int _x, int _y);
+	Coordonnee(const Coordonnee& other);
+	virtual bool operator==(const Coordonnee& other) const;
 	
 };
 

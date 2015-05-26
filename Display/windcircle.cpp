@@ -1,10 +1,9 @@
 #include "windcircle.h"
-#include <math.h>
-#include <QtCore/QString>
+
+// Valeur du nombre pi, utilisée pour les calcul de trigonométrie
+#define PI 3.14159265
 
 using namespace std;
-#define PI 3.14159265
-#include <iostream>
 
 /*** Constructeur et destructeur ***/
 /**

@@ -3,11 +3,10 @@
 
 #include <string>
 #include <sstream>
+#include <cmath>
 
 #include "../debug.h"
-
 #include "coordonnee.h"
-
 
 class Vent
 {

@@ -1,10 +1,9 @@
 #include "fwelcome.h"
 
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QGridLayout>
-#include <QApplication>
-#include <qdesktopwidget.h>
+// Composants Qt qui ne sont pas des attributs de classe
+#include <QtGui/QHBoxLayout>
+#include <QtGui/QVBoxLayout>
+#include <QtGui/QGridLayout>
 /*
  * - BUG Ugo : Les sliders/labels changent de dimension lorsqu'il y a un nombre à 2 chiffres après la virgule
  */
@@ -69,9 +68,11 @@ void Fwelcome::initComponents(){
 		QLabel* l_lbl = new QLabel("Width : ");
 		#endif
 		
+		int largeurMaximaleMenusDroite= 300;
+		
 		larg_spin = new QSpinBox(WSettings);
 			larg_spin->setMinimum(100);
-			larg_spin->setMaximum(QApplication::desktop()->screenGeometry().width() -250-15);
+			larg_spin->setMaximum(QApplication::desktop()->screenGeometry().width() -largeurMaximaleMenusDroite -40);
 			larg_spin->setValue(450);
 			larg_spin->setSingleStep(25);
 			larg_spin->setAccelerated(1);
@@ -83,9 +84,11 @@ void Fwelcome::initComponents(){
 		QLabel* h_lbl = new QLabel("Height : ");
 		#endif
 		
+		int hauteurMaximaleBarresFenetre= 45;
+		
 		haut_spin = new QSpinBox(WSettings);
 			haut_spin->setMinimum(100);
-			haut_spin->setMaximum(QApplication::desktop()->screenGeometry().height()-45-25 ); // 45 pixel à cause des marges et menu (observé 43)
+			haut_spin->setMaximum(QApplication::desktop()->screenGeometry().height() -hauteurMaximaleBarresFenetre -25 ); // 45 pixel à cause des marges et menu (observé 43)
 			haut_spin->setValue(300);
 			haut_spin->setSingleStep(25);
 			haut_spin->setAccelerated(1);

@@ -1,11 +1,16 @@
 #ifndef WINDCIRCLE_H
 #define WINDCIRCLE_H
 
+#include <QtCore/QString>
+#include <QtCore/QPointF>
+#include <QtCore/QEvent>
+#include <QtGui/qevent.h>	// event de la partie graphique
+#include <QtGui/QPainter>
 #include <QtGui/QWidget>
 #include <QtGui/QImage>
-#include <QtCore/QPointF>
-#include <QtGui/QPainter>
-#include <QtGui/qevent.h>
+
+#include <cmath>
+#include <iostream>
 
 /**
  * Cette classe correspond au widget d'affichage de la direction

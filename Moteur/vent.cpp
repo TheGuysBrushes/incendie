@@ -1,5 +1,4 @@
 #include "vent.h"
-#include <cmath>
 
 using namespace std;
 

@@ -1,8 +1,4 @@
 #include "firewidget.h"
-#include <QtGui/qevent.h>
-#include <qcolormap.h>
-
-#include "../Moteur/actions.h"
 
 #define GRAY 	5
 #define RED_TRANSPARENT 	6
@@ -13,36 +9,10 @@
 
 using namespace std;
 
-/* 
- * TODO	4- utiliser des Qrgba pour définir les couleurs
- */
-
 // ##################################
 /*** Constructeur et destructeur ***/
 // #################################
-/**
- * Constructeur de classe. Initialise les différents pointeurs
- * et fixe la taille minimale du widget
- * @param int _largeur : nombre de colonnes de la matrice 
- * @param int _hauteur : nombre de lignes de la matrice
- * @param float _proba : probabilité qu'une cellule deviennent un arbre
- * @param float _coef : coefficient de combustion de l'incendie
- * @author Ugo et Florian
- * @deprecated
- */
-// FireWidget::FireWidget(int _largeur, int _hauteur, float proba, float coef_brulure): QWidget()
-// {
-// 	initialise(_largeur, _hauteur, proba, coef_brulure);
-// 
-// 	buffer = new QImage();
-// 	color = new QColor(Qt::black);
-// 	bufferPainter= new QPainter();
-// 	
-// 	pictureForest= new QImage();
-// // 	loadFromPicture("../foret_pay.tif");
-// 	
-// 	rubber = NULL;
-// }
+
 /**
  * Constructeur de classe. Initialise les différents pointeurs
  * et fixe la taille minimale du widget
@@ -53,16 +23,16 @@ using namespace std;
  * @author Ugo et Florian
  * 
  */
-FireWidget::FireWidget(): QWidget(){
-	
+FireWidget::FireWidget(): QWidget()
+{	
 	buffer = new QImage();
 	color = new QColor(Qt::black);
 	bufferPainter= new QPainter();
-	
 	pictureForest= new QImage();
+	
 // 	if ( !initialise("../foret_pay.tif") )
 // 	TODO prévenir l'utilisateur ou faire une fonction par défaut en cas d'echec de chargement à partir d'une image
-		cout << "Echec de création d'une foret à partir de l'image"<< endl;
+// 		cout << "Echec de création d'une foret à partir de l'image"<< endl;
 	rubber = NULL;
 }
 
@@ -76,7 +46,7 @@ FireWidget::~FireWidget()
 }
 
 // ########################
-/*** 	Autres Méthodes 	***/
+/*** 	Initialisations 	***/
 // ########################
 /**
  * Fonction de création d'une foret ALEATOIRE lors de la (ré)initialisation
@@ -351,23 +321,6 @@ void FireWidget::setWind(float _hor, float _ver)
 	forest->setWind(_hor, _ver);
 }
 
-void FireWidget::razRubber(){
-	rubber = NULL;
-}
-
-/* TODO creation matrice à partir d'image dans forest ou dans firewidget ? ou les deux
- */
-// 	Pour créer la matrice
-// 	QByteArray data;
-// 
-// 	for(int i=0; i<forest->height(); ++i){
-// 		vector< Cellule* >* ligne= (*forest)[i];
-// 
-// 		for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
-// 			data.push_back( (*j)->getState() *10);
-// 		}
-// 	}
-
 // ########################
 /***		Affichages	***/
 // ########################
@@ -391,7 +344,7 @@ void FireWidget::drawPicture(){
  */
 void FireWidget::drawCell(int colonne, int ligne)
 {
-	bufferPainter->fillRect(colonne, ligne, tailleCell, tailleCell, *(color));
+	bufferPainter->fillRect(colonne, ligne, 1, 1, *(color));
 	#if DEBUG_TMATRICE
 	cout <<"draw cell ; ";
 	#endif
@@ -406,7 +359,7 @@ void FireWidget::drawCell(int colonne, int ligne)
 void FireWidget::drawTree(const Arbre* ab)
 {
 // 	drawCell(ab->getPos().col, ab->getPos().row);
-	bufferPainter->fillRect(tailleCell* ab->getPos().col, tailleCell* ab->getPos().row, tailleCell, tailleCell, *(color));
+	bufferPainter->fillRect(ab->getPos().col, ab->getPos().row, 1, 1, *(color));
 	#if DEBUG_TMATRICE
 	cout <<"draw tree ; "<< ab->getPos().col << ab->getPos().row ;
 	#endif
@@ -474,12 +427,12 @@ void FireWidget::drawForest()
 			}
 			
 			// Incrémentation des positions des cellules
-			current_largeur += tailleCell;
+			current_largeur += 1;
 		}
 		#if DEBUG_TMATRICE
 		cout << endl;
 		#endif
-		current_hauteur += tailleCell;
+		current_hauteur += 1;
 	}
 	
 	bufferPainter->end();
@@ -519,6 +472,7 @@ void FireWidget::drawChanged()
 	bufferPainter->end();
 }
 
+// Debuggage
 int num_redraw= 0;
 
 /**
@@ -535,7 +489,7 @@ void FireWidget::redraw()
 	if (!buffer->isNull()){
 		delete(buffer);
 	}
-	buffer = new QImage(tailleCell*forest->width(), tailleCell*forest->height(), QImage::Format_ARGB32);
+	buffer = new QImage(forest->width(), forest->height(), QImage::Format_ARGB32);
 	drawPicture();
 	drawForest();
 	drawChanged();
@@ -548,9 +502,14 @@ void FireWidget::redraw()
 void FireWidget::paintEvent(QPaintEvent* event)
 {
 	QPainter paint(this);
+	paint.scale(tailleCell, tailleCell);
 	paint.drawImage(0, 0, *buffer);
 }
 
+/**
+ * 
+ * @author
+ */
 void FireWidget::resizeEvent(QResizeEvent* event)
 {
 	#if DEBUG_CURRENT
@@ -559,10 +518,10 @@ void FireWidget::resizeEvent(QResizeEvent* event)
 	
 	int nbCol= forest->width();
 	int nbRow= forest->height();
-	tailleCell = min (event->size().width() / nbCol , event->size().height() / nbRow);
+	tailleCell = min (event->size().width() / (float)nbCol , event->size().height() / (float)nbRow);
 	
 	// TODO voir comment modifier la taille de de FireWidget sans repasser par resizeEvent, vraiment utile (ajouté pour rubberband, le modifier pour s'adapter?)
-	resize(tailleCell * nbCol, tailleCell*nbRow); // Fait lagger
+// 	resize(tailleCell * nbCol, tailleCell*nbRow); // Fait lagger
 	
 	#if DEBUG_CURRENT
 // 	cout << "test apres resize dans resizeEvent (ligne 488 firewidget)"<< endl;
@@ -692,25 +651,25 @@ bool FireWidget::next()
  * @author Florian et un petit peu Ugo :p
  * @deprecated
  */
-void FireWidget::reset(int _larg, int _haut, float proba, float coef)
-{
-// 	Foret* OldForet= forest;
-// 	forest = new Foret(*OldForet, probaMatriceReset);
-// 	delete(OldForet);
-// IMPROVEIT quelle est la meilleure facon de RAZ une foret?
-// 	buffer->fill(1);
-
-	forest->clean();	// suppression de l'ancienne foret
-	forest->setValues(_larg,_haut, coef); // changement des valeurs de taille et de brulure
-	forest->randomMatrix(proba);	// création de la nouvelle foret IMPROVEIT faire un randomMatrix dans setValues ?
-
-	setMinimumSize(_larg, _haut);
-	
-	drawPicture();
-	drawForest();
-	drawChanged();
-//  update();
-}
+// void FireWidget::reset(int _larg, int _haut, float proba, float coef)
+// {
+// // 	Foret* OldForet= forest;
+// // 	forest = new Foret(*OldForet, probaMatriceReset);
+// // 	delete(OldForet);
+// // IMPROVEIT quelle est la meilleure facon de RAZ une foret?
+// // 	buffer->fill(1);
+// 
+// 	forest->clean();	// suppression de l'ancienne foret
+// 	forest->setValues(_larg,_haut, coef); // changement des valeurs de taille et de brulure
+// 	forest->randomMatrix(proba);	// création de la nouvelle foret IMPROVEIT faire un randomMatrix dans setValues ?
+// 
+// 	setMinimumSize(_larg, _haut);
+// 	
+// 	drawPicture();
+// 	drawForest();
+// 	drawChanged();
+// //  update();
+// }
 
 
 /**

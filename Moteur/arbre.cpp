@@ -1,9 +1,5 @@
 #include "arbre.h"
 
-#include <cmath>
-#include <cstdlib>
-#include <iostream>
-
 /*
  * On considère pour la gestion de l'embrasement d'un arbre
  * et pour sa combustion le système suivant :
@@ -11,7 +7,7 @@
  * Plus ce taux est faible, plus l'arbre perd de points de vie par tour
  * De plus, des paramètres extérieurs pourront ralentir cette perte ( pluie, humidité ambiante, canadarage, etc ^^)
  * 
- * On considère de plus qu'un arbre en feu ne génère pas de flamme tant que son humidité n'est pas inférieure à 50%
+ * On considère de plus qu'un arbre en feu ne génère pas de flamme tant que son humidité n'est pas inférieure à 50% FAUX
  * Par conséquent, un arbre emflammera son voisin uniquement à cette condition
  */
 

@@ -1,15 +1,22 @@
 #ifndef FIRESCREEN_H
 #define FIRESCREEN_H
 
-#include <QtGui/QMainWindow>
 #include <QtCore/QTimer>
+#include <QtCore/QString>
+#include <QtGui/QMainWindow>
 #include <QtGui/QLabel>
 #include <QtGui/QPushButton>
 #include <QtGui/QHBoxLayout>
+#include <QtGui/QDesktopWidget>
+#include <QtGui/QApplication>
 
+#include <cmath>
+
+#include "../Moteur/actions.h"
 #include "fwelcome.h"
 #include "firewidget.h"
 #include "windwidget.h"
+
 /*	firescreen:
  * 
  *	 DONE : 
@@ -31,16 +38,18 @@ private:
 	
 	QLabel* cpt_lbl;
 	QLabel* delai_lbl;
-	// TODO vérifier si on utilise les signaux directement sur les boutons pour griser les boutons ?
-	QPushButton* pause_btn;	// pour pouvoir le griser, on pourrait utiliser un signal
-	QPushButton* play_btn;	// pour pouvoir le griser, on pourrait utiliser un signal
-	QPushButton* next_btn;	// pour pouvoir le griser, on pourrait utiliser un signal
-	QPushButton* cut_btn;	// pour pouvoir le griser, on pourrait utiliser un signal
-	QPushButton* delay_btn;	// pour pouvoir le griser, on pourrait utiliser un signal
+
+	QPushButton* pause_btn;	// pour pouvoir le griser
+	QPushButton* play_btn;	// pour pouvoir le griser
+	QPushButton* next_btn;	// pour pouvoir le griser
+	QPushButton* cut_btn;	// pour pouvoir le griser
+	QPushButton* delay_btn;	// pour pouvoir le griser
 	
 	QTimer* timer;
+	
 	int nb_tour;
 	long delai;
+	
 public:
 	FireScreen();
 // 	FireScreen(int hauteur, int largeur, float proba, long nTemps, float coef_brulure=1.0/*, QWidget* parent = 0, Qt::WindowFlags flags = 0*/);

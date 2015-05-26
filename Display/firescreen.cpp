@@ -1,21 +1,13 @@
 #include "firescreen.h"
 
-// #include <QtGui/QHBoxLayout>
+// Composants Qt qui ne sont pas des attributs de classe
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QGridLayout>
-#include <QtCore/QString>
 #include <QtGui/QSlider>
-
-#include <QtGui/QMenu>
-#include <QtGui/QMenuBar>
 #include <QtGui/QAction>
-#include <QApplication>
+#include <QtGui/QMenuBar>
 
-#include <qdesktopwidget.h>
-
-#include "../Moteur/actions.h"
-
-#include <math.h>
+// Valeur du nombre pi, utilisée pour les calcul de trigonométrie
 #define PI 3.14159265
 
 using namespace std;
@@ -32,7 +24,7 @@ FireScreen::FireScreen(): QMainWindow()
 	// Elements de la barre de menus
 	QAction* exit = new QAction(this);
 	exit->setText( "Quit" );
-	menuBar()/*->addMenu( "Menu" )*/->addAction(exit);
+	menuBar()->addAction(exit);
 	connect(exit, 	SIGNAL(triggered()), SLOT(close()) );
 	
 	QAction* save = new QAction(this);
@@ -374,7 +366,7 @@ void FireScreen::initForest(Fwelcome * fwel)
 		sleep(1);
 		
 		// BUG IMPROVEIT echec creation en utilisant l'image (fwidget noir, foret vide?)
-		if (! fWidget->initialise("../foret_payTOD_ELETEE.tif"))	{
+		if (! fWidget->initialise("../foret_payTO_DELETE.tif"))	{
 			cout << "Echec creation foret à partir fichier image, creation foret à partir des parametres de fwelcome"<< endl;
 			fWidget->initialise(largeur,hauteur,
 									  fwel->get_proba(),
@@ -628,7 +620,7 @@ void FireScreen::releaseOrdered()
 		#if DEBUG_RETARD
 		std::cout << "demande de retardateur" << std::endl;
 		#endif
-		emit actionSender(/*DELAY*/1);
+		emit actionSender(DELAY);
 	}
 	
 }

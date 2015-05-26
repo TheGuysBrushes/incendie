@@ -1,12 +1,14 @@
 #ifndef ARBRE_H
 #define ARBRE_H
 
+#include <cmath>
+#include <cstdlib>
+#include <iostream>
+
 #include "../debug.h"
-
-#include "essence.h"
-#include "cellule.h"
 #include "coordonnee.h"
-
+#include "cellule.h"
+#include "essence.h"
 
 class Arbre: public Cellule
 {

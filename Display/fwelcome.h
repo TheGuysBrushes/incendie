@@ -1,16 +1,19 @@
 #ifndef FWELCOME_H
 #define FWELCOME_H
 
-#include "../debug.h"
-
 #include <QtGui/QDialog>
 #include <QtGui/QLabel>
 #include <QtGui/QPushButton>
 #include <QtGui/QSpinBox>
 #include <QtGui/QSlider>
 #include <QtGui/QProgressBar>
+// Pour les valeurs max des SpinBox
+#include <QtGui/QDesktopWidget>
+#include <QtGui/QApplication>
 
 #include <fstream>
+
+#include "../debug.h"
 
 /**
  * Classe représentant le panneau de dialogue

@@ -1,7 +1,6 @@
-#include "debug.h"
-
 #include <QtGui/QApplication>
 
+#include "debug.h"
 #include "Display/firescreen.h"
 
 using namespace std;

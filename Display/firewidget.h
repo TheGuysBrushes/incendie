@@ -1,19 +1,24 @@
 #ifndef FIREWIDGET_H
 #define FIREWIDGET_H
 
+#include <QtCore/QByteArray>
+#include <QtCore/QPoint>
+
 #include <QtGui/QWidget>
 #include <QtGui/QImage>
 #include <QtGui/QPainter>
 #include <QtGui/QColor>
+#include <QtGui/QRubberBand>
+#include <QtGui/qevent.h>	// IMPROVEIT pas d'equivalent sans .h ?
 
 #include <vector>
+#include <fstream>
 
-#include <QtCore/QByteArray>
-#include <QtCore/QPoint>
-#include <QtGui/QRubberBand>
+// Macros
+#include "../Moteur/actions.h"
+
 #include "../Moteur/foret.h"
 #include "fwelcome.h"
-#include <fstream>
 
 /**
  * Widget d'affichage de l'automate cellulaire. Ce composant
@@ -29,7 +34,6 @@ private:
 	QImage* buffer;
 	QColor* color;
 	QPainter* bufferPainter;
-	int tailleCell;
 
 // 	QPixmap* pictureForest; remplacé
 	QImage* pictureForest;
@@ -39,6 +43,8 @@ private:
 	// Points de départ et d'arrivée de la zone de selection (redondance pour origine mais normal pour l'instant)
 	QPoint depart;
 	QPoint arrivee;
+	
+	qreal tailleCell;
 	long temps;
 	bool running;
 	
@@ -47,15 +53,22 @@ private:
 	
 public:
 	/* Constructeur et desctructeur */
-// 	FireWidget(int _largeur, int _hauteur, float proba = 0.60, float coef_brulure=1.0);
 	FireWidget();
 	virtual ~FireWidget();
 
-	/* Autres Méthodes */
+	/* Initialisations */
 	void initialise(int largeur, int hauteur, float proba = 0.60, float coef_brulure=1.0);
 	void initialise(int largeur, int hauteur, std::ifstream* file, QProgressBar* PB);
 	bool initialise(QString filename);
+
+	/* Getters et Setters */
+	void setColor(int colorIndice);	
+	void setWind(float _hor, float _ver);
+	int getTailleCell() const { return tailleCell; };
+	Foret* getForet() const { return forest; };
+	void razRubber() 	{ rubber= NULL; };
 	
+	/* Gestion Foret */
 	void loadFromPicture(int largeurImage, int hauteurImage);
 	bool loadForest(std::string filename);
 	void saveForest() const;
@@ -66,12 +79,6 @@ public:
 	bool finirFeu(int colonne, int ligne);
 // 	void newForet(int _largeur, int _hauteur, float _proba, float _coef_brulure);
 
-	/* Getters et Setters */
-	void setColor(int colorIndice);	
-	void setWind(float _hor, float _ver);
-	int getTailleCell() const { return tailleCell; };
-	Foret* getForet() const { return forest; };
-	void razRubber();
 	
 	/* Affichage */
 	void drawPicture();
@@ -83,7 +90,7 @@ public:
 	void redraw();
 
 	/** @deprecated */
-	void reset(int _larg, int _haut, float proba, float coef);
+// 	void reset(int _larg, int _haut, float proba, float coef);
 
 protected:
 	/* Events */
@@ -95,8 +102,6 @@ protected:
 	
 public slots:
 	bool next();
-// 	void drawFire();
-// 	void transition(long x);
 	void actionReceived(int x);
 	
 signals:

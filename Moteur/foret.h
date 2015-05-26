@@ -1,19 +1,21 @@
 #ifndef FORET_H
 #define FORET_H
 
+#include <QtGui/QProgressBar> // IMPROVEIT ?
+
 #include <vector>
 #include <list>
 #include <iostream>
 #include <fstream>
+// Pour l'aléatoire
+#include <cstdlib>
+#include <ctime>
 
 #include "../debug.h"
-
 #include "cellule.h"
-#include "arbre.h"
 #include "essence.h"
+#include "arbre.h"
 #include "vent.h"
-
-#include <QtGui/QProgressBar> // IMPROVEIT
 
 #define MAXI 1000 
 
@@ -42,7 +44,7 @@ private:
 public:
 	
 	// Constructeur et destructeur
-	Foret(int n_colonnes, int n_lignes, float proba = 0.60, float coefFire = 1.0);
+	Foret(int _colonnes, int _lignes, float proba = 0.60, float _coefFeu = 1.0);
 // 	Foret(Foret& other, float proba=0.60);
 	Foret(int _largeur, int _hauteur, std::ifstream* file, QProgressBar* PB);
 	Foret(int _largeur, int _hauteur, std::vector< std::vector<char> >* matrice);

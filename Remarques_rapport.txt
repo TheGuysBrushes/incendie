@@ -37,6 +37,21 @@ en activant les debugs concernés, sans ralentir l'exécution du programme en "m
 
  Moteur indépendant de l'affichage.
  
+ 
+Transmission Feu :
+(Aussi dans arbre.cpp)
+/*
+ * On considère pour la gestion de l'embrasement d'un arbre
+ * et pour sa combustion le système suivant :
+ * Le taux d'humidité de l'arbre diminue au fil de sa combustion
+ * Plus ce taux est faible, plus l'arbre perd de points de vie par tour
+ * De plus, des paramètres extérieurs pourront ralentir cette perte ( pluie, humidité ambiante, canadarage, etc ^^)
+ * 
+ * On considère de plus qu'un arbre en feu ne génère pas de flamme tant que son humidité n'est pas inférieure à 50% FAUX
+ * Par conséquent, un arbre emflammera son voisin uniquement à cette condition
+ */
+
+ 
 
 // Florian :
 - voir si on fait une liste unique pour les éléments qui ont changé d'état ?

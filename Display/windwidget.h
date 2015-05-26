@@ -1,10 +1,13 @@
 #ifndef WINDWIDGET_H
 #define WINDWIDGET_H
 
+#include <QtCore/QString>
+#include <QtCore/QTimer>
 #include <QtGui/QWidget>
 #include <QtGui/QLabel>
-#include <QSlider>
-#include <QtCore/QTimer>
+#include <QtGui/QSlider>
+
+#include <iostream>
 
 #include "../debug.h"
 #include "windcircle.h"
