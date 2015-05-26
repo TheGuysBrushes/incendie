@@ -36,8 +36,7 @@ private:
 	QColor* color;
 	QPainter* bufferPainter;
 
-// 	QPixmap* pictureForest; remplacé
-	QImage* pictureForest;
+// 	QImage* pictureForest;
 	
 	QPoint origin;
 	QRubberBand* rubber;
@@ -60,7 +59,7 @@ public:
 	/* Initialisations */
 	void initialise(int largeur, int hauteur, float proba = 0.60, float coef_brulure=1.0);
 	void initialise(int largeur, int hauteur, std::ifstream* file, QProgressBar* PB);
-	bool initialise(QString filename);
+	bool initialise(QImage* imageForet);
 
 	/* Getters et Setters */
 	void setColor(int colorIndice);	
@@ -70,7 +69,7 @@ public:
 	void razRubber() 	{ rubber= NULL; };
 	
 	/* Gestion Foret */
-	void loadFromPicture(int largeurImage, int hauteurImage);
+	void loadFromPicture(int largeurImage, int hauteurImage, QImage* imageForet);
 	bool loadForest(std::string filename);
 	void saveForest() const;
 	void delForest();

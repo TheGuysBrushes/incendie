@@ -28,7 +28,7 @@ FireWidget::FireWidget(): QWidget()
 	buffer = new QImage();
 	color = new QColor(Qt::black);
 	bufferPainter= new QPainter();
-	pictureForest= new QImage();
+// 	pictureForest= new QImage();
 	
 // 	if ( !initialise("../foret_pay.tif") )
 // 	TODO prévenir l'utilisateur ou faire une fonction par défaut en cas d'echec de chargement à partir d'une image
@@ -42,7 +42,7 @@ FireWidget::~FireWidget()
 	delete(buffer);
 	delete(color);
 	delete(bufferPainter);
-	delete(pictureForest);
+// 	delete(pictureForest);
 }
 
 // ########################
@@ -77,20 +77,18 @@ void FireWidget::initialise(int largeur, int hauteur, ifstream * file, QProgress
  * @author Florian et Ugo
  * @param all identiques au constructeur de Foret aléatoire
  */
-bool FireWidget::initialise(QString filename)
+bool FireWidget::initialise(QImage* imageForet)
 {
-	pictureForest->load(filename);
-	
-	if (!pictureForest->isNull()){
+	if (!imageForet->isNull()){
 		#if DEBUG_IMAGE
 		cout<< "image chargée"<< endl;
 		#endif
 		
-		int largeur= pictureForest->width();
-		int hauteur= pictureForest->height();
+		int largeur= imageForet->width();
+		int hauteur= imageForet->height();
 
 		setMinimumSize(largeur, hauteur);
-		loadFromPicture(largeur, hauteur);
+		loadFromPicture(largeur, hauteur, imageForet);
 		
 		return true;
 	}
@@ -112,7 +110,7 @@ bool FireWidget::initialise(QString filename)
  * @author Florian
  * @param QString ?
  */
-void FireWidget::loadFromPicture(int largeurImage, int hauteurImage)
+void FireWidget::loadFromPicture(int largeurImage, int hauteurImage, QImage* imageForet)
 {
 	cout<< "Creation à partir d'image ..."<< endl;
 	vector< vector<char> >* matrice= new vector< vector<char> >;
@@ -122,7 +120,7 @@ void FireWidget::loadFromPicture(int largeurImage, int hauteurImage)
 		vector<char> ligne;
 		
 		for (int j= 0; j< largeurImage; ++j){
-			pix->setRgba(pictureForest->pixel(j, i));
+			pix->setRgba(imageForet->pixel(j, i));
 			#if DEBUG_IMAGE_POS
 			cout << "qté vert en "<< j<< " ; "<< i<<" : "<< pix->green()<< endl;
 			#endif
@@ -331,14 +329,14 @@ void FireWidget::setColor(int colorIndice)
  * Fonction à commenter par son auteur :p
  * @author Florian
  */
-void FireWidget::drawPicture(){
-	
-	if (!pictureForest->isNull()){
-		bufferPainter->begin(buffer);
-		bufferPainter->drawImage(0, 0, *pictureForest);
-		bufferPainter->end();
-	}
-}
+// void FireWidget::drawPicture(){
+// 	
+// 	if (!pictureForest->isNull()){
+// 		bufferPainter->begin(buffer);
+// 		bufferPainter->drawImage(0, 0, *pictureForest);
+// 		bufferPainter->end();
+// 	}
+// }
 
 /**
  * Imprime une cellule à une position donnée, utilise la couleur courante
@@ -493,7 +491,7 @@ void FireWidget::redraw()
 		delete(buffer);
 	}
 	buffer = new QImage(forest->width(), forest->height(), QImage::Format_ARGB32);
-	drawPicture();
+// 	drawPicture();
 	drawForest();
 	drawChanged();
 	update();	// TODO apparemment non utile

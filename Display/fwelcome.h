@@ -8,6 +8,7 @@
 #include <QtGui/QSlider>
 #include <QtGui/QProgressBar>
 #include <QtGui/QGridLayout>
+#include <QtGui/QImage>
 // Pour les valeurs max des SpinBox
 #include <QtGui/QDesktopWidget>
 #include <QtGui/QApplication>
@@ -28,13 +29,16 @@ private:
 	QGridLayout* gridLay;
 	QSpinBox* haut_spin;
 	QSpinBox* larg_spin;
+	
 	QLabel* p_value;
 	QLabel* c_value;
+	
 	QPushButton* valid_btn;
 	QPushButton* cancel_btn;
 	QPushButton* loadFromImgBtn;
-	QPushButton* load_btn;
-	QProgressBar* PB_load;
+	QPushButton* restoreBtn;
+	
+	QImage* pictureForest;
 	
 	float proba;
 	float coef_brulure;
@@ -55,14 +59,15 @@ public:
 	float get_proba() const	{ return proba; };
 	float get_coef() const	{ return coef_brulure; };
 	std::ifstream* getFile() { return file; };
-	QPushButton* getLoadBtn() { return load_btn; };
-// 	QProgressBar* getProgressBar() const	{ return PB_load; };
+	QImage* getImage() { return pictureForest; };
+// 	QPushButton* getRestoreBtn() { return restoreBtn; };
 
 public slots:
 	/* Setters */
 	void set_proba(int x);
 	void set_coef(int x);
-	void load(/*std::string filename*/);
+	void restore(/*std::string filename*/);
+	void loadFromImg();
 };
 
 #endif // FWELCOME_H

@@ -16,10 +16,7 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	p_value = new QLabel();
 	c_value = new QLabel();
 	
-	PB_load= new QProgressBar();
-	PB_load->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-	PB_load->setFixedHeight(20);
-	PB_load->setHidden(true);
+	pictureForest= new QImage();
 	
 	initComponents();
 	
@@ -31,7 +28,7 @@ Fwelcome::~Fwelcome(){
 	delete(larg_spin);
 	delete(p_value);
 	delete(c_value);
-	delete(load_btn);
+	delete(restoreBtn);
 	delete(cancel_btn);
 }
 
@@ -144,20 +141,19 @@ void Fwelcome::initComponents(){
 			valid_btn = new QPushButton("Confirm");
 			// TODO placement du bouton de chargement
 			cancel_btn = new QPushButton("Cancel");
-			load_btn= new QPushButton("Load forest");
+			restoreBtn= new QPushButton("Load forest");
 			loadFromImgBtn = new QPushButton("Create from image");
 			#endif
 			
 			cancel_btn->setVisible(false);
 			
-		gridLay->addWidget(load_btn,0,0);
-		gridLay->addWidget(loadFromImgBtn,0,1);
-		gridLay->addWidget(valid_btn,1,0, 1,0);
+		gridLay->addWidget(restoreBtn, 0,0);
+		gridLay->addWidget(loadFromImgBtn, 0,1);
+		gridLay->addWidget(valid_btn, 1,0, 1,0);
 
 	lay->addWidget(present);
 	lay->addWidget(WSettings);
 	lay->addWidget(WButtons);
-	lay->addWidget(PB_load);
 
 	/* Connexion entre les différents éléments */
 	connect(slide_p,	SIGNAL(valueChanged(int)), this, SLOT(set_proba(int)) );
@@ -165,7 +161,8 @@ void Fwelcome::initComponents(){
 	
 	connect(valid_btn,	SIGNAL(clicked()), this, SLOT(accept()) );
 	connect(cancel_btn,	SIGNAL(clicked()), this, SLOT(reject()) );
-	connect(load_btn,	SIGNAL(clicked()), this, SLOT(load()) );
+	connect(restoreBtn,	SIGNAL(clicked()), this, SLOT(restore()) );
+	connect(loadFromImgBtn,	SIGNAL(clicked()), this, SLOT(loadFromImg()) );
 
 	// Appel à setValue pour déclencer l'affichage de la valeur à la construction du widget
 	slide_c->setValue(50);
@@ -182,7 +179,7 @@ void Fwelcome::addCancel() const
 
 #include <fstream>
 #include <iostream>
-void Fwelcome::load()
+void Fwelcome::restore()
 {
 	std::string filename= "./Resources/foret1.dat";
 	
@@ -207,11 +204,33 @@ void Fwelcome::load()
 		cout<<x<< " en hauteur" <<endl;
 		#endif
 		
-// 		file->close();
 		accept();
 	}
 }
 
+void Fwelcome::loadFromImg()
+{
+	QString filename= "../foret_pay.tif";
+	
+	pictureForest->load(filename);
+	
+	if (pictureForest->isNull()){
+		std::cout<< "Echec ouverture fichier de sauvegarde"<< std::endl;
+	}
+	else {
+		larg_spin->setValue(pictureForest->width());
+		#if DEBUG_LOAD
+		cout<< "Taille : " << pictureForest->width()<< " en largeur ";
+		#endif
+		
+		haut_spin->setValue(pictureForest->height());
+		#if DEBUG_LOAD
+		cout<< pictureForest->height()<< " en hauteur" <<endl;
+		#endif
+		
+		accept();
+	}
+}
 
 
 /*** SLOTS ***/

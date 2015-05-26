@@ -66,6 +66,9 @@ Foret::Foret(int _largeur, int _hauteur, vector< std::vector< char > >* matrice)
 	// TODO Ugo : faire des constructeur qui permettent de créer un vent inital en accord avec la valeur initiale du curseur
 	wind = new Vent(3,-2);
 	loadEssences("../Moteur/essence_data.txt");
+	#if DEBUG_ARBRE_PLANTE
+	cout<< "création de la foret à partir d'une matrice d'intensité, de taille "<< _largeur<< "x"<< _hauteur<< endl;
+	#endif
 	create(_largeur, _hauteur, matrice);
 }
 
@@ -244,6 +247,10 @@ std::list< list< Arbre* > >* Foret::getChanged()
  */
 void Foret::plantTree(int col, int row)
 {
+	#if DEBUG_ARBRE_PLANTE
+	cout<< "\t"<< col<< endl;
+	#endif
+	
 	// on choisit une essence aléatoirement pour cet arbre
 	unsigned distVoisins= 2;
 	unsigned ess = essenceRandom(col,row, distVoisins);
@@ -265,6 +272,10 @@ void Foret::plantTree(int col, int row)
 
 void Foret::plantTree(int col, int row, unsigned int numEss)
 {
+	#if DEBUG_ARBRE_PLANTE
+	cout<< "arbre planté en "<< col << ";"<< row<< endl;
+	#endif	
+	
 	const Essence* pEss= &(essences[numEss]);
 	// pour l'instant, on considere que tous les arbres ont atteint leur maturite
 	Arbre* ab= new Arbre(matrix[row][col], col,row, pEss, rand()%ecartAgeMax +pEss->getAgeMaturite(), rand()%ecartHMax +hMin );
@@ -298,12 +309,19 @@ void Foret::initEmpty()
 void Foret::create(int largeur, int hauteur, vector< vector< char > >* matrice)
 {
 	initEmpty();
+#if DEBUG_CURRENT
+	cout << "ajout des arbres si intensité > 70"<< endl;
+#endif
 	
-	for(int ligne= 0; ligne< hauteur; ++ligne)
-	{
-		for (int colonne; colonne< largeur; ++colonne){
-			if ( (*matrice)[ligne][colonne] > 80)
+	for(int ligne= 0; ligne< hauteur; ++ligne){
+		#if DEBUG_ARBRE_PLANTE
+		cout<< "plantage des arbres de la ligne : "<< ligne<< endl;
+		#endif
+		
+		for (int colonne=0; colonne< largeur; ++colonne){
+			if ( (*matrice)[ligne][colonne] > (char)70){
 				plantTree(colonne, ligne);
+			}
 		}
 	}
 }
@@ -327,6 +345,10 @@ void Foret::randomMatrix(float probabilite)
 	
 	// Arbres placés aléatoirement
 	for (int i= 0; i< lignes; ++i){
+		#if DEBUG_ARBRE_PLANTE
+		cout<< "plantage des arbres de la ligne : "<< i<< endl;
+		#endif
+		
 		#if DEBUG_ESSENCE==1
 		cout << endl<< "indices des essences choisies : ";
 		#endif

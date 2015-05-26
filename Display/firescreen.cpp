@@ -341,6 +341,9 @@ void FireScreen::createForest(ifstream* file)
 	createForest(largeur, hauteur, file);
 }
 
+
+#include <QtGui/QImage>
+
 /**
  * Crée une nouvelle forêt à partir d'une fenêtre de paramétrage
  * @author Florian
@@ -355,19 +358,23 @@ void FireScreen::initForest(Fwelcome * fwel)
 
 	ifstream* file= fwel->getFile();
 	
-	if ( file->is_open()){	
+	if ( file->is_open()){
 		createForest(largeur, hauteur, file);
 	}
 	else {
 		cout<< "Pas de fichier, création d'une foret aléatoirement"<< endl;
 		sleep(1);
 		
+		QImage* picture= fwel->getImage();
 		// BUG IMPROVEIT echec creation en utilisant l'image (fwidget noir, foret vide?)
-		if (! fWidget->initialise("../foret_payTO_DELETE.tif"))	{
+		if (picture->isNull()){
 			cout << "Echec creation foret à partir fichier image, creation foret à partir des parametres de fwelcome"<< endl;
 			fWidget->initialise(largeur,hauteur,
 									  fwel->get_proba(),
 									  fwel->get_coef()	);
+		} else {
+			cout << "Réussite ouverture fichier, creation foret à partir de l'image"<< endl;
+			fWidget->initialise(picture);
 		}
 		majCompteur();
 	}
