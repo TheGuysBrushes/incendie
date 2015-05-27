@@ -147,9 +147,9 @@ void Fwelcome::initComponents(){
 			
 			cancel_btn->setVisible(false);
 			
-		gridLay->addWidget(restoreBtn, 0,0);
-		gridLay->addWidget(loadFromImgBtn, 0,1);
-		gridLay->addWidget(valid_btn, 1,0, 1,0);
+		gridLay->addWidget(valid_btn, 0,0, 1,0);
+		gridLay->addWidget(restoreBtn, 1,0);
+		gridLay->addWidget(loadFromImgBtn, 1,1);
 
 	lay->addWidget(present);
 	lay->addWidget(WSettings);
@@ -172,8 +172,8 @@ void Fwelcome::initComponents(){
 void Fwelcome::addCancel() const
 {
 	gridLay->removeWidget(valid_btn);
-	gridLay->addWidget(valid_btn,1,0);
-	gridLay->addWidget(cancel_btn,1,1);
+	gridLay->addWidget(valid_btn, 0,0);
+	gridLay->addWidget(cancel_btn, 0,1);
 	cancel_btn->setVisible(true);
 }
 

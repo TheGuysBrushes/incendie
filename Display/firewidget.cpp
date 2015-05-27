@@ -591,10 +591,10 @@ void FireWidget::mouseReleaseEvent(QMouseEvent* event)
 		depart.setX(rubber->x());
 		depart.setY(rubber->y());
 		/* Vérification du point d'origine du rubber
-			* Celui étant toujours le point le plus en haut à gauche, il faut simplement vérifier 
-			* qu'il n'est pas en dehors du cadre, auquel cas nous ramenons la (les) coordonnée(s) concernée(s)
-			* à 0.
-			*/
+		 * Celui étant toujours le point le plus en haut à gauche, il faut simplement vérifier 
+		 * qu'il n'est pas en dehors du cadre, auquel cas nous ramenons la (les) coordonnée(s) concernée(s)
+		 * à 0.
+		 */
 		arrivee.setX(rubber->width()+depart.x());
 		arrivee.setY(rubber->height()+depart.y());
 		if(depart.x() < 0){

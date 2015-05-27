@@ -23,4 +23,5 @@ Créer une classe de création de foret au lieu de le faire dans fwelcome
 
 Lardeux :
 	Chargement/sauvegarde dans une classe séparée ?
-	fwelcome initilialise une foret OU donne les paramètres pour la crée OU redéfinir le comportement de QDialog avec plus que 2 retours possibles?
+	fwelcome initilialise une foret OU donne les paramètres pour la crée OU redéfinir le comportement de QDialog avec plus que 2 retours possibles ?
+	Est-ce que c'est utile de ne plus enflammer les voisins si l'arbre n'a pas transmis au tour précédent, SI il n'y a pas de changement de vent

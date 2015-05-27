@@ -884,11 +884,14 @@ void Foret::loadMatrix(ifstream* file, QProgressBar* PB)
 		
 		plantTree(col, row, indice);
 		#if DEBUG_LOAD_POS
-		cout<< "arbre en : "<< col<< "; "<< row << " essence indice : " << indice<<endl;
+		cout<< "arbre en : "<< col<< "; "<< row << " essence indice : " << indice<< endl;
 		#endif
 		
-		int newProgression= (colonnes*row)*100 / (lignes*colonnes);
+		int newProgression= (row*100) / (lignes);
 		PB->setValue(newProgression);
+		#if DEBUG_LOAD_PROGRESS
+		cout<< "progression : "<< newProgression<< "%"<< endl;
+		#endif
 	}
 // 		int progression= 0;
 }
