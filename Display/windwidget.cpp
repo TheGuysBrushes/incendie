@@ -153,7 +153,6 @@ void WindWidget::changeWindDir()
 {
 	int variation= 2;
 	if (varAngleBox->isChecked()){
-		cout << "angle vent changée"<< endl;
 		float coef = rand()%(2*variation +1) - variation;
 		int angle = wind->getAngle()*(1.0+(coef/100.0));
 		
