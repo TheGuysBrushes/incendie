@@ -297,8 +297,10 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 void FireScreen::createForest(int largeur, int hauteur, ifstream* file)
 {
 	cout<< "Chargement d'une foret à partir d'un fichier "<< endl;
-	sleep(1);
-	// 		QProgressBar* PB= fwel->getProgressBar();
+	#if DEBUG_LOAD
+	cout<< "Taille : " << largeur<< " en largeur "<< hauteur<< " en hauteur" <<endl;
+	#endif
+	
 	QMainWindow* loadWindow= new QMainWindow;
 	QWidget* w= new QWidget(loadWindow);
 	w->resize(400, 30);
@@ -328,16 +330,8 @@ void FireScreen::createForest(int largeur, int hauteur, ifstream* file)
 void FireScreen::createForest(ifstream* file)
 {
 	int largeur, hauteur;
-	
 	file->read( (char *)&(largeur), sizeof(int));
-	#if DEBUG_LOAD
-	cout<< "Taille : " << largeur<< " en largeur ";
-	#endif
-	
 	file->read( (char *)&(hauteur), sizeof(int));
-	#if DEBUG_LOAD
-	cout<< hauteur<< " en hauteur" <<endl;
-	#endif
 	
 	createForest(largeur, hauteur, file);
 }
@@ -359,24 +353,24 @@ void FireScreen::initForest(Fwelcome * fwel)
 
 	ifstream* file= fwel->getFile();
 	
-	if ( file->is_open()){
+	if ( file->is_open()){ // Creation par fichier de sauvegarde si il est ouvert
 		createForest(largeur, hauteur, file);
 	}
 	else {
 		cout<< "Pas de fichier, création d'une foret aléatoirement"<< endl;
-		sleep(1);
+		QImage* picture= fwel->getImage();	
 		
-		QImage* picture= fwel->getImage();
-		// BUG IMPROVEIT echec creation en utilisant l'image (fwidget noir, foret vide?)
-		if (picture->isNull()){
-			cout << "Echec creation foret à partir fichier image, creation foret à partir des parametres de fwelcome"<< endl;
-			fWidget->initialise(largeur,hauteur,
-									  fwel->get_proba(),
-									  fwel->get_coef()	);
-		} else {
+		if (!picture->isNull()){ // Creation par image si elle est chargée
 			cout << "Réussite ouverture fichier, creation foret à partir de l'image"<< endl;
 			fWidget->initialise(picture);
 		}
+		else { // Sinon, cas par défaut : Creation d'une forêt selon les paramétres de la fenetre d'initialisation
+			cout << "Echec creation foret à partir fichier image, creation foret à partir des parametres de fwelcome"<< endl;
+			fWidget->initialise(largeur,hauteur,
+									fwel->get_proba(),
+									fwel->get_coef()	);
+		}
+		
 		majCompteur();
 	}
 	
