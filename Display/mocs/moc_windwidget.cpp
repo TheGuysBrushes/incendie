@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'windwidget.h'
 **
-** Created: Wed May 27 14:38:50 2015
+** Created: Wed May 27 15:55:00 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_WindWidget[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -34,18 +34,17 @@ static const uint qt_meta_data_WindWidget[] = {
       14,   12,   11,   11, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      41,   35,   11,   11, 0x0a,
-      63,   55,   11,   11, 0x0a,
-      77,   11,   11,   11, 0x0a,
-      97,   11,   11,   11, 0x0a,
+      35,   11,   11,   11, 0x0a,
+      54,   46,   11,   11, 0x0a,
+      68,   11,   11,   11, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_WindWidget[] = {
     "WindWidget\0\0,\0modif_value(int,int)\0"
-    "alpha\0majAngle(int)\0vitesse\0majSpeed(int)\0"
-    "switchAngleBox(int)\0changeWindDir()\0"
+    "majAngle()\0vitesse\0majSpeed(int)\0"
+    "changeWindDir()\0"
 };
 
 void WindWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -55,10 +54,9 @@ void WindWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         WindWidget *_t = static_cast<WindWidget *>(_o);
         switch (_id) {
         case 0: _t->modif_value((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 1: _t->majAngle((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 1: _t->majAngle(); break;
         case 2: _t->majSpeed((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 3: _t->switchAngleBox((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 4: _t->changeWindDir(); break;
+        case 3: _t->changeWindDir(); break;
         default: ;
         }
     }
@@ -96,9 +94,9 @@ int WindWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 4;
     }
     return _id;
 }

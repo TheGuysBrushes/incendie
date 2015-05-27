@@ -6,6 +6,7 @@
 #include <QtGui/QWidget>
 #include <QtGui/QLabel>
 #include <QtGui/QSlider>
+#include <QtGui/QCheckBox>
 
 #include <iostream>
 
@@ -26,8 +27,9 @@ private:
 	QLabel* angle_lbl;
 	QLabel* speed_lbl;
 	QTimer* timer;
+	QCheckBox* varAngleBox;
 
-	bool varWind;
+// 	bool varWind;
 	int speed;
 
 public:
@@ -50,9 +52,9 @@ protected:
 	void resizeEvent(QResizeEvent* Qevent);
 
 public slots:
-	void majAngle(int alpha);
+	void majAngle();
 	void majSpeed(int vitesse);
-	void switchAngleBox(int);
+// 	void switchAngleBox(int);
 	void changeWindDir();
 	
 signals:

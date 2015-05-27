@@ -70,9 +70,11 @@ void FireWidget::initialise(int largeur, int hauteur, float proba, float coef_br
  * Fonction de création d'une foret A PARTIR D'UNE SAUVEGARDE,
  * dans un fichier ouvert dont les tailles ont déjà été lues, lors de la (ré)initialisation
  * @author Florian et Ugo
+ * 
  * @param largeur de la nouvelle forêt
  * @param hauteur de la nouvelle forêt
- * @param file fichier binaire ouvert contenant la sauvegarde de la forêt (essences-arbres)
+ * @param file fichier binaire, ouvert, contenant la sauvegarde de la forêt (essences-arbres)
+ * @return vrai si le fichier est ouvert
  */
 bool FireWidget::initialise(int largeur, int hauteur, ifstream * file) 
 {
@@ -91,7 +93,6 @@ bool FireWidget::initialise(int largeur, int hauteur, ifstream * file)
 		QLabel* txtLoad= new QLabel("Chargement de la foret");
 		// TODO voir si il faut que foret fasse emit d'un signal à connecter à la progressbar
 		QProgressBar* PB_load= new QProgressBar();
-	// 	PB_load->resize(390, 25);
 		
 		layLoad->addWidget(txtLoad);
 		layLoad->addWidget(PB_load);
@@ -115,8 +116,11 @@ bool FireWidget::initialise(int largeur, int hauteur, ifstream * file)
 /**
  * Fonction de création d'une foret ALEATOIRE lors de la (ré)initialisation
  * @author Florian et Ugo
+ * 
+ * @param largeur de la nouvelle forêt
+ * @param hauteur de la nouvelle forêt
  * @param imageForet image d'une foret, pour l'instant une image converie du jpg au tif
- * @
+ * @return vrai si l'image est chargée
  */
 bool FireWidget::initialise(int largeur, int hauteur, QImage* imageForet)
 {
@@ -146,7 +150,7 @@ bool FireWidget::initialise(int largeur, int hauteur, QImage* imageForet)
 /**
  * Fonction à commenter par son auteur :p
  * @author Florian
- * @param QString ?
+ * @param 
  */
 void FireWidget::loadFromPicture(int largeurImage, int hauteurImage, QImage* imageForet)
 {
@@ -168,8 +172,6 @@ void FireWidget::loadFromPicture(int largeurImage, int hauteurImage, QImage* ima
 		matrice->push_back(ligne);
 	}
 	forest= new Foret(largeurImage, hauteurImage, matrice);
-// 	forest->create(largeurImage, hauteurImage, matrice);
-	
 // 		QColormap map(pictureForest->tr);
 	// 	img.trueMatrix()
 }

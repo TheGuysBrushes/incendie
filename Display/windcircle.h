@@ -50,7 +50,7 @@ protected:
 	void paintEvent(QPaintEvent* event);
 	void mousePressEvent(QMouseEvent* event);
 signals:
-	void modifAngle(int );
+	void modifAngle();
 };
 
 #endif // WINDCIRCLE_H

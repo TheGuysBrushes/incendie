@@ -15,7 +15,7 @@ using namespace std;
  * initialisée à 5km/h.
  *@author Ugo 
  */
-WindWidget::WindWidget() : varWind(false)
+WindWidget::WindWidget()
 {
 	// Initialisation des composants de la classe
 	speed_lbl = new QLabel();
@@ -70,7 +70,8 @@ void WindWidget::initComponents()
 		v_lay->addWidget(slider_vitesse);
 		v_lay->addWidget(speed_label_container);
 		
-	QCheckBox* varAngleBox = new QCheckBox("Variation Auto");
+		// TODO créer dans constructeur?
+	/*QCheckBox* */varAngleBox = new QCheckBox("Variation Auto");
 	varAngleBox->setChecked(false);
 
 	// Conteneur général de l'ensemble des autres éléments
@@ -89,8 +90,8 @@ void WindWidget::initComponents()
 	// Connexion des sliders avec les setters de la classe :
 	// 	permet de gérer dynamiquement les changements de valeurs;
 	connect(slider_vitesse,	SIGNAL(valueChanged(int)),		this, SLOT(majSpeed(int)));
-	connect(varAngleBox, SIGNAL(stateChanged(int)), this, SLOT(switchAngleBox(int)));
-	connect(wind, SIGNAL(modifAngle(int)), this, SLOT(majAngle(int)));
+// 	connect(varAngleBox, SIGNAL(stateChanged(int)), this, SLOT(switchAngleBox(int)));
+	connect(wind, SIGNAL(modifAngle()), this, SLOT(majAngle()));
 // 	connect(timer,	SIGNAL(timeout()),	this, SLOT(varWind()));
 	slider_vitesse->setValue(2);
 
@@ -99,6 +100,10 @@ void WindWidget::initComponents()
 
 }
 
+/**
+ * Envoie le signal de changement d'angle à firescreen
+ * 
+ */
 void WindWidget::setAngle(int angle)
 {
 	#if DEBUG_VENT
@@ -115,22 +120,20 @@ void WindWidget::resizeEvent(QResizeEvent* Qevent)
 
 /*** Slots ***/
 /**
- * Met à jour la valeur de l'angle, l'affiche et
- * dessine la ligne directionnelle
+ * Signale à firescreen que le vent a été modifié
  * @author Ugo
  */
-void WindWidget::majAngle(int alpha)
+void WindWidget::majAngle()
 {
 	#if DEBUG_VENT
-	cout << "angle de windwidget par appel de majAngle" << alpha << endl;
+// 	cout << "angle de windwidget par appel de majAngle" << alpha << endl;
 	#endif
-	setAngle(alpha);
-	wind->drawDir();
-	update();
+	emit modif_value(wind->getAngle(), speed);
 }
 
 /**
  * Met à jour la valeur de la vitesse choisie et l'affiche
+ *  signale à firescreen que le vent a été modifié
  * @author Ugo
  */
 void WindWidget::majSpeed(int vitesse){
@@ -140,30 +143,17 @@ void WindWidget::majSpeed(int vitesse){
 	emit modif_value(wind->getAngle(), speed);
 }
 
-/**
- * Slot déclenchant ou stoppant l'activation du timer gérant
- * la variation de l'angle du vent
- * @author Ugo
- */
-void WindWidget::switchAngleBox(int )
-{
-	if(varWind) {
-		varWind= false;
-	} else {
-		varWind= true;
-	}
-}
 
 /** 
  * Slot exécuté à chaque timeout du timer pour
  * faire varier la valeur de l'angle de facon aléatoire
  * @author Ugo
- * 
  */
 void WindWidget::changeWindDir()
 {
 	int variation= 2;
-	if (varWind){
+	if (varAngleBox->isChecked()){
+		cout << "angle vent changée"<< endl;
 		float coef = rand()%(2*variation +1) - variation;
 		int angle = wind->getAngle()*(1.0+(coef/100.0));
 		
@@ -176,7 +166,8 @@ void WindWidget::changeWindDir()
 		cout << "coefficient de variation " << coef << " ; " << endl;
 		cout << "angle après modif " << angle << endl;
 		#endif
+		wind->setAngle(angle);
 		
-		majAngle(angle-270);
+		majAngle();
 	}
 }

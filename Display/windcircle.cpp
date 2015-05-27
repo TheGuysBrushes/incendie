@@ -39,6 +39,8 @@ WindCircle::~WindCircle(){
  */
 void WindCircle::setAngle(int x){
 	angle = x;
+	drawDir();
+	update();
 }
 
 /**
@@ -130,6 +132,8 @@ void WindCircle::resizeEvent(QResizeEvent* event){
 /**
  * Nous avons redéfini cet Event dans le but de pouvoir faire varier la valeur de l'angle
  * dynamiquement à l'aide du clic sur le widget
+ * Signale à windwidget que l'angle est modifié
+ * @author Ugo
  */
 void WindCircle::mousePressEvent(QMouseEvent* event)
 {
@@ -150,8 +154,6 @@ void WindCircle::mousePressEvent(QMouseEvent* event)
 	cout << "Angle résultat ? : " << (int)result << endl;
 	#endif
 	setAngle((int)result);
-	drawDir();
-	update();
-	emit modifAngle((int)result);
+	emit modifAngle();
 }
 

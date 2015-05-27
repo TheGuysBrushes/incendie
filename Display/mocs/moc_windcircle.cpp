@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'windcircle.h'
 **
-** Created: Wed May 27 14:38:50 2015
+** Created: Wed May 27 15:55:00 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -37,7 +37,7 @@ static const uint qt_meta_data_WindCircle[] = {
 };
 
 static const char qt_meta_stringdata_WindCircle[] = {
-    "WindCircle\0\0modifAngle(int)\0"
+    "WindCircle\0\0modifAngle()\0"
 };
 
 void WindCircle::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -46,10 +46,11 @@ void WindCircle::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         Q_ASSERT(staticMetaObject.cast(_o));
         WindCircle *_t = static_cast<WindCircle *>(_o);
         switch (_id) {
-        case 0: _t->modifAngle((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 0: _t->modifAngle(); break;
         default: ;
         }
     }
+    Q_UNUSED(_a);
 }
 
 const QMetaObjectExtraData WindCircle::staticMetaObjectExtraData = {
@@ -92,9 +93,8 @@ int WindCircle::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void WindCircle::modifAngle(int _t1)
+void WindCircle::modifAngle()
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 0, _a);
+    QMetaObject::activate(this, &staticMetaObject, 0, 0);
 }
 QT_END_MOC_NAMESPACE
