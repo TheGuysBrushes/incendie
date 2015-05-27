@@ -103,7 +103,7 @@ void WindCircle::drawDir(){
  * @author Ugo
  */
 void WindCircle::effaceBuffer(){
-	buffer->fill(1);
+	buffer->fill(Qt::white);
 	drawCircle();
 }
 

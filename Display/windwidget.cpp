@@ -85,7 +85,7 @@ void WindWidget::initComponents()
 	grid_lay->addWidget(speed_container, 1,0);
 	grid_lay->addWidget(varAngleBox,1,1);	
 	*/
-	grid_lay->addWidget(wind);
+	grid_lay->addWidget(wind,1);
 	grid_lay->addWidget(container);
 	// Connexion des sliders avec les setters de la classe :
 	// 	permet de gérer dynamiquement les changements de valeurs;

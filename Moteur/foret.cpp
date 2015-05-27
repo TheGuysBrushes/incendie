@@ -865,7 +865,13 @@ void Foret::loadEssences(ifstream* file)
 	}
 }
 
-
+/**
+ * Charge une foret à partir d'un fichier de sauvegarde
+ * @author Florian
+ * @param file fichier de sauvegarde d'une foret
+ * @param PB barre de progression IMPROVEIT pas propre
+ */
+// TODO voir pour mettre un thread comme vincent barichard l'a dit
 void Foret::loadMatrix(ifstream* file, QProgressBar* PB)
 {
 	cout<< "Chargement ..."<< endl;
