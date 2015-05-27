@@ -40,7 +40,7 @@ public:
 
 	// Autres méthodes
 	void spark	(float coef=1.0);
-	bool burn	(float coef=1.0);
+	bool burn	(float coefBrulure = 1.0);
 	void initialise();
 	
 	// Méthodes constantes

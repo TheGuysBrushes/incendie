@@ -55,19 +55,49 @@ FireWidget::~FireWidget()
  */
 void FireWidget::initialise(int largeur, int hauteur, float proba, float coef_brulure)
 {
+	#if DEBUG_CREA_FORET
+	cout<< "Creation d'une foret aléatoire à partir de paramètres"<< endl;
+	#endif
+
 	forest= new Foret(largeur, hauteur, proba, coef_brulure);
 	
 	setMinimumSize(largeur, hauteur);
 }
 
+#include <QtGui/QVBoxLayout>
+
 /**
- * Fonction de création d'une foret A PARTIR D'UNE SAUVEGARDE lors de la (ré)initialisation
+ * Fonction de création d'une foret A PARTIR D'UNE SAUVEGARDE,
+ * dans un fichier ouvert dont les tailles ont déjà été lues, lors de la (ré)initialisation
  * @author Florian et Ugo
- * @param all identiques au constructeur de Foret par chargement de sauvegarde
+ * @param largeur de la nouvelle forêt
+ * @param hauteur de la nouvelle forêt
+ * @param file fichier binaire ouvert contenant la sauvegarde de la forêt (essences-arbres)
  */
-void FireWidget::initialise(int largeur, int hauteur, ifstream * file, QProgressBar* PB) 
+void FireWidget::initialise(int largeur, int hauteur, ifstream * file) 
 {
-	forest= new Foret(largeur, hauteur, file, PB);
+	#if DEBUG_CREA_FORET
+	cout<< "Chargement d'une foret à partir d'un fichier "<< endl;
+	#endif
+	#if DEBUG_LOAD
+	cout<< "Taille : " << largeur<< " en largeur "<< hauteur<< " en hauteur" <<endl;
+	#endif
+	
+	QWidget* loadWindow= new QWidget();
+	loadWindow->resize(400, 30);
+	QVBoxLayout* layLoad= new QVBoxLayout(loadWindow);
+	
+	QLabel* txtLoad= new QLabel("Chargement de la foret");
+	// TODO voir si il faut que foret fasse emit d'un signal à connecter à la progressbar
+	QProgressBar* PB_load= new QProgressBar();
+// 	PB_load->resize(390, 25);
+	
+	layLoad->addWidget(txtLoad);
+	layLoad->addWidget(PB_load);
+	
+	loadWindow->show();
+	forest= new Foret(largeur, hauteur, file, PB_load);
+	loadWindow->hide();
 	
 	setMinimumSize(largeur, hauteur);
 }
@@ -79,6 +109,10 @@ void FireWidget::initialise(int largeur, int hauteur, ifstream * file, QProgress
  */
 bool FireWidget::initialise(QImage* imageForet)
 {
+	#if DEBUG_CREA_FORET
+	cout << "Réussite ouverture fichier, creation foret à partir de l'image"<< endl;
+	#endif
+
 	if (!imageForet->isNull()){
 		#if DEBUG_IMAGE
 		cout<< "image chargée"<< endl;

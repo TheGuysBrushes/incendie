@@ -26,6 +26,15 @@ Programme :
  * TODO	4- utiliser des Qrgba pour définir les couleurs
  * 		 4_bis-	lecture pixel par pixel de l'image
  */
+ 
+ 	
+Demandé à Vincent Barichard :
+	OK Upscaling/Downscaling du dessin de la foret :
+		scale() de Qpainter
+	
+	OK Ugo : Dimension du FireWidget, pour qu'il ait la même taille que le dessin de la foret : 
+		scale on maximum size(redefinit si on change de palier ?)
+		
 
 
 
