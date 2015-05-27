@@ -595,6 +595,8 @@ void FireWidget::mouseReleaseEvent(QMouseEvent* event)
 			* qu'il n'est pas en dehors du cadre, auquel cas nous ramenons la (les) coordonnée(s) concernée(s)
 			* à 0.
 			*/
+		arrivee.setX(rubber->width()+depart.x());
+		arrivee.setY(rubber->height()+depart.y());
 		if(depart.x() < 0){
 			depart.setX(0);
 		}
@@ -602,8 +604,6 @@ void FireWidget::mouseReleaseEvent(QMouseEvent* event)
 			depart.setY(0);
 		}
 		
-		arrivee.setX(rubber->width()+depart.x());
-		arrivee.setY(rubber->height()+depart.y());
 		
 		if(arrivee.x() > size().width() ){
 			arrivee.setX(size().width());
@@ -617,7 +617,7 @@ void FireWidget::mouseReleaseEvent(QMouseEvent* event)
 		cout << "Coordonnée de l'origine : " << rubber->x() << "; " << rubber->y() << endl;
 		cout << "Coordonnée de départ : " << depart.x()<< ";" << depart.y() << endl;
 		cout << "Coordonnée de l'arrivée : " << arrivee.x()<< ";" << arrivee.y() << endl;
-		cout << "Taille de la zone de selection : " <<	rubber->width() << ";" << rubber->height() << endl;
+		cout << "Taille de la zone de selection : " <<	arrivee.x() - depart.x() << ";" << arrivee.y() - depart.y() << endl;
 		#endif
 		// Emission du signal pour récupérer l'action à effectuer
 		emit releaseSignal();
@@ -686,19 +686,16 @@ void FireWidget::actionReceived(int x)
 	int yDep = depart.y() / tailleCell;
 	
 	int xArr = arrivee.x() / tailleCell;
-	/*
+	
 	if (xArr> forest->width())
 		xArr= forest->width();
-	else if (xArr< 0)
-		xArr= 0;
-	*/
+	
 	int yArr = arrivee.y() / tailleCell;
-	/*
+	
 	if (yArr> forest->height())
 		yArr= forest->height();
-	else if (yArr< 0)
-		yArr= 0;
-	*/
+
+	
 	#if DEBUG_RETARD
 	cout << "Coordonnée en cellule du départ : " << xDep << ";" << yDep << endl;
 	cout << "Coordonnée en cellule de l'arrivée : " << xArr << ";" << yArr << endl;

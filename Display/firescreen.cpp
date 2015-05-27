@@ -254,6 +254,7 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	tour_lbl->setStyleSheet("QLabel {  color : darkblue; }");
 	cpt_lbl->setStyleSheet("QLabel { color : darkblue; }");
 	delai_lbl->setStyleSheet("QLabel { color : darkblue; }");
+
 }
 
 /**
