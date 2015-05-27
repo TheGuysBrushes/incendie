@@ -97,9 +97,9 @@ void Arbre::setCoefficient(float x)
  * L'arbre reçoit des flammes et risque de s'enflammer
  * @author Florian
  */
-void Arbre::spark(float coef)
+void Arbre::spark(float coefTransmission)
 {
-	int taux= 10*coef/humidity *100;
+	int taux= 10*(coefTransmission*coefficient)/humidity *100;
 	
 	int aleatoire= rand()%101;
 	
@@ -114,7 +114,7 @@ void Arbre::spark(float coef)
 		#endif
 	}
 	else {
-		humidity -= coef;
+		humidity -= coefTransmission*coefficient;
 		#if DEBUG_SPARK
 		cout<< "non"<< endl;
 		#endif
@@ -127,10 +127,10 @@ void Arbre::spark(float coef)
  * @author Florian
  * @param coef
  */
-bool Arbre::burn(float coef)
+bool Arbre::burn(float coefBrulure)
 {
 	// On va déterminer le nombre de points de vie à enlever.
-	int decrementation = 100.0*coef*coefficient;
+	int decrementation = 100.0*coefBrulure*coefficient;
 	
 	decrementation *= 1.0/( (float)humidity );
 	#if DEBUG_DECRE
