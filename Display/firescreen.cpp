@@ -317,22 +317,12 @@ void FireScreen::initForest(Fwelcome * fwel)
 	ifstream* file= fwel->getFile();
 	QImage* picture= fwel->getImage();	
 	
-	if ( file->is_open()){ // Creation par fichier de sauvegarde si il est ouvert
-		fWidget->initialise(largeur,hauteur, file);
-	}
-	else {
-		#if DEBUG_CREA_FORET
-		cout<< "Pas de fichier, essai création par image"<< endl;
-		#endif
+	// Choix de la méthode de création de foret selon les paramètres initialisés
+	if ( !fWidget->initialise(largeur,hauteur, file) ){ // Essai création par fichier de sauvegarde si il est ouvert
 		
-		if (!picture->isNull()){ // Creation par image si elle est chargée
-			fWidget->initialise(picture);
-		}
-		else { // Sinon, cas par défaut : Creation d'une forêt selon les paramétres de la fenetre d'initialisation
-			#if DEBUG_CREA_FORET
-			cout << "Pas d'image, creation foret à partir des parametres de fwelcome"<< endl;
-			#endif
-			
+		// sinon essai creation par image, si elle est chargée
+		if ( !fWidget->initialise(largeur,hauteur, picture) ){ // 
+			// Sinon, cas par défaut : Creation selon les paramétres de la fenetre de paramétrage
 			fWidget->initialise(largeur,hauteur,
 									fwel->get_proba(),
 									fwel->get_coef()	);

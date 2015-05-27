@@ -58,8 +58,8 @@ public:
 
 	/* Initialisations */
 	void initialise(int largeur, int hauteur, float proba = 0.60, float coef_brulure=1.0);
-	void initialise(int largeur, int hauteur, std::ifstream* file);
-	bool initialise(QImage* imageForet);
+	bool initialise(int largeur, int hauteur, std::ifstream* file);
+	bool initialise(int largeur, int hauteur, QImage* imageForet);
 
 	/* Getters et Setters */
 	void setColor(int colorIndice);	

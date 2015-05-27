@@ -74,52 +74,56 @@ void FireWidget::initialise(int largeur, int hauteur, float proba, float coef_br
  * @param hauteur de la nouvelle forêt
  * @param file fichier binaire ouvert contenant la sauvegarde de la forêt (essences-arbres)
  */
-void FireWidget::initialise(int largeur, int hauteur, ifstream * file) 
+bool FireWidget::initialise(int largeur, int hauteur, ifstream * file) 
 {
-	#if DEBUG_CREA_FORET
-	cout<< "Chargement d'une foret à partir d'un fichier "<< endl;
-	#endif
-	#if DEBUG_LOAD
-	cout<< "Taille : " << largeur<< " en largeur "<< hauteur<< " en hauteur" <<endl;
-	#endif
-	
-	QWidget* loadWindow= new QWidget();
-	loadWindow->resize(400, 30);
-	QVBoxLayout* layLoad= new QVBoxLayout(loadWindow);
-	
-	QLabel* txtLoad= new QLabel("Chargement de la foret");
-	// TODO voir si il faut que foret fasse emit d'un signal à connecter à la progressbar
-	QProgressBar* PB_load= new QProgressBar();
-// 	PB_load->resize(390, 25);
-	
-	layLoad->addWidget(txtLoad);
-	layLoad->addWidget(PB_load);
-	
-	loadWindow->show();
-	forest= new Foret(largeur, hauteur, file, PB_load);
-	loadWindow->hide();
-	
-	setMinimumSize(largeur, hauteur);
+	if (file->is_open()){
+		#if DEBUG_CREA_FORET
+		cout<< "Chargement d'une foret à partir d'un fichier "<< endl;
+		#endif
+		#if DEBUG_LOAD
+		cout<< "Taille : " << largeur<< " en largeur "<< hauteur<< " en hauteur" <<endl;
+		#endif
+		
+		QWidget* loadWindow= new QWidget();
+		loadWindow->resize(400, 30);
+		QVBoxLayout* layLoad= new QVBoxLayout(loadWindow);
+		
+		QLabel* txtLoad= new QLabel("Chargement de la foret");
+		// TODO voir si il faut que foret fasse emit d'un signal à connecter à la progressbar
+		QProgressBar* PB_load= new QProgressBar();
+	// 	PB_load->resize(390, 25);
+		
+		layLoad->addWidget(txtLoad);
+		layLoad->addWidget(PB_load);
+		
+		loadWindow->show();
+		forest= new Foret(largeur, hauteur, file, PB_load);
+		loadWindow->hide();
+		
+		setMinimumSize(largeur, hauteur);
+		
+		return true;
+	}
+	else{
+		#if DEBUG_CREA_FORET
+		cout<< "Pas de fichier, essai création par image"<< endl;
+		#endif
+		return false;
+	}
 }
 
 /**
  * Fonction de création d'une foret ALEATOIRE lors de la (ré)initialisation
  * @author Florian et Ugo
- * @param all identiques au constructeur de Foret aléatoire
+ * @param imageForet image d'une foret, pour l'instant une image converie du jpg au tif
+ * @
  */
-bool FireWidget::initialise(QImage* imageForet)
+bool FireWidget::initialise(int largeur, int hauteur, QImage* imageForet)
 {
-	#if DEBUG_CREA_FORET
-	cout << "Réussite ouverture fichier, creation foret à partir de l'image"<< endl;
-	#endif
-
-	if (!imageForet->isNull()){
-		#if DEBUG_IMAGE
-		cout<< "image chargée"<< endl;
+	if (!imageForet->isNull()){	
+		#if DEBUG_CREA_FORET
+		cout << "Réussite ouverture fichier, creation foret à partir de l'image"<< endl;
 		#endif
-		
-		int largeur= imageForet->width();
-		int hauteur= imageForet->height();
 
 		setMinimumSize(largeur, hauteur);
 		loadFromPicture(largeur, hauteur, imageForet);
@@ -127,8 +131,8 @@ bool FireWidget::initialise(QImage* imageForet)
 		return true;
 	}
 	else {
-		#if DEBUG_IMAGE
-		cout<< "image non chargée"<< endl;
+		#if DEBUG_CREA_FORET
+		cout << "Pas d'image, creation foret à partir des parametres de fwelcome"<< endl;
 		#endif
 		
 		return false;
@@ -311,22 +315,22 @@ void FireWidget::setColor(int colorIndice)
 {
 	switch(colorIndice){
 		case 0:
-			this->color->setRgb(01,100,00,	100);
+			this->color->setRgb(01,100,00);
 			break;
 		case 1:
-			this->color->setRgb(34,139,34	,	100);
+			this->color->setRgb(34,139,34	);
 			break;
 		case 2:
-			this->color->setRgb(107,142,35,	100);
+			this->color->setRgb(107,142,35);
 			break;
 		case 3:
-			this->color->setRgb(00,205,00,	100);
+			this->color->setRgb(00,205,00);
 			break;
 		case 4:
-			this->color->setRgb(46,139,87,	100);
+			this->color->setRgb(46,139,87);
 			break;
 		case GRAY:
-			this->color->setRgb(80,80,80,200);
+			this->color->setRgb(80,80,80);
 			break;
 		case RED_TRANSPARENT:
 			this->color->setRgb(255,00,00,	180);
@@ -449,7 +453,7 @@ void FireWidget::drawForest()
 			else if (cell->getState() == 2){
 				setColor(RED);
 				if(dynamic_cast < Arbre* >(cell)->getCoeff() != 1)
-					setColor(RED_TRANSPARENT);		
+					setColor(RED_TRANSPARENT);	
 				drawCell(current_largeur, current_hauteur);
 			}
 			else if (cell->getState() == -1){
@@ -487,7 +491,7 @@ void FireWidget::drawChanged()
 {
 	bufferPainter->begin(buffer);
 	
-	setColor(RED_TRANSPARENT);
+	setColor(RED);
 	drawList(forest->getBurned());
 // 	forest->clearBurned();
 	
