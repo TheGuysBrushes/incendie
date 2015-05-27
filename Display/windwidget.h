@@ -26,7 +26,6 @@ private:
 	QLabel* angle_lbl;
 	QLabel* speed_lbl;
 	QTimer* timer;
-	QSlider* slider_angle;
 
 	bool varWind;
 	int speed;

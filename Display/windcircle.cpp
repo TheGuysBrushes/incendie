@@ -1,5 +1,6 @@
 #include "windcircle.h"
 
+#include "../debug.h"
 // Valeur du nombre pi, utilisée pour les calcul de trigonométrie
 #define PI 3.14159265
 
@@ -14,8 +15,7 @@ using namespace std;
 WindCircle::WindCircle()
 {
 	buffer = new QImage();
-	// TODO Ugo : Corriger le constructeur (on ne peut pas utiliser les tailles du widget lors de sa construction car il n'est pas crée), modifier center dans resizeEvent?
-	center = new QPointF(width()/2.0, height()/2.0);
+	center = NULL;
 	direction = new QPointF();
 
 	setMinimumSize(100,100);
@@ -116,6 +116,9 @@ void WindCircle::resizeEvent(QResizeEvent* event){
     if (!buffer->isNull()){
 		delete(buffer);
 	}
+	if(!center)
+		center = new QPointF();
+	
 	buffer = new QImage(event->size().width(), event->size().height(), QImage::Format_ARGB32);
 
 	center->setX(event->size().width()/2);
@@ -124,3 +127,31 @@ void WindCircle::resizeEvent(QResizeEvent* event){
   	drawCircle();
 	drawDir();
 }
+/**
+ * Nous avons redéfini cet Event dans le but de pouvoir faire varier la valeur de l'angle
+ * dynamiquement à l'aide du clic sur le widget
+ */
+void WindCircle::mousePressEvent(QMouseEvent* event)
+{
+	float param = event->x()-center->x();
+	float rayon = height()/2.0;
+	param = param/ rayon;
+	float result = atan((event->y()-center->y())/(event->x()-center->x()))*180.0 / PI;
+
+	if(param<=0){
+		result += 180;
+	}
+
+	#if DEBUG_CLICK
+	cout << "Taille de windcircle : " << width() << " ; " << height() << endl;
+	cout << "Angle de windcircle : " << angle << endl;
+	cout << "Coordonnée du centre : " << center->x() << " ; " << center->y() << endl;
+	cout << "Coordonnée de l'event : " << event->x() << " ; " << event->y() << endl;
+	cout << "Angle résultat ? : " << (int)result << endl;
+	#endif
+	setAngle((int)result);
+	drawDir();
+	update();
+	emit modifAngle((int)result);
+}
+

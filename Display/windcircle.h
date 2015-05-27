@@ -47,7 +47,10 @@ public:
 protected:
 	/* Events */
 	void resizeEvent(QResizeEvent * event);
-	void paintEvent(QPaintEvent* event);	
+	void paintEvent(QPaintEvent* event);
+	void mousePressEvent(QMouseEvent* event);
+signals:
+	void modifAngle(int );
 };
 
 #endif // WINDCIRCLE_H
