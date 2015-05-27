@@ -53,7 +53,7 @@ protected:
 public slots:
 	void majAngle(int alpha);
 	void majSpeed(int vitesse);
-	void startTimer(bool);
+	void switchAngleBox(int);
 	void changeWindDir();
 	
 signals:

@@ -5,6 +5,7 @@
 #include <QtGui/QGridLayout>
 #include <QtGui/QSlider>
 #include <QtGui/QPushButton>
+#include <QtGui/QCheckBox>
 
 using namespace std;
 
@@ -82,14 +83,15 @@ void WindWidget::initComponents()
 		v_lay->addWidget(slider_vitesse);
 		v_lay->addWidget(speed_label_container);
 		
-	QPushButton* varButton = new QPushButton("Varation Auto");
+	QCheckBox* varAngleBox = new QCheckBox("Varation Auto");
+	varAngleBox->setChecked(false);
 
 	// Conteneur général de l'ensemble des autres éléments
 	QGridLayout* grid_lay = new QGridLayout(this);
 	grid_lay->addWidget(wind, 0,0);
 	grid_lay->addWidget(speed_container, 0,1, 1,1);
 	grid_lay->addWidget(slider_angle, 1,0);
-	grid_lay->addWidget(varButton,1,1);
+	grid_lay->addWidget(varAngleBox,1,1);
 	grid_lay->addWidget(angle_container, 2,0);	
 	
 	slider_angle->setValue(45);
@@ -98,7 +100,7 @@ void WindWidget::initComponents()
 	// 	permet de gérer dynamiquement les changements de valeurs
 	connect(slider_angle,	SIGNAL(valueChanged(int)),		this, SLOT(majAngle(int)) );
 	connect(slider_vitesse,	SIGNAL(valueChanged(int)),		this, SLOT(majSpeed(int)));
-	connect(varButton,	SIGNAL(clicked(bool)),	this, SLOT(startTimer(bool)));
+	connect(varAngleBox, SIGNAL(stateChanged(int)), this, SLOT(switchAngleBox(int)));
 // 	connect(timer,	SIGNAL(timeout()),	this, SLOT(varWind()));
 	slider_vitesse->setValue(2);
 
@@ -155,16 +157,8 @@ void WindWidget::majSpeed(int vitesse){
  * la variation de l'angle du vent
  * @author Ugo
  */
-// TODO Ugo : Renommer avec un nom pour comprendre que cela influe sur le vent et sans start, qqch comme toggleWindVar
-void WindWidget::startTimer(bool )
+void WindWidget::switchAngleBox(int )
 {
-// 	// on effectue l'action correspondante au nouvel état
-// 	if(!timer->isActive()){
-// 		timer->start(500);
-// 	} else {
-// 		timer->stop();
-// 	}
-	
 	if(varWind) {
 		varWind= false;
 	} else {
