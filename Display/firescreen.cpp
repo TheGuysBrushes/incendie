@@ -288,53 +288,18 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 
 
 /**
- * Restaure une forêt à partir d'un fichier ouvert, dont les tailles ont déjà été lues
- * @author Florian
- * @param largeur de la nouvelle forêt
- * @param hauteur de la nouvelle forêt
- * @param file fichier binaire ouvert contenant la sauvegarde de la forêt (essences-arbres)
- */
-void FireScreen::createForest(int largeur, int hauteur, ifstream* file)
-{
-	cout<< "Chargement d'une foret à partir d'un fichier "<< endl;
-	#if DEBUG_LOAD
-	cout<< "Taille : " << largeur<< " en largeur "<< hauteur<< " en hauteur" <<endl;
-	#endif
-	
-	QMainWindow* loadWindow= new QMainWindow;
-	QWidget* w= new QWidget(loadWindow);
-	w->resize(400, 30);
-	QVBoxLayout* layLoad= new QVBoxLayout(w);
-	
-	QLabel* txtLoad= new QLabel("Chargement de la foret");
-	QProgressBar* PB_load= new QProgressBar();
-	PB_load->resize(390, 25);
-	
-	layLoad->addWidget(txtLoad);
-	layLoad->addWidget(PB_load);
-	
-	
-	loadWindow->setCentralWidget(w);
-	loadWindow->show();
-	
-	// TODO voir si il faut que foret fasse emit d'un signal à connecter à la progressbar
-	fWidget->initialise(largeur,hauteur, file, PB_load);
-	loadWindow->hide();
-}
-
-/**
  * Restaure une forêt à partir d'un fichier ouvert
  * @author Florian
  * @param file fichier binaire ouvert contenant la sauvegarde de la forêt (taille-essences-arbres)
  */
-void FireScreen::createForest(ifstream* file)
-{
-	int largeur, hauteur;
-	file->read( (char *)&(largeur), sizeof(int));
-	file->read( (char *)&(hauteur), sizeof(int));
-	
-	createForest(largeur, hauteur, file);
-}
+// void FireScreen::createForest(ifstream* file)
+// {
+// 	int largeur, hauteur;
+// 	file->read( (char *)&(largeur), sizeof(int));
+// 	file->read( (char *)&(hauteur), sizeof(int));
+// 	
+// 	createForest(largeur, hauteur, file);
+// }
 
 
 #include <QtGui/QImage>
@@ -349,23 +314,25 @@ void FireScreen::initForest(Fwelcome * fwel)
 	nb_tour = 0;
 	int largeur= fwel->get_larg();
 	int hauteur= fwel->get_haut();
-	
-
 	ifstream* file= fwel->getFile();
+	QImage* picture= fwel->getImage();	
 	
 	if ( file->is_open()){ // Creation par fichier de sauvegarde si il est ouvert
-		createForest(largeur, hauteur, file);
+		fWidget->initialise(largeur,hauteur, file);
 	}
 	else {
-		cout<< "Pas de fichier, création d'une foret aléatoirement"<< endl;
-		QImage* picture= fwel->getImage();	
+		#if DEBUG_CREA_FORET
+		cout<< "Pas de fichier, essai création par image"<< endl;
+		#endif
 		
 		if (!picture->isNull()){ // Creation par image si elle est chargée
-			cout << "Réussite ouverture fichier, creation foret à partir de l'image"<< endl;
 			fWidget->initialise(picture);
 		}
 		else { // Sinon, cas par défaut : Creation d'une forêt selon les paramétres de la fenetre d'initialisation
-			cout << "Echec creation foret à partir fichier image, creation foret à partir des parametres de fwelcome"<< endl;
+			#if DEBUG_CREA_FORET
+			cout << "Pas d'image, creation foret à partir des parametres de fwelcome"<< endl;
+			#endif
+			
 			fWidget->initialise(largeur,hauteur,
 									fwel->get_proba(),
 									fwel->get_coef()	);
@@ -481,7 +448,7 @@ void FireScreen::reset()
 		
 		initForest(fwel);
 		fWidget->razRubber();
-		fWidget->redraw();
+// 		fWidget->redraw();
 	}
 }
 
