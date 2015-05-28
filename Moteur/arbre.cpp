@@ -13,8 +13,12 @@
 
 using namespace std;
 
+/**
+ * Construit un arbre à partir d'une position
+ * 
+ */
 Arbre::Arbre(int col, int row, const Essence* const _essence, unsigned _age, unsigned _humidite)
-	: Cellule(1), pos(col, row),essence(_essence),age(_age),humidity(_humidite)
+	: Cellule(1), pos(col, row), essence(_essence), age(_age), humidity(_humidite), coefficient(1)
 {	
 	initialise();
 }
@@ -24,7 +28,7 @@ Arbre::Arbre(int col, int row, const Essence* const _essence, unsigned _age, uns
  * @param cell cellule à remplacer, elle est désallouée
  */
 Arbre::Arbre(Cellule* cell, int col, int row, const Essence*const _essence, unsigned int _age, unsigned int _humidite)
-	: Cellule(1), pos(col, row),essence(_essence),age(_age),humidity(_humidite)
+	: Cellule(1), pos(col, row), essence(_essence), age(_age), humidity(_humidite), coefficient(1)
 {
 	initialise();
 	// suppression ancienne cellule 
@@ -79,10 +83,8 @@ void Arbre::initialise()
 	#if DEBUG_PV==1
 	cout << " => hp : "<< hp << endl;
 	#endif
-	// L'initialisation du coefficient sera faite plus tard puisqu'il dépend des paramètres extérieurs à l'arbre 
-	// Humidité ambiante, force du vent etc
-	 coefficient = 1.0;
 }
+
 /*** Setter ***/
 void Arbre::setCoefficient(float x)
 {
