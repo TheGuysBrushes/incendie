@@ -61,7 +61,7 @@ void FireWidget::initialise(int largeur, int hauteur, float proba, float coef_br
 
 	forest= new Foret(largeur, hauteur, proba, coef_brulure);
 	
-	setMinimumSize(largeur, hauteur);
+	setMinimumSize(largeur/2.0, hauteur/2.0);
 }
 
 #include <QtGui/QVBoxLayout>
@@ -101,7 +101,7 @@ bool FireWidget::initialise(int largeur, int hauteur, ifstream * file)
 		forest= new Foret(largeur, hauteur, file, PB_load);
 		loadWindow->hide();
 		
-		setMinimumSize(largeur, hauteur);
+		setMinimumSize(largeur/2.0, hauteur/2.0);
 		
 		return true;
 	}
@@ -129,8 +129,8 @@ bool FireWidget::initialise(int largeur, int hauteur, QImage* imageForet)
 		cout << "Réussite ouverture fichier, creation foret à partir de l'image"<< endl;
 		#endif
 
-		setMinimumSize(largeur, hauteur);
 		loadFromPicture(largeur, hauteur, imageForet);
+		setMinimumSize(largeur/2.0, hauteur/2.0);
 		
 		return true;
 	}

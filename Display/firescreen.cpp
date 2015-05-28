@@ -6,6 +6,7 @@
 #include <QtGui/QSlider>
 #include <QtGui/QAction>
 #include <QtGui/QMenuBar>
+#include <QtGui/QImage>
 
 using namespace std;
 
@@ -94,7 +95,7 @@ void FireScreen::initSizes(int largeur, int hauteur)
 // 	setMaximumHeight( tCellMax * hauteur +45 );
 // 	setMaximumHeight( freePixHeight );
 	
-	// 	resize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
+// 		resize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
 	// TODO mettre une largeur de base minimum, à partir de la hauteur du menu droite (calculer la taille d'une cellule si la hauteur de la fenetre est la hauteur du menu)
 	resize( (tCellMax+1)/2 * largeur + largeurMenu +25, (tCellMax + 1)/2 * hauteur +45 );
 	
@@ -286,11 +287,12 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 // 	setMinimumWidth(vert_lay1->sizeHint().width());
 }
 
-#include <QtGui/QImage>
 
 /**
- * 
- * 
+ * Essai de créer un nouvelle forêt grâce à une fenêtre de paramétrage (Fwelcome)
+ * @author Florian
+ * @param fwel fenêtre de paramétrage
+ * @return faux si l'utilisateur annule ou qu'il y a une erreur
  */
 bool FireScreen::initForest(Fwelcome* fwel)
 {
@@ -315,7 +317,10 @@ bool FireScreen::initForest(Fwelcome* fwel)
 			fWidget->initialise(largeur,hauteur,
 									fwel->get_proba(), fwel->get_coef()	);
 		}
-		else cerr<< "Mauvais code de retour de la fenetre de paramétrage"<< endl;
+		else {
+			cerr<< "Mauvais code de retour de la fenetre de paramétrage"<< endl;
+			return false;
+		}
 		
 		majCompteur();
 		initSizes(largeur, hauteur);
@@ -324,8 +329,6 @@ bool FireScreen::initForest(Fwelcome* fwel)
 	}
 	else return false;
 }
-
-
 
 /**
  * Initialise l'application et crée une nouvelle forêt, en utilisant une fenêtre dédiée (Fwelcome)
