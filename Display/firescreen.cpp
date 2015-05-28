@@ -453,10 +453,11 @@ void FireScreen::reset()
 	fwel->show();
 
 	nb_tour = 0;
+	int resExec= fwel->exec();
+	
 	int largeur= fwel->get_larg();
 	int hauteur= fwel->get_haut();
 	
-	int resExec= fwel->exec();
 	if (resExec>0){
 		fWidget->delForest();
 		fWidget->razRubber();
@@ -464,26 +465,18 @@ void FireScreen::reset()
 		if(  resExec== Load ){
 			QImage* picture= fwel->getImage();
 			fWidget->initialise(largeur, hauteur, picture);
-	// 		initForest(fwel);
-			
-			fWidget->redraw();
 		}
 		else if(  resExec== Restore ){
 			ifstream* file= fwel->getFile();
 			fWidget->initialise(largeur,hauteur, file);
-	// 		initForest(fwel);
-			
-			fWidget->redraw();
 		}
 		else if( resExec==QDialog::Accepted ){
 			fWidget->initialise(largeur,hauteur,
 									fwel->get_proba(), fwel->get_coef()	);
-	// 		initForest(fwel);
-			
-			fWidget->redraw();
 		}
 		else cerr<< "Mauvais code de retour de la fenetre de paramétrage"<< endl;
 		
+		initSizes(largeur, hauteur);
 		fWidget->redraw();
 	}
 }
