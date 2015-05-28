@@ -288,9 +288,47 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 
 #include <QtGui/QImage>
 
+/**
+ * 
+ * 
+ */
+bool FireScreen::initForest(Fwelcome* fwel)
+{
+	fwel->show();
+	
+	int resExec= fwel->exec();
+	if (resExec>0){
+		
+		nb_tour = 0;
+		int largeur= fwel->get_larg();
+		int hauteur= fwel->get_haut();
+		
+		if(  resExec== Load ){
+			QImage* picture= fwel->getImage();
+			fWidget->initialise(largeur, hauteur, picture);
+		}
+		else if(  resExec== Restore ){
+			ifstream* file= fwel->getFile();
+			fWidget->initialise(largeur,hauteur, file);
+		}
+		else if( resExec==QDialog::Accepted ){
+			fWidget->initialise(largeur,hauteur,
+									fwel->get_proba(), fwel->get_coef()	);
+		}
+		else cerr<< "Mauvais code de retour de la fenetre de paramétrage"<< endl;
+		
+		majCompteur();
+		initSizes(largeur, hauteur);
+	
+		return true;
+	}
+	else return false;
+}
+
+
 
 /**
- * Crée une nouvelle forêt à partir d'une fenêtre de paramétrage
+ * Initialise l'application et crée une nouvelle forêt, en utilisant une fenêtre dédiée (Fwelcome)
  * @author Florian et Ugo
  */
 bool FireScreen::initialisation()
@@ -298,33 +336,11 @@ bool FireScreen::initialisation()
 	initComponents();
 	
 	Fwelcome* fwel = new Fwelcome(this);
-	fwel->show();
 	
-	nb_tour = 0;
-	int resExec= fwel->exec();
-	
-	int largeur= fwel->get_larg();
-	int hauteur= fwel->get_haut();
-	if (resExec>0){
-		if( resExec == Load ){
-			QImage* picture= fwel->getImage();
-			fWidget->initialise(largeur, hauteur, picture);
-		} 
-		else if( resExec== Restore ){
-			ifstream* file= fwel->getFile();
-			fWidget->initialise(largeur,hauteur, file);
-		}
-		else if( resExec==QDialog::Accepted ){
-			fWidget->initialise(largeur,hauteur,
-									fwel->get_proba(), fwel->get_coef()	);	
-		}
-
-		majCompteur();
-		initSizes(largeur, hauteur);
-		
+	if ( initForest(fwel) )		
 		return true;
-	}
-	else return false;
+	else
+		return false;
 }
 
 
@@ -392,8 +408,8 @@ void FireScreen::updateWind(int angle, int vitesse)
 /*** 	Boutons	***/
 
 /**
- * Appelle une nouvelle fenêtre de paramétrage de forêt.
- * Si l'utilisateur valide, alors une nouvelle forêt,
+ * Une nouvelle fenêtre de création de forêt est ouverte.
+ * Si l'utilisateur valide, alors une nouvelle forêt est crée,
  * sinon, l'ancienne forêt est conservée
  * @author Florian et Ugo
  */
@@ -404,35 +420,9 @@ void FireScreen::reset()
 	Fwelcome* fwel = new Fwelcome(this);
 	fwel->addCancel();
 	fwel->setModal(true);
-	fwel->show();
-
-	nb_tour = 0;
-	int resExec= fwel->exec();
 	
-	int largeur= fwel->get_larg();
-	int hauteur= fwel->get_haut();
-	
-	if (resExec>0){
-		fWidget->delForest();
-		fWidget->razRubber();
-	
-		if(  resExec== Load ){
-			QImage* picture= fwel->getImage();
-			fWidget->initialise(largeur, hauteur, picture);
-		}
-		else if(  resExec== Restore ){
-			ifstream* file= fwel->getFile();
-			fWidget->initialise(largeur,hauteur, file);
-		}
-		else if( resExec==QDialog::Accepted ){
-			fWidget->initialise(largeur,hauteur,
-									fwel->get_proba(), fwel->get_coef()	);
-		}
-		else cerr<< "Mauvais code de retour de la fenetre de paramétrage"<< endl;
-		
-		initSizes(largeur, hauteur);
+	if ( initForest(fwel) )
 		fWidget->redraw();
-	}
 }
 
 /**
@@ -475,6 +465,10 @@ void FireScreen::nextStep()
 	else stop_timer();
 }
 
+/**
+ * Démarre le déroulement continue de l'incendie
+ * @author Ugo
+ */
 void FireScreen::start_timer()
 {
 	timer->start(delai);
@@ -483,6 +477,10 @@ void FireScreen::start_timer()
 	pause_btn->setEnabled(true);
 }
 
+/**
+ * Démarre le déroulement continue de l'incendie
+ * @author Ugo
+ */
 void FireScreen::stop_timer()
 {
 	timer->stop();

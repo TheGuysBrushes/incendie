@@ -64,6 +64,7 @@ public:
 	void initMenus(QHBoxLayout* HLayout) /*const*/;
 	void initComponents();
 	void initSizes(int largeur, int hauteur);
+	bool initForest(Fwelcome* fwel);
 	
 	void majCompteur();
 	bool initialisation();
