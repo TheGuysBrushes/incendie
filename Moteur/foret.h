@@ -108,8 +108,8 @@ public:
 	void delay(int xDep, int yDep, int xArr, int yArr);
 	
 	
-	void burnAdjacentsWind(int posCol, int posRow, int hor, int vert);
-	void burnAdjacentsWind(Arbre* a, const Vent* vent);
+	void sparkAdjacentsWind(int posCol, int posRow, int hor, int vert);
+	void sparkAdjacentsWind(Arbre* a, const Vent* vent);
 	
 	// 	Avancee du temps
 	// voir transition avec d'autres parametres

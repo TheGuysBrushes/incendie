@@ -33,7 +33,7 @@ WindCircle::~WindCircle(){
 
 /*** Getters and Setters ***/
 /**
- * Met à jour la valeur de l'angle
+ * Met à jour la valeur de l'angle et redessine la ligne d'angle
  * @param int Valeur de l'angle
  * @author Ugo
  */
@@ -58,7 +58,7 @@ void WindCircle::setDirection(int angle){
 
 /*** Autres Méthodes ***/
 /**
- * Méthode graphique permettant d'afficher le cercle de la boussole
+ * Affiche le cercle de la boussole
  * @author Ugo
  */
 void WindCircle::drawCircle(){
@@ -82,8 +82,7 @@ void WindCircle::drawCircle(){
 }
 
 /**
- * Méthode graphique permettant d'afficher la ligne 
- * directionnelle de la boussole
+ * Affiche la ligne directionnelle de la boussole
  * @author Ugo
  */
 void WindCircle::drawDir(){
@@ -99,7 +98,7 @@ void WindCircle::drawDir(){
 }
 
 /**
- * Méthode générique pour vider le buffer 
+ * Vide le buffer 
  * @author Ugo
  */
 void WindCircle::effaceBuffer(){
@@ -108,12 +107,19 @@ void WindCircle::effaceBuffer(){
 }
 
 /*** Events ***/
+/**
+ * Copie le buffer sur le widget
+ * @author Ugo
+ */
 void WindCircle::paintEvent(QPaintEvent* event){
 	QPainter paint(this);
 	paint.drawImage(0, 0, *buffer);
 }
 
-
+/**
+ * Replace le centre du cercle et redessine la ligne de l'angle
+ * @author Ugo
+ */
 void WindCircle::resizeEvent(QResizeEvent* event){
     if (!buffer->isNull()){
 		delete(buffer);

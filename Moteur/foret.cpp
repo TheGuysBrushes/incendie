@@ -74,7 +74,8 @@ Foret::Foret(int _largeur, int _hauteur, vector< std::vector< char > >* matrice)
 
 
 /**
- * On vide également les listes, mêmes si c'est fait automatiquement TODO-SE RENSEIGNER si ca n'empeche pas un probleme de "double libération" des arbres  et l'ordre libérer-vider
+ * On vide également les listes, mêmes si c'est fait automatiquement TODO-SE RENSEIGNER si ca n'empeche pas un probleme de "double libération" des arbres et l'ordre libérer-vider
+ * @author Florian
  */
 Foret::~Foret()
 {
@@ -100,7 +101,7 @@ Foret::~Foret()
  * Découpe une chaine de caractères en sous-chaine et place chaque élément dans un vecteur de string
  * 	nécessaire pour l'initialisation des essences d'arbres
  * @author Ugo
- * @param str : Chaine à découper
+ * @param str Chaine à découper
  * @return vecteur des mots séparés par des espaces // TODO TRIM
  */
 // IMPROVEIT voir si il faut utiliser référence ou pointeur
@@ -173,7 +174,6 @@ bool Foret::loadEssences(const string& fileName)
 											atoi(tokens[5].c_str())		) );
 			
 			indice +=1;
-// 			delete(tokens);
 		}
 		#if DEBUG_FILE
 		showEssences();
@@ -192,6 +192,7 @@ bool Foret::loadEssences(const string& fileName)
 /**
  * Choisi une essence pseudo aléatoirement, en prennant en compte les arbre autour d'une position
  * @author Ugo
+ * 
  * @param j colonne de la position du futur arbre
  * @param i ligne de la position du futur arbre
  * @param distOthers distance à laquelle on doit prendre en compte les arbres avoisinants
@@ -228,6 +229,8 @@ unsigned Foret::essenceRandom(int col, int row, unsigned distOthers){
 }
 
 /**
+ * Retourne les listes d'éléments modfiés
+ * @author Florian
  *	IMPROVEIT ? Inutilisé, car il faudrait regarder pour chaque élément avec quelle couleur l'afficher au lieu d'une couleur par liste
  */
 std::list< list< Arbre* > >* Foret::getChanged()
@@ -244,6 +247,7 @@ std::list< list< Arbre* > >* Foret::getChanged()
 /**
  * "Plante" un arbre à la position donnée dans la matrice
  * @author Florian et Ugo
+ * @param all position de l'arbre dans la matrice
  */
 void Foret::plantTree(int col, int row)
 {
@@ -270,6 +274,13 @@ void Foret::plantTree(int col, int row)
 	matrix[row][col]= ab;
 }
 
+/**
+ * "Plante" un arbre à la position donnée dans la matrice
+ * @author Florian et Ugo
+ * @param col abscisse de l'arbre
+ * @param row ordonnée de l'arbre
+ * @param numEss indice de l'essence de l'arbre à utiliser
+ */
 void Foret::plantTree(int col, int row, unsigned int numEss)
 {
 	#if DEBUG_ARBRE_PLANTE
@@ -284,7 +295,7 @@ void Foret::plantTree(int col, int row, unsigned int numEss)
 
 
 /**
- * initialise une matrice avec des cellules (vierge)
+ * Initialise une matrice avec des cellules (vierge)
  * @author Ugo and Florian
  */
 void Foret::initEmpty()
@@ -305,6 +316,9 @@ void Foret::initEmpty()
 /**
  * Crée une foret à partir d'une matrice de niveau de couleur de vert
  * @author Florian
+ * @param largeur largeur de la foret à créer
+ * @param hauteur hauteur de la foret à créer
+ * @param matrice de taille largeur x hauteur, d'intensités de vert dans l'image
  */
 void Foret::create(int largeur, int hauteur, vector< vector< char > >* matrice)
 {
@@ -325,7 +339,6 @@ void Foret::create(int largeur, int hauteur, vector< vector< char > >* matrice)
 		}
 	}
 }
-
 
 /**
  * Initialise une matrice vide puis ajoute des arbre dans la Foret
@@ -410,6 +423,8 @@ void Foret::clean()
 /**
  * Définit/redéfinit la taille et le coefficient de brulure d'une foret
  * @author Florian
+ * @param all définit les paramètres particuliers de la forêt (en dehors du vent)
+ * @deprecated
  */
 void Foret::setValues(int largeur, int hauteur, float coef)
 {
@@ -421,8 +436,8 @@ void Foret::setValues(int largeur, int hauteur, float coef)
 /**
  * Définit la direction du vent
  * @author Florian
- * @param EO force du vent sur l'axe Est-Ouest
- * @param NS force du vent sur l'axe Nord-Sud
+ * @param angle angle du nouveau vent
+ * @param vitesse force du nouveau
  */
 void Foret::setWind(int angle, int vitesse)
 {
@@ -437,7 +452,7 @@ void Foret::setWind(int angle, int vitesse)
 	cout <<"sinus de l'angle envoyé : " << vertical << endl;
 	#endif
 	/*
-	 * TODO Arret temporaire :
+	 * TODO Ugo : Arret temporaire :
 	 * 
 	 * Déterminer une fonction à croissance de type exponentiel afin de diviser vitesse dans 
 	 * le but d'obtenir des valeurs de transmission minimale et maximale.
@@ -452,18 +467,19 @@ void Foret::setWind(int angle, int vitesse)
 	cout <<"deplacement vertical en pixel : " << vertical << endl;
 	#endif
 	
+	// correction des valeurs si elles ont dépassés les seuils maximaux
 	if(horizontal < 1 && horizontal > 0)
 		horizontal = 1;
-	if(horizontal > -1 && horizontal < 0)
+	else if(horizontal > -1 && horizontal < 0)
 		horizontal = -1;
-	if(vertical < 0 && vertical > -1)
+	else if(vertical < 0 && vertical > -1)
 		vertical = -1;
-	if(vertical > 0 && vertical < 1)
+	else if(vertical > 0 && vertical < 1)
 		vertical =1;
 		
 	wind->setPower_h(horizontal);
 	wind->setPower_v(vertical);
-#if DEBUG_VENT
+#if DEBUG_VENT or DEBUG_HYPO
 	cout << "valeur power h" << horizontal << endl;
 	cout << "valeur power v" << vertical << endl;
 #endif
@@ -490,7 +506,7 @@ void Foret::uproot(Arbre* ab)
 /**
  * Coupe ou déracine l'arbre à la position donnée
  * @author Florian
- * @param ab arbre à supprimer
+ * @param all position de l'arbre à supprimer
  */
 void Foret::uproot(int col, int row)
 {
@@ -502,6 +518,10 @@ void Foret::uproot(int col, int row)
 	}
 }
 
+/**
+ * Coupe les arbres se trouvant dans un rectangle
+ * @param all positions de 2 points diagonaux du rectangle
+ */
 void Foret::cut(int xDep, int yDep, int xArr, int yArr)
 {
 	for(int i= xDep; i < xArr; ++i){
@@ -512,6 +532,10 @@ void Foret::cut(int xDep, int yDep, int xArr, int yArr)
 	}
 }
 
+/**
+ * Applique un retardateur sur les arbres se trouvant dans un rectangle
+ * @param all positions de 2 points diagonaux du rectangle
+ */
 void Foret::delay(int xDep, int yDep, int xArr, int yArr)
 {
 	for(int i= xDep; i < xArr; ++i){
@@ -559,7 +583,7 @@ void Foret::kindle(Arbre* ab)
 /**
  * Definit une position comme étant en feu, si c'est un arbre
  * @author Florian
- * @param col_row position de l'arbre à allumer
+ * @param all position de l'arbre à allumer
  */
 void Foret::kindle(int col, int row)
 {	
@@ -587,6 +611,7 @@ void Foret::blast(Arbre* ab)
  * Enflamme un arbre : un autre arbre lui "transmet" du feu
  * @author Florian
  * @param ab arbre à enflammer
+ * @param intensite force de transmission du feu
  */
 void Foret::spark(Arbre* ab, int intensite)
 {
@@ -606,6 +631,7 @@ void Foret::spark(Arbre* ab, int intensite)
  * @author Florian
  * @param row ligne où est la cellule 
  * @param col colonne où est la cellule
+ * @param intensite force de transmission du feu
  * @deprecated
  */
 void Foret::spark(int col, int row, int intensite)
@@ -614,9 +640,13 @@ void Foret::spark(int col, int row, int intensite)
 		Arbre * ab = dynamic_cast<Arbre *>(matrix[row][col]);
 		spark(ab, intensite);
 	}
-// 	else if (etat==2){}
+// 	else if (etat==2){// si l'arbre est déja en feu} 
 }
 
+/**
+ * Vide les listes d'éléments modifiés
+ * @author Florian
+ */
 void Foret::clearChanged()
 {
 	uprooted.clear();
@@ -632,7 +662,7 @@ void Foret::clearChanged()
  * @param col indice de la colonne de la cellule
  * @param row indice de la ligne de la cellule
  * @param distance distance sur laquelle s'effectue la recherche de voisins
- * @return list de pointeurs sur arbres 
+ * @return list de pointeurs sur arbres proches
  */
 std::list< Arbre* > Foret::adjacents(int col, int row, int distance) const
 {
@@ -709,7 +739,18 @@ std::list< Arbre* > Foret::adjacents(const Arbre * ab, int distance) const
 	return adjacents(ab->getPos().col,ab->getPos().row, distance);
 }
 
-void Foret::burnAdjacentsWind(int posCol, int posRow, int hor, int vert){
+
+/**
+ * Transmet le feu d'un arbre à ses voisins, selon la position de l'arbre
+ * @author Ugo et Florian
+ * 
+ * @param posCol abscisse de l'arbre qui est en feu
+ * @param posRow ordonnée de l'arbre qui est en feu
+ * @param hor force du vent horizontalement
+ * @param vert force du vent verticalement
+ */
+void Foret::sparkAdjacentsWind(int posCol, int posRow, int hor, int vert){
+	
 	for(int i = 0; i <= abs( hor ); ++i) {
 		for(int j = 0; j <= abs( vert ); ++j) {
 // 			burnAdjacentsWind(posCol, posRow, i, j);
@@ -721,8 +762,9 @@ void Foret::burnAdjacentsWind(int posCol, int posRow, int hor, int vert){
 				#endif
 				Cellule* cell;
 				
+				// TODO Ugo : verification que vent négatif horizontalement mais pas verticalement, POURQUOI ?
 				if(hor < 0)
-					cell = matrix[posRow + (vert -j)][posCol + (hor +i)];
+					cell= matrix[posRow + (vert -j)][posCol + (hor +i)];
 				else
 					cell= matrix[posRow +  (vert -j)][posCol + (hor -i)];
 				
@@ -733,13 +775,20 @@ void Foret::burnAdjacentsWind(int posCol, int posRow, int hor, int vert){
 	}
 }
 
-void Foret::burnAdjacentsWind(Arbre* a, const Vent* vent)
+/**
+ * Transmet le feu d'un arbre à ses voisins, selon la position de l'arbre
+ * @author Ugo et Florian
+ * 
+ * @param a arbre qui transmet le feu
+ * @param vent qui influe la transmission
+ */
+void Foret::sparkAdjacentsWind(Arbre* a, const Vent* vent)
 {
-#if DEBUG_VENT2
-cout<< endl<< "BRULE LES ADJACENTS DE "<< a->getPos().col<< ";" << a->getPos().row<< endl;
-#endif
+	#if DEBUG_VENT2
+	cout<< endl<< "BRULE LES ADJACENTS DE "<< a->getPos().col<< ";" << a->getPos().row<< endl;
+	#endif
 
-	burnAdjacentsWind(a->getPos().col, a->getPos().row,
+	sparkAdjacentsWind(a->getPos().col, a->getPos().row,
 						vent->getPower_h(), vent->getPower_v() );
 }
 
@@ -769,13 +818,16 @@ void Foret::transition(Arbre* ab)
 }
 
 /**
- * Parcours la liste des arbres en feu et emflamme les voisins en tenant compte de la direction du vent
+ * Un arbre brule pendant une unité de temps :
+ * 	il enflamme les voisins en tenant compte de la direction du vent et perd des PV
  * @author Ugo
  * 
+ * @param a arbre qui brule
+ * @param vent qui influe la transmission
  */
 void Foret::transitionWind(Arbre* a, const Vent* vent)
 {
-	burnAdjacentsWind(a, vent);
+	sparkAdjacentsWind(a, vent);
 	
 	if ( a->burn(burningCoef) )
 		onFire.push_back(a);
@@ -785,7 +837,7 @@ void Foret::transitionWind(Arbre* a, const Vent* vent)
 
 
 /**
- * passe de t à t+1 tous les arbres à l'aide de la liste d'arbres en feu
+ * Passe de t à t+1 tous les arbres à l'aide de la liste d'arbres en feu
  * @author Florian et Ugo
  * @return vrai si il y eu des changements, faux sinon
  */
@@ -803,7 +855,7 @@ bool Foret::NextMove()
 		#endif
 		// TODO utiliser mapping ?
 		for (list< Arbre* >::iterator ab(old.begin()); ab!=old.end(); ++ab){
-// 			transition(*ab);
+// 			transition(*ab); // sans prendre en compte le vent
 			transitionWind(*ab, wind);
 		}
 	}
@@ -818,6 +870,12 @@ bool Foret::NextMove()
 
 // TODO FLorian : Doc des fonctions de chargement et sauvegarde
 
+/**
+ * Lit les tailles d'une foret dans un fichier de sauvegarde
+ * @author Florian
+ * @param file fichier de sauvegarde de foret
+ * @deprecated taille lues dans fwelcome, pour initialiser les tailles des fenetres
+ */
 void Foret::loadSizes(ifstream* file)
 {
 	file->read( (char *)&(colonnes), sizeof(int));
@@ -827,7 +885,11 @@ void Foret::loadSizes(ifstream* file)
 	#endif
 }
 
-
+/**
+ * Lit les essences d'une foret dans un fichier de sauvegarde
+ * @author Florian
+ * @param file fichier de sauvegarde de foret
+ */
 void Foret::loadEssences(ifstream* file)
 {
 	int nbEssences;
@@ -869,7 +931,7 @@ void Foret::loadEssences(ifstream* file)
  * Charge une foret à partir d'un fichier de sauvegarde
  * @author Florian
  * @param file fichier de sauvegarde d'une foret
- * @param PB barre de progression IMPROVEIT pas propre
+ * @param PB barre de progression pour suivre le chargement de la foret IMPROVEIT
  */
 // TODO voir pour mettre un thread comme vincent barichard l'a dit
 void Foret::loadMatrix(ifstream* file, QProgressBar* PB)
@@ -902,6 +964,12 @@ void Foret::loadMatrix(ifstream* file, QProgressBar* PB)
 // 		int progression= 0;
 }
 
+/**
+ * Lit les tailles d'une foret dans un fichier de sauvegarde
+ * @author Florian
+ * @param file fichier de sauvegarde de foret
+ * @param PB barre de progression pour suivre le chargement de la foret IMPROVEIT
+ */
 bool Foret::load(ifstream * file, QProgressBar* PB)
 {
 // 	string chemin= "./Resources/"+fileName+".dat";
@@ -912,7 +980,6 @@ bool Foret::load(ifstream * file, QProgressBar* PB)
 		return false;
 	}
 	else {
-// 		loadSizes(file); // le chargement des tailles est déja fait dans fwlcome
 		loadEssences(file);
 // 		loadEssences("../Moteur/essence_data.txt");
 		loadMatrix(file, PB);
@@ -923,14 +990,23 @@ bool Foret::load(ifstream * file, QProgressBar* PB)
 	}
 }
 
-
+// SAUVEGARDES
+/**
+ * Sauvegarde les tailles de la foret dans un fichier de sauvegarde
+ * @author Florian
+ * @param file fichier où sauvegarder les données de la forêt
+ */
 void Foret::saveSizes(ofstream* file)
 {
 	file->write( (char *)&(colonnes), sizeof(int));
 	file->write( (char *)&(lignes), sizeof(int));
 }
 
-
+/**
+ * Sauvegarde les essences de la foret et leur nombre dans un fichier de sauvegarde
+ * @author Florian
+ * @param file fichier où sauvegarder les données de la forêt
+ */
 void Foret::saveEssences(ofstream* file)
 {
 	int taille= essences.size();
@@ -971,6 +1047,11 @@ void Foret::saveEssences(ofstream* file)
 	}
 }
 
+/**
+ * Sauvegarde les arbres de la foret dans un fichier de sauvegarde
+ * @author Florian
+ * @param file fichier où sauvegarder les données de la forêt
+ */
 void Foret::saveMatrix(ofstream* file)
 {
 	int progression= 0;
@@ -1007,6 +1088,11 @@ cout<< "Enregistrement de l'arbre "<< ab->getPos().col<< "; "<< lignes<< endl;
 
 }
 
+/**
+ * Sauvegarde une forêt dans un fichier (tailles-essences-arbres)
+ * @author Florian
+ * @param filename chemin où sauvegarder le fichier de sauvegarde
+ */
 bool Foret::save(string fileName)
 {
 	string chemin= "./Resources/"+fileName+".dat";
@@ -1018,7 +1104,6 @@ bool Foret::save(string fileName)
 	}
 	else {
 		cout<< "Sauvegarde ..."<< endl;
-		
 		saveSizes(file);
 		saveEssences(file);
 		saveMatrix(file);
@@ -1032,7 +1117,12 @@ bool Foret::save(string fileName)
 
 // #########################
 // #	Affichage attributs	#
-// ######################### 
+// ######################### }
+
+/**
+ * Affiche les essences de la foret sur la sortie standard (debuggage)
+ * @author Florian
+ */
 void Foret::showEssences() const
 {
 	cout << "| Nom\t\t||"<< " indice\t||"<< " masseV\t||"<< " diam\t||"<< " haut\t||"<< " type\t||"<< " ageM\t|"<< endl;
