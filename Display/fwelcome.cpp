@@ -6,6 +6,7 @@
 #include <QtGui/QGridLayout>
 /*
  * - BUG Ugo : Les sliders/labels changent de dimension lorsqu'il y a un nombre à 2 chiffres après la virgule
+ * TODO Commenter les fonctions de fwelcome
  */
 
 using namespace std;
@@ -177,8 +178,6 @@ void Fwelcome::addCancel() const
 	cancel_btn->setVisible(true);
 }
 
-#include <fstream>
-#include <iostream>
 void Fwelcome::restore()
 {
 	std::string filename= "./Resources/foret1.dat";
@@ -204,7 +203,7 @@ void Fwelcome::restore()
 		cout<<x<< " en hauteur" <<endl;
 		#endif
 		
-		accept();
+		done(Restore);
 	}
 }
 
@@ -228,7 +227,8 @@ void Fwelcome::loadFromImg()
 		cout<< pictureForest->height()<< " en hauteur" <<endl;
 		#endif
 		
-		accept();
+		done(Load);
+// 		accept();
 	}
 }
 

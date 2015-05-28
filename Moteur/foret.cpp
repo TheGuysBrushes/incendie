@@ -324,7 +324,7 @@ void Foret::create(int largeur, int hauteur, vector< vector< char > >* matrice)
 {
 	initEmpty();
 #if DEBUG_CURRENT
-	cout << "ajout des arbres si intensité > 70"<< endl;
+	cout << "ajout des arbres si intensité > 60"<< endl;
 #endif
 	
 	for(int ligne= 0; ligne< hauteur; ++ligne){
@@ -333,7 +333,7 @@ void Foret::create(int largeur, int hauteur, vector< vector< char > >* matrice)
 		#endif
 		
 		for (int colonne=0; colonne< largeur; ++colonne){
-			if ( (*matrice)[ligne][colonne] > (char)70){
+			if ( (*matrice)[ligne][colonne] > (char)60){
 				plantTree(colonne, ligne);
 			}
 		}
@@ -936,10 +936,14 @@ void Foret::loadEssences(ifstream* file)
 // TODO voir pour mettre un thread comme vincent barichard l'a dit
 void Foret::loadMatrix(ifstream* file, QProgressBar* PB)
 {
+	#if DEBUG_LOAD
 	cout<< "Chargement ..."<< endl;
+	#endif
 	
 	initEmpty();
+	#if DEBUG_LOAD
 	cout<< "fin init foret"<< endl;
+	#endif
 	
 	// Arbres
 	while(!file->eof()){

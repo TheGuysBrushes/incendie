@@ -13,9 +13,12 @@
 #include <QtGui/QDesktopWidget>
 #include <QtGui/QApplication>
 
+#include <iostream>
 #include <fstream>
 
 #include "../debug.h"
+
+enum DialogCode{Rejected, Accepted, Load, Restore};
 
 /**
  * Classe représentant le panneau de dialogue

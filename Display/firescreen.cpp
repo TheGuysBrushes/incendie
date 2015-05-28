@@ -309,30 +309,30 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
  * @author Florian
  * @param fwel fenêtre qui a été appelée et contient les paramètres de la nouvelle forêt
  */
-void FireScreen::initForest(Fwelcome * fwel)
-{
-	nb_tour = 0;
-	int largeur= fwel->get_larg();
-	int hauteur= fwel->get_haut();
-	ifstream* file= fwel->getFile();
-	QImage* picture= fwel->getImage();	
-	
-	// Choix de la méthode de création de foret selon les paramètres initialisés
-	if ( !fWidget->initialise(largeur,hauteur, file) ){ // Essai création par fichier de sauvegarde si il est ouvert
-		
-		// sinon essai creation par image, si elle est chargée
-		if ( !fWidget->initialise(largeur,hauteur, picture) ){ // 
-			// Sinon, cas par défaut : Creation selon les paramétres de la fenetre de paramétrage
-			fWidget->initialise(largeur,hauteur,
-									fwel->get_proba(),
-									fwel->get_coef()	);
-		}
-		
-		majCompteur();
-	}
-	
-	initSizes(largeur, hauteur);
-}
+// void FireScreen::initForest(Fwelcome * fwel)
+// {
+// 	nb_tour = 0;
+// 	int largeur= fwel->get_larg();
+// 	int hauteur= fwel->get_haut();
+// 	ifstream* file= fwel->getFile();
+// 	QImage* picture= fwel->getImage();	
+// 	
+// 	// Choix de la méthode de création de foret selon les paramètres initialisés
+// 	if ( !fWidget->initialise(largeur,hauteur, file) ){ // Essai création par fichier de sauvegarde si il est ouvert
+// 		
+// 		// sinon essai creation par image, si elle est chargée
+// 		if ( !fWidget->initialise(largeur,hauteur, picture) ){ // 
+// 			// Sinon, cas par défaut : Creation selon les paramétres de la fenetre de paramétrage
+// 			fWidget->initialise(largeur,hauteur,
+// 									fwel->get_proba(),
+// 									fwel->get_coef()	);
+// 		}
+// 		
+// 		majCompteur();
+// 	}
+// 	
+// 	initSizes(largeur, hauteur);
+// }
 
 
 /**
@@ -346,12 +346,31 @@ bool FireScreen::initialisation()
 	Fwelcome* fwel = new Fwelcome(this);
 	fwel->show();
 	
-	if( fwel->exec() == QDialog::Accepted ){
-		initForest(fwel);
+	nb_tour = 0;
+	int resExec= fwel->exec();
+	
+	int largeur= fwel->get_larg();
+	int hauteur= fwel->get_haut();
+	if (resExec>0){
+		if( resExec == Load ){
+			QImage* picture= fwel->getImage();
+			fWidget->initialise(largeur, hauteur, picture);
+		} 
+		else if( resExec== Restore ){
+			ifstream* file= fwel->getFile();
+			fWidget->initialise(largeur,hauteur, file);
+		}
+		else if( resExec==QDialog::Accepted ){
+			fWidget->initialise(largeur,hauteur,
+									fwel->get_proba(), fwel->get_coef()	);	
+		}
+
+		majCompteur();
+		initSizes(largeur, hauteur);
 		
 		return true;
 	}
-	return false;
+	else return false;
 }
 
 
@@ -432,12 +451,39 @@ void FireScreen::reset()
 	fwel->addCancel();
 	fwel->setModal(true);
 	fwel->show();
+
+	nb_tour = 0;
+	int largeur= fwel->get_larg();
+	int hauteur= fwel->get_haut();
 	
-	if( fwel->exec() == QDialog::Accepted ){
+	int resExec= fwel->exec();
+	if (resExec>0){
 		fWidget->delForest();
-		
-		initForest(fwel);
 		fWidget->razRubber();
+	
+		if(  resExec== Load ){
+			QImage* picture= fwel->getImage();
+			fWidget->initialise(largeur, hauteur, picture);
+	// 		initForest(fwel);
+			
+			fWidget->redraw();
+		}
+		else if(  resExec== Restore ){
+			ifstream* file= fwel->getFile();
+			fWidget->initialise(largeur,hauteur, file);
+	// 		initForest(fwel);
+			
+			fWidget->redraw();
+		}
+		else if( resExec==QDialog::Accepted ){
+			fWidget->initialise(largeur,hauteur,
+									fwel->get_proba(), fwel->get_coef()	);
+	// 		initForest(fwel);
+			
+			fWidget->redraw();
+		}
+		else cerr<< "Mauvais code de retour de la fenetre de paramétrage"<< endl;
+		
 		fWidget->redraw();
 	}
 }
