@@ -211,6 +211,8 @@ void Fwelcome::loadFromImg()
 {
 	QString filename= "../foret_pay.tif";
 	
+	delete pictureForest;
+	pictureForest= new QImage();
 	pictureForest->load(filename);
 	
 	if (pictureForest->isNull()){

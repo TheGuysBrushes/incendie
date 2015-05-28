@@ -1,6 +1,56 @@
+28/05
+###################################	#
+#				firescreen.cpp				#
+#	initForest(choix crea foret)		#
+###################################	#
+/**
+ * Restaure une forêt à partir d'un fichier ouvert
+ * @author Florian
+ * @param file fichier binaire ouvert contenant la sauvegarde de la forêt (taille-essences-arbres)
+ */
+// void FireScreen::createForest(ifstream* file)
+// {
+// 	int largeur, hauteur;
+// 	file->read( (char *)&(largeur), sizeof(int));
+// 	file->read( (char *)&(hauteur), sizeof(int));
+// 	
+// 	createForest(largeur, hauteur, file);
+// }
+
+/**
+ * Crée une nouvelle forêt à partir d'une fenêtre de paramétrage
+ * @author Florian
+ * @param fwel fenêtre qui a été appelée et contient les paramètres de la nouvelle forêt
+ */
+// void FireScreen::initForest(Fwelcome * fwel)
+// {
+// 	nb_tour = 0;
+// 	int largeur= fwel->get_larg();
+// 	int hauteur= fwel->get_haut();
+// 	ifstream* file= fwel->getFile();
+// 	QImage* picture= fwel->getImage();	
+// 	
+// 	// Choix de la méthode de création de foret selon les paramètres initialisés
+// 	if ( !fWidget->initialise(largeur,hauteur, file) ){ // Essai création par fichier de sauvegarde si il est ouvert
+// 		
+// 		// sinon essai creation par image, si elle est chargée
+// 		if ( !fWidget->initialise(largeur,hauteur, picture) ){ // 
+// 			// Sinon, cas par défaut : Creation selon les paramétres de la fenetre de paramétrage
+// 			fWidget->initialise(largeur,hauteur,
+// 									fwel->get_proba(),
+// 									fwel->get_coef()	);
+// 		}
+// 		
+// 		majCompteur();
+// 	}
+// 	
+// 	initSizes(largeur, hauteur);
+// }
+
+
 22/05
 ###############################	#
-#			firewidget				#
+#			firewidget					#
 # constructeur avec crea foret	#
 ###############################	#
 .h :
