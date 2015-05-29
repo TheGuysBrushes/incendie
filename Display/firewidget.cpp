@@ -1,11 +1,7 @@
 #include "firewidget.h"
 
-#define GRAY 	5
-#define RED_TRANSPARENT 	6
-#define ANTI_RED_TRANSPARENT	7
-#define BLUE 8
-#define PURPLE 9
-#define RED 10
+enum Colors{colorArbre0, colorArbre1, colorArbre2, colorArbre3, colorArbre4, Gray, Red, Red_transparent, Anti_red_transparent, Blue, Purple};
+
 
 using namespace std;
 
@@ -331,22 +327,22 @@ void FireWidget::setColor(int colorIndice)
 		case 4:
 			this->color->setRgb(46,139,87);
 			break;
-		case GRAY:
+		case Gray:
 			this->color->setRgb(80,80,80);
 			break;
-		case RED_TRANSPARENT:
+		case Red_transparent:
 			this->color->setRgb(255,00,00,	180);
 			break;
-		case ANTI_RED_TRANSPARENT:
+		case Anti_red_transparent:
 			this->color->setRgb(00,75,75,180);
 			break;
-		case BLUE:
-			this->color->setRgb(25,25,250,50);
+		case Blue:
+			this->color->setRgb(25,25,250,180);
 			break;
-		case PURPLE:
+		case Purple:
 			this->color->setRgb(148,0,211);
 			break;
-		case RED:
+		case Red:
 			this->color->setRgb(255,0,0);
 			break;
 		default :
@@ -448,22 +444,22 @@ void FireWidget::drawForest()
 				// On vérifie ici si l'arbre a recu un retardateur
 				// i.e son coefficient est différent de 1
 				if(dynamic_cast < Arbre* >(cell)->getCoeff() != 1)
-					setColor(BLUE);
+					setColor(Blue);
 				drawCell(current_largeur, current_hauteur);
 				
 			}
 			else if (cell->getState() == 2){
-				setColor(RED);
+				setColor(Red);
 				if(dynamic_cast < Arbre* >(cell)->getCoeff() != 1)
-					setColor(RED_TRANSPARENT);	
+					setColor(Red_transparent);	
 				drawCell(current_largeur, current_hauteur);
 			}
 			else if (cell->getState() == -1){
-				setColor(GRAY);
+				setColor(Gray);
 				drawCell(current_largeur, current_hauteur);
 			}
 			else if(cell->getState() == -2){
-				setColor(PURPLE);
+				setColor(Purple);
 				drawCell(current_largeur,current_hauteur);
 			}
 			
@@ -493,12 +489,11 @@ void FireWidget::drawChanged()
 {
 	bufferPainter->begin(buffer);
 	
-	setColor(RED);
+	setColor(Red);
 	drawList(forest->getBurned());
 // 	forest->clearBurned();
 	
-	setColor(GRAY);
-	// 	setColor(ANTI_RED_TRANSPARENT);
+	setColor(Gray);
 	drawList(forest->getCarbonized());
 	forest->clearCarbonized();
 	

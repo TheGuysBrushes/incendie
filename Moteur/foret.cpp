@@ -347,7 +347,7 @@ void Foret::create(int largeur, int hauteur, vector< vector< char > >* matrice)
  */
 void Foret::randomMatrix(float probabilite)
 {
-	srand(std::time(0));
+	srand(0);
 	if (probabilite>1){
 		probabilite=0.6;
 		std::cout << "MIS A DEFAUT"<< endl;
@@ -750,26 +750,38 @@ std::list< Arbre* > Foret::adjacents(const Arbre * ab, int distance) const
  * @param vert force du vent verticalement
  */
 void Foret::sparkAdjacentsWind(int posCol, int posRow, int hor, int vert){
-	
+	int x=1;
+	if(hor<0)
+		x = -1;
+	int y=1;
+	if(vert<0)
+		y = -1;
+		
+	for(int i = hor; i !=-x; i-=x) {
+		for(int j = vert; j != -y; j-=y) {
+/*	
 	for(int i = 0; i <= abs( hor ); ++i) {
-		for(int j = 0; j <= abs( vert ); ++j) {
+		for(int j = 0; j <= abs( vert ); ++j) {*/
 // 			burnAdjacentsWind(posCol, posRow, i, j);
 
-			if( ( (hor + posCol-i) >= 0 ) && ( (hor + posCol-i) < (colonnes) ) && ( (vert + posRow-j) >= 0 ) && ( (vert +posRow-j) < (lignes) ) ){
-				
+			// Test d'appartenance des coordonnées à la matriceif( ( (hor + posCol-i) >= 0 ) && ( (hor + posCol-i) < (colonnes) ) && ( (vert + posRow-j) >= 0 ) && ( (vert +posRow-j) < (lignes) ) ){
+// 			if( ( (hor + posCol-i) >= 0 ) && ( (hor + posCol-i) < (colonnes) ) && ( (vert + posRow-j) >= 0 ) && ( (vert +posRow-j) < (lignes) ) ){
+				if( ( (posCol+i) >= 0 ) && ( (posCol+i) < (colonnes) ) && ( (posRow+j) >= 0 ) && ( (posRow+j) < (lignes) ) ){
 				#if DEBUG_VENT2
 				cout << "transmission à cellule en "<< posRow + (hor -i)<< " ; "<< posCol + (vert -j)<< endl;
 				#endif
 				Cellule* cell;
 				
 				// TODO Ugo : verification que vent négatif horizontalement mais pas verticalement, POURQUOI ?
+				/*
 				if(hor < 0)
 					cell= matrix[posRow + (vert -j)][posCol + (hor +i)];
 				else
 					cell= matrix[posRow +  (vert -j)][posCol + (hor -i)];
-				
+				*/
+				cell = matrix[posRow+j][posCol+i];
 				if(cell->getState() == 1)
-					spark(dynamic_cast < Arbre* >(cell), (i+1)*(j+1) );
+					spark(dynamic_cast < Arbre* >(cell), (abs(hor+i)+1)*(abs(vert+j)+1) );
 			}
 		}
 	}
