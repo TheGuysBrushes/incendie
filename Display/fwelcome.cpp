@@ -131,16 +131,15 @@ void Fwelcome::initComponents(){
 	
 	// BOUTONS
 	QWidget* WButtons= new QWidget();
+		// TODO remettre dans le constructeur les création ?
 		gridLay = new QGridLayout(WButtons);
 		
-			// TODO remettre dans le constructeur
 			#if FRENCH
 			valid_btn = new QPushButton("Valider");
 			cancel_btn = new QPushButton("Annuler");
 			QPushButton* load_btn= new QPushButton("Charger une foret", this);
 			#else 
 			valid_btn = new QPushButton("Confirm");
-			// TODO placement du bouton de chargement
 			cancel_btn = new QPushButton("Cancel");
 			restoreBtn= new QPushButton("Load forest");
 			loadFromImgBtn = new QPushButton("Create from image");

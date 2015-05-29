@@ -761,18 +761,19 @@ void Foret::sparkAdjacentsWind(int posCol, int posRow, int hor, int vert)
 		y= -1;
 		
 	// On parcourt les cellules dans les sens du vent et 1 cellule de distance à l'opposé du vent (tranmission "arrière")
-	for(int i = hor; i !=-2*x; i-=x) {
-		for(int j = vert; j != -2*y; j-=y) {
+	for(int i = hor+x; i !=-2*x; i-=x) {
+		for(int j = vert+y; j != -2*y; j-=y) {
 
 			// Test d'appartenance des coordonnées à la matrice
 			if( ( (posCol+i) >= 0 ) && ( (posCol+i) < (colonnes) ) && ( (posRow+j) >= 0 ) && ( (posRow+j) < (lignes) ) ){
 				#if DEBUG_VENT2
 				cout << "transmission à cellule en "<< posRow + (hor -i)<< " ; "<< posCol + (vert -j)<< endl;
 				#endif
-				
+				// transmission du feu à la cellule voisine si c'est un arbre
 				Cellule* cell= matrix[posRow+j][posCol+i];
 				if(cell->getState() == 1)
-					spark(dynamic_cast < Arbre* >(cell), (abs(hor+i)+1)*(abs(vert+j)+1) );
+					// voir si on met abs(i) et abs(j)
+					spark(dynamic_cast < Arbre* >(cell), (abs(hor-i)+1)*(abs(vert-j)+1) );
 			}
 		}
 	}
@@ -802,7 +803,7 @@ void Foret::sparkAdjacentsWind(Arbre* a, const Vent* vent)
 /**
  * Applique une transition de l'état t à l'état t+1 d'un arbre
  * @author Florian et Ugo
- * @param ab
+ * @param ab arbre en feu qui doit le transmettre
  * @deprecated
  */
 void Foret::transition(Arbre* ab)
