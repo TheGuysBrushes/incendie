@@ -258,6 +258,7 @@ void Foret::plantTree(int col, int row)
 	// on choisit une essence aléatoirement pour cet arbre
 	unsigned distVoisins= 2;
 	unsigned ess = essenceRandom(col,row, distVoisins);
+
 	#if DEBUG_ESSENCE==1
 	cout << ess << " ; ";
 	#endif

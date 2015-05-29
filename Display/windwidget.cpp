@@ -161,8 +161,6 @@ void WindWidget::changeWindDir()
 		if(angle < 270)
 			angle += 360;
 		#if DEBUG_VAR
-		cout << "angle de wind : " << wind->getAngle() << " ; " << endl;
-		cout << "coefficient de variation " << coef << " ; " << endl;
 		cout << "angle après modif " << angle << endl;
 		#endif
 		wind->setAngle(angle);

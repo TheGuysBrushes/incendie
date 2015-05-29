@@ -152,11 +152,9 @@ void WindCircle::mousePressEvent(QMouseEvent* event)
 		result += 180;
 	}
 
-	#if DEBUG_CLICK
+	#if DEBUG_VAR
 	cout << "Taille de windcircle : " << width() << " ; " << height() << endl;
 	cout << "Angle de windcircle : " << angle << endl;
-	cout << "Coordonnée du centre : " << center->x() << " ; " << center->y() << endl;
-	cout << "Coordonnée de l'event : " << event->x() << " ; " << event->y() << endl;
 	cout << "Angle résultat ? : " << (int)result << endl;
 	#endif
 	setAngle((int)result);

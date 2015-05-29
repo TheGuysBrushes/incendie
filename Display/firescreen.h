@@ -9,6 +9,8 @@
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QDesktopWidget>
 #include <QtGui/QApplication>
+#include <QtGui/QComboBox>
+#include <QtGui/QLineEdit>
 
 #include <cmath>
 
@@ -44,7 +46,7 @@ private:
 	QPushButton* next_btn;	// pour pouvoir le griser
 	QPushButton* cut_btn;	// pour pouvoir le griser
 	QPushButton* delay_btn;	// pour pouvoir le griser
-	
+	QComboBox* actionBox;
 	QTimer* timer;
 	
 	int nb_tour;
@@ -82,7 +84,6 @@ public slots:
 	void reset();
 	void save() const;
 	
-	void invertActionRightMouse();
 	void updateWind(int angle, int vitesse);
 	
 	void releaseOrdered();

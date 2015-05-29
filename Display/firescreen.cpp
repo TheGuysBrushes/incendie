@@ -35,24 +35,27 @@ FireScreen::FireScreen(): QMainWindow()
 	windWidget = new WindWidget();
 	menus = new QWidget();
 	timer = new QTimer();
+	// COMBOBOX des différentes actions
+	actionBox = new QComboBox(this);
+	actionBox->addItem("");
 	
+
 #if FRENCH
 	next_btn = new QPushButton("Suivant");
 	play_btn = new QPushButton("Démarrer");
 	pause_btn = new QPushButton("Pause");
-	cut_btn = new QPushButton("Coupure");
-	delay_btn = new QPushButton("Retardateur");
+	actionBox->addItem("Coupure");
+	actionBox->addItem("Retardateur");	
 #else
 	next_btn = new QPushButton("Next");
 	play_btn = new QPushButton("Play");
 	pause_btn = new QPushButton("Pause");
-	cut_btn = new QPushButton("Cutting");
-	delay_btn = new QPushButton("Retardatorr");
+	actionBox->addItem("Cutting");
+	actionBox->addItem("Retardator");	
+
 #endif
 
 	pause_btn->setDisabled(true);
-	cut_btn->setEnabled(true);
-	delay_btn->setEnabled(false);
 	
 	cpt_lbl = new QLabel();
 	delai_lbl = new QLabel();
@@ -67,6 +70,7 @@ FireScreen::~FireScreen()
 	delete play_btn;
 	delete next_btn;
 
+	delete actionBox;
 	delete timer;
 	delete menus;
 	delete fWidget;
@@ -202,9 +206,10 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	h_lay1->addWidget(tour_lbl);
 	h_lay1->addWidget(cpt_lbl);
 	
-	h_lay2->addWidget(cut_btn);
-	h_lay2->addWidget(delay_btn);
-	
+	QLabel* actionLabel = new QLabel("Action a effectuer :");
+
+	h_lay2->addWidget(actionLabel);
+	h_lay2->addWidget(actionBox);
 	vert_lay1->addWidget(titre);
 	vert_lay1->addWidget(info_vent);
 	vert_lay1->addWidget(windWidget);
@@ -230,9 +235,6 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	// IMPROVEIT Temporaire, à revoir lors de la création de l'explorateur de fichier
 
 	connect(save_btn,	SIGNAL(clicked()),	this, SLOT( save()) );	
-		/* Clic droit */
-	connect(cut_btn,	SIGNAL(clicked()),		this, SLOT(invertActionRightMouse()));	
-	connect(delay_btn,	SIGNAL(clicked()),	this, SLOT(invertActionRightMouse()));
 		/* Déroulement*/
 	connect(next_btn,	SIGNAL(clicked()), 		this,	SLOT( nextStep()) );
 	connect(play_btn,	SIGNAL(clicked()), 		this,	SLOT( start_timer()) );
@@ -255,6 +257,7 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	tour_lbl->setStyleSheet("QLabel {  color : darkblue; }");
 	cpt_lbl->setStyleSheet("QLabel { color : darkblue; }");
 	delai_lbl->setStyleSheet("QLabel { color : darkblue; }");
+	actionLabel->setStyleSheet("QLabel { color : darkblue; }");
 
 }
 
@@ -437,22 +440,6 @@ void FireScreen::save() const
 	fWidget->saveForest();
 }
 
-/**
- * Cette fonction permet d'inverser les actions effectuées par le clic droit.
- * @author Ugo
- */
-void FireScreen::invertActionRightMouse()
-{
-	if(cut_btn->isEnabled()){
-		cut_btn->setDisabled(true);
-		delay_btn->setEnabled(true);
-	}else{
-		delay_btn->setDisabled(true);
-		cut_btn->setEnabled(true);
-	}
-	
-}
-
 	/* Déroulement */
 /**
  * Avance la progression de l'incendie d'un tour (t+1)
@@ -504,17 +491,20 @@ void FireScreen::stop_timer()
  */
 void FireScreen::releaseOrdered()
 {
-	// L'action choisie est représenté par le fait que le boutton est désactivé
-	if(!cut_btn->isEnabled()){
+	if(actionBox->currentIndex() == 0){
+		std::cout << "Rien"<< endl;
+	}
+	else if(actionBox->currentIndex() == 1){
 		#if DEBUG_RETARD
 		std::cout << "demande de coupure" << std::endl;
 		#endif
 		emit actionSender(CUT);
-	} else if(!delay_btn->isEnabled()){
+	}
+	else if(actionBox->currentIndex() == 2){
 		#if DEBUG_RETARD
 		std::cout << "demande de retardateur" << std::endl;
 		#endif
 		emit actionSender(DELAY);
 	}
-	
+
 }
