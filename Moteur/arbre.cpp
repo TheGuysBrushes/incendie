@@ -101,7 +101,7 @@ void Arbre::setCoefficient(float x)
  */
 void Arbre::spark(float coefTransmission)
 {
-	int taux= 10*(coefTransmission*coefficient)/humidity *100;
+	int taux= (coefTransmission*coefficient)/humidity *100;
 	
 	int aleatoire= rand()%101;
 	
