@@ -96,8 +96,9 @@ void Arbre::setCoefficient(float x)
 // ###############
 
 /**
- * L'arbre reçoit des flammes et risque de s'enflammer
+ * L'arbre reçoit des flammes d'un voisin et risque de s'enflammer
  * @author Florian
+ * @param coefTransmission force de transmisson de l'arbre en feu au voisin, correspond à un rapport (force du vent)/(dist à l'arbre en feu)
  */
 void Arbre::spark(float coefTransmission)
 {

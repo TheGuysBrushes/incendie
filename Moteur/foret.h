@@ -25,7 +25,7 @@ private:
 	int lignes;
 	int colonnes;
 	
-	float burningCoef; // ralenti la progression du feu, il lui faut plus de tours pour avancer : affecte la précision des mesures
+	float burningCoef; // ralenti la progression du feu, il lui faut plus de tours pour avancer (peut affecter la précision des mesures)
 	
 	Vent* wind;
 	std::vector< Essence > essences;

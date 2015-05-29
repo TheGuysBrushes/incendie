@@ -39,7 +39,12 @@ public:
 	void setCoefficient(float x);
 
 	// Autres méthodes
-	void spark	(float coef=1.0);
+	/**
+	 * L'arbre reçoit des flammes d'un voisin et risque de s'enflammer
+	 * @author Florian
+	 * @param coefTransmission force de transmisson de l'arbre en feu au voisin, correspond à un rapport (force du vent)/(dist à l'arbre en feu)
+	 */
+	void spark	(float coefTransmission = 1.0);
 	bool burn	(float coefBrulure = 1.0);
 	void initialise();
 	
