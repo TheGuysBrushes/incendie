@@ -491,17 +491,18 @@ void FireWidget::drawChanged()
 	
 	setColor(Red);
 	drawList(forest->getBurned());
-// 	forest->clearBurned();
+	forest->clearBurned();
 	
 	setColor(Gray);
 	drawList(forest->getCarbonized());
 	forest->clearCarbonized();
 	
-	color->setNamedColor("blue");
+// 	color->setNamedColor("blue");
+	setColor(Blue);
 	drawList(forest->getExtinguished());
-	forest->clearUprooted();
+	forest->clearExtinguished();
 	
-	color->setNamedColor("black");
+	setColor(Purple);;
 	drawList(forest->getUprooted());
 	forest->clearUprooted();
 	
@@ -517,8 +518,8 @@ int num_redraw= 0;
  */
 void FireWidget::redraw()
 {
-	++num_redraw;
 #if DEBUG_CURRENT
+	++num_redraw;
 	cout << "test redraw "<< num_redraw<< " TO DELETE (ligne 449 firewidget)"<< endl;
 #endif
 	
@@ -744,5 +745,7 @@ void FireWidget::actionReceived(int x)
 		forest->delay(xDep, yDep, xArr,yArr);
 	}
 
-	redraw();
+	drawChanged();
+	update();
+// 	redraw();
 }

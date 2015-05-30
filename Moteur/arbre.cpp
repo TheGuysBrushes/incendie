@@ -91,6 +91,12 @@ void Arbre::setCoefficient(float x)
 	coefficient = x;
 }
 
+void Arbre::water()
+{
+	setCoefficient(0.5);
+}
+
+
 // ###############
 // 	Actions
 // ###############

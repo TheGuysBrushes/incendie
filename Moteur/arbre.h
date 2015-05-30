@@ -51,7 +51,7 @@ public:
 	// Méthodes constantes
 	virtual bool isOnFire()	const	{ return state==2; };
 	
-	void water()	{ state= 1;	};
+	void water()	/*{ state= 1;	}*/;
 	void kindle()	{ state= 2;	};
 	void blast()	{ state= -1; };
 	void uproot()	{ state= -2; };

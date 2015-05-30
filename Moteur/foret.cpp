@@ -546,11 +546,11 @@ void Foret::delay(int xDep, int yDep, int xArr, int yArr)
 		
 		for(int j= yDep; j < yArr; ++j){
 			// Le retardateur ne s'applique que sur les arbres
-			if(matrix[j][i]->getState() > 0){
-				Arbre* ab = dynamic_cast<Arbre *>(matrix[j][i]);
+			Cellule* cell= matrix[j][i];
+			if (cell->getState()>0)
 				// Réduit le coefficient de combustion personnel de l'arbre à 0.5
-				ab->setCoefficient(0.5);
-			}			
+				water(  dynamic_cast<Arbre *>(cell) );
+// 				ab->setCoefficient(0.5);
 		}
 	}
 }
@@ -564,7 +564,7 @@ void Foret::delay(int xDep, int yDep, int xArr, int yArr)
 void Foret::water(Arbre* ab)
 {
 	ab->water();
-	onFire.remove(ab);
+// 	onFire.remove(ab);
 	extinguished.push_back(ab);
 }
 
