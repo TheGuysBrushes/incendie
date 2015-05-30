@@ -53,8 +53,8 @@ public:
 	
 	void water()	{ state= 1;	};
 	void kindle()	{ state= 2;	};
-	void blast()	{ state= -1;	};
-	void uproot()	{ state= 0;	};
+	void blast()	{ state= -1; };
+	void uproot()	{ state= -2; };
 };
 
 #endif // ARBRE_H

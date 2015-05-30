@@ -347,7 +347,8 @@ void Foret::create(int largeur, int hauteur, vector< vector< char > >* matrice)
  */
 void Foret::randomMatrix(float probabilite)
 {
-	srand(0);
+// 	srand(0);
+	srand(time(0));
 	if (probabilite>1){
 		probabilite=0.6;
 		std::cout << "MIS A DEFAUT"<< endl;
@@ -527,7 +528,10 @@ void Foret::cut(int xDep, int yDep, int xArr, int yArr)
 	for(int i= xDep; i < xArr; ++i){
 		
 		for(int j= yDep; j < yArr; ++j){
-			matrix[j][i]->setState(-2);
+// 			matrix[j][i]->setState(-2);
+			Cellule* cell= matrix[j][i];
+			if (cell->getState()>0)
+				uproot(  dynamic_cast<Arbre *>(matrix[j][i]) );
 		}
 	}
 }
@@ -559,9 +563,6 @@ void Foret::delay(int xDep, int yDep, int xArr, int yArr)
  */
 void Foret::water(Arbre* ab)
 {
-// 	for (list< Arbre* >::iterator tmp(onFire.begin()); tmp!=onFire.end(); ++tmp)
-// 		if (ab==*tmp)
-
 	ab->water();
 	onFire.remove(ab);
 	extinguished.push_back(ab);
@@ -889,7 +890,7 @@ void Foret::loadSizes(ifstream* file)
 }
 
 /**
- * Lit les tailles d'une foret dans un fichier de sauvegarde
+ * Lit le coefficient de brulure d'une foret dans un fichier de sauvegarde
  * @author Florian
  * @param file fichier de sauvegarde de foret
  */
@@ -1089,9 +1090,14 @@ cout<< "Enregistrement de l'arbre "<< ab->getPos().col<< "; "<< lignes<< endl;
 				file->write( (char *)&(ab->getPos().col), sizeof(int));
 				file->write( (char *)&(ab->getPos().row), sizeof(int));
 				
+				// Essence
 				unsigned indice= ab->getEssence()->getIndice();
-				
 				file->write( (char*)&(indice), sizeof(unsigned));
+				
+				// Etat
+				int etat= ab->getState();
+				file->write( (char*)&(etat), sizeof(int));
+				
 			}
 		}
 		
