@@ -121,10 +121,11 @@ public:
 	
 	// Persistance des donnees
 	void loadSizes(std::ifstream* file);
+	void loadBurningCoef(std::ifstream* file);
 	void loadEssences(std::ifstream* file);
 	void loadMatrix(std::ifstream* file, QProgressBar* PB);
 	
-	void saveSizes(std::ofstream* file);
+	void saveProperties(std::ofstream* file);
 	void saveEssences(std::ofstream* file);
 	void saveMatrix(std::ofstream* file);
 	

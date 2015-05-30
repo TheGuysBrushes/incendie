@@ -1,5 +1,7 @@
 #include "firewidget.h"
 
+#include <QtGui/QVBoxLayout> // fenetre chargement
+
 enum Colors{colorArbre0, colorArbre1, colorArbre2, colorArbre3, colorArbre4, Gray, Red, Red_transparent, Anti_red_transparent, Blue, Purple};
 
 
@@ -59,8 +61,6 @@ void FireWidget::initialise(int largeur, int hauteur, float proba, float coef_br
 	
 	setMinimumSize(largeur/2.0, hauteur/2.0);
 }
-
-#include <QtGui/QVBoxLayout>
 
 /**
  * Fonction de création d'une foret A PARTIR D'UNE SAUVEGARDE,

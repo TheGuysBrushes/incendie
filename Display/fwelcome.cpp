@@ -5,7 +5,6 @@
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QGridLayout>
 /*
- * - BUG Ugo : Les sliders/labels changent de dimension lorsqu'il y a un nombre à 2 chiffres après la virgule
  * TODO Commenter les fonctions de fwelcome
  */
 
@@ -229,7 +228,6 @@ void Fwelcome::loadFromImg()
 		#endif
 		
 		done(Load);
-// 		accept();
 	}
 }
 

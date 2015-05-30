@@ -41,9 +41,8 @@ Foret::Foret(int _largeur, int _hauteur, float proba, float _coefFeu)
  * @param file fichier de sauvegarde d'une foret précédente, contenant les essences et l'emplacement des arbres et leur indice d'essence
  * @param PB barre de progression Qt, pour afficher l'avancement du chargement
  */
-// TODO modifier initialisation burningCoef
 Foret::Foret(int _largeur, int _hauteur, ifstream * file, QProgressBar* PB)
-	:lignes(_hauteur), colonnes(_largeur), burningCoef(0.5)
+	:lignes(_hauteur), colonnes(_largeur)
 {
 	// TODO Ugo : faire des constructeur qui permettent de créer un vent inital en accord avec la valeur initiale du curseur
 	wind = new Vent(1,-1);
@@ -59,7 +58,7 @@ Foret::Foret(int _largeur, int _hauteur, ifstream * file, QProgressBar* PB)
  * @param _hauteur nombre de lignes de la matrice, la hauteur
  * @param matrice matrice d'intensités de couleur verte selon l'emplacement dans l'image
  */
-// TODO modifier initialisation burningCoef
+// IMPROVEIT Initialisation burning coef à 0.5
 Foret::Foret(int _largeur, int _hauteur, vector< std::vector< char > >* matrice)
 	: lignes(_hauteur), colonnes(_largeur), burningCoef(0.5)
 {
@@ -890,6 +889,19 @@ void Foret::loadSizes(ifstream* file)
 }
 
 /**
+ * Lit les tailles d'une foret dans un fichier de sauvegarde
+ * @author Florian
+ * @param file fichier de sauvegarde de foret
+ */
+void Foret::loadBurningCoef(ifstream* file)
+{
+	file->read( (char *)&(burningCoef), sizeof(float));
+	#if DEBUG_LOAD
+	cout<< "Coefficient de brulure : "<< burningCoef<< endl;
+	#endif
+}
+
+/**
  * Lit les essences d'une foret dans un fichier de sauvegarde
  * @author Florian
  * @param file fichier de sauvegarde de foret
@@ -969,27 +981,23 @@ void Foret::loadMatrix(ifstream* file, QProgressBar* PB)
 		cout<< "progression : "<< newProgression<< "%"<< endl;
 		#endif
 	}
-// 		int progression= 0;
 }
 
 /**
- * Lit les tailles d'une foret dans un fichier de sauvegarde
+ * Initialise la foret et rempli la matrice d'arbres à partir d"un fichier de sauvegarde
  * @author Florian
  * @param file fichier de sauvegarde de foret
  * @param PB barre de progression pour suivre le chargement de la foret IMPROVEIT
  */
 bool Foret::load(ifstream * file, QProgressBar* PB)
 {
-// 	string chemin= "./Resources/"+fileName+".dat";
-// 	ifstream* file= new ifstream(chemin.c_str(), ios::in|ios::binary);
-	// 	file.
 	if (!file->is_open()){
 		cout<< "Echec ouverture fichier de sauvegarde"<< endl;
 		return false;
 	}
 	else {
+		loadBurningCoef(file);
 		loadEssences(file);
-// 		loadEssences("../Moteur/essence_data.txt");
 		loadMatrix(file, PB);
 		
 		file->close();
@@ -1000,14 +1008,16 @@ bool Foret::load(ifstream * file, QProgressBar* PB)
 
 // SAUVEGARDES
 /**
- * Sauvegarde les tailles de la foret dans un fichier de sauvegarde
+ * Sauvegarde les tailles et le coefficient de brulure de la foret dans un fichier de sauvegarde
  * @author Florian
  * @param file fichier où sauvegarder les données de la forêt
  */
-void Foret::saveSizes(ofstream* file)
+void Foret::saveProperties(ofstream* file)
 {
 	file->write( (char *)&(colonnes), sizeof(int));
 	file->write( (char *)&(lignes), sizeof(int));
+	
+	file->write( (char *)&(burningCoef), sizeof(float));
 }
 
 /**
@@ -1112,7 +1122,7 @@ bool Foret::save(string fileName)
 	}
 	else {
 		cout<< "Sauvegarde ..."<< endl;
-		saveSizes(file);
+		saveProperties(file);
 		saveEssences(file);
 		saveMatrix(file);
 		
