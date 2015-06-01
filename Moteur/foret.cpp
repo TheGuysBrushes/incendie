@@ -10,7 +10,7 @@ int ecartAgeMax= 80;
 
 using namespace std;
 
-// TODO modifier les noms pour les arbres retarder, remplacer water
+// TODO modifier les noms pour les arbres retarder, remplacer delay
 
 // ###################################
 //		Constructeurs et destructeur
@@ -283,7 +283,7 @@ void Foret::plantTree(int col, int row)
  * @param row ordonnée de l'arbre
  * @param numEss indice de l'essence de l'arbre à utiliser
  */
-void Foret::plantTree(int col, int row, unsigned int numEss)
+void Foret::plantTree(int col, int row, unsigned int numEss, float coef, int etat)
 {
 	#if DEBUG_ARBRE_PLANTE
 	cout<< "arbre planté en "<< col << ";"<< row<< endl;
@@ -291,7 +291,18 @@ void Foret::plantTree(int col, int row, unsigned int numEss)
 	
 	const Essence* pEss= &(essences[numEss]);
 	// pour l'instant, on considere que tous les arbres ont atteint leur maturite
-	Arbre* ab= new Arbre(matrix[row][col], col,row, pEss, rand()%ecartAgeMax +pEss->getAgeMaturite(), rand()%ecartHMax +hMin );
+	Arbre* ab= new Arbre(matrix[row][col], col,row, pEss, rand()%ecartAgeMax +pEss->getAgeMaturite(), rand()%ecartHMax +hMin);
+	
+	if (coef==0.5)
+		delay(ab, coef);
+	
+	if (etat==-1)
+		blast(ab);
+	else if (etat==-2)
+		delay(ab);
+	else if (etat==2)
+		kindle(ab);
+	
 	matrix[row][col]= ab;
 }
 
@@ -551,8 +562,7 @@ void Foret::delay(int xDep, int yDep, int xArr, int yArr)
 			Cellule* cell= matrix[j][i];
 			if (cell->getState()>0)
 				// Réduit le coefficient de combustion personnel de l'arbre à 0.5
-				water(  dynamic_cast<Arbre *>(cell) );
-// 				ab->setCoefficient(0.5);
+				delay(  dynamic_cast<Arbre *>(cell) );
 		}
 	}
 }
@@ -563,9 +573,9 @@ void Foret::delay(int xDep, int yDep, int xArr, int yArr)
  * @author Florian
  * @param ab arbre à éteindre
  */
-void Foret::water(Arbre* ab)
+void Foret::delay(Arbre* ab, float coef)
 {
-	ab->water();
+	ab->delay(coef);
 // 	onFire.remove(ab);
 	extinguished.push_back(ab);
 }
@@ -973,7 +983,14 @@ void Foret::loadMatrix(ifstream* file, QProgressBar* PB)
 		unsigned indice;
 		file->read( (char*)&(indice), sizeof(unsigned));
 		
-		plantTree(col, row, indice);
+		// Coef brulure
+		float coefBrulure;
+		file->read((char*)&(coefBrulure), sizeof(float));
+		
+		int etat;
+		file->read( (char*)&(etat), sizeof(int));
+		
+		plantTree(col, row, indice, coefBrulure, etat);
 		#if DEBUG_LOAD_POS
 		cout<< "arbre en : "<< col<< "; "<< row << " essence indice : " << indice<< endl;
 		#endif
@@ -1079,7 +1096,7 @@ void Foret::saveMatrix(ofstream* file)
 	
 	for (int i= 0; i< lignes; ++i){
 		for(vector< Cellule* >::const_iterator cell(matrix[i].begin()); cell != matrix[i].end() ; ++cell ){
-			if ( (*cell)->getState()>0){
+			if ( (*cell)->getState()!=0){
 				Arbre * ab= dynamic_cast< Arbre * >(*cell);
 #if DEBUG_SAVE_POS
 cout<< "Enregistrement de l'arbre "<< ab->getPos().col<< "; "<< lignes<< endl;
@@ -1095,6 +1112,10 @@ cout<< "Enregistrement de l'arbre "<< ab->getPos().col<< "; "<< lignes<< endl;
 				// Essence
 				unsigned indice= ab->getEssence()->getIndice();
 				file->write( (char*)&(indice), sizeof(unsigned));
+				
+				// Coef brulure
+				float coefBrulure= ab->getCoeff();
+				file->write((char*)&(coefBrulure), sizeof(float));
 				
 				// Etat
 				int etat= ab->getState();

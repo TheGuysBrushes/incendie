@@ -24,8 +24,8 @@ private:
 	
 public:
 	// Constructeurs et destructeur
-	Arbre(int col, int row, const Essence* const _essence, unsigned int _age = 0, unsigned int _humidite = 20);
-	Arbre(Cellule* cell, int col, int row, const Essence* const _essence, unsigned int _age = 0, unsigned int _humidite = 20);
+	Arbre(int col, int row, const Essence*const _essence, unsigned int _age = 0, unsigned int _humidite = 20, int _coefficient = 1);
+	Arbre(Cellule* cell, int col, int row, const Essence*const _essence, unsigned int _age = 0, unsigned int _humidite = 20, int _coefficient = 1);
 		
 	// Getters 
 	virtual int getState()	const	{ return state; };
@@ -51,7 +51,7 @@ public:
 	// Méthodes constantes
 	virtual bool isOnFire()	const	{ return state==2; };
 	
-	void water()	/*{ state= 1;	}*/;
+	void delay(float coefRalentissement)	/*{ state= 1;	}*/;
 	void kindle()	{ state= 2;	};
 	void blast()	{ state= -1; };
 	void uproot()	{ state= -2; };

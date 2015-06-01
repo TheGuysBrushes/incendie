@@ -77,12 +77,12 @@ public:
 	
 	// Manipulations d'arbre
 	void plantTree(int col, int row);
-	void plantTree(int col, int row, unsigned numEss);
+	void plantTree(int col, int row, unsigned int numEss, float coef, int etat);
 	
 	void uproot(Arbre* ab);
 	void uproot(int col, int row);
 	
-	void water(Arbre* ab);
+	void delay(Arbre* ab, float coef=0.5);
 	
 	void kindle(Arbre* ab);
 	void kindle(int col, int row);

@@ -2,7 +2,7 @@
 
 #include <QtGui/QVBoxLayout> // fenetre chargement
 
-enum Colors{Green0, Green1, Green2, Green3, Green4, Gray, Red, Red_transparent, Anti_red_transparent, Blue, Purple};
+enum Colors{Green0, Green1, Green2, Green3, Green4, Gray, Red, Red_transparent, Anti_red_transparent, Blue, Purple, Brownie};
 
 
 using namespace std;
@@ -219,29 +219,29 @@ void FireWidget::delForest(){
  * @param int/int indices de la colonne et de la ligne de l'arbre à éteindre
  * @return vrai si il y avait un arbre en feu
  */
-bool FireWidget::eteindreFeu(int colonne, int ligne)
-{
-	#if DEBUG_ALLUME
-	cout << "eteindre cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
-	#endif
-
-	if(ligne>=0 && ligne < forest->height()){
-		vector< Cellule* >* line= (*forest)[ligne];
-
-		if (colonne>=0 && colonne < forest->width()){
-			Cellule* cell= (*line)[colonne];	
-
-			if (cell->getState()==2){
-				Arbre* ab= dynamic_cast< Arbre* >(cell);
-				forest->water(ab);
-
-				return true;
-			}
-		}
-	}
-	// cas d'erreur par défaut
-	return false;
-}
+// bool FireWidget::eteindreFeu(int colonne, int ligne)
+// {
+// 	#if DEBUG_ALLUME
+// 	cout << "eteindre cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
+// 	#endif
+// 
+// 	if(ligne>=0 && ligne < forest->height()){
+// 		vector< Cellule* >* line= (*forest)[ligne];
+// 
+// 		if (colonne>=0 && colonne < forest->width()){
+// 			Cellule* cell= (*line)[colonne];	
+// 
+// 			if (cell->getState()==2){
+// 				Arbre* ab= dynamic_cast< Arbre* >(cell);
+// 				forest->delay(ab);
+// 
+// 				return true;
+// 			}
+// 		}
+// 	}
+// 	// cas d'erreur par défaut
+// 	return false;
+// }
 
 /**
  * Allume un feu sur un arbre "vivant"
@@ -349,6 +349,9 @@ void FireWidget::setColor(int colorIndice)
 		case Red:
 			this->color->setRgb(255,0,0);
 			break;
+		case Brownie:
+			color->setRgb(40, 30, 20);
+			break;
 		default :
 			this->color->setRgb(255,255,255,	100);
 	}
@@ -438,24 +441,26 @@ void FireWidget::drawForest()
 			Cellule* cell= *j;
 			
 			if( cell->getState() == 0){
-				color->setNamedColor("black");
+				setColor(Brownie);
 				drawCell(current_largeur, current_hauteur);
 			}
 			else if(cell->getState() == 1){
 				// Il faut ici vérifier l'essence de l'arbre pour lui attribuer une variante de vert
 				unsigned indice= dynamic_cast < Arbre* >(cell)->getEssence()->getIndice();
-				setColor(indice);
 				// On vérifie ici si l'arbre a recu un retardateur
-				// i.e son coefficient est différent de 1
-				if(dynamic_cast < Arbre* >(cell)->getCoeff() != 1)
+				// i.e son coefficient est inférieur à 1
+				if(dynamic_cast < Arbre* >(cell)->getCoeff() < 1)
 					setColor(Blue);
+				else setColor(indice);
+				
 				drawCell(current_largeur, current_hauteur);
 				
 			}
 			else if (cell->getState() == 2){
-				setColor(Red);
-				if(dynamic_cast < Arbre* >(cell)->getCoeff() != 1)
+				if(dynamic_cast < Arbre* >(cell)->getCoeff() < 1)
 					setColor(Red_transparent);	
+				else setColor(Red);
+				
 				drawCell(current_largeur, current_hauteur);
 			}
 			else if (cell->getState() == -1){
