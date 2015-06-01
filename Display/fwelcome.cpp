@@ -13,10 +13,23 @@ using namespace std;
 Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 {
 	// Initialisation des composants dynamiques (SpinBox exceptées)
-	p_value = new QLabel();
+	p_value = new QLabel();	
 	c_value = new QLabel();
 	
 	pictureForest= new QImage();
+	
+	#if FRENCH
+	valid_btn = new QPushButton("Valider");
+	cancel_btn = new QPushButton("Annuler");
+	QPushButton* load_btn= new QPushButton("Charger une foret", this);
+	#else 
+	valid_btn = new QPushButton("Confirm");
+	cancel_btn = new QPushButton("Cancel");
+	restoreBtn= new QPushButton("Load forest");
+	loadFromImgBtn = new QPushButton("Create from image");
+	#endif
+	
+	cancel_btn->setVisible(false);
 	
 	initComponents();
 	
@@ -131,21 +144,7 @@ void Fwelcome::initComponents(){
 	// BOUTONS
 	QWidget* WButtons= new QWidget();
 		// TODO remettre dans le constructeur les création ?
-		gridLay = new QGridLayout(WButtons);
-		
-			#if FRENCH
-			valid_btn = new QPushButton("Valider");
-			cancel_btn = new QPushButton("Annuler");
-			QPushButton* load_btn= new QPushButton("Charger une foret", this);
-			#else 
-			valid_btn = new QPushButton("Confirm");
-			cancel_btn = new QPushButton("Cancel");
-			restoreBtn= new QPushButton("Load forest");
-			loadFromImgBtn = new QPushButton("Create from image");
-			#endif
-			
-			cancel_btn->setVisible(false);
-			
+		gridLay = new QGridLayout(WButtons);			
 		gridLay->addWidget(valid_btn, 0,0, 1,0);
 		gridLay->addWidget(restoreBtn, 1,0);
 		gridLay->addWidget(loadFromImgBtn, 1,1);
