@@ -77,7 +77,7 @@ public:
 	
 	// Manipulations d'arbre
 	void plantTree(int col, int row);
-	void plantTree(int col, int row, unsigned int numEss, float coef, int etat);
+	void plantTree(int col, int row, unsigned int numEss, int PdV, float humidite, float coef, int etat);
 	
 	void uproot(Arbre* ab);
 	void uproot(int col, int row);

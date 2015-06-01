@@ -17,7 +17,7 @@ private:
 	// les essences sont constantes et un arbre a toujours la même essence
 	const Essence * const essence;
 	
-	int age;
+// 	int age;
 	float humidity;
 	float coefficient;
 	int hp;	// calculés lors de la création
@@ -25,7 +25,8 @@ private:
 public:
 	// Constructeurs et destructeur
 	Arbre(int col, int row, const Essence*const _essence, unsigned int _age = 0, unsigned int _humidite = 20, int _coefficient = 1);
-	Arbre(Cellule* cell, int col, int row, const Essence*const _essence, unsigned int _age = 0, unsigned int _humidite = 20, int _coefficient = 1);
+	Arbre(Cellule* cell, int col, int row, const Essence* const _essence, unsigned int age = 0, unsigned int _humidite = 20, int _coefficient = 1);
+	Arbre(int col, int row, Cellule* cell, const Essence* const _essence, unsigned int _humidite, int _hp, int _coefficient = 1);
 		
 	// Getters 
 	virtual int getState()	const	{ return state; };
@@ -46,7 +47,7 @@ public:
 	 */
 	void spark	(float coefTransmission = 1.0);
 	bool burn	(float coefBrulure = 1.0);
-	void initialise();
+	void initialise(unsigned age);
 	
 	// Méthodes constantes
 	virtual bool isOnFire()	const	{ return state==2; };

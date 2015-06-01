@@ -283,7 +283,7 @@ void Foret::plantTree(int col, int row)
  * @param row ordonnée de l'arbre
  * @param numEss indice de l'essence de l'arbre à utiliser
  */
-void Foret::plantTree(int col, int row, unsigned int numEss, float coef, int etat)
+void Foret::plantTree(int col, int row, unsigned int numEss, int PdV, float humidite, float coef, int etat)
 {
 	#if DEBUG_ARBRE_PLANTE
 	cout<< "arbre planté en "<< col << ";"<< row<< endl;
@@ -291,7 +291,7 @@ void Foret::plantTree(int col, int row, unsigned int numEss, float coef, int eta
 	
 	const Essence* pEss= &(essences[numEss]);
 	// pour l'instant, on considere que tous les arbres ont atteint leur maturite
-	Arbre* ab= new Arbre(matrix[row][col], col,row, pEss, rand()%ecartAgeMax +pEss->getAgeMaturite(), rand()%ecartHMax +hMin);
+	Arbre* ab= new Arbre(col,row, matrix[row][col], pEss, humidite, PdV);
 	
 	if (coef==0.5)
 		delay(ab, coef);
@@ -983,6 +983,12 @@ void Foret::loadMatrix(ifstream* file, QProgressBar* PB)
 		unsigned indice;
 		file->read( (char*)&(indice), sizeof(unsigned));
 		
+		// PV et Humidité
+		int PV;
+		float humidite;
+		file->read((char*)&(PV), sizeof(int));
+		file->read((char*)&(humidite), sizeof(float));
+		
 		// Coef brulure
 		float coefBrulure;
 		file->read((char*)&(coefBrulure), sizeof(float));
@@ -990,7 +996,7 @@ void Foret::loadMatrix(ifstream* file, QProgressBar* PB)
 		int etat;
 		file->read( (char*)&(etat), sizeof(int));
 		
-		plantTree(col, row, indice, coefBrulure, etat);
+		plantTree(col, row, indice, PV, humidite ,coefBrulure, etat);
 		#if DEBUG_LOAD_POS
 		cout<< "arbre en : "<< col<< "; "<< row << " essence indice : " << indice<< endl;
 		#endif
@@ -1112,6 +1118,12 @@ cout<< "Enregistrement de l'arbre "<< ab->getPos().col<< "; "<< lignes<< endl;
 				// Essence
 				unsigned indice= ab->getEssence()->getIndice();
 				file->write( (char*)&(indice), sizeof(unsigned));
+				
+				// PV et Humidité
+				int PV= ab->getPv();
+				float humidite= ab->getHumidity();
+				file->write((char*)&(PV), sizeof(int));
+				file->write((char*)&(humidite), sizeof(float));
 				
 				// Coef brulure
 				float coefBrulure= ab->getCoeff();

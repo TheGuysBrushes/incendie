@@ -15,25 +15,42 @@ using namespace std;
 
 /**
  * Construit un arbre à partir d'une position
- * 
+ * @param age age de l'arbre, permet de calculer ses PV
+ * @param all paramètres d'initialisation des attributs de l'arbre
  */
-Arbre::Arbre(int col, int row, const Essence* const _essence, unsigned _age, unsigned _humidite, int _coefficient)
-	: Cellule(1), pos(col, row), essence(_essence), age(_age), humidity(_humidite), coefficient(_coefficient)
+Arbre::Arbre(int col, int row, const Essence* const _essence, unsigned age, unsigned _humidite, int _coefficient)
+	: Cellule(1), pos(col, row), essence(_essence), humidity(_humidite), coefficient(_coefficient)
 {	
-	initialise();
+	initialise(age);
 }
 
 /**
  * Construit un arbre "à partir" d'une cellule
  * @param cell cellule à remplacer, elle est désallouée
+ * @param age age de l'arbre, permet de calculer ses PV
+ * @param all paramètres d'initialisation des attributs de l'arbre
  */
-Arbre::Arbre(Cellule* cell, int col, int row, const Essence*const _essence, unsigned int _age, unsigned int _humidite, int _coefficient)
-	: Cellule(1), pos(col, row), essence(_essence), age(_age), humidity(_humidite), coefficient(_coefficient)
+Arbre::Arbre(Cellule* cell, int col, int row, const Essence*const _essence, unsigned age, unsigned int _humidite, int _coefficient)
+	: Cellule(1), pos(col, row), essence(_essence), humidity(_humidite), coefficient(_coefficient)
 {
-	initialise();
+	initialise(age);
 	// suppression ancienne cellule 
 	delete(cell);
 }
+
+/**
+ * Construit un arbre par dessus une cellule, en donnant des PV plutot que de les calculer avec l'age
+ * @param cell cellule à remplacer, elle est désallouée
+ * @param all paramètres d'initialisation des attributs de l'arbre
+ */
+Arbre::Arbre(int col, int row, Cellule* cell, const Essence* const _essence, unsigned int _humidite, int _hp, int _coefficient)
+	: Cellule(1), pos(col, row), essence(_essence), humidity(_humidite), coefficient(_coefficient), hp(_hp)
+{
+
+	// suppression ancienne cellule 
+	delete(cell);
+}
+
 
 
 /**
@@ -41,7 +58,7 @@ Arbre::Arbre(Cellule* cell, int col, int row, const Essence*const _essence, unsi
  * et de ses propriétés discrètes
  * @author Ugo Florian
  */
-void Arbre::initialise()
+void Arbre::initialise(unsigned age)
 {
 	/*
 	 * Nous avons décidé d'établir le rayon et la hauteur de l'arbre en fonction de son âge
@@ -54,15 +71,6 @@ void Arbre::initialise()
 	 * 
 	 * Si un arbre est plus vieux que son âge de maturité, il possèdera les caractères
 	 */
-	// Initialisation des points de vie de l'arbre
-	#if DEBUG_PV
-	cout << "Essence :  "<< essence->toString()<< endl ;
-	#endif
-	
-	float rayon = essence->getDiametre() / 2.0;
-	float	hauteur = essence->getHauteur();
-	float masseV= essence->getMasse()/1000.0;
-	
 // 	int ageMatur= essence->getAgeMaturite();
 // 	unsigned points;
 // 	if (age>= ageMatur)
@@ -72,6 +80,16 @@ void Arbre::initialise()
 // 		unsigned pointsJ= ageMatur /* *croissance/an ?*/;
 // 		points= pointsJ + (age-ageMatur) /* *croissance/an ?*/;
 // 	}
+	
+	// Initialisation des points de vie de l'arbre
+	#if DEBUG_PV
+	cout << "Essence :  "<< essence->toString()<< endl ;
+	#endif
+	
+	float rayon = essence->getDiametre() / 2.0;
+	float	hauteur = essence->getHauteur();
+	float masseV= essence->getMasse()/1000.0;
+
 	
 	unsigned points = (unsigned) ( (M_PI* (rayon*rayon)*hauteur) * masseV );
 	
