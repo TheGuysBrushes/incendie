@@ -206,7 +206,7 @@ void Fwelcome::restore()
 
 void Fwelcome::loadFromImg()
 {
-	QString filename= "../foret_pay.png";
+	QString filename= "../foret_pay.tif";
 	
 	delete pictureForest;
 	pictureForest= new QImage();

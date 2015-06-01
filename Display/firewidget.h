@@ -72,6 +72,7 @@ public:
 	bool loadForest(std::string filename);
 	void saveForest() const;
 	void delForest();
+	void delPicture();
 
 	bool eteindreFeu(int colonne, int ligne);
 	bool allumerFeu(int colonne, int ligne);
@@ -105,7 +106,8 @@ public slots:
 	void actionReceived(int x);
 	
 signals:
-	void releaseSignal();
+	void releaseSignal(); // Vers firescreen
+	void endAction();	// Vers firescreen
 	
 };
 

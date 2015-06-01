@@ -88,6 +88,7 @@ public slots:
 	void releaseOrdered();
 	
 signals:
+	// signal de firescreen vers firewidget pour effectuer l'action du clic droit
 	void actionSender(int x);
 
 };

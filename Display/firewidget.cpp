@@ -151,19 +151,23 @@ bool FireWidget::initialise(int largeur, int hauteur, QImage* imageForet)
 void FireWidget::loadFromPicture(int largeurImage, int hauteurImage, QImage* imageForet)
 {
 	cout<< "Creation à partir d'image ..."<< endl;
-	vector< vector<char> >* matrice= new vector< vector<char> >;
+	vector< vector< int > >* matrice= new vector< vector< int > >;
 	QColor* pix= new QColor();
 	
 	for (int i= 0; i< hauteurImage; ++i){
-		vector<char> ligne;
+		vector< int > ligne;
 		
 		for (int j= 0; j< largeurImage; ++j){
 			pix->setRgba(imageForet->pixel(j, i));
 			#if DEBUG_IMAGE_POS
-			cout << "qté vert en "<< j<< " ; "<< i<<" : "<< pix->green()<< endl;
+			cout << "qté vert en "<< j<< " ; "<< i<<" : "<< pix->green();
+			cout << "\tqté red : " << pix->red() << " ; bleu : "<< pix->blue()<< endl;
 			#endif
 			
-			ligne.push_back( pix->green() );
+			int green= pix->green();
+			if (0.8*pix->red()< green && pix->blue()< 140)
+				ligne.push_back(green);
+			else ligne.push_back(0);
 		}
 		matrice->push_back(ligne);
 	}
@@ -212,6 +216,13 @@ void FireWidget::saveForest() const
 void FireWidget::delForest(){
 	delete(forest);
 }
+
+void FireWidget::delPicture()
+{
+	delete pictureForest;
+	pictureForest= new QImage;
+}
+
 
 
 /**
@@ -333,7 +344,7 @@ void FireWidget::setColor(int colorIndice)
 			this->color->setRgb(46,139,87);
 			break;
 		case Gray:
-			this->color->setRgb(80,80,80);
+			this->color->setRgb(60,60,60);
 			break;
 		case Red_transparent:
 			this->color->setRgb(255,00,00,	180);
@@ -342,7 +353,7 @@ void FireWidget::setColor(int colorIndice)
 			this->color->setRgb(00,75,75,180);
 			break;
 		case Blue:
-			this->color->setRgb(25,25,250,180);
+			this->color->setRgb(25,25,250,	200);
 			break;
 		case Purple:
 			this->color->setRgb(148,0,211);
@@ -497,7 +508,6 @@ bool FireWidget::drawPicture()
 
 bool FireWidget::drawPictureForest()
 {
-	
 	if (drawPicture()){
 		
 		bufferPainter->begin(buffer);
@@ -649,8 +659,16 @@ void FireWidget::mousePressEvent(QMouseEvent* event)
 	else if (event->button()==Qt::MiddleButton)
 		finirFeu(colonne, ligne);
 	else if (event->button()==Qt::RightButton)
+	{
 		initRubber(event);
-
+		
+		#if DEBUG_COLOR
+		QColor* pix= new QColor(pictureForest->pixel(colonne, ligne));
+		cout << "qté vert en "<< colonne<< " ; "<< ligne<<" : "<< pix->green();
+		cout << "\tqté red : " << pix->red() << " ; bleu : "<< pix->blue()<< endl;
+		#endif
+	}
+	
 	drawChanged();
 	update();
 }
@@ -686,6 +704,10 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 
 void FireWidget::mouseReleaseEvent(QMouseEvent* event)
 {
+	
+// 	IMPROVEIT Ugo : pourquoi ne pas definir la taille du rubber ici ? :
+// 	rubber->setGeometry(QRect(origin,event->pos()).normalized());
+
 	if(rubber){
 		rubber->hide();
 		// Sauvegarde des points du rubber pour parcours de la matrice
@@ -720,7 +742,7 @@ void FireWidget::mouseReleaseEvent(QMouseEvent* event)
 		cout << "Coordonnée de l'arrivée : " << arrivee.x()<< ";" << arrivee.y() << endl;
 		cout << "Taille de la zone de selection : " <<	arrivee.x() - depart.x() << ";" << arrivee.y() - depart.y() << endl;
 		#endif
-		// Emission du signal pour récupérer l'action à effectuer
+		// Emission du signal pour récupérer l'action à effectuer par firescreen
 		emit releaseSignal();
 	}
 	
@@ -803,14 +825,16 @@ void FireWidget::actionReceived(int x)
 	#endif
 	
 	// Appel à une fonction de forêt qui parcours la zone et effectue l'action
-
+	
+	
 	if(x == CUT){
 		forest->cut(xDep, yDep, xArr, yArr);
 	}else if( x == DELAY){
 		forest->delay(xDep, yDep, xArr,yArr);
-	}
-
+	}else cerr<< "mauvais index d'action clic droit"<< endl;
+	
 	drawChanged();
 	update();
+	emit endAction();
 // 	redraw();
 }

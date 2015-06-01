@@ -61,7 +61,7 @@ Foret::Foret(int _largeur, int _hauteur, ifstream * file, QProgressBar* PB)
  * @param matrice matrice d'intensités de couleur verte selon l'emplacement dans l'image
  */
 // IMPROVEIT Initialisation burning coef à 0.5
-Foret::Foret(int _largeur, int _hauteur, vector< std::vector< char > >* matrice)
+Foret::Foret(int _largeur, int _hauteur, vector< std::vector< int > >* matrice)
 	: lignes(_hauteur), colonnes(_largeur), burningCoef(0.5)
 {
 	// TODO Ugo : faire des constructeur qui permettent de créer un vent inital en accord avec la valeur initiale du curseur
@@ -333,11 +333,11 @@ void Foret::initEmpty()
  * @param hauteur hauteur de la foret à créer
  * @param matrice de taille largeur x hauteur, d'intensités de vert dans l'image
  */
-void Foret::create(int largeur, int hauteur, vector< vector< char > >* matrice)
+void Foret::create(int largeur, int hauteur, vector< vector< int > >* matrice)
 {
 	initEmpty();
 #if DEBUG_CURRENT
-	cout << "ajout des arbres si intensité > 60"<< endl;
+	cout << "ajout des arbres si intensité vert > autres"<< endl;
 #endif
 	
 	for(int ligne= 0; ligne< hauteur; ++ligne){
@@ -346,7 +346,7 @@ void Foret::create(int largeur, int hauteur, vector< vector< char > >* matrice)
 		#endif
 		
 		for (int colonne=0; colonne< largeur; ++colonne){
-			if ( (*matrice)[ligne][colonne] > (char)50){
+			if ( (*matrice)[ligne][colonne] > 40){
 				plantTree(colonne, ligne);
 			}
 		}

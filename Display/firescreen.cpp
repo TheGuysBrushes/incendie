@@ -246,6 +246,7 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	// Coupure et retardateur
 	connect(fWidget,	SIGNAL(releaseSignal()),	this, SLOT(releaseOrdered()));
 	connect(this,	SIGNAL(actionSender(int)),		fWidget, SLOT(actionReceived(int)));
+	connect(fWidget,	SIGNAL(endAction()),			this, SLOT(start_timer()));
 	
 	
 /*** 	DEFINITTION DU STYLE DES ELEMENTS	***/
@@ -304,6 +305,7 @@ bool FireScreen::initForest(Fwelcome* fwel)
 	int resExec= fwel->exec();
 	if (resExec>0){
 		
+		fWidget->delPicture();
 		nb_tour = 0;
 		int largeur= fwel->get_larg();
 		int hauteur= fwel->get_haut();
@@ -491,18 +493,24 @@ void FireScreen::stop_timer()
 void FireScreen::releaseOrdered()
 {
 	if(actionBox->currentIndex() == 0){
-		std::cout << "Rien"<< endl;
+		#if DEBUG_RETARD
+		std::cout << "Rien à faire"<< endl;
+		#endif
 	}
 	else if(actionBox->currentIndex() == 1){
 		#if DEBUG_RETARD
 		std::cout << "demande de coupure" << std::endl;
 		#endif
+		stop_timer();
+		pause_btn->setEnabled(true);
 		emit actionSender(CUT);
 	}
 	else if(actionBox->currentIndex() == 2){
 		#if DEBUG_RETARD
 		std::cout << "demande de retardateur" << std::endl;
 		#endif
+		stop_timer();
+		pause_btn->setEnabled(true);
 		emit actionSender( DELAY );
 	}
 
