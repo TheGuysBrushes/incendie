@@ -10,6 +10,8 @@ int ecartAgeMax= 80;
 
 using namespace std;
 
+// TODO modifier les noms pour les arbres retarder, remplacer water
+
 // ###################################
 //		Constructeurs et destructeur
 // ################################### 

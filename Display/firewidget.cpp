@@ -2,7 +2,7 @@
 
 #include <QtGui/QVBoxLayout> // fenetre chargement
 
-enum Colors{colorArbre0, colorArbre1, colorArbre2, colorArbre3, colorArbre4, Gray, Red, Red_transparent, Anti_red_transparent, Blue, Purple};
+enum Colors{Green0, Green1, Green2, Green3, Green4, Gray, Red, Red_transparent, Anti_red_transparent, Blue, Purple};
 
 
 using namespace std;
@@ -28,9 +28,6 @@ FireWidget::FireWidget(): QWidget()
 	bufferPainter= new QPainter();
 // 	pictureForest= new QImage();
 	
-// 	if ( !initialise("../foret_pay.tif") )
-// 	TODO prévenir l'utilisateur ou faire une fonction par défaut en cas d'echec de chargement à partir d'une image
-// 		cout << "Echec de création d'une foret à partir de l'image"<< endl;
 	rubber = NULL;
 }
 
@@ -124,7 +121,9 @@ bool FireWidget::initialise(int largeur, int hauteur, QImage* imageForet)
 		#if DEBUG_CREA_FORET
 		cout << "Réussite ouverture fichier, creation foret à partir de l'image"<< endl;
 		#endif
-
+		
+		// 	TODO prévenir l'utilisateur ou faire une fonction par défaut en cas d'echec de chargement à partir d'une image
+		// 		cout << "Echec de création d'une foret à partir de l'image"<< endl;
 		loadFromPicture(largeur, hauteur, imageForet);
 		setMinimumSize(largeur/2.0, hauteur/2.0);
 		
@@ -169,7 +168,7 @@ void FireWidget::loadFromPicture(int largeurImage, int hauteurImage, QImage* ima
 	}
 	forest= new Foret(largeurImage, hauteurImage, matrice);
 // 		QColormap map(pictureForest->tr);
-	// 	img.trueMatrix()
+// 	img.trueMatrix()
 }
 	
 /**
@@ -195,6 +194,10 @@ bool FireWidget::loadForest(std::string filename)
 	}
 }
 
+/**
+ * Sauvegarde la foret dans un fichier de sauvegarde (IMPROVEIT par défaut pour l'instant)
+ * @author Florian
+ */
 void FireWidget::saveForest() const
 {
 	forest->save("foret1");
@@ -203,6 +206,7 @@ void FireWidget::saveForest() const
 /**
  * Méthodes de destruction de la forêt pour gérer la 
  * ré-initialisation de la matrice
+ * @author Florian
  */
 void FireWidget::delForest(){
 	delete(forest);
@@ -242,8 +246,8 @@ bool FireWidget::eteindreFeu(int colonne, int ligne)
 /**
  * Allume un feu sur un arbre "vivant"
  * @author Florian
- * @param ligne
- * @param colonne ligne et colonne de l'arbre à enflammer
+ * @param colonne de l'arbre à enflammer
+ * @param ligne de l'arbre à enflammer
  * @return vrai si il y avait un arbre enflammable
  */
 bool FireWidget::allumerFeu(int colonne, int ligne)
@@ -312,19 +316,19 @@ bool FireWidget::finirFeu(int colonne, int ligne)
 void FireWidget::setColor(int colorIndice)
 {
 	switch(colorIndice){
-		case 0:
+		case Green0:
 			this->color->setRgb(01,100,00);
 			break;
-		case 1:
+		case Green1:
 			this->color->setRgb(34,139,34	);
 			break;
-		case 2:
+		case Green2:
 			this->color->setRgb(107,142,35);
 			break;
-		case 3:
+		case Green3:
 			this->color->setRgb(00,205,00);
 			break;
-		case 4:
+		case Green4:
 			this->color->setRgb(46,139,87);
 			break;
 		case Gray:

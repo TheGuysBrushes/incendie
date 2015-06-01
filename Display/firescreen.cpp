@@ -233,8 +233,8 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 		/* Gestion foret */
 	connect(reset_btn,	SIGNAL(clicked()), 	this,	SLOT( reset()) );
 	// IMPROVEIT Temporaire, à revoir lors de la création de l'explorateur de fichier
-
 	connect(save_btn,	SIGNAL(clicked()),	this, SLOT( save()) );	
+	
 		/* Déroulement*/
 	connect(next_btn,	SIGNAL(clicked()), 		this,	SLOT( nextStep()) );
 	connect(play_btn,	SIGNAL(clicked()), 		this,	SLOT( start_timer()) );
@@ -405,7 +405,6 @@ void FireScreen::set_delai(int x)
  * Les paramètres du vent ont été modifiés.
  * On doit récupérer les valeurs et mettre à jour le vent
  */
-// TODO mettre dans le .h ?
 void FireScreen::updateWind(int angle, int vitesse)
 {
 	fWidget->setWind(angle, vitesse);
@@ -504,7 +503,7 @@ void FireScreen::releaseOrdered()
 		#if DEBUG_RETARD
 		std::cout << "demande de retardateur" << std::endl;
 		#endif
-		emit actionSender(DELAY);
+		emit actionSender( DELAY );
 	}
 
 }
