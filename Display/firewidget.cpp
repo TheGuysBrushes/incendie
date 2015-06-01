@@ -26,7 +26,7 @@ FireWidget::FireWidget(): QWidget()
 	buffer = new QImage();
 	color = new QColor(Qt::black);
 	bufferPainter= new QPainter();
-// 	pictureForest= new QImage();
+	pictureForest= new QImage();
 	
 	rubber = NULL;
 }
@@ -117,21 +117,22 @@ bool FireWidget::initialise(int largeur, int hauteur, ifstream * file)
  */
 bool FireWidget::initialise(int largeur, int hauteur, QImage* imageForet)
 {
-	if (!imageForet->isNull()){	
+	if (!imageForet->isNull()){
+		pictureForest= imageForet;
 		#if DEBUG_CREA_FORET
 		cout << "Réussite ouverture fichier, creation foret à partir de l'image"<< endl;
 		#endif
 		
-		// 	TODO prévenir l'utilisateur ou faire une fonction par défaut en cas d'echec de chargement à partir d'une image
-		// 		cout << "Echec de création d'une foret à partir de l'image"<< endl;
 		loadFromPicture(largeur, hauteur, imageForet);
 		setMinimumSize(largeur/2.0, hauteur/2.0);
 		
 		return true;
 	}
 	else {
+		// 	TODO prévenir l'utilisateur ou faire une fonction par défaut en cas d'echec de chargement à partir d'une image
+		// 		cout << "Echec de création d'une foret à partir de l'image"<< endl;
 		#if DEBUG_CREA_FORET
-		cout << "Pas d'image, creation foret à partir des parametres de fwelcome"<< endl;
+		cout << "Pas d'image"<< endl;
 		#endif
 		
 		return false;
@@ -369,19 +370,6 @@ void FireWidget::setColor(int colorIndice)
 /***		Affichages	***/
 // ########################
 /**
- * Fonction à commenter par son auteur :p
- * @author Florian
- */
-// void FireWidget::drawPicture(){
-// 	
-// 	if (!pictureForest->isNull()){
-// 		bufferPainter->begin(buffer);
-// 		bufferPainter->drawImage(0, 0, *pictureForest);
-// 		bufferPainter->end();
-// 	}
-// }
-
-/**
  * Imprime une cellule à une position donnée, utilise la couleur courante
  * @author Florian
  * @param int col,row indices de la colonne et de la ligne de la cellules
@@ -427,66 +415,134 @@ void FireWidget::drawList( list< Arbre* > * arbres){
  * @author Ugo et Florian
  */
 void FireWidget::drawForest()
-{	
-	bufferPainter->begin(buffer);
-	
-	int current_hauteur= 0;
-	for(int i=0; i<forest->height(); ++i){
-		// On ne passe pas la hauteur de la grille mais le nombre de colonne*taille de colonne pour
-		// éviter la petite zone en bas de grille
-		vector< Cellule* >* ligne= (*forest)[i];
+{
+	if (!drawPictureForest()){
 		
-		int current_largeur= 0;
-		for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
-			Cellule* cell= *j;
+		bufferPainter->begin(buffer);
+		
+		int current_hauteur= 0;
+		for(int i=0; i<forest->height(); ++i){
+			// On ne passe pas la hauteur de la grille mais le nombre de colonne*taille de colonne pour
+			// éviter la petite zone en bas de grille
+			vector< Cellule* >* ligne= (*forest)[i];
 			
-			if( cell->getState() == 0){
-				setColor(Brownie);
-				drawCell(current_largeur, current_hauteur);
-			}
-			else if(cell->getState() == 1){
-				// Il faut ici vérifier l'essence de l'arbre pour lui attribuer une variante de vert
-				unsigned indice= dynamic_cast < Arbre* >(cell)->getEssence()->getIndice();
-				// On vérifie ici si l'arbre a recu un retardateur
-				// i.e son coefficient est inférieur à 1
-				if(dynamic_cast < Arbre* >(cell)->getCoeff() < 1)
-					setColor(Blue);
-				else setColor(indice);
+			int current_largeur= 0;
+			for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
+				Cellule* cell= *j;
 				
-				drawCell(current_largeur, current_hauteur);
+				if( cell->getState() == 0){
+					setColor(Brownie);
+					drawCell(current_largeur, current_hauteur);
+				}
+				else if(cell->getState() == 1){
+					// Il faut ici vérifier l'essence de l'arbre pour lui attribuer une variante de vert
+					unsigned indice= dynamic_cast < Arbre* >(cell)->getEssence()->getIndice();
+					// On vérifie ici si l'arbre a recu un retardateur
+					// i.e son coefficient est inférieur à 1
+					if(dynamic_cast < Arbre* >(cell)->getCoeff() < 1)
+						setColor(Blue);
+					else setColor(indice);
+					
+					drawCell(current_largeur, current_hauteur);
+					
+				}
+				else if (cell->getState() == 2){
+					if(dynamic_cast < Arbre* >(cell)->getCoeff() < 1)
+						setColor(Red_transparent);	
+					else setColor(Red);
+					
+					drawCell(current_largeur, current_hauteur);
+				}
+				else if (cell->getState() == -1){
+					setColor(Gray);
+					drawCell(current_largeur, current_hauteur);
+				}
+				else if(cell->getState() == -2){
+					setColor(Purple);
+					drawCell(current_largeur,current_hauteur);
+				}
 				
+				// Incrémentation des positions des cellules
+				current_largeur += 1;
 			}
-			else if (cell->getState() == 2){
-				if(dynamic_cast < Arbre* >(cell)->getCoeff() < 1)
-					setColor(Red_transparent);	
-				else setColor(Red);
-				
-				drawCell(current_largeur, current_hauteur);
-			}
-			else if (cell->getState() == -1){
-				setColor(Gray);
-				drawCell(current_largeur, current_hauteur);
-			}
-			else if(cell->getState() == -2){
-				setColor(Purple);
-				drawCell(current_largeur,current_hauteur);
-			}
-			
-			// Incrémentation des positions des cellules
-			current_largeur += 1;
+			#if DEBUG_TMATRICE
+			cout << endl;
+			#endif
+			current_hauteur += 1;
 		}
+		
+		bufferPainter->end();
+		
 		#if DEBUG_TMATRICE
-		cout << endl;
+		cout <<"fin draw forest ; "<< endl;
 		#endif
-		current_hauteur += 1;
 	}
-	
-	bufferPainter->end();
-	
-	#if DEBUG_TMATRICE
-	cout <<"fin draw forest ; "<< endl;
-	#endif
 }
+
+/**
+ * Fonction à commenter par son auteur :p
+ * @author Florian
+ */
+bool FireWidget::drawPicture()
+{
+	if (!pictureForest->isNull()){
+		bufferPainter->begin(buffer);
+		bufferPainter->drawImage(0, 0, *pictureForest);
+		bufferPainter->end();
+		
+		return true;
+	}
+	else return false;
+}
+
+bool FireWidget::drawPictureForest()
+{
+	
+	if (drawPicture()){
+		
+		bufferPainter->begin(buffer);
+		int current_hauteur= 0;
+		for(int i=0; i<forest->height(); ++i){
+			// On ne passe pas la hauteur de la grille mais le nombre de colonne*taille de colonne pour
+			// éviter la petite zone en bas de grille
+			vector< Cellule* >* ligne= (*forest)[i];
+			
+			int current_largeur= 0;
+			for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
+				Cellule* cell= *j;
+
+				if (cell->getState() == 2){
+					if(dynamic_cast < Arbre* >(cell)->getCoeff() < 1)
+						setColor(Red_transparent);	
+					else setColor(Red);
+					
+					drawCell(current_largeur, current_hauteur);
+				}
+				else if (cell->getState() == -1){
+					setColor(Gray);
+					drawCell(current_largeur, current_hauteur);
+				}
+				else if(cell->getState() == -2){
+					setColor(Purple);
+					drawCell(current_largeur,current_hauteur);
+				}
+				
+				// Incrémentation des positions des cellules
+				current_largeur += 1;
+			}
+			#if DEBUG_TMATRICE
+			cout << endl;
+			#endif
+			current_hauteur += 1;
+		}
+		
+		bufferPainter->end();
+		
+		return true;
+	}
+	else return false;
+}
+
 
 /**
  * Redessine les arbres qui ont changés d'état, sur l'ancienne matrice

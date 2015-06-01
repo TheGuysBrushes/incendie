@@ -35,8 +35,7 @@ private:
 	QImage* buffer;
 	QColor* color;
 	QPainter* bufferPainter;
-
-// 	QImage* pictureForest;
+	QImage* pictureForest;
 	
 	QPoint origin;
 	QRubberBand* rubber;
@@ -81,11 +80,12 @@ public:
 
 	
 	/* Affichage */
-	void drawPicture();
 	void drawCell(int colonne, int ligne);
 	void drawTree(const Arbre* ab);
 	void drawList(std::list< Arbre* >* arbres);
 	void drawForest();
+	bool drawPicture();
+	bool drawPictureForest();
 	void drawChanged();
 	void redraw();
 

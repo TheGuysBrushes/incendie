@@ -346,7 +346,7 @@ void Foret::create(int largeur, int hauteur, vector< vector< char > >* matrice)
 		#endif
 		
 		for (int colonne=0; colonne< largeur; ++colonne){
-			if ( (*matrice)[ligne][colonne] > (char)60){
+			if ( (*matrice)[ligne][colonne] > (char)50){
 				plantTree(colonne, ligne);
 			}
 		}

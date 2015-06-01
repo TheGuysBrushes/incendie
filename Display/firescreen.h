@@ -10,7 +10,6 @@
 #include <QtGui/QDesktopWidget>
 #include <QtGui/QApplication>
 #include <QtGui/QComboBox>
-#include <QtGui/QLineEdit>
 
 #include <cmath>
 
