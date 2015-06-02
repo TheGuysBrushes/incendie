@@ -47,14 +47,14 @@ public:
 	Foret(int _largeur, int _hauteur, float proba = 0.60, float _coefFeu = 1.0);
 // 	Foret(Foret& other, float proba=0.60);
 	Foret(int _largeur, int _hauteur, std::ifstream* file, QProgressBar* PB);
-	Foret(int _largeur, int _hauteur, std::vector< std::vector<char> >* matrice);
+	Foret(int _largeur, int _hauteur, std::vector< std::vector< int > >* matrice);
 	virtual ~Foret();
 	
 	// Initialisations
 	void initEmpty();
 	bool loadEssences(const std::string& fileName);
 	
-	void create(int largeur, int hauteur, std::vector< std::vector< char > >* matrice);
+	void create(int largeur, int hauteur, std::vector< std::vector< int > >* matrice);
 	void randomMatrix(float probabilite);
 	
 	void clean();
