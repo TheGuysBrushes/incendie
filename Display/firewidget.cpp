@@ -165,7 +165,8 @@ void FireWidget::loadFromPicture(int largeurImage, int hauteurImage, QImage* ima
 			#endif
 			
 			int green= pix->green();
-			if (0.8*pix->red()< green && pix->blue()*1.8< green+50)
+			// Une cellule est un arbre si il y a un peu moins de rouge que de vert et si il n'y a pas trop bleu, ni de blanc
+			if (0.8*pix->red()< green && pix->blue()*1.65 -55 < green)
 				ligne.push_back(green);
 			else ligne.push_back(0);
 		}
