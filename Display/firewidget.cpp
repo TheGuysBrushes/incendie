@@ -24,7 +24,7 @@ using namespace std;
 FireWidget::FireWidget(): QWidget()
 {	
 	buffer = new QImage();
-	color = new QColor(Qt::black);
+	color = new QColor(Qt::white);
 	bufferPainter= new QPainter();
 	pictureForest= new QImage();
 	
@@ -37,7 +37,7 @@ FireWidget::~FireWidget()
 	delete(buffer);
 	delete(color);
 	delete(bufferPainter);
-// 	delete(pictureForest);
+	delete(pictureForest);
 }
 
 // ########################
@@ -165,7 +165,7 @@ void FireWidget::loadFromPicture(int largeurImage, int hauteurImage, QImage* ima
 			#endif
 			
 			int green= pix->green();
-			if (0.8*pix->red()< green && pix->blue()< 140)
+			if (0.8*pix->red()< green && pix->blue()< 120)
 				ligne.push_back(green);
 			else ligne.push_back(0);
 		}
@@ -359,10 +359,10 @@ void FireWidget::setColor(int colorIndice)
 			this->color->setRgb(255,0,0);
 			break;
 		case Brownie:
-			color->setRgb(40, 30, 20);
+			this->color->setRgb(40, 30, 20);
 			break;
 		default :
-			this->color->setRgb(255,255,255,	100);
+			this->color->setRgb(255,255,255);
 	}
 }
 
@@ -424,10 +424,10 @@ void FireWidget::drawList( list< Arbre* > * arbres){
  */
 void FireWidget::drawForest()
 {
-// 	if (!drawPictureForest()){
+	if (!drawPictureForest()){
 	
 		bufferPainter->begin(buffer);
-		drawPicture();
+// 		drawPicture();
 		
 		int current_hauteur= 0;
 		for(int i=0; i<forest->height(); ++i){
@@ -460,7 +460,7 @@ void FireWidget::drawForest()
 				}
 				else if (cell->getState() == 2){
 					if(dynamic_cast < Arbre* >(cell)->getCoeff() < 1)
-						setColor(Orange);	
+						setColor(Orange);
 					else setColor(Red);
 					
 					drawCell(current_largeur, current_hauteur);
@@ -488,7 +488,7 @@ void FireWidget::drawForest()
 		#if DEBUG_TMATRICE
 		cout <<"fin draw forest ; "<< endl;
 		#endif
-// 	}
+	}
 }
 
 /**
@@ -498,61 +498,61 @@ void FireWidget::drawForest()
 bool FireWidget::drawPicture()
 {
 	if (!pictureForest->isNull()){
-// 		bufferPainter->begin(buffer);
+		bufferPainter->begin(buffer);
 		bufferPainter->drawImage(0, 0, *pictureForest);
-// 		bufferPainter->end();
+		bufferPainter->end();
 		
 		return true;
 	}
 	else return false;
 }
 
-// bool FireWidget::drawPictureForest()
-// {
-// 	if (drawPicture()){
-// 		
-// 		bufferPainter->begin(buffer);
-// 		int current_hauteur= 0;
-// 		for(int i=0; i<forest->height(); ++i){
-// 			// On ne passe pas la hauteur de la grille mais le nombre de colonne*taille de colonne pour
-// 			// éviter la petite zone en bas de grille
-// 			vector< Cellule* >* ligne= (*forest)[i];
-// 			
-// 			int current_largeur= 0;
-// 			for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
-// 				Cellule* cell= *j;
-// 
-// 				if (cell->getState() == 2){
-// 					if(dynamic_cast < Arbre* >(cell)->getCoeff() < 1)
-// 						setColor(Orange);	
-// 					else setColor(Red);
-// 					
-// 					drawCell(current_largeur, current_hauteur);
-// 				}
-// 				else if (cell->getState() == -1){
-// 					setColor(Gray);
-// 					drawCell(current_largeur, current_hauteur);
-// 				}
-// 				else if(cell->getState() == -2){
-// 					setColor(Purple);
-// 					drawCell(current_largeur,current_hauteur);
-// 				}
-// 				
-// 				// Incrémentation des positions des cellules
-// 				current_largeur += 1;
-// 			}
-// 			#if DEBUG_TMATRICE
-// 			cout << endl;
-// 			#endif
-// 			current_hauteur += 1;
-// 		}
-// 		
-// 		bufferPainter->end();
-// 		
-// 		return true;
-// 	}
-// 	else return false;
-// }
+bool FireWidget::drawPictureForest()
+{
+	if (drawPicture()){
+		
+		bufferPainter->begin(buffer);
+		int current_hauteur= 0;
+		for(int i=0; i<forest->height(); ++i){
+			// On ne passe pas la hauteur de la grille mais le nombre de colonne*taille de colonne pour
+			// éviter la petite zone en bas de grille
+			vector< Cellule* >* ligne= (*forest)[i];
+			
+			int current_largeur= 0;
+			for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
+				Cellule* cell= *j;
+
+				if (cell->getState() == 2){
+					if(dynamic_cast < Arbre* >(cell)->getCoeff() < 1)
+						setColor(Orange);	
+					else setColor(Red);
+					
+					drawCell(current_largeur, current_hauteur);
+				}
+				else if (cell->getState() == -1){
+					setColor(Gray);
+					drawCell(current_largeur, current_hauteur);
+				}
+				else if(cell->getState() == -2){
+					setColor(Purple);
+					drawCell(current_largeur,current_hauteur);
+				}
+				
+				// Incrémentation des positions des cellules
+				current_largeur += 1;
+			}
+			#if DEBUG_TMATRICE
+			cout << endl;
+			#endif
+			current_hauteur += 1;
+		}
+		
+		bufferPainter->end();
+		
+		return true;
+	}
+	else return false;
+}
 
 
 /**
@@ -573,12 +573,15 @@ void FireWidget::drawChanged()
 	drawList(forest->getCarbonized());
 	forest->clearCarbonized();
 	
-// 	color->setNamedColor("blue");
 	setColor(Blue);
-	drawList(forest->getExtinguished());
-	forest->clearExtinguished();
+	drawList(forest->getDelayed());
+	forest->clearDelayed();
 	
-	setColor(Purple);;
+	setColor(Orange);
+	drawList(forest->getDelayBurned());
+	forest->clearDelayBurned();
+	
+	setColor(Purple);
 	drawList(forest->getUprooted());
 	forest->clearUprooted();
 	

@@ -33,7 +33,8 @@ private:
 	
 	std::list< Arbre* >	onFire;
 	std::list< Arbre* >	uprooted;
-	std::list< Arbre* >	extinguished;
+	std::list< Arbre* >	delayed;
+	std::list< Arbre* >	delayBurned;
 	std::list< Arbre* >	burned;
 	std::list< Arbre* >	carbonized;
 	
@@ -70,8 +71,9 @@ public:
 	
 	const std::list< Arbre* >* getOnFire() const	{ return &onFire; };
 	std::list< Arbre* >* getUprooted()		{ return &uprooted; };
-	std::list< Arbre* >* getExtinguished()	{ return &extinguished; };
-	std::list< Arbre* >* getCarbonized()		{ return &carbonized; };
+	std::list< Arbre* >* getDelayed()		{ return &delayed; };
+	std::list< Arbre* >* getDelayBurned()	{ return &delayBurned; };
+	std::list< Arbre* >* getCarbonized()	{ return &carbonized; };
 	std::list< Arbre* >* getBurned()			{ return &burned; };
 	std::list< std::list< Arbre* > >* getChanged();
 	
@@ -95,7 +97,8 @@ public:
 	
 	// Vidage des listes
 	void clearUprooted()	{ uprooted.clear(); };
-	void clearExtinguished()	{ extinguished.clear(); };
+	void clearDelayed()	{ delayed.clear(); };
+	void clearDelayBurned()	{ delayBurned.clear(); };
 	void clearCarbonized()	{ carbonized.clear(); };
 	void clearBurned()	{ burned.clear(); };
 	void clearChanged();
@@ -130,7 +133,7 @@ public:
 	void saveMatrix(std::ofstream* file);
 	
 	bool load(std::ifstream* file, QProgressBar* PB);
-	bool save(std::string fileName= "save_forest");
+	bool save(std::string filePath = "save_forest");
 	
 	
 	// Affichage attributs
