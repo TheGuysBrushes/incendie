@@ -52,7 +52,7 @@ public:
 	// Méthodes constantes
 	virtual bool isOnFire()	const	{ return state==2; };
 	
-	void delay(float coefRalentissement)	/*{ state= 1;	}*/;
+	void delay(float coefRalentissement);
 	void kindle()	{ state= 2;	};
 	void blast()	{ state= -1; };
 	void uproot()	{ state= -2; };

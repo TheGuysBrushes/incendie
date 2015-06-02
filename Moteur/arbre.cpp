@@ -111,7 +111,7 @@ void Arbre::setCoefficient(float x)
 
 void Arbre::delay(float coefRalentissement)
 {
-	setCoefficient(coefRalentissement);
+	setCoefficient(coefficient*coefRalentissement);
 }
 
 

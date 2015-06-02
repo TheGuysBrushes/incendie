@@ -10,8 +10,6 @@ int ecartAgeMax= 80;
 
 using namespace std;
 
-// TODO modifier les noms pour les arbres retarder, remplacer delay
-
 // ###################################
 //		Constructeurs et destructeur
 // ################################### 
@@ -296,7 +294,7 @@ void Foret::plantTree(int col, int row, unsigned int numEss, int PdV, float humi
 	// pour l'instant, on considere que tous les arbres ont atteint leur maturite
 	Arbre* ab= new Arbre(col,row, matrix[row][col], pEss, humidite, PdV);
 	
-	if (coef==0.5)
+	if (coef < 1.0)
 		delay(ab, coef);
 	
 	if (etat==-1)
@@ -349,7 +347,7 @@ void Foret::create(int largeur, int hauteur, vector< vector< int > >* matrice)
 		#endif
 		
 		for (int colonne=0; colonne< largeur; ++colonne){
-			if ( (*matrice)[ligne][colonne] > 40){
+			if ( (*matrice)[ligne][colonne] > 50){
 				plantTree(colonne, ligne);
 			}
 		}
@@ -579,7 +577,6 @@ void Foret::delay(int xDep, int yDep, int xArr, int yArr)
 void Foret::delay(Arbre* ab, float coef)
 {
 	ab->delay(coef);
-// 	onFire.remove(ab);
 	delayed.push_back(ab);
 }
 

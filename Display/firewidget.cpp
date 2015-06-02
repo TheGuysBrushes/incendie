@@ -2,7 +2,7 @@
 
 #include <QtGui/QVBoxLayout> // fenetre chargement
 
-enum Colors{Green0, Green1, Green2, Green3, Green4, Gray, Red, Orange, Blue, Purple, Brownie};
+enum Colors{Green0, Green1, Green2, Green3, Green4, Gray, Red, Orange, BlueTrans, BrownCut, Brownie};
 
 
 using namespace std;
@@ -165,7 +165,7 @@ void FireWidget::loadFromPicture(int largeurImage, int hauteurImage, QImage* ima
 			#endif
 			
 			int green= pix->green();
-			if (0.8*pix->red()< green && pix->blue()< 120)
+			if (0.8*pix->red()< green && pix->blue()*1.8< green+50)
 				ligne.push_back(green);
 			else ligne.push_back(0);
 		}
@@ -350,11 +350,11 @@ void FireWidget::setColor(int colorIndice)
 		case Orange:
 			this->color->setRgb(255,165,00);
 			break;
-		case Blue:
-			this->color->setRgb(25,25,250,	200);
+		case BlueTrans:
+			this->color->setRgb(83,104,120,	200);
 			break;
-		case Purple:
-			this->color->setRgb(148,0,211);
+		case BrownCut:
+			this->color->setRgb(150,75,0,	200);
 			break;
 		case Red:
 			this->color->setRgb(255,0,0);
@@ -452,7 +452,7 @@ void FireWidget::drawForest()
 						// On vérifie ici si l'arbre a recu un retardateur
 						// i.e son coefficient est inférieur à 1
 						if(dynamic_cast < Arbre* >(cell)->getCoeff() < 1)
-							setColor(Blue);
+							setColor(BlueTrans);
 						else setColor(indice);
 						
 						drawCell(current_largeur, current_hauteur);
@@ -471,7 +471,7 @@ void FireWidget::drawForest()
 					drawCell(current_largeur, current_hauteur);
 				}
 				else if(cell->getState() == -2){
-					setColor(Purple);
+					setColor(BrownCut);
 					drawCell(current_largeur,current_hauteur);
 				}
 				
@@ -526,7 +526,7 @@ bool FireWidget::drawPictureForest()
 					// On vérifie ici si l'arbre a recu un retardateur
 					// i.e son coefficient est inférieur à 1
 					if(dynamic_cast < Arbre* >(cell)->getCoeff() < 1){
-						setColor(Blue);
+						setColor(BlueTrans);
 						drawCell(current_largeur, current_hauteur);
 					}
 				}
@@ -542,7 +542,7 @@ bool FireWidget::drawPictureForest()
 					drawCell(current_largeur, current_hauteur);
 				}
 				else if(cell->getState() == -2){
-					setColor(Purple);
+					setColor(BrownCut);
 					drawCell(current_largeur,current_hauteur);
 				}
 				
@@ -581,7 +581,7 @@ void FireWidget::drawChanged()
 	drawList(forest->getCarbonized());
 	forest->clearCarbonized();
 	
-	setColor(Blue);
+	setColor(BlueTrans);
 	drawList(forest->getDelayed());
 	forest->clearDelayed();
 	
@@ -589,7 +589,7 @@ void FireWidget::drawChanged()
 	drawList(forest->getDelayBurned());
 	forest->clearDelayBurned();
 	
-	setColor(Purple);
+	setColor(BrownCut);
 	drawList(forest->getUprooted());
 	forest->clearUprooted();
 	
