@@ -1,5 +1,7 @@
 #include "fwelcome.h"
 
+#include <QtGui/QFileDialog>
+
 // Composants Qt qui ne sont pas des attributs de classe
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QVBoxLayout>
@@ -206,6 +208,7 @@ void Fwelcome::restore()
 
 void Fwelcome::loadFromImg()
 {
+	/*
 	QString filename= "../foret_pay.png";
 	
 	delete pictureForest;
@@ -228,6 +231,9 @@ void Fwelcome::loadFromImg()
 		
 		done(Load);
 	}
+	*/
+	QFileDialog* file = new QFileDialog(this);
+	file->show();
 }
 
 
