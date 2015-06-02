@@ -1154,7 +1154,7 @@ cout<< "Enregistrement de l'arbre "<< ab->getPos().col<< "; "<< lignes<< endl;
  */
 bool Foret::save(string fileName)
 {
-	string chemin= "./Resources/"+fileName+".dat";
+	string chemin= fileName+".dat";
 	ofstream* file= new ofstream(chemin.c_str(), std::ios::out|std::ios::binary);
 	
 	if (!file->is_open()){

@@ -55,6 +55,8 @@ FireScreen::FireScreen(): QMainWindow()
 
 	pause_btn->setDisabled(true);
 	
+	fileSaveDialog = NULL;
+	
 	cpt_lbl = new QLabel();
 	delai_lbl = new QLabel();
 }
@@ -72,6 +74,8 @@ FireScreen::~FireScreen()
 	delete timer;
 	delete menus;
 	delete fWidget;
+	
+	delete fileSaveDialog;
 }
 
 
@@ -433,9 +437,18 @@ void FireScreen::reset()
  * Appelle la sauvegarde de la foret de fWidget 
  * @author Florian
  */
-void FireScreen::save() const
+void FireScreen::save()
 {
-	fWidget->saveForest("foret1");
+	fileSaveDialog = new QFileDialog(this);
+	fileSaveDialog->setAcceptMode(QFileDialog::AcceptSave);
+	string s;
+	if(fileSaveDialog->exec()){
+		s = fileSaveDialog->selectedFiles().at(0).toStdString();
+		cout << s << endl;
+	}
+	if(s.substr(s.length()-5,4) == ".dat")
+		s = s.substr(0, s.length()-5);
+	fWidget->saveForest(s);
 }
 
 	/* Déroulement */
