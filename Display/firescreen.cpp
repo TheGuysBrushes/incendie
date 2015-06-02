@@ -424,7 +424,7 @@ void FireScreen::reset()
 {
 	stop_timer();
 	
-	Fwelcome* fwel = new Fwelcome(this, fWidget->getForet());
+	Fwelcome* fwel = new Fwelcome(this, fWidget->getForet()->width(), fWidget->getForet()->height());
 	fwel->addCancel();
 	fwel->setModal(true);
 	
