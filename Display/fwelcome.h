@@ -53,9 +53,11 @@ private:
 public:
 	/* Constructeur et destructeur */
 	Fwelcome(QWidget* parent);
+	Fwelcome(QWidget* parent, int _largeur, int _hauteur);
 	virtual ~Fwelcome();
 
 	/* Autres Méthodes */
+	void createComponents();
 	void initComponents();
 	void addCancel() const;
 

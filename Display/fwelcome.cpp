@@ -12,6 +12,40 @@ using namespace std;
 
 Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 {
+	createComponents();
+	file= new ifstream;
+	
+	initComponents();
+}
+
+Fwelcome::Fwelcome(QWidget* parent, int _largeur, int _hauteur): QDialog(parent)
+{
+	createComponents();
+	file= new ifstream;
+	
+	initComponents();
+	
+	larg_spin->setValue(_largeur);
+	haut_spin->setValue(_hauteur);
+}
+
+
+Fwelcome::~Fwelcome(){
+	delete(haut_spin);
+	delete(larg_spin);
+	delete(p_value);
+	delete(c_value);
+	delete(restoreBtn);
+	delete(cancel_btn);
+}
+
+/*** Autres Méthodes ***/
+/**
+ * Initialise les composants graphiques attributs de la classe
+ * @author Ugo et Florian
+ */
+void Fwelcome::createComponents()
+{
 	// Initialisation des composants dynamiques (SpinBox exceptées)
 	p_value = new QLabel();	
 	c_value = new QLabel();
@@ -30,22 +64,8 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 	#endif
 	
 	cancel_btn->setVisible(false);
-	
-	initComponents();
-	
-	file= new ifstream;
 }
 
-Fwelcome::~Fwelcome(){
-	delete(haut_spin);
-	delete(larg_spin);
-	delete(p_value);
-	delete(c_value);
-	delete(restoreBtn);
-	delete(cancel_btn);
-}
-
-/*** Autres Méthodes ***/
 void Fwelcome::initComponents(){
 
 	/* Conteneurs */
