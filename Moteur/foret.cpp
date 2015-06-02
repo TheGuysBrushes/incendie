@@ -89,8 +89,10 @@ Foret::~Foret()
 	onFire.clear();
 	burned.clear();
 	carbonized.clear();
+	delayBurned.clear();
+	delayed.clear();
 	uprooted.clear();
-	extinguished.clear();
+	
 }
 
 
@@ -238,7 +240,8 @@ std::list< list< Arbre* > >* Foret::getChanged()
 {
 	list< list< Arbre* > >* listes= new list< list< Arbre* > >();
 	listes->push_back(uprooted);
-	listes->push_back(extinguished);
+	listes->push_back(delayed);
+	listes->push_back(delayBurned);
 	listes->push_back(burned);
 	listes->push_back(carbonized);
 	return listes;
@@ -577,7 +580,7 @@ void Foret::delay(Arbre* ab, float coef)
 {
 	ab->delay(coef);
 // 	onFire.remove(ab);
-	extinguished.push_back(ab);
+	delayed.push_back(ab);
 }
 
 // EMBRASEMENT
@@ -663,7 +666,8 @@ void Foret::spark(int col, int row, int intensite)
 void Foret::clearChanged()
 {
 	uprooted.clear();
-	extinguished.clear();
+	delayed.clear();
+	delayBurned.clear();
 	burned.clear();
 	carbonized.clear();
 }

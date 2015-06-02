@@ -522,8 +522,15 @@ bool FireWidget::drawPictureForest()
 			int current_largeur= 0;
 			for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
 				Cellule* cell= *j;
-
-				if (cell->getState() == 2){
+				if(cell->getState() == 1){
+					// On vérifie ici si l'arbre a recu un retardateur
+					// i.e son coefficient est inférieur à 1
+					if(dynamic_cast < Arbre* >(cell)->getCoeff() < 1){
+						setColor(Blue);
+						drawCell(current_largeur, current_hauteur);
+					}
+				}
+				else if (cell->getState() == 2){
 					if(dynamic_cast < Arbre* >(cell)->getCoeff() < 1)
 						setColor(Orange);	
 					else setColor(Red);
