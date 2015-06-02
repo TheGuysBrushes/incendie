@@ -444,10 +444,9 @@ void FireScreen::save()
 	string s;
 	if(fileSaveDialog->exec()){
 		s = fileSaveDialog->selectedFiles().at(0).toStdString();
-		cout << s << endl;
+		cout << s << s.length() << endl;
 	}
-	if(s.substr(s.length()-5,4) == ".dat")
-		s = s.substr(0, s.length()-5);
+
 	fWidget->saveForest(s);
 }
 
