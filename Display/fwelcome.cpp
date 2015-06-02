@@ -208,8 +208,10 @@ void Fwelcome::restore()
 
 void Fwelcome::loadFromImg()
 {
-	/*
-	QString filename= "../foret_pay.png";
+	QString filename;
+	QFileDialog* file = new QFileDialog(this);
+	if ( (filename= file->getOpenFileName()) == "")
+		filename= "../foret_pay.png";
 	
 	delete pictureForest;
 	pictureForest= new QImage();
@@ -231,9 +233,7 @@ void Fwelcome::loadFromImg()
 		
 		done(Load);
 	}
-	*/
-	QFileDialog* file = new QFileDialog(this);
-	file->show();
+	 
 }
 
 
