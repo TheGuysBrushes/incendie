@@ -9,6 +9,7 @@
 #include <QtGui/QProgressBar>
 #include <QtGui/QGridLayout>
 #include <QtGui/QImage>
+#include <QtGui/QFileDialog>
 // Pour les valeurs max des SpinBox
 #include <QtGui/QDesktopWidget>
 #include <QtGui/QApplication>
@@ -42,6 +43,8 @@ private:
 	QPushButton* restoreBtn;
 	
 	QImage* pictureForest;
+	
+	QFileDialog* fileDialog;
 	
 	float proba;
 	float coef_brulure;
