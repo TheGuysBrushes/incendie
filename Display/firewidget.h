@@ -70,7 +70,7 @@ public:
 	/* Gestion Foret */
 	void loadFromPicture(int largeurImage, int hauteurImage, QImage* imageForet);
 	bool loadForest(std::string filename);
-	void saveForest() const;
+	void saveForest(std::string filepath) const;
 	void delForest();
 	void delPicture();
 

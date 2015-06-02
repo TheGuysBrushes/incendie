@@ -10,8 +10,6 @@
 
 using namespace std;
 
-/* - TODO voir pour choisir une meilleur taille initiale */
-
 /**
  * On initialise les composant graphiques de la classe (foret et menus, boutons), la barre des menus
  * @author Ugo et Florian
@@ -232,7 +230,6 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	// Boutons
 		/* Gestion foret */
 	connect(reset_btn,	SIGNAL(clicked()), 	this,	SLOT( reset()) );
-	// IMPROVEIT Temporaire, à revoir lors de la création de l'explorateur de fichier
 	connect(save_btn,	SIGNAL(clicked()),	this, SLOT( save()) );	
 	
 		/* Déroulement*/
@@ -430,7 +427,7 @@ void FireScreen::reset()
 	
 	if ( initForest(fwel) )
 		fWidget->redraw();
-}
+}    
 
 /**
  * Appelle la sauvegarde de la foret de fWidget 
@@ -438,7 +435,7 @@ void FireScreen::reset()
  */
 void FireScreen::save() const
 {
-	fWidget->saveForest();
+	fWidget->saveForest("foret1");
 }
 
 	/* Déroulement */

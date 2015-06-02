@@ -2,7 +2,7 @@
 
 #include <QtGui/QVBoxLayout> // fenetre chargement
 
-enum Colors{Green0, Green1, Green2, Green3, Green4, Gray, Red, Red_transparent, Anti_red_transparent, Blue, Purple, Brownie};
+enum Colors{Green0, Green1, Green2, Green3, Green4, Gray, Red, Orange, Blue, Purple, Brownie};
 
 
 using namespace std;
@@ -203,9 +203,9 @@ bool FireWidget::loadForest(std::string filename)
  * Sauvegarde la foret dans un fichier de sauvegarde (IMPROVEIT par défaut pour l'instant)
  * @author Florian
  */
-void FireWidget::saveForest() const
+void FireWidget::saveForest(string filepath) const
 {
-	forest->save("foret1");
+	forest->save(filepath);
 }
 
 /**
@@ -346,11 +346,8 @@ void FireWidget::setColor(int colorIndice)
 		case Gray:
 			this->color->setRgb(60,60,60);
 			break;
-		case Red_transparent:
-			this->color->setRgb(255,00,00,	180);
-			break;
-		case Anti_red_transparent:
-			this->color->setRgb(00,75,75,180);
+		case Orange:
+			this->color->setRgb(255,165,00);
 			break;
 		case Blue:
 			this->color->setRgb(25,25,250,	200);
@@ -427,9 +424,10 @@ void FireWidget::drawList( list< Arbre* > * arbres){
  */
 void FireWidget::drawForest()
 {
-	if (!drawPictureForest()){
-		
+// 	if (!drawPictureForest()){
+	
 		bufferPainter->begin(buffer);
+		drawPicture();
 		
 		int current_hauteur= 0;
 		for(int i=0; i<forest->height(); ++i){
@@ -446,20 +444,23 @@ void FireWidget::drawForest()
 					drawCell(current_largeur, current_hauteur);
 				}
 				else if(cell->getState() == 1){
-					// Il faut ici vérifier l'essence de l'arbre pour lui attribuer une variante de vert
-					unsigned indice= dynamic_cast < Arbre* >(cell)->getEssence()->getIndice();
-					// On vérifie ici si l'arbre a recu un retardateur
-					// i.e son coefficient est inférieur à 1
-					if(dynamic_cast < Arbre* >(cell)->getCoeff() < 1)
-						setColor(Blue);
-					else setColor(indice);
 					
-					drawCell(current_largeur, current_hauteur);
+					if (pictureForest->isNull()){
+						// Il faut ici vérifier l'essence de l'arbre pour lui attribuer une variante de vert
+						unsigned indice= dynamic_cast < Arbre* >(cell)->getEssence()->getIndice();
+						// On vérifie ici si l'arbre a recu un retardateur
+						// i.e son coefficient est inférieur à 1
+						if(dynamic_cast < Arbre* >(cell)->getCoeff() < 1)
+							setColor(Blue);
+						else setColor(indice);
+						
+						drawCell(current_largeur, current_hauteur);
+					}
 					
 				}
 				else if (cell->getState() == 2){
 					if(dynamic_cast < Arbre* >(cell)->getCoeff() < 1)
-						setColor(Red_transparent);	
+						setColor(Orange);	
 					else setColor(Red);
 					
 					drawCell(current_largeur, current_hauteur);
@@ -487,7 +488,7 @@ void FireWidget::drawForest()
 		#if DEBUG_TMATRICE
 		cout <<"fin draw forest ; "<< endl;
 		#endif
-	}
+// 	}
 }
 
 /**
@@ -497,61 +498,61 @@ void FireWidget::drawForest()
 bool FireWidget::drawPicture()
 {
 	if (!pictureForest->isNull()){
-		bufferPainter->begin(buffer);
+// 		bufferPainter->begin(buffer);
 		bufferPainter->drawImage(0, 0, *pictureForest);
-		bufferPainter->end();
+// 		bufferPainter->end();
 		
 		return true;
 	}
 	else return false;
 }
 
-bool FireWidget::drawPictureForest()
-{
-	if (drawPicture()){
-		
-		bufferPainter->begin(buffer);
-		int current_hauteur= 0;
-		for(int i=0; i<forest->height(); ++i){
-			// On ne passe pas la hauteur de la grille mais le nombre de colonne*taille de colonne pour
-			// éviter la petite zone en bas de grille
-			vector< Cellule* >* ligne= (*forest)[i];
-			
-			int current_largeur= 0;
-			for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
-				Cellule* cell= *j;
-
-				if (cell->getState() == 2){
-					if(dynamic_cast < Arbre* >(cell)->getCoeff() < 1)
-						setColor(Red_transparent);	
-					else setColor(Red);
-					
-					drawCell(current_largeur, current_hauteur);
-				}
-				else if (cell->getState() == -1){
-					setColor(Gray);
-					drawCell(current_largeur, current_hauteur);
-				}
-				else if(cell->getState() == -2){
-					setColor(Purple);
-					drawCell(current_largeur,current_hauteur);
-				}
-				
-				// Incrémentation des positions des cellules
-				current_largeur += 1;
-			}
-			#if DEBUG_TMATRICE
-			cout << endl;
-			#endif
-			current_hauteur += 1;
-		}
-		
-		bufferPainter->end();
-		
-		return true;
-	}
-	else return false;
-}
+// bool FireWidget::drawPictureForest()
+// {
+// 	if (drawPicture()){
+// 		
+// 		bufferPainter->begin(buffer);
+// 		int current_hauteur= 0;
+// 		for(int i=0; i<forest->height(); ++i){
+// 			// On ne passe pas la hauteur de la grille mais le nombre de colonne*taille de colonne pour
+// 			// éviter la petite zone en bas de grille
+// 			vector< Cellule* >* ligne= (*forest)[i];
+// 			
+// 			int current_largeur= 0;
+// 			for( vector< Cellule* >::const_iterator j( ligne->begin() ); j!=ligne->end(); ++j){
+// 				Cellule* cell= *j;
+// 
+// 				if (cell->getState() == 2){
+// 					if(dynamic_cast < Arbre* >(cell)->getCoeff() < 1)
+// 						setColor(Orange);	
+// 					else setColor(Red);
+// 					
+// 					drawCell(current_largeur, current_hauteur);
+// 				}
+// 				else if (cell->getState() == -1){
+// 					setColor(Gray);
+// 					drawCell(current_largeur, current_hauteur);
+// 				}
+// 				else if(cell->getState() == -2){
+// 					setColor(Purple);
+// 					drawCell(current_largeur,current_hauteur);
+// 				}
+// 				
+// 				// Incrémentation des positions des cellules
+// 				current_largeur += 1;
+// 			}
+// 			#if DEBUG_TMATRICE
+// 			cout << endl;
+// 			#endif
+// 			current_hauteur += 1;
+// 		}
+// 		
+// 		bufferPainter->end();
+// 		
+// 		return true;
+// 	}
+// 	else return false;
+// }
 
 
 /**
@@ -585,7 +586,9 @@ void FireWidget::drawChanged()
 }
 
 // Debuggage
+#if DEBUG_CURRENT
 int num_redraw= 0;
+#endif
 
 /**
  * Vide le buffer et rafraichit l'affichage
@@ -593,10 +596,10 @@ int num_redraw= 0;
  */
 void FireWidget::redraw()
 {
-#if DEBUG_CURRENT
+	#if DEBUG_CURRENT
 	++num_redraw;
 	cout << "test redraw "<< num_redraw<< " TO DELETE (ligne 449 firewidget)"<< endl;
-#endif
+	#endif
 	
 	if (!buffer->isNull()){
 		delete(buffer);
