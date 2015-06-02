@@ -10,6 +10,7 @@
 #include <QtGui/QDesktopWidget>
 #include <QtGui/QApplication>
 #include <QtGui/QComboBox>
+#include <QtGui/QFileDialog>
 
 #include <cmath>
 
@@ -48,6 +49,8 @@ private:
 	QComboBox* actionBox;
 	QTimer* timer;
 	
+	QFileDialog* fileSaveDialog;
+	
 	int nb_tour;
 	long delai;
 	
@@ -81,7 +84,7 @@ public slots:
 	/*	Boutons	*/
 	void nextStep();
 	void reset();
-	void save() const;
+	void save();
 	
 	void updateWind(int angle, int vitesse);
 	

@@ -206,6 +206,7 @@ bool FireWidget::loadForest(std::string filename)
 void FireWidget::saveForest(string filepath) const
 {
 	forest->save(filepath);
+	cout << "filePath fWidget : " << filepath << endl;
 }
 
 /**
