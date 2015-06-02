@@ -72,10 +72,15 @@ public:
 
 public slots:
 	/* Setters */
+	// Slots d'ouverture FileDialog pour chargement
+	void popImageDIalog();
+	void popSaveDialog();
+// 	void popSeedDialog();
+	
 	void set_proba(int x);
 	void set_coef(int x);
-	void restore(/*std::string filename*/);
-	void loadFromImg();
+	void restore(QString filename);
+	void loadFromImg(QString filename);
 };
 
 #endif // FWELCOME_H

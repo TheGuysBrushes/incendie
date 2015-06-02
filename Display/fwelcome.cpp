@@ -14,7 +14,7 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 {
 	createComponents();
 	file= new ifstream;
-	
+	fileDialog = NULL;
 	initComponents();
 }
 
@@ -22,6 +22,7 @@ Fwelcome::Fwelcome(QWidget* parent, int _largeur, int _hauteur): QDialog(parent)
 {
 	createComponents();
 	file= new ifstream;
+	fileDialog = NULL;
 	
 	initComponents();
 	
@@ -37,6 +38,7 @@ Fwelcome::~Fwelcome(){
 	delete(c_value);
 	delete(restoreBtn);
 	delete(cancel_btn);
+	delete(fileDialog);
 }
 
 /*** Autres Méthodes ***/
@@ -179,8 +181,8 @@ void Fwelcome::initComponents(){
 	
 	connect(valid_btn,	SIGNAL(clicked()), this, SLOT(accept()) );
 	connect(cancel_btn,	SIGNAL(clicked()), this, SLOT(reject()) );
-	connect(restoreBtn,	SIGNAL(clicked()), this, SLOT(restore()) );
-	connect(loadFromImgBtn,	SIGNAL(clicked()), this, SLOT(loadFromImg()) );
+	connect(restoreBtn,	SIGNAL(clicked()), this, SLOT(popSaveDialog()) );
+	connect(loadFromImgBtn,	SIGNAL(clicked()), this, SLOT(popImageDIalog()) );
 
 	// Appel à setValue pour déclencer l'affichage de la valeur à la construction du widget
 	slide_c->setValue(50);
@@ -195,13 +197,13 @@ void Fwelcome::addCancel() const
 	cancel_btn->setVisible(true);
 }
 
-void Fwelcome::restore()
+void Fwelcome::restore(QString filename)
 {
-	std::string filename= "./Resources/foret1.dat";
+	std::string filePath= filename.toStdString();
 	
 // 	file= new ifstream(filename.c_str(), ios::in|ios::binary);
 	
-	file->open(filename.c_str(), ios::in|ios::binary);
+	file->open(filePath.c_str(), ios::in|ios::binary);
 	if (!file->is_open()){
 		std::cout<< "Echec ouverture fichier de sauvegarde"<< std::endl;
 	}
@@ -224,19 +226,53 @@ void Fwelcome::restore()
 	}
 }
 
-void Fwelcome::loadFromImg()
+/**
+ * Slot déclenché lors du clic sur le bouton d'importation d'image.
+ * Ouvre une fenetre de selection d'un fichier image et appelle
+ * la fonction de chargement d'image.
+ * @author Ugo
+ */
+void Fwelcome::popImageDIalog()
 {
-	QString filename;
+	QString fileName;
+
 	fileDialog = new QFileDialog(this);
 	fileDialog->setViewMode(QFileDialog::Detail);
 	fileDialog->setNameFilter(tr("Images (*.png *.jpeg *.tif)"));
-	//if ( (filename= file->getOpenFileName()) == "")
-		//filename= "../foret_pay.png";
 	if(fileDialog->exec())
-		filename = fileDialog->selectedFiles().at(0);
+		fileName = fileDialog->selectedFiles().at(0);
 	else
-		filename = "../foret_pay.png";
-	
+		fileName = "../foret_pay.png";
+			
+	loadFromImg(fileName);
+		
+}
+
+/**
+ * Slot déclenché lors du clic surle bouton de chargement d'une sauvegarde.
+ * Ouvre une fenetre de sélection d'un fichier de sauvegarde et appelle 
+ * la fonction de chargement correspondant.
+ * @author Ugo
+ */
+void Fwelcome::popSaveDialog()
+{
+	QString fileName;
+
+	fileDialog = new QFileDialog(this);
+	fileDialog->setViewMode(QFileDialog::Detail);
+	fileDialog->setNameFilter(tr("Sauvegarde (*.data *.frt *.dat *.sav)"));
+	if(fileDialog->exec())
+		fileName = fileDialog->selectedFiles().at(0);
+	else
+		fileName = "./Resources/foret1.dat";
+			
+	restore(fileName);
+
+}
+
+
+void Fwelcome::loadFromImg(QString filename)
+{
 	delete pictureForest;
 	pictureForest= new QImage();
 	pictureForest->load(filename);

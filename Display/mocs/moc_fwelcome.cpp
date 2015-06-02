@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'fwelcome.h'
 **
-** Created: Tue Jun 2 11:07:44 2015
+** Created: Tue Jun 2 14:23:23 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_Fwelcome[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -31,17 +31,20 @@ static const uint qt_meta_data_Fwelcome[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      12,   10,    9,    9, 0x0a,
-      27,   10,    9,    9, 0x0a,
-      41,    9,    9,    9, 0x0a,
-      51,    9,    9,    9, 0x0a,
+      10,    9,    9,    9, 0x0a,
+      27,    9,    9,    9, 0x0a,
+      45,   43,    9,    9, 0x0a,
+      60,   43,    9,    9, 0x0a,
+      83,   74,    9,    9, 0x0a,
+     100,   74,    9,    9, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_Fwelcome[] = {
-    "Fwelcome\0\0x\0set_proba(int)\0set_coef(int)\0"
-    "restore()\0loadFromImg()\0"
+    "Fwelcome\0\0popImageDIalog()\0popSaveDialog()\0"
+    "x\0set_proba(int)\0set_coef(int)\0filename\0"
+    "restore(QString)\0loadFromImg(QString)\0"
 };
 
 void Fwelcome::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -50,10 +53,12 @@ void Fwelcome::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         Q_ASSERT(staticMetaObject.cast(_o));
         Fwelcome *_t = static_cast<Fwelcome *>(_o);
         switch (_id) {
-        case 0: _t->set_proba((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 1: _t->set_coef((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 2: _t->restore(); break;
-        case 3: _t->loadFromImg(); break;
+        case 0: _t->popImageDIalog(); break;
+        case 1: _t->popSaveDialog(); break;
+        case 2: _t->set_proba((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 3: _t->set_coef((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 4: _t->restore((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 5: _t->loadFromImg((*reinterpret_cast< QString(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -91,9 +96,9 @@ int Fwelcome::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 6;
     }
     return _id;
 }
