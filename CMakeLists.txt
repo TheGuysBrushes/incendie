@@ -10,7 +10,7 @@ add_subdirectory(Moteur)
 add_subdirectory(Display)
 
 set(Moteur_SRCS Moteur/coordonnee.cpp Moteur/vent.cpp Moteur/cellule.cpp Moteur/essence.cpp Moteur/arbre.cpp Moteur/foret.cpp)
-set(Display_SRCS Display/fileexplorer.cpp Display/windcircle.cpp Display/mocs/moc_windcircle.cpp Display/windwidget.cpp Display/mocs/moc_windwidget.cpp Display/fwelcome.cpp Display/mocs/moc_fwelcome.cpp Display/firewidget.cpp Display/mocs/moc_firewidget.cpp Display/firescreen.cpp Display/mocs/moc_firescreen.cpp)
+set(Display_SRCS Display/windcircle.cpp Display/mocs/moc_windcircle.cpp Display/windwidget.cpp Display/mocs/moc_windwidget.cpp Display/fwelcome.cpp Display/mocs/moc_fwelcome.cpp Display/firewidget.cpp Display/mocs/moc_firewidget.cpp Display/firescreen.cpp Display/mocs/moc_firescreen.cpp)
 
 
 set(Automate_SRCS ${Moteur_SRCS} ${Display_SRCS} main.cpp)
