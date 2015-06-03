@@ -16,6 +16,7 @@
 #include "essence.h"
 #include "arbre.h"
 #include "vent.h"
+#include "loadprogress.h"
 
 #define MAXI 1000 
 
@@ -26,6 +27,8 @@ private:
 	int colonnes;
 	
 	float burningCoef; // ralenti la progression du feu, il lui faut plus de tours pour avancer (peut affecter la précision des mesures)
+	
+	std::time_t randomSeed;
 	
 	Vent* wind;
 	std::vector< Essence > essences;
@@ -45,9 +48,9 @@ private:
 public:
 	
 	// Constructeur et destructeur
-	Foret(int _largeur, int _hauteur, float proba = 0.60, float _coefFeu = 1.0);
+	Foret(int _largeur, int _hauteur, float proba = 0.60, float _coefFeu = 0.5, std::time_t graine=time(0));
 // 	Foret(Foret& other, float proba=0.60);
-	Foret(int _largeur, int _hauteur, std::ifstream* file, QProgressBar* PB);
+	Foret(int _largeur, int _hauteur, std::ifstream* file, LoadProgress* PB);
 	Foret(int _largeur, int _hauteur, std::vector< std::vector< int > >* matrice, float coef_brulure);
 	virtual ~Foret();
 	
@@ -126,13 +129,15 @@ public:
 	void loadSizes(std::ifstream* file);
 	void loadBurningCoef(std::ifstream* file);
 	void loadEssences(std::ifstream* file);
-	void loadMatrix(std::ifstream* file, QProgressBar* PB);
+	void loadMatrix(std::ifstream* file, LoadProgress* PB);
 	
 	void saveProperties(std::ofstream* file);
 	void saveEssences(std::ofstream* file);
 	void saveMatrix(std::ofstream* file);
 	
-	bool load(std::ifstream* file, QProgressBar* PB);
+	void saveSeed(std::ofstream* file);
+	
+	bool load(std::ifstream* file, LoadProgress* PB);
 	bool save(std::string filePath = "save_forest");
 	
 	

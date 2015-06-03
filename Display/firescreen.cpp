@@ -312,12 +312,12 @@ bool FireScreen::initForest(Fwelcome* fwel)
 		
 		fWidget->delPicture();
 		nb_tour = 0;
-		int largeur= fwel->get_larg();
-		int hauteur= fwel->get_haut();
+		int largeur= fwel->getLarg();
+		int hauteur= fwel->getHaut();
 		
 		if(  resExec== Load ){
 			QImage* picture= fwel->getImage();
-			fWidget->initialise(largeur, hauteur, picture,fwel->get_coef());
+			fWidget->initialise(largeur, hauteur, picture,fwel->getCoef());
 			windWidget->initValues(30, 80);
 		}
 		else if(  resExec== Restore ){
@@ -325,9 +325,14 @@ bool FireScreen::initForest(Fwelcome* fwel)
 			fWidget->initialise(largeur,hauteur, file);
 			windWidget->initValues(30, 80);
 		}
+		else if( resExec==RestoreSeed ){
+			fWidget->initialise(largeur,hauteur,
+									  fwel->getProba(), fwel->getCoef(), fwel->getSeed() );
+			windWidget->initValues(30, 80);
+		}		
 		else if( resExec==QDialog::Accepted ){
 			fWidget->initialise(largeur,hauteur,
-									fwel->get_proba(), fwel->get_coef()	);
+									  fwel->getProba(), fwel->getCoef()	);
 			windWidget->initValues(30, 80);
 		}
 		else {

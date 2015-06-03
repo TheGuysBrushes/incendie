@@ -16,10 +16,11 @@
 
 #include <iostream>
 #include <fstream>
+#include <ctime>
 
 #include "../debug.h"
 
-enum DialogCode{Rejected, Accepted, Load, Restore};
+enum DialogCode{Rejected, Accepted, Load, Restore, RestoreSeed};
 
 /**
  * Classe représentant le panneau de dialogue
@@ -47,7 +48,9 @@ private:
 	QFileDialog* fileDialog;
 	
 	float proba;
-	float coef_brulure;
+	float burningCoef;
+	std::time_t seed;
+	
 	std::ifstream* file;
 
 public:
@@ -62,10 +65,12 @@ public:
 	void addCancel() const;
 
 	/* Getters */
-	int get_haut() const	{ return haut_spin->value(); };
-	int get_larg() const	{ return larg_spin->value(); };
-	float get_proba() const	{ return proba; };
-	float get_coef() const	{ return coef_brulure; };
+	int getHaut() const	{ return haut_spin->value(); };
+	int getLarg() const	{ return larg_spin->value(); };
+	float getProba() const	{ return proba; };
+	float getCoef() const	{ return burningCoef; };
+	float getSeed() const	{ return seed; };
+	
 	std::ifstream* getFile() { return file; };
 	QImage* getImage() { return pictureForest; };
 // 	QPushButton* getRestoreBtn() { return restoreBtn; };

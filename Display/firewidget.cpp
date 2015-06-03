@@ -48,13 +48,13 @@ FireWidget::~FireWidget()
  * @author Florian et Ugo
  * @param all identiques au constructeur de Foret aléatoire
  */
-void FireWidget::initialise(int largeur, int hauteur, float proba, float coef_brulure)
+void FireWidget::initialise(int largeur, int hauteur, float proba, float coef_brulure, time_t graine)
 {
 	#if DEBUG_CREA_FORET
 	cout<< "Creation d'une foret aléatoire à partir de paramètres"<< endl;
 	#endif
 
-	forest= new Foret(largeur, hauteur, proba, coef_brulure);
+	forest= new Foret(largeur,hauteur, proba, coef_brulure, graine);
 	
 	setMinimumSize(largeur/2.0, hauteur/2.0);
 }
@@ -69,29 +69,13 @@ void FireWidget::initialise(int largeur, int hauteur, float proba, float coef_br
  * @param file fichier binaire, ouvert, contenant la sauvegarde de la forêt (essences-arbres)
  * @return vrai si le fichier est ouvert
  */
-bool FireWidget::initialise(int largeur, int hauteur, ifstream * file) 
+bool FireWidget::initialise(int largeur, int hauteur, ifstream * file)
 {
 	if (file->is_open()){
-		#if DEBUG_CREA_FORET
-		cout<< "Chargement d'une foret à partir d'un fichier "<< endl;
-		#endif
-		#if DEBUG_LOAD
-		cout<< "Taille : " << largeur<< " en largeur "<< hauteur<< " en hauteur" <<endl;
-		#endif
-		
-		QWidget* loadWindow= new QWidget();
-		loadWindow->resize(400, 30);
-		QVBoxLayout* layLoad= new QVBoxLayout(loadWindow);
-		
-		QLabel* txtLoad= new QLabel("Chargement de la foret");
-		QProgressBar* PB_load= new QProgressBar();
-		
-		layLoad->addWidget(txtLoad);
-		layLoad->addWidget(PB_load);
-		
-		loadWindow->show();
-		forest= new Foret(largeur, hauteur, file, PB_load);
-		loadWindow->hide();
+
+		LoadWindow* loadWindow= createProgressWindow();
+		forest= new Foret(largeur, hauteur, file, loadWindow);
+		loadWindow->closeProgress();
 		
 		setMinimumSize(largeur/2.0, hauteur/2.0);
 		
@@ -136,6 +120,13 @@ bool FireWidget::initialise(int largeur, int hauteur, QImage* imageForet, float 
 		
 		return false;
 	}
+}
+
+
+LoadWindow* FireWidget::createProgressWindow() const
+{
+	LoadWindow* progressWindow= new LoadWindow();
+	return progressWindow;
 }
 
 

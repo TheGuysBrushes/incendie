@@ -23,8 +23,8 @@ using namespace std;
  * @param proba, probabilite qu'il y ait un arbre, pour chaque case de la matrice. C'est environ le pourcentage d'arbres
  * @param _coefFeu coefficient de propagation du feu : 1 forêt "classique"; <1 progression plus lente (humidité...); >1 progression plus rapide (sécheresse ?)
  */
-Foret::Foret(int _largeur, int _hauteur, float proba, float _coefFeu)
-: lignes(_hauteur), colonnes(_largeur), burningCoef(_coefFeu)
+Foret::Foret(int _largeur, int _hauteur, float proba, float _coefFeu, time_t graine)
+: lignes(_hauteur), colonnes(_largeur), burningCoef(_coefFeu), randomSeed(graine)
 {
 	loadEssences("../Moteur/essence_data.txt");
 	randomMatrix(proba);
@@ -41,7 +41,7 @@ Foret::Foret(int _largeur, int _hauteur, float proba, float _coefFeu)
  * @param file fichier de sauvegarde d'une foret précédente, contenant les essences et l'emplacement des arbres et leur indice d'essence
  * @param PB barre de progression Qt, pour afficher l'avancement du chargement
  */
-Foret::Foret(int _largeur, int _hauteur, ifstream * file, QProgressBar* PB)
+Foret::Foret(int _largeur, int _hauteur, ifstream * file, LoadProgress* PB)
 	:lignes(_hauteur), colonnes(_largeur)
 {
 	wind = new Vent();
@@ -357,8 +357,7 @@ void Foret::create(int largeur, int hauteur, vector< vector< int > >* matrice)
  */
 void Foret::randomMatrix(float probabilite)
 {
-// 	srand(0);
-	srand(time(0));
+	srand(randomSeed);
 	if (probabilite>1){
 		probabilite=0.6;
 		std::cout << "MIS A DEFAUT"<< endl;
@@ -952,7 +951,7 @@ void Foret::loadEssences(ifstream* file)
  * @param PB barre de progression pour suivre le chargement de la foret IMPROVEIT
  */
 // TODO voir pour mettre un thread comme vincent barichard l'a dit
-void Foret::loadMatrix(ifstream* file, QProgressBar* PB)
+void Foret::loadMatrix(ifstream* file, LoadProgress* PB)
 {
 	#if DEBUG_LOAD
 	cout<< "Chargement ..."<< endl;
@@ -991,7 +990,7 @@ void Foret::loadMatrix(ifstream* file, QProgressBar* PB)
 		#endif
 		
 		int newProgression= (row*100) / (lignes);
-		PB->setValue(newProgression);
+		PB->setProgress(newProgression);
 		#if DEBUG_LOAD_PROGRESS
 		cout<< "progression : "<< newProgression<< "%"<< endl;
 		#endif
@@ -1004,7 +1003,7 @@ void Foret::loadMatrix(ifstream* file, QProgressBar* PB)
  * @param file fichier de sauvegarde de foret
  * @param PB barre de progression pour suivre le chargement de la foret IMPROVEIT
  */
-bool Foret::load(ifstream * file, QProgressBar* PB)
+bool Foret::load(ifstream* file, LoadProgress* PB)
 {
 	if (!file->is_open()){
 		cout<< "Echec ouverture fichier de sauvegarde"<< endl;
@@ -1135,6 +1134,20 @@ cout<< "Enregistrement de l'arbre "<< ab->getPos().col<< "; "<< lignes<< endl;
 	cout<< endl<< progression<<"%"<< endl;
 
 }
+
+
+void Foret::saveSeed(ofstream* file)
+{
+	string chemin= "foret.seed";
+	file= new ofstream(chemin.c_str(), std::ios::out|std::ios::binary);
+	
+	file->write( (char*)&(randomSeed), sizeof(std::time_t));
+	
+	file->write( (char*)&(colonnes), sizeof(int));
+	file->write( (char*)&(lignes), sizeof(int));
+	file->write( (char*)&(burningCoef), sizeof(int));
+}
+
 
 /**
  * Sauvegarde une forêt dans un fichier (tailles-essences-arbres)

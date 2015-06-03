@@ -316,6 +316,6 @@ void Fwelcome::set_proba(int x){
  * @author Ugo
  */
 void Fwelcome::set_coef(int x){
-	coef_brulure = (float) x/100;
-	c_value->setText(QString::number(coef_brulure, 'f', 2));
+	burningCoef = (float) x/100;
+	c_value->setText(QString::number(burningCoef, 'f', 2));
 }

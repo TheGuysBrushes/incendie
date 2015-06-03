@@ -9,6 +9,7 @@
 #include <QtGui/QPainter>
 #include <QtGui/QColor>
 #include <QtGui/QRubberBand>
+#include <QtGui/QProgressBar>
 #include <QtGui/qevent.h>	// IMPROVEIT pas d'equivalent sans .h ?
 
 #include <vector>
@@ -20,6 +21,7 @@
 
 #include "../Moteur/foret.h"
 #include "fwelcome.h"
+#include "loadwindow.h"
 
 /**
  * Widget d'affichage de l'automate cellulaire. Ce composant
@@ -56,10 +58,14 @@ public:
 	virtual ~FireWidget();
 
 	/* Initialisations */
-	void initialise(int largeur, int hauteur, float proba = 0.60, float coef_brulure=1.0);
+	void initialise(int largeur, int hauteur, float proba = 0.60, float coef_brulure=1.0, std::time_t graine=time(0));
 	bool initialise(int largeur, int hauteur, std::ifstream* file);
 	bool initialise(int largeur, int hauteur, QImage* imageForet, float coef_brulure);
 
+private:
+	LoadWindow* createProgressWindow() const;
+	
+public:
 	/* Getters et Setters */
 	void setColor(int colorIndice);	
 	void setWind(float angle, float vitesse)	{ forest->setWind(angle, vitesse); };
