@@ -58,7 +58,7 @@ public:
 	/* Initialisations */
 	void initialise(int largeur, int hauteur, float proba = 0.60, float coef_brulure=1.0);
 	bool initialise(int largeur, int hauteur, std::ifstream* file);
-	bool initialise(int largeur, int hauteur, QImage* imageForet);
+	bool initialise(int largeur, int hauteur, QImage* imageForet, float coef_brulure);
 
 	/* Getters et Setters */
 	void setColor(int colorIndice);	
@@ -68,7 +68,7 @@ public:
 	void razRubber() 	{ rubber= NULL; };
 	
 	/* Gestion Foret */
-	void loadFromPicture(int largeurImage, int hauteurImage, QImage* imageForet);
+	void loadFromPicture(int largeurImage, int hauteurImage, QImage* imageForet, float coef_brulure);
 	bool loadForest(std::string filename);
 	void saveForest(std::string filepath) const;
 	void delForest();

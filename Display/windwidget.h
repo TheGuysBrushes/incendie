@@ -28,6 +28,7 @@ private:
 	QLabel* speed_lbl;
 	QTimer* timer;
 	QCheckBox* varAngleBox;
+	QSlider* slider_vitesse;
 
 // 	bool varWind;
 	int speed;
@@ -39,6 +40,7 @@ public:
 	
 	/* Méthodes d'initialisation */
 	void initComponents();
+	void initValues(int angle, int vitesse);
 	
 	/* Getters */
 	int getAngle() const { return wind->getAngle(); };

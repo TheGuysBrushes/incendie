@@ -28,8 +28,8 @@ Foret::Foret(int _largeur, int _hauteur, float proba, float _coefFeu)
 {
 	loadEssences("../Moteur/essence_data.txt");
 	randomMatrix(proba);
-	// TODO Ugo : faire des constructeur qui permettent de créer un vent inital en accord avec la valeur initiale du curseur
-	wind = new Vent(2.0,2.0);
+
+	wind = new Vent();
 }
 
 /**
@@ -44,8 +44,7 @@ Foret::Foret(int _largeur, int _hauteur, float proba, float _coefFeu)
 Foret::Foret(int _largeur, int _hauteur, ifstream * file, QProgressBar* PB)
 	:lignes(_hauteur), colonnes(_largeur)
 {
-	// TODO Ugo : faire des constructeur qui permettent de créer un vent inital en accord avec la valeur initiale du curseur
-	wind = new Vent(1,-1);
+	wind = new Vent();
 	load(file, PB);
 }
 
@@ -58,12 +57,10 @@ Foret::Foret(int _largeur, int _hauteur, ifstream * file, QProgressBar* PB)
  * @param _hauteur nombre de lignes de la matrice, la hauteur
  * @param matrice matrice d'intensités de couleur verte selon l'emplacement dans l'image
  */
-// IMPROVEIT Initialisation burning coef à 0.5
-Foret::Foret(int _largeur, int _hauteur, vector< std::vector< int > >* matrice)
-	: lignes(_hauteur), colonnes(_largeur), burningCoef(0.5)
+Foret::Foret(int _largeur, int _hauteur, vector< std::vector< int > >* matrice,float coef_brulure)
+	: lignes(_hauteur), colonnes(_largeur), burningCoef(coef_brulure)
 {
-	// TODO Ugo : faire des constructeur qui permettent de créer un vent inital en accord avec la valeur initiale du curseur
-	wind = new Vent(3,-2);
+	wind = new Vent();
 	loadEssences("../Moteur/essence_data.txt");
 	#if DEBUG_ARBRE_PLANTE
 	cout<< "création de la foret à partir d'une matrice d'intensité, de taille "<< _largeur<< "x"<< _hauteur<< endl;
@@ -95,7 +92,7 @@ Foret::~Foret()
 
 
 // ########################
-//		Initialisations
+//		Initialisations 9juin 11h30 h6
 // ########################
 
 /**
@@ -105,7 +102,6 @@ Foret::~Foret()
  * @param str Chaine à découper
  * @return vecteur des mots séparés par des espaces // TODO TRIM
  */
-// IMPROVEIT voir si il faut utiliser référence ou pointeur
 vector< string >& explode(const string& str)
 {
 	istringstream split(str);
@@ -466,14 +462,6 @@ void Foret::setWind(int angle, int vitesse)
 	cout <<"cosinus de l'angle envoyé : " << horizontal << endl;
 	cout <<"sinus de l'angle envoyé : " << vertical << endl;
 	#endif
-	/*
-	 * TODO Ugo : Arret temporaire :
-	 * 
-	 * Déterminer une fonction à croissance de type exponentiel afin de diviser vitesse dans 
-	 * le but d'obtenir des valeurs de transmission minimale et maximale.
-	 * A l'heure actuelle, à vent minimal, on obtient des transmissions entre ( [-10;10] ; [-10;10] ) en faisant 
-	 * varier l'angle. A vent maximum, on obtient des résultats entre ( [-100;100] ; [-100;100] ).
-	 */
 	
 	vertical *= vitesse/20.0;
 	horizontal *= vitesse/20.0;

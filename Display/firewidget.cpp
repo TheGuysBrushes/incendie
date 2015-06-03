@@ -84,7 +84,6 @@ bool FireWidget::initialise(int largeur, int hauteur, ifstream * file)
 		QVBoxLayout* layLoad= new QVBoxLayout(loadWindow);
 		
 		QLabel* txtLoad= new QLabel("Chargement de la foret");
-		// TODO voir si il faut que foret fasse emit d'un signal à connecter à la progressbar
 		QProgressBar* PB_load= new QProgressBar();
 		
 		layLoad->addWidget(txtLoad);
@@ -115,7 +114,7 @@ bool FireWidget::initialise(int largeur, int hauteur, ifstream * file)
  * @param imageForet image d'une foret, pour l'instant une image converie du jpg au tif
  * @return vrai si l'image est chargée
  */
-bool FireWidget::initialise(int largeur, int hauteur, QImage* imageForet)
+bool FireWidget::initialise(int largeur, int hauteur, QImage* imageForet, float coef_brulure)
 {
 	if (!imageForet->isNull()){
 		pictureForest= imageForet;
@@ -123,7 +122,7 @@ bool FireWidget::initialise(int largeur, int hauteur, QImage* imageForet)
 		cout << "Réussite ouverture fichier, creation foret à partir de l'image"<< endl;
 		#endif
 		
-		loadFromPicture(largeur, hauteur, imageForet);
+		loadFromPicture(largeur, hauteur, imageForet,coef_brulure);
 		setMinimumSize(largeur/2.0, hauteur/2.0);
 		
 		return true;
@@ -148,7 +147,7 @@ bool FireWidget::initialise(int largeur, int hauteur, QImage* imageForet)
  * @author Florian
  * @param 
  */
-void FireWidget::loadFromPicture(int largeurImage, int hauteurImage, QImage* imageForet)
+void FireWidget::loadFromPicture(int largeurImage, int hauteurImage, QImage* imageForet,float coef_brulure)
 {
 	cout<< "Creation à partir d'image ..."<< endl;
 	vector< vector< int > >* matrice= new vector< vector< int > >;
@@ -165,13 +164,13 @@ void FireWidget::loadFromPicture(int largeurImage, int hauteurImage, QImage* ima
 			#endif
 			
 			int green= pix->green();
-			if (0.8*pix->red()< green && pix->blue()*1.8< green+50)
+			if (0.8*pix->red()< green && pix->blue()*1.65< green+50)
 				ligne.push_back(green);
 			else ligne.push_back(0);
 		}
 		matrice->push_back(ligne);
 	}
-	forest= new Foret(largeurImage, hauteurImage, matrice);
+	forest= new Foret(largeurImage, hauteurImage, matrice,coef_brulure);
 // 		QColormap map(pictureForest->tr);
 // 	img.trueMatrix()
 }
@@ -718,10 +717,6 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 
 void FireWidget::mouseReleaseEvent(QMouseEvent* event)
 {
-	
-// 	IMPROVEIT Ugo : pourquoi ne pas definir la taille du rubber ici ? :
-// 	rubber->setGeometry(QRect(origin,event->pos()).normalized());
-
 	if(rubber){
 		rubber->hide();
 		// Sauvegarde des points du rubber pour parcours de la matrice

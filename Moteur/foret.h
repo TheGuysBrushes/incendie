@@ -48,7 +48,7 @@ public:
 	Foret(int _largeur, int _hauteur, float proba = 0.60, float _coefFeu = 1.0);
 // 	Foret(Foret& other, float proba=0.60);
 	Foret(int _largeur, int _hauteur, std::ifstream* file, QProgressBar* PB);
-	Foret(int _largeur, int _hauteur, std::vector< std::vector< int > >* matrice);
+	Foret(int _largeur, int _hauteur, std::vector< std::vector< int > >* matrice, float coef_brulure);
 	virtual ~Foret();
 	
 	// Initialisations

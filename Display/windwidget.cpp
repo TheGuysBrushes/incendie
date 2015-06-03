@@ -13,7 +13,7 @@ using namespace std;
 /**
  * Constructeur de classe. Par défaut, la vitesse est 
  * initialisée à 5km/h.
- *@author Ugo 
+ * @author Ugo 
  */
 WindWidget::WindWidget()
 {
@@ -27,6 +27,9 @@ WindWidget::WindWidget()
 	this->setMaximumHeight(300);
 	
 	timer = new QTimer();
+	
+	varAngleBox = new QCheckBox("Variation Auto");
+	varAngleBox->setChecked(false);
 	
 	initComponents();
 }
@@ -51,7 +54,7 @@ void WindWidget::initComponents()
 	QWidget* speed_container = new QWidget(this);
 
 		// Curseur vitesse
-		QSlider* slider_vitesse = new QSlider(Qt::Horizontal);
+		/*QSlider**/ slider_vitesse = new QSlider(Qt::Horizontal);
 		slider_vitesse->setMinimum(1);
 		slider_vitesse->setMaximum(100);
 
@@ -70,35 +73,28 @@ void WindWidget::initComponents()
 		v_lay->addWidget(slider_vitesse);
 		v_lay->addWidget(speed_label_container);
 		
-		// TODO créer dans constructeur?
-	/*QCheckBox* */varAngleBox = new QCheckBox("Variation Auto");
-	varAngleBox->setChecked(false);
-
 	// Conteneur général de l'ensemble des autres éléments
 	QVBoxLayout* grid_lay = new QVBoxLayout(this);
 	QWidget* container = new QWidget();
 	QHBoxLayout* testLay = new QHBoxLayout(container);
 	testLay->addWidget(speed_container);
 	testLay->addWidget(varAngleBox);
-	/*
-	grid_lay->addWidget(wind, 0,0,1,1);
-	grid_lay->addWidget(speed_container, 1,0);
-	grid_lay->addWidget(varAngleBox,1,1);	
-	*/
+
 	grid_lay->addWidget(wind,1);
 	grid_lay->addWidget(container);
 	// Connexion des sliders avec les setters de la classe :
 	// 	permet de gérer dynamiquement les changements de valeurs;
 	connect(slider_vitesse,	SIGNAL(valueChanged(int)),		this, SLOT(majSpeed(int)));
-// 	connect(varAngleBox, SIGNAL(stateChanged(int)), this, SLOT(switchAngleBox(int)));
 	connect(wind, SIGNAL(modifAngle()), this, SLOT(majAngle()));
-// 	connect(timer,	SIGNAL(timeout()),	this, SLOT(varWind()));
-	slider_vitesse->setValue(2);
-
-	// Appel à la fonction setAngle pour que l'initialisation des composants se fasse parfaitement
-	setAngle(45);
-
 }
+
+void WindWidget::initValues(int angle, int vitesse)
+{
+	slider_vitesse->setValue(vitesse);
+	// Appel à la fonction setAngle pour que l'initialisation des composants se fasse parfaitement
+	setAngle(angle);
+}
+
 
 /**
  * Envoie le signal de changement d'angle à firescreen
@@ -128,6 +124,7 @@ void WindWidget::majAngle()
 	#if DEBUG_VENT
 // 	cout << "angle de windwidget par appel de majAngle" << alpha << endl;
 	#endif
+	// Signal émis vers firescreen
 	emit modif_value(wind->getAngle(), speed);
 }
 
