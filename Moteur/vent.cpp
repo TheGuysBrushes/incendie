@@ -1,6 +1,9 @@
 #include "vent.h"
 
 using namespace std;
+Vent::Vent(){
+
+}
 
 Vent::Vent(float _power_h, float _power_v)
 	:power_h(_power_h),power_v(_power_v)

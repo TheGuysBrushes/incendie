@@ -16,7 +16,6 @@ using namespace std;
  */
 FireScreen::FireScreen(): QMainWindow()
 {
-	// TODO Version anglaise
 	// Elements de la barre de menus
 	QAction* exit = new QAction(this);
 	exit->setText( "Quit" );
@@ -249,7 +248,6 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	connect(this,	SIGNAL(actionSender(int)),		fWidget, SLOT(actionReceived(int)));
 	connect(fWidget,	SIGNAL(endAction()),			this, SLOT(start_timer()));
 	
-	
 /*** 	DEFINITTION DU STYLE DES ELEMENTS	***/
 	// Touches d'améliorations visuelles et d'initialisation de propriétés
 	titre->setStyleSheet("color : darkblue; font : bold italic 20px;");
@@ -313,15 +311,18 @@ bool FireScreen::initForest(Fwelcome* fwel)
 		
 		if(  resExec== Load ){
 			QImage* picture= fwel->getImage();
-			fWidget->initialise(largeur, hauteur, picture);
+			fWidget->initialise(largeur, hauteur, picture,fwel->get_coef());
+			windWidget->initValues(30, 80);
 		}
 		else if(  resExec== Restore ){
 			ifstream* file= fwel->getFile();
 			fWidget->initialise(largeur,hauteur, file);
+			windWidget->initValues(30, 80);
 		}
 		else if( resExec==QDialog::Accepted ){
 			fWidget->initialise(largeur,hauteur,
 									fwel->get_proba(), fwel->get_coef()	);
+			windWidget->initValues(30, 80);
 		}
 		else {
 			cerr<< "Mauvais code de retour de la fenetre de paramétrage"<< endl;
