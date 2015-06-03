@@ -18,14 +18,20 @@ FireScreen::FireScreen(): QMainWindow()
 {
 	// Elements de la barre de menus
 	QAction* exit = new QAction(this);
+	#if FRENCH
+	exit->setText( "Quitter" );
+	#else
 	exit->setText( "Quit" );
+	#endif
 	menuBar()->addAction(exit);
 	connect(exit, 	SIGNAL(triggered()), SLOT(close()) );
 	
 	QAction* save = new QAction(this);
+	#if FRENCH
+	save->setText( "Enregistrer" );
+	#else
 	save->setText( "Save" );
-	menuBar()->addAction(save);
-	connect(save,	SIGNAL(triggered()), SLOT( save()) );
+	#endif
 
 	// Composants Qt de la classe
 	fWidget= new FireWidget();
