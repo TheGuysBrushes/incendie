@@ -64,6 +64,10 @@ public:
 	void initComponents();
 	void addCancel() const;
 
+	/* Setters */
+	void setProba(int x);
+	void setCoef(int x);
+	
 	/* Getters */
 	int getHaut() const	{ return haut_spin->value(); };
 	int getLarg() const	{ return larg_spin->value(); };
@@ -74,18 +78,24 @@ public:
 	std::ifstream* getFile() { return file; };
 	QImage* getImage() { return pictureForest; };
 // 	QPushButton* getRestoreBtn() { return restoreBtn; };
+	
+	
+	void null();
+	/*Chargements*/
+	void openFile(QString filename);
+	void loadSizes();
+	
+	void restore(QString filename);
+	void loadFromImg(QString filename);
+	void loadSeed(QString filename);
 
 public slots:
-	/* Setters */
+	
 	// Slots d'ouverture FileDialog pour chargement
 	void popImageDIalog();
 	void popSaveDialog();
-// 	void popSeedDialog();
+	void popSeedDialog();
 	
-	void set_proba(int x);
-	void set_coef(int x);
-	void restore(QString filename);
-	void loadFromImg(QString filename);
 };
 
 #endif // FWELCOME_H

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'fwelcome.h'
 **
-** Created: Tue Jun 2 14:23:23 2015
+** Created: Thu Jun 4 10:58:54 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_Fwelcome[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -33,18 +33,14 @@ static const uint qt_meta_data_Fwelcome[] = {
  // slots: signature, parameters, type, tag, flags
       10,    9,    9,    9, 0x0a,
       27,    9,    9,    9, 0x0a,
-      45,   43,    9,    9, 0x0a,
-      60,   43,    9,    9, 0x0a,
-      83,   74,    9,    9, 0x0a,
-     100,   74,    9,    9, 0x0a,
+      43,    9,    9,    9, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_Fwelcome[] = {
     "Fwelcome\0\0popImageDIalog()\0popSaveDialog()\0"
-    "x\0set_proba(int)\0set_coef(int)\0filename\0"
-    "restore(QString)\0loadFromImg(QString)\0"
+    "popSeedDialog()\0"
 };
 
 void Fwelcome::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -55,13 +51,11 @@ void Fwelcome::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         switch (_id) {
         case 0: _t->popImageDIalog(); break;
         case 1: _t->popSaveDialog(); break;
-        case 2: _t->set_proba((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 3: _t->set_coef((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 4: _t->restore((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 5: _t->loadFromImg((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 2: _t->popSeedDialog(); break;
         default: ;
         }
     }
+    Q_UNUSED(_a);
 }
 
 const QMetaObjectExtraData Fwelcome::staticMetaObjectExtraData = {
@@ -96,9 +90,9 @@ int Fwelcome::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 3;
     }
     return _id;
 }

@@ -41,7 +41,9 @@ Fwelcome::~Fwelcome(){
 	delete(fileDialog);
 }
 
+/*#####################*/
 /*** Autres Méthodes ***/
+/*#####################*/
 /**
  * Initialise les composants graphiques attributs de la classe
  * @author Ugo et Florian
@@ -189,6 +191,12 @@ void Fwelcome::initComponents(){
 	slide_p->setValue(50);
 }
 
+/*######################*/
+
+/**
+ * Ajoute le bouton cancel à l'interface de création de forêt
+ * @author Florian et Ugo
+ */
 void Fwelcome::addCancel() const
 {
 	gridLay->removeWidget(valid_btn);
@@ -197,80 +205,96 @@ void Fwelcome::addCancel() const
 	cancel_btn->setVisible(true);
 }
 
-void Fwelcome::restore(QString filename)
+
+/*################*/
+/***	 Setters	 ***/
+/*################*/
+
+/**
+ * Met à jour la valeur de la probabilité qu'une cellule soit un arbre
+ * et affiche la valeur courante.
+ * @param int Probabilité qu'une cellule devienne un arbre.
+ * @author Ugo
+ */
+void Fwelcome::setProba(int x){
+	proba = (float) x/100;
+	p_value->setText(QString::number(proba, 'f', 2));
+}
+
+/**
+ * Met à jour la valeur du coefficient de combustion de l'incendie
+ * et affiche la valeur courante
+ * @param int Coefficient de combustion
+ * @author Ugo
+ */
+void Fwelcome::setCoef(int x){
+	burningCoef = (float) x/100;
+	c_value->setText(QString::number(burningCoef, 'f', 2));
+}
+
+
+/*######################*/
+/***	 Chargements	 ***/
+/*######################*/
+/**
+ * Ouvre un fichier à partir de son chemin, enregistré dans fwelcome
+ * @author Florian
+ * @param filename chemin du fichier à ouvrir
+ */
+void Fwelcome::openFile(QString filename)
 {
 	std::string filePath= filename.toStdString();
 	
-// 	file= new ifstream(filename.c_str(), ios::in|ios::binary);
-	
 	file->open(filePath.c_str(), ios::in|ios::binary);
+}
+
+/**
+ * Lit les tailles d'une forêt dans et les assigne aux spinboxs
+ * @author Florian
+ */
+void Fwelcome::loadSizes()
+{
+	int x; // x est utilisé pour la largeur ET la hauteur
+	
+	file->read( (char *)&(x), sizeof(int));
+	larg_spin->setValue(x);
+	#if DEBUG_LOAD
+	cout<< "Taille : " << x<< " en largeur ";
+	#endif
+	
+	file->read( (char *)&(x), sizeof(int));
+	haut_spin->setValue(x);
+	#if DEBUG_LOAD
+	cout<<x<< " en hauteur" <<endl;
+	#endif
+}
+
+/*######################*/
+
+/**
+ * Restaure une forêt stockée dans un fichier
+ * @author Florian
+ * @param filename chemin du fichier de sauvegarde
+ */
+void Fwelcome::restore(QString filename)
+{
+	openFile(filename);
+	
 	if (!file->is_open()){
 		std::cout<< "Echec ouverture fichier de sauvegarde"<< std::endl;
 	}
 	else {
-		int x; // x est utilisé pour la largeur ET la hauteur
-		
-		file->read( (char *)&(x), sizeof(int));
-		larg_spin->setValue(x);
-		#if DEBUG_LOAD
-		cout<< "Taille : " << x<< " en largeur ";
-		#endif
-		
-		file->read( (char *)&(x), sizeof(int));
-		haut_spin->setValue(x);
-		#if DEBUG_LOAD
-		cout<<x<< " en hauteur" <<endl;
-		#endif
+		loadSizes();
 		
 		done(Restore);
 	}
 }
 
 /**
- * Slot déclenché lors du clic sur le bouton d'importation d'image.
- * Ouvre une fenetre de selection d'un fichier image et appelle
- * la fonction de chargement d'image.
- * @author Ugo
+ * Crée un forêt à partir d'une image
+ * @author Florian
+ * @param filename chemin de l'image
  */
-void Fwelcome::popImageDIalog()
-{
-	QString fileName;
-
-	fileDialog = new QFileDialog(this);
-	fileDialog->setViewMode(QFileDialog::Detail);
-	fileDialog->setNameFilter(tr("Images (*.png *.jpeg *.tif)"));
-	if(fileDialog->exec())
-		fileName = fileDialog->selectedFiles().at(0);
-	else
-		fileName = "../foret_pay.png";
-			
-	loadFromImg(fileName);
-		
-}
-
-/**
- * Slot déclenché lors du clic surle bouton de chargement d'une sauvegarde.
- * Ouvre une fenetre de sélection d'un fichier de sauvegarde et appelle 
- * la fonction de chargement correspondant.
- * @author Ugo
- */
-void Fwelcome::popSaveDialog()
-{
-	QString fileName;
-
-	fileDialog = new QFileDialog(this);
-	fileDialog->setViewMode(QFileDialog::Detail);
-	fileDialog->setNameFilter(tr("Sauvegarde (*.data *.frt *.dat *.sav)"));
-	if(fileDialog->exec())
-		fileName = fileDialog->selectedFiles().at(0);
-	else
-		fileName = "./Resources/foret1.dat";
-			
-	restore(fileName);
-
-}
-
-
 void Fwelcome::loadFromImg(QString filename)
 {
 	delete pictureForest;
@@ -296,26 +320,87 @@ void Fwelcome::loadFromImg(QString filename)
 	 
 }
 
-
-/*** SLOTS ***/
 /**
- * Met à jour la valeur de la probabilité qu'une cellule soit un arbre
- * et affiche la valeur courante.
- * @param int Probabilité qu'une cellule devienne un arbre.
+ * Utilise une graine aléatoire stockée dans un fichier pour créer une forêt
+ * @author Florian
+ * @param filename chemin du fichier contenant la graine
+ */
+void Fwelcome::loadSeed(QString filename)
+{
+	openFile(filename);
+	
+	// Chargements des parametres dans le fichier
+	file->read((char *)&(seed), sizeof(time_t));
+	loadSizes();
+	file->read( (char*)&(burningCoef), sizeof(int));
+	
+	done(RestoreSeed);
+}
+
+
+/*################*/
+/***	 SLOTS	 ***/
+/*################*/
+/**
+ * Slot déclenché lors du clic sur le bouton d'importation d'image.
+ * Ouvre une fenetre de selection d'un fichier image et appelle
+ * la fonction de chargement d'image.
  * @author Ugo
  */
-void Fwelcome::set_proba(int x){
-	proba = (float) x/100;
-	p_value->setText(QString::number(proba, 'f', 2));
+void Fwelcome::popImageDIalog()
+{
+	fileDialog = new QFileDialog(this);
+	fileDialog->setViewMode(QFileDialog::Detail);
+	fileDialog->setNameFilter(tr("Images (*.png *.jpeg *.tif)"));
+	
+	QString fileName;
+	if(fileDialog->exec())
+		fileName = fileDialog->selectedFiles().at(0);
+	else
+		fileName = "../foret_pay.png";
+	
+	loadFromImg(fileName);
+	
 }
 
 /**
- * Met à jour la valeur du coefficient de combustion de l'incendie
- * et affiche la valeur courante
- * @param int Coefficient de combustion
+ * Slot déclenché lors du clic sur le bouton de chargement d'une sauvegarde.
+ * Ouvre une fenetre de sélection d'un fichier charge la forêt de ce fichier.
  * @author Ugo
  */
-void Fwelcome::set_coef(int x){
-	burningCoef = (float) x/100;
-	c_value->setText(QString::number(burningCoef, 'f', 2));
+void Fwelcome::popSaveDialog()
+{
+	fileDialog = new QFileDialog(this);
+	fileDialog->setViewMode(QFileDialog::Detail);
+	fileDialog->setNameFilter(tr("Sauvegarde (*.data *.frt *.dat *.sav)"));
+	
+	QString fileName;
+	if(fileDialog->exec())
+		fileName = fileDialog->selectedFiles().at(0);
+	else
+		fileName = "./Resources/foret1.dat";
+	
+	restore(fileName);
 }
+
+
+/**
+ * Slot déclenché lors du clic sur le bouton de chargement d'une graine.
+ * Ouvre une fenetre de sélection d'un fichier et crée une forêt grâce à ce fichier.
+ * @author Ugo et Florian
+ */
+void Fwelcome::popSeedDialog()
+{
+	fileDialog = new QFileDialog(this);
+	fileDialog->setViewMode(QFileDialog::Detail);
+	fileDialog->setNameFilter(tr("Sauvegarde (*.seed)"));
+	
+	QString fileName;
+	if(fileDialog->exec())
+		fileName = fileDialog->selectedFiles().at(0);
+	else
+		fileName = "./Resources/foret1.seed";
+	
+	loadSeed(fileName);
+}
+
