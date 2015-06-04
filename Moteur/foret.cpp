@@ -27,30 +27,11 @@ Foret::Foret(int _largeur, int _hauteur, float proba, float _coefFeu, time_t gra
 : lignes(_hauteur), colonnes(_largeur), burningCoef(_coefFeu), randomSeed(graine)
 {
 	loadEssences("../Moteur/essence_data.txt");
-	srand(time(0));
 	randomMatrix(proba);
 	
 	wind = new Vent();
 }
 
-/**
- * Constructeurs de forêt aléatoirement, à partir de paramètres
- * @author Florian
- * 
- * @param _largeur nombre de colonnes de la matrice représentant la forêt, sa largeur
- * @param _hauteur nombre de lignes de la matrice, la hauteur
- * @param proba, probabilite qu'il y ait un arbre, pour chaque case de la matrice. C'est environ le pourcentage d'arbres
- * @param _coefFeu coefficient de propagation du feu : 1 forêt "classique"; <1 progression plus lente (humidité...); >1 progression plus rapide (sécheresse ?)
- */
-// Foret::Foret(int _largeur, int _hauteur, time_t graine, float proba, float _coefFeu)
-// : lignes(_hauteur), colonnes(_largeur), burningCoef(_coefFeu), randomSeed(graine)
-// {
-// 	loadEssences("../Moteur/essence_data.txt");
-// 	srand(graine);
-// 	randomMatrix(proba);
-// 
-// 	wind = new Vent();
-// }
 
 /**
  * Constructeurs de forêt aléatoirement, à partir d'un fichier de sauvegarde
