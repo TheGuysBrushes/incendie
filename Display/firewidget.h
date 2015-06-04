@@ -83,6 +83,8 @@ public:
 	bool loadForest(std::string filename);
 	void saveForest(std::string filepath) const;
 	bool saveImage(QString fileName);
+	//TODO FLO a toi de vérifier
+	bool saveSeed(QString fileName);
 	
 	/* Modifications de l'état des arbres */
 // 	bool eteindreFeu(int colonne, int ligne);

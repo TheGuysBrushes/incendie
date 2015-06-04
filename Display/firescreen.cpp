@@ -178,6 +178,8 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	// Compteur de tours et Slider
 	QLabel* trans_con = new QLabel("Transmission continue : ");	
 	QLabel* tour_lbl = new QLabel("Nombre de tours :");
+	QPushButton* saveStateBtn = new QPushButton("Sauvegarder l'etat courant");
+	QPushButton* saveSeedBtn = new QPushButton("Sauvegarder la graine");
 	
 #else 
 	QLabel* titre = new QLabel("Cellular automaton");
@@ -187,7 +189,8 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	QLabel* trans_p2p = new QLabel("Step-to-step transmission : ");
 	
 	QPushButton* reset_btn = new QPushButton("Reset ! Be careful");
-	QPushButton* save_btn = new QPushButton("Save");
+	QPushButton* saveStateBtn = new QPushButton("Save current state");
+	QPushButton* saveSeedBtn = new QPushButton("Save seed's forest");
 	
 	// Compteur de tours et Slider
 	QLabel* trans_con = new QLabel("Continuous transmission : ");	
@@ -216,8 +219,9 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	grid_lay2->addWidget(delai_lbl,1,1);
 	
 
-	grid_lay3->addWidget(save_btn,0,0);
-	grid_lay3->addWidget(reset_btn,1,0);
+	grid_lay3->addWidget(saveStateBtn,0,0);
+	grid_lay3->addWidget(saveSeedBtn, 0, 1);
+	grid_lay3->addWidget(reset_btn,1,0,1,0);
 	
 	h_lay1->addWidget(tour_lbl);
 	h_lay1->addWidget(cpt_lbl);
@@ -248,7 +252,8 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	// Boutons
 		/* Gestion foret */
 	connect(reset_btn,	SIGNAL(clicked()), 	this,	SLOT( reset()) );
-	connect(save_btn,	SIGNAL(clicked()),	this, SLOT( saveData()) );	
+	connect(saveStateBtn,	SIGNAL(clicked()),	this, SLOT( saveData()) );
+	connect(saveSeedBtn, SIGNAL(clicked()), this, SLOT( saveSeed()) );
 	
 		/* Déroulement*/
 	connect(next_btn,	SIGNAL(clicked()), 		this,	SLOT( nextStep()) );
@@ -473,7 +478,7 @@ void FireScreen::saveData()
 }
 
 /**
- * Appelle la sauvegarde d(une image de foret dans fWidget
+ * Appelle la sauvegarde d'une image de foret dans fWidget
  * @author Ugo et Florian
  */
 void FireScreen::saveImage()
@@ -487,6 +492,24 @@ void FireScreen::saveImage()
 	}
 	
 	fWidget->saveImage(QString::fromStdString(s));
+}
+
+/**
+ * Appelle la sauvegarde d'une graine de foret dans fWidget
+ * @author Ugo et Florian
+ */
+void FireScreen::saveSeed()
+{
+	fileSaveDialog = new QFileDialog(this);
+	fileSaveDialog->setAcceptMode(QFileDialog::AcceptSave);
+	string s;
+	if(fileSaveDialog->exec()){
+		s = fileSaveDialog->selectedFiles()[0].toStdString();
+		cout <<"taille de "<< s<< " : "<< s.length() << endl;
+	}
+	
+	// Appel à la fonction de sauvegarde de fWidget
+	
 }
 
 

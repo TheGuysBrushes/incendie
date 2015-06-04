@@ -86,6 +86,7 @@ public slots:
 	void reset();
 	void saveData();
 	void saveImage();
+	void saveSeed();
 	
 	void updateWind(int angle, int vitesse);
 	

@@ -291,6 +291,12 @@ bool FireWidget::saveImage(QString fileName)
 	}
 }
 
+//TODO FLO reprise ici
+bool FireWidget::saveSeed(QString fileName)
+{
+
+	return  true;
+}
 
 
 //######################################

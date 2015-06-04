@@ -42,6 +42,7 @@ private:
 	QPushButton* cancel_btn;
 	QPushButton* loadFromImgBtn;
 	QPushButton* restoreBtn;
+	QPushButton* seedBtn;
 	
 	QImage* pictureForest;
 	

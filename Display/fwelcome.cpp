@@ -59,12 +59,15 @@ void Fwelcome::createComponents()
 	#if FRENCH
 	valid_btn = new QPushButton("Valider");
 	cancel_btn = new QPushButton("Annuler");
-	QPushButton* load_btn= new QPushButton("Charger une foret", this);
+	restoreBtn= new QPushButton("Charger une foret");
+	loadFromImgBtn = new QPushButton("Importer une image");
+	seedBtn = new QPushButton("Charger une graine");
 	#else 
 	valid_btn = new QPushButton("Confirm");
 	cancel_btn = new QPushButton("Cancel");
 	restoreBtn= new QPushButton("Load forest");
 	loadFromImgBtn = new QPushButton("Create from image");
+	seedBtn = new QPushButton("Load a seed");
 	#endif
 	
 	cancel_btn->setVisible(false);
@@ -172,6 +175,7 @@ void Fwelcome::initComponents(){
 		gridLay->addWidget(valid_btn, 0,0, 1,0);
 		gridLay->addWidget(restoreBtn, 1,0);
 		gridLay->addWidget(loadFromImgBtn, 1,1);
+		gridLay->addWidget(seedBtn, 1, 1);
 
 	lay->addWidget(present);
 	lay->addWidget(WSettings);
@@ -185,6 +189,7 @@ void Fwelcome::initComponents(){
 	connect(cancel_btn,	SIGNAL(clicked()), this, SLOT(reject()) );
 	connect(restoreBtn,	SIGNAL(clicked()), this, SLOT(popSaveDialog()) );
 	connect(loadFromImgBtn,	SIGNAL(clicked()), this, SLOT(popImageDIalog()) );
+	connect(seedBtn,SIGNAL(clicked()), this, SLOT(popSeedDialog()) );
 
 	// Appel à setValue pour déclencer l'affichage de la valeur à la construction du widget
 	slide_c->setValue(50);
