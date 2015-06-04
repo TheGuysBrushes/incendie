@@ -37,7 +37,7 @@ private:
 	QImage* buffer;
 	QColor* color;
 	QPainter* bufferPainter;
-	QImage* pictureForest;
+	QImage* pictureForest;	// Image de fond
 	
 	QPoint origin;
 	QRubberBand* rubber;
@@ -66,26 +66,30 @@ private:
 	LoadWindow* createProgressWindow() const;
 	
 public:
-	/* Getters et Setters */
+	/* Setters */
 	void setColor(int colorIndice);	
 	void setWind(float angle, float vitesse)	{ forest->setWind(angle, vitesse); };
+	void razRubber() 	{ rubber= NULL; };
+		/* Gestion Foret */
+	void delForest();
+	void delPicture();
+	
+	/* Getters */
 	int getTailleCell() const { return tailleCell; };
 	Foret* getForet() const { return forest; };
-	void razRubber() 	{ rubber= NULL; };
 	
-	/* Gestion Foret */
+	/* Gestion Sauvegardes */
 	void loadFromPicture(int largeurImage, int hauteurImage, QImage* imageForet, float coef_brulure);
 	bool loadForest(std::string filename);
 	void saveForest(std::string filepath) const;
-	void delForest();
-	void delPicture();
-
-	bool eteindreFeu(int colonne, int ligne);
+	bool saveImage(QString fileName);
+	
+	/* Modifications de l'état des arbres */
+// 	bool eteindreFeu(int colonne, int ligne);
 	bool allumerFeu(int colonne, int ligne);
 	bool finirFeu(int colonne, int ligne);
 // 	void newForet(int _largeur, int _hauteur, float _proba, float _coef_brulure);
 
-	
 	/* Affichage */
 	void drawCell(int colonne, int ligne);
 	void drawTree(const Arbre* ab);

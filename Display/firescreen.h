@@ -84,7 +84,8 @@ public slots:
 	/*	Boutons	*/
 	void nextStep();
 	void reset();
-	void save();
+	void saveData();
+	void saveImage();
 	
 	void updateWind(int angle, int vitesse);
 	

@@ -51,6 +51,7 @@ void LoadWindow::setProgress(int pourcentage)
 void LoadWindow::closeProgress()
 {
 	hide();
+	delete PB_load;
 }
 
 

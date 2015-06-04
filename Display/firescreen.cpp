@@ -26,14 +26,21 @@ FireScreen::FireScreen(): QMainWindow()
 	menuBar()->addAction(exit);
 	connect(exit, 	SIGNAL(triggered()), SLOT(close()) );
 	
-	QAction* save = new QAction(this);
+	QAction* saveData = new QAction(this);
+	QAction* saveImage = new QAction(this);
 	#if FRENCH
-	save->setText( "Enregistrer" );
+	saveData->setText( "Foret complète" );
+	saveImage->setText( "sous forme d'Image" );
+	
 	#else
-	save->setText( "Save" );
+	saveData->setText( "complete Forest" );
+	saveImage->setText( "to Image" );
 	#endif
-	menuBar()->addAction(save);
-	connect(exit, 	SIGNAL(triggered()), SLOT(save()) );
+	QMenu* menuSave= menuBar()->addMenu("Sauvegardes...");
+	menuSave->addAction(saveData);
+	menuSave->addAction(saveImage);
+	connect(saveData, 	SIGNAL(triggered()), SLOT(saveData()) );
+	connect(saveImage, 	SIGNAL(triggered()), SLOT(saveImage()) );
 
 	// Composants Qt de la classe
 	fWidget= new FireWidget();
@@ -241,7 +248,7 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	// Boutons
 		/* Gestion foret */
 	connect(reset_btn,	SIGNAL(clicked()), 	this,	SLOT( reset()) );
-	connect(save_btn,	SIGNAL(clicked()),	this, SLOT( save()) );	
+	connect(save_btn,	SIGNAL(clicked()),	this, SLOT( saveData()) );	
 	
 		/* Déroulement*/
 	connect(next_btn,	SIGNAL(clicked()), 		this,	SLOT( nextStep()) );
@@ -447,22 +454,41 @@ void FireScreen::reset()
 		fWidget->redraw();
 }    
 
+
 /**
- * Appelle la sauvegarde de la foret de fWidget 
- * @author Florian
+ * Appelle la sauvegarde de la foret dans fWidget
+ * @author Ugo et Florian
  */
-void FireScreen::save()
+void FireScreen::saveData()
 {
 	fileSaveDialog = new QFileDialog(this);
 	fileSaveDialog->setAcceptMode(QFileDialog::AcceptSave);
 	string s;
 	if(fileSaveDialog->exec()){
 		s = fileSaveDialog->selectedFiles().at(0).toStdString();
-		cout << s << s.length() << endl;
+		cout <<"taille de "<< s<< " : "<< s.length() << endl;
 	}
-
+	
 	fWidget->saveForest(s);
 }
+
+/**
+ * Appelle la sauvegarde d(une image de foret dans fWidget
+ * @author Ugo et Florian
+ */
+void FireScreen::saveImage()
+{
+	fileSaveDialog = new QFileDialog(this);
+	fileSaveDialog->setAcceptMode(QFileDialog::AcceptSave);
+	string s;
+	if(fileSaveDialog->exec()){
+		s = fileSaveDialog->selectedFiles()[0].toStdString();
+		cout <<"taille de "<< s<< " : "<< s.length() << endl;
+	}
+	
+	fWidget->saveImage(QString::fromStdString(s));
+}
+
 
 	/* Déroulement */
 /**

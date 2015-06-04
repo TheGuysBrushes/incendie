@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'firescreen.h'
 **
-** Created: Thu Jun 4 11:26:22 2015
+** Created: Thu Jun 4 15:41:53 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_FireScreen[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -40,8 +40,9 @@ static const uint qt_meta_data_FireScreen[] = {
       74,   11,   11,   11, 0x0a,
       85,   11,   11,   11, 0x0a,
       93,   11,   11,   11, 0x0a,
-     114,  100,   11,   11, 0x0a,
-     134,   11,   11,   11, 0x0a,
+     104,   11,   11,   11, 0x0a,
+     130,  116,   11,   11, 0x0a,
+     150,   11,   11,   11, 0x0a,
 
        0        // eod
 };
@@ -49,8 +50,9 @@ static const uint qt_meta_data_FireScreen[] = {
 static const char qt_meta_stringdata_FireScreen[] = {
     "FireScreen\0\0x\0actionSender(int)\0"
     "start_timer()\0stop_timer()\0set_delai(int)\0"
-    "nextStep()\0reset()\0save()\0angle,vitesse\0"
-    "updateWind(int,int)\0releaseOrdered()\0"
+    "nextStep()\0reset()\0saveData()\0saveImage()\0"
+    "angle,vitesse\0updateWind(int,int)\0"
+    "releaseOrdered()\0"
 };
 
 void FireScreen::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -65,9 +67,10 @@ void FireScreen::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 3: _t->set_delai((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 4: _t->nextStep(); break;
         case 5: _t->reset(); break;
-        case 6: _t->save(); break;
-        case 7: _t->updateWind((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 8: _t->releaseOrdered(); break;
+        case 6: _t->saveData(); break;
+        case 7: _t->saveImage(); break;
+        case 8: _t->updateWind((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 9: _t->releaseOrdered(); break;
         default: ;
         }
     }
@@ -105,9 +108,9 @@ int FireScreen::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 10;
     }
     return _id;
 }

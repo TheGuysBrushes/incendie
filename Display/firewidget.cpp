@@ -130,6 +130,81 @@ LoadWindow* FireWidget::createProgressWindow() const
 }
 
 
+//######################
+/*** 		Setters 		***/
+//######################
+
+/**
+ * Fonction permettant de fixer la couleur à utiliser pour dessiner un arbre
+ * @param int indice de l'essence de l'arbre
+ * @author Florian et Ugo
+ * IMPROVEIT plus de nuances de couleurs ?, une couleur par cellule : on utiliserai une methode differente de "peinture" ? 
+ */
+void FireWidget::setColor(int colorIndice)
+{
+	switch(colorIndice){
+		case Green0:
+			this->color->setRgb(01,100,00);
+			break;
+		case Green1:
+			this->color->setRgb(34,139,34	);
+			break;
+		case Green2:
+			this->color->setRgb(107,142,35);
+			break;
+		case Green3:
+			this->color->setRgb(00,205,00);
+			break;
+		case Green4:
+			this->color->setRgb(46,139,87);
+			break;
+		case Gray:
+			this->color->setRgb(60,60,60);
+			break;
+		case Orange:
+			this->color->setRgb(255,165,00);
+			break;
+		case BlueTrans:
+			this->color->setRgb(83,104,120,	200);
+			break;
+		case BrownCut:
+			this->color->setRgb(150,75,0,	200);
+			break;
+		case Red:
+			this->color->setRgb(255,0,0);
+			break;
+		case Brownie:
+			this->color->setRgb(40, 30, 20);
+			break;
+		default :
+			this->color->setRgb(255,255,255);
+	}
+}
+
+// #################################
+/*** 		Gestion de la foret		***/
+// #################################
+/**
+ * Méthodes de destruction de la forêt pour gérer la 
+ * ré-initialisation de la matrice
+ * @author Florian
+ */
+void FireWidget::delForest(){
+	delete(forest);
+}
+
+/**
+ * Crée une nouvelle image de fond vierge
+ * @author Florian
+ */
+void FireWidget::delPicture()
+{
+	delete pictureForest;
+	pictureForest= new QImage;
+}
+
+
+
 // #################################
 /*** 	Gestion des sauvegardes 	***/
 // #################################
@@ -200,23 +275,27 @@ void FireWidget::saveForest(string filepath) const
 	cout << "filePath fWidget : " << filepath << endl;
 }
 
-/**
- * Méthodes de destruction de la forêt pour gérer la 
- * ré-initialisation de la matrice
- * @author Florian
- */
-void FireWidget::delForest(){
-	delete(forest);
-}
-
-void FireWidget::delPicture()
+bool FireWidget::saveImage(QString fileName)
 {
-	delete pictureForest;
-	pictureForest= new QImage;
+	if ( !buffer->isNull() ){
+		// TEST verifier que la taille est correcte
+		QImage tmp= buffer->scaled(tailleCell*forest->width(), tailleCell*forest->height());
+		tmp.save(fileName);
+		return true;
+	}
+	else{
+		#if DEBUG_SAVE
+		cout << "Impossible de sauvegarder l'image, de forêt ouverte !"<< endl;
+		#endif
+		return false;
+	}
 }
 
 
 
+//######################################
+/* Modifications de l'état des arbres */
+//######################################
 /**
  * Eteint un arbre à une position donnée
  * @author Florian
@@ -307,55 +386,6 @@ bool FireWidget::finirFeu(int colonne, int ligne)
 	}
 	// cas d'erreur par défaut
 	return false;
-}
-
-/*** Setters ***/
-
-/**
- * Fonction permettant de fixer la couleur à utiliser pour dessiner un arbre
- * @param int indice de l'essence de l'arbre
- * @author Florian et Ugo
- * IMPROVEIT plus de nuances de couleurs ?, une couleur par cellule : on utiliserai une methode differente de "peinture" ? 
- */
-void FireWidget::setColor(int colorIndice)
-{
-	switch(colorIndice){
-		case Green0:
-			this->color->setRgb(01,100,00);
-			break;
-		case Green1:
-			this->color->setRgb(34,139,34	);
-			break;
-		case Green2:
-			this->color->setRgb(107,142,35);
-			break;
-		case Green3:
-			this->color->setRgb(00,205,00);
-			break;
-		case Green4:
-			this->color->setRgb(46,139,87);
-			break;
-		case Gray:
-			this->color->setRgb(60,60,60);
-			break;
-		case Orange:
-			this->color->setRgb(255,165,00);
-			break;
-		case BlueTrans:
-			this->color->setRgb(83,104,120,	200);
-			break;
-		case BrownCut:
-			this->color->setRgb(150,75,0,	200);
-			break;
-		case Red:
-			this->color->setRgb(255,0,0);
-			break;
-		case Brownie:
-			this->color->setRgb(40, 30, 20);
-			break;
-		default :
-			this->color->setRgb(255,255,255);
-	}
 }
 
 /**
