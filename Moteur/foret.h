@@ -48,8 +48,8 @@ private:
 public:
 	
 	// Constructeur et destructeur
-	Foret(int _largeur, int _hauteur, float proba = 0.60, float _coefFeu = 0.5);
-	Foret(int _largeur, int _hauteur, std::time_t graine, float proba = 0.60, float _coefFeu = 0.5);
+	Foret(int _largeur, int _hauteur, float proba = 0.60, float _coefFeu = 0.5, std::time_t graine=time(0));
+// 	Foret(int _largeur, int _hauteur, std::time_t graine, float proba = 0.60, float _coefFeu = 0.5);
 // 	Foret(Foret& other, float proba=0.60);
 	Foret(int _largeur, int _hauteur, std::ifstream* file, LoadProgress* PB);
 	Foret(int _largeur, int _hauteur, std::vector< std::vector< int > >* matrice, float coef_brulure);
