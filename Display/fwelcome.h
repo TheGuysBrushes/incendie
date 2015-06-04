@@ -63,11 +63,13 @@ public:
 	void createComponents();
 	void initComponents();
 	void addCancel() const;
-
+	
+public slots:
 	/* Setters */
 	void setProba(int x);
 	void setCoef(int x);
 	
+public:
 	/* Getters */
 	int getHaut() const	{ return haut_spin->value(); };
 	int getLarg() const	{ return larg_spin->value(); };
@@ -80,7 +82,6 @@ public:
 // 	QPushButton* getRestoreBtn() { return restoreBtn; };
 	
 	
-	void null();
 	/*Chargements*/
 	void openFile(QString filename);
 	void loadSizes();

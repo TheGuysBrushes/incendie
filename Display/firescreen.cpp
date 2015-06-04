@@ -32,6 +32,8 @@ FireScreen::FireScreen(): QMainWindow()
 	#else
 	save->setText( "Save" );
 	#endif
+	menuBar()->addAction(save);
+	connect(exit, 	SIGNAL(triggered()), SLOT(save()) );
 
 	// Composants Qt de la classe
 	fWidget= new FireWidget();
@@ -317,7 +319,7 @@ bool FireScreen::initForest(Fwelcome* fwel)
 		
 		if(  resExec==Load ){
 			QImage* picture= fwel->getImage();
-			fWidget->initialise(largeur, hauteur, picture,fwel->getCoef());
+			fWidget->initialise(largeur,hauteur, picture, fwel->getCoef());
 			windWidget->initValues(30, 80);
 		}
 		else if(  resExec==Restore ){
@@ -327,12 +329,12 @@ bool FireScreen::initForest(Fwelcome* fwel)
 		}
 		else if( resExec==RestoreSeed ){
 			fWidget->initialise(largeur,hauteur,
-									  fwel->getProba(), fwel->getCoef(), fwel->getSeed() );
+									fwel->getProba(), fwel->getCoef(), fwel->getSeed() );
 			windWidget->initValues(30, 80);
 		}		
 		else if( resExec==Accepted ){
 			fWidget->initialise(largeur,hauteur,
-									  fwel->getProba(), fwel->getCoef()	);
+									fwel->getProba(), fwel->getCoef()	);
 			windWidget->initValues(30, 80);
 		}
 		else {

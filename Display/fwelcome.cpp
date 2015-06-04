@@ -178,8 +178,8 @@ void Fwelcome::initComponents(){
 	lay->addWidget(WButtons);
 
 	/* Connexion entre les différents éléments */
-	connect(slide_p,	SIGNAL(valueChanged(int)), this, SLOT(set_proba(int)) );
-	connect(slide_c,	SIGNAL(valueChanged(int)), this, SLOT(set_coef(int)) );
+	connect(slide_p,	SIGNAL(valueChanged(int)), this, SLOT(setProba(int)) );
+	connect(slide_c,	SIGNAL(valueChanged(int)), this, SLOT(setCoef(int)) );
 	
 	connect(valid_btn,	SIGNAL(clicked()), this, SLOT(accept()) );
 	connect(cancel_btn,	SIGNAL(clicked()), this, SLOT(reject()) );
