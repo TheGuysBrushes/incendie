@@ -80,8 +80,6 @@ public:
 	
 	std::ifstream* getFile() { return file; };
 	QImage* getImage() { return pictureForest; };
-// 	QPushButton* getRestoreBtn() { return restoreBtn; };
-	
 	
 	/*Chargements*/
 	void openFile(QString filename);

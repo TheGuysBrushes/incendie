@@ -470,7 +470,7 @@ void FireScreen::saveData()
 	fileSaveDialog->setAcceptMode(QFileDialog::AcceptSave);
 	string s;
 	if(fileSaveDialog->exec()){
-		s = fileSaveDialog->selectedFiles().at(0).toStdString();
+		s= fileSaveDialog->selectedFiles().at(0).toStdString();
 		cout <<"taille de "<< s<< " : "<< s.length() << endl;
 	}
 	
@@ -487,7 +487,7 @@ void FireScreen::saveImage()
 	fileSaveDialog->setAcceptMode(QFileDialog::AcceptSave);
 	string s;
 	if(fileSaveDialog->exec()){
-		s = fileSaveDialog->selectedFiles()[0].toStdString();
+		s= fileSaveDialog->selectedFiles()[0].toStdString();
 		cout <<"taille de "<< s<< " : "<< s.length() << endl;
 	}
 	

@@ -189,7 +189,7 @@ void Fwelcome::initComponents(){
 	connect(cancel_btn,	SIGNAL(clicked()), this, SLOT(reject()) );
 	connect(restoreBtn,	SIGNAL(clicked()), this, SLOT(popSaveDialog()) );
 	connect(loadFromImgBtn,	SIGNAL(clicked()), this, SLOT(popImageDIalog()) );
-	connect(seedBtn,SIGNAL(clicked()), this, SLOT(popSeedDialog()) );
+	connect(seedBtn,		SIGNAL(clicked()), this, SLOT(popSeedDialog()) );
 
 	// Appel à setValue pour déclencer l'affichage de la valeur à la construction du widget
 	slide_c->setValue(50);
