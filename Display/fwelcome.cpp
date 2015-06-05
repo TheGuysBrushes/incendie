@@ -175,7 +175,7 @@ void Fwelcome::initComponents(){
 		gridLay->addWidget(valid_btn, 0,0, 1,0);
 		gridLay->addWidget(restoreBtn, 1,0);
 		gridLay->addWidget(loadFromImgBtn, 1,1);
-		gridLay->addWidget(seedBtn, 1, 1);
+		gridLay->addWidget(seedBtn, 1, 2);
 
 	lay->addWidget(present);
 	lay->addWidget(WSettings);
