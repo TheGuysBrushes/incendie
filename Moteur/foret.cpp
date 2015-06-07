@@ -252,6 +252,8 @@ bool Foret::loadEssences(const string& fileName)
 											atoi(tokens[5].c_str())		) );
 			
 			indice +=1;
+			// suppression du vecteur de strings instancié en pointeur
+			delete &tokens;
 		}
 		#if DEBUG_FILE
 		showEssences();
@@ -328,7 +330,8 @@ void Foret::plantTree(int col, int row, unsigned int numEss, int PdV, float humi
 	matrix[row][col]= ab;
 }
 
-
+// IMPROVEIT Il faudrait pouvoir choisir une sensibilité au vert ou à la luminosité, ou bien calculer la luminosité moyenne de l'image pour la prendre en compte
+// 	On peut avoir des résultat étranges en changeant la luminosité ou l'etalonnage d'une même image
 void Foret::create(int largeur, int hauteur, vector< vector< int > >* matrice)
 {
 	initEmpty();
@@ -465,7 +468,11 @@ void Foret::kindle(Arbre* ab)
 {
 	ab->kindle();
 	onFire.push_back(ab);
-	burned.push_back(ab);
+	
+	if (ab->getCoeff() < 1)
+		delayBurned.push_back(ab);
+	else 
+		burned.push_back(ab);
 }
 
 void Foret::kindle(int col, int row)
@@ -498,7 +505,11 @@ void Foret::spark(Arbre* ab, int intensite)
 	ab->spark(burningCoef*intensite);
 	if (ab->isOnFire()){
 		onFire.push_back(ab);
-		burned.push_back(ab);
+		
+		if (ab->getCoeff() < 1)
+			delayBurned.push_back(ab);
+		else 
+			burned.push_back(ab);
 	}
 }
 
@@ -508,7 +519,6 @@ void Foret::spark(int col, int row, int intensite)
 		Arbre * ab = dynamic_cast<Arbre *>(matrix[row][col]);
 		spark(ab, intensite);
 	}
-	// 	else if (etat==2){// si l'arbre est déja en feu} 
 }
 
 

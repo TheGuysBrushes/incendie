@@ -301,7 +301,7 @@ void Fwelcome::loadSeed(QString filename)
 	
 	// Chargements des parametres dans le fichier
 	file->read((char *)&(seed), sizeof(time_t));
-	cout<< "graine : "<< seed<< " "<< seed<< endl;
+	cout<< "graine : "<< seed<< endl;
 	loadSizes();
 	file->read( (char*)&(burningCoef), sizeof(float));
 	

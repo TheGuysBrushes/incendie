@@ -4,4 +4,3 @@ LoadProgress::LoadProgress()
 {
 
 }
-

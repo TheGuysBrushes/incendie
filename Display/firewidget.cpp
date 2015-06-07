@@ -12,10 +12,10 @@ using namespace std;
 // #################################
 FireWidget::FireWidget(): QWidget()
 {	
-	buffer = new QImage();
+	buffer = new QImage;
 	color = new QColor(Qt::white);
-	bufferPainter= new QPainter();
-	pictureForest= new QImage();
+	bufferPainter= new QPainter;
+	pictureForest= new QImage;
 	
 	rubber = NULL;
 }
@@ -70,7 +70,10 @@ bool FireWidget::initialise(int largeur, int hauteur, ifstream * file)
 bool FireWidget::initialise(int largeur, int hauteur, QImage* imageForet, float coef_brulure)
 {
 	if (!imageForet->isNull()){
-		pictureForest= imageForet;
+		// on crée une copie de l'image, pour éviter de pointer sur une image détruite, 
+		//		on pourrait enlever la destruction de pictureForest dans fwelcome pour gagner en performance,
+		//		mais il y a un risque de fuite mémoire en cas d'une utilisation différente de fwelcome
+		pictureForest= new QImage(*imageForet);
 		#if DEBUG_CREA_FORET
 		cout << "Réussite ouverture fichier, creation foret à partir de l'image"<< endl;
 		#endif
@@ -164,7 +167,7 @@ void FireWidget::loadFromPicture(int largeurImage, int hauteurImage, QImage* ima
 {
 	cout<< "Creation à partir d'image ..."<< endl;
 	vector< vector< int > >* matrice= new vector< vector< int > >;
-	QColor* pix= new QColor();
+	QColor* pix= new QColor;
 	
 	for (int i= 0; i< hauteurImage; ++i){
 		vector< int > ligne;
@@ -336,10 +339,11 @@ void FireWidget::drawList( list< Arbre* > * arbres){
 
 void FireWidget::drawForest()
 {
+	// essai de dessin de l'image de fond, et de la foret, si présente
 	if (!drawPictureForest()){
-	
+		// si il n"y a oas d'image, on dessine toute la foret dont les arbre
+
 		bufferPainter->begin(buffer);
-// 		drawPicture();
 		
 		int current_hauteur= 0;
 		for(int i=0; i<forest->height(); ++i){
@@ -417,7 +421,9 @@ bool FireWidget::drawPicture()
 
 bool FireWidget::drawPictureForest()
 {
+	// essai de dessin de l'image de fond, si présente
 	if (drawPicture()){
+		// si il y a une image de fond, on ne dessine pas les arbres "neutres"
 		
 		bufferPainter->begin(buffer);
 		int current_hauteur= 0;

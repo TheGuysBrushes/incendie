@@ -82,8 +82,6 @@ FireScreen::~FireScreen()
 	delete windWidget;
 	delete fWidget;
 	
-	delete menus;
-	
 	delete delai_lbl;
 	delete cpt_lbl;
 	
@@ -91,8 +89,10 @@ FireScreen::~FireScreen()
 	delete play_btn;
 	delete next_btn;
 	delete actionBox;
-	delete timer;
 	
+	delete menus;
+	
+	delete timer;
 	delete fileSaveDialog;
 }
 
@@ -104,11 +104,9 @@ bool FireScreen::initialisation()
 	Fwelcome* fwel = new Fwelcome(this);
 	
 	if ( initForest(fwel) )	{
-		delete fwel;
 		return true;
 	}
 	else {
-		delete fwel;
 		return false;
 	}
 }
