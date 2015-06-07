@@ -10,11 +10,6 @@
 using namespace std;
 
 /*** Constructeur et destructeur ***/
-/**
- * Constructeur de classe. Par défaut, la vitesse est 
- * initialisée à 5km/h.
- * @author Ugo 
- */
 WindWidget::WindWidget()
 {
 	// Initialisation des composants de la classe
@@ -36,16 +31,17 @@ WindWidget::WindWidget()
 
 WindWidget::~WindWidget(){
 	delete(wind);
+	delete timer;
+
 	delete(angle_lbl);
 	delete(speed_lbl);
+	
+	delete varAngleBox;
+	delete slider_vitesse;
 }
 
 /*** Composants ***/
-/**
- * Initialise les composants graĥiques statiques
- * 	et organise la hiérarchie des différents composants
- * @author Ugo
- */
+
 void WindWidget::initComponents()
 {
 
@@ -96,10 +92,6 @@ void WindWidget::initValues(int angle, int vitesse)
 }
 
 
-/**
- * Envoie le signal de changement d'angle à firescreen
- * 
- */
 void WindWidget::setAngle(int angle)
 {
 	#if DEBUG_VENT
@@ -115,10 +107,6 @@ void WindWidget::resizeEvent(QResizeEvent* Qevent)
 
 
 /*** Slots ***/
-/**
- * Signale à firescreen que le vent a été modifié
- * @author Ugo
- */
 void WindWidget::majAngle()
 {
 	#if DEBUG_VENT
@@ -128,11 +116,6 @@ void WindWidget::majAngle()
 	emit modif_value(wind->getAngle(), speed);
 }
 
-/**
- * Met à jour la valeur de la vitesse choisie et l'affiche
- *  signale à firescreen que le vent a été modifié
- * @author Ugo
- */
 void WindWidget::majSpeed(int vitesse){
 	
 	speed_lbl->setText(QString::number(vitesse));
@@ -141,11 +124,6 @@ void WindWidget::majSpeed(int vitesse){
 }
 
 
-/** 
- * Slot exécuté à chaque timeout du timer pour
- * faire varier la valeur de l'angle de facon aléatoire
- * @author Ugo
- */
 void WindWidget::changeWindDir()
 {
 	int variation= 2;

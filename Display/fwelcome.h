@@ -34,7 +34,6 @@ private:
 	QGridLayout* gridLay;
 	QSpinBox* haut_spin;
 	QSpinBox* larg_spin;
-	
 	QLabel* p_value;
 	QLabel* c_value;
 	

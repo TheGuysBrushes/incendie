@@ -51,17 +51,16 @@ public:
 // 									QWidget* parent = 0, Qt::WindowFlags flags = 0);
 	virtual ~FireScreen();
 	
-// 	void createForest(int largeur, int hauteur, std::ifstream* file);
-// 	void createForest(std::ifstream* file);
-	
-// 	void initForest(Fwelcome* fwel);
-	void initMenus(QHBoxLayout* HLayout) /*const*/;
+/* Initialisations */
+	void initMenus(QHBoxLayout* HLayout);
 	void initComponents();
 	void initSizes(int largeur, int hauteur);
 	bool initForest(Fwelcome* fwel);
 	
-	void majCompteur();
 	bool initialisation();
+	
+	/* Methodes diverses */
+	void majCompteur();
 		
 protected:
 	void resizeEvent(QResizeEvent* Qevent);
@@ -83,7 +82,7 @@ public slots:
 	void releaseOrdered();
 	
 signals:
-	// signal de firescreen vers firewidget pour effectuer l'action du clic droit
+	// signal vers firewidget pour effectuer l'action du clic droit
 	void actionSender(int x);
 
 };

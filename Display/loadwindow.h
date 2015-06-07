@@ -1,7 +1,6 @@
 #ifndef LOADWINDOW_H
 #define LOADWINDOW_H
 
-
 #include <QtGui/QProgressBar>
 #include <QtGui/QWidget>
 

@@ -38,6 +38,8 @@ FireWidget::~FireWidget()
 	delete(color);
 	delete(bufferPainter);
 	delete(pictureForest);
+	
+	delete rubber;
 }
 
 // ########################
@@ -73,9 +75,11 @@ bool FireWidget::initialise(int largeur, int hauteur, ifstream * file)
 {
 	if (file->is_open()){
 
-		LoadWindow* loadWindow= createProgressWindow();
-		forest= new Foret(largeur, hauteur, file, loadWindow);
-		loadWindow->closeProgress();
+		LoadWindow* progressWindow= createProgressWindow();
+		forest= new Foret(largeur, hauteur, file, progressWindow);
+		
+		progressWindow->closeProgress();
+		delete progressWindow;
 		
 		setMinimumSize(largeur/2.0, hauteur/2.0);
 		
@@ -106,8 +110,8 @@ bool FireWidget::initialise(int largeur, int hauteur, QImage* imageForet, float 
 		cout << "Réussite ouverture fichier, creation foret à partir de l'image"<< endl;
 		#endif
 		
-		loadFromPicture(largeur, hauteur, imageForet,coef_brulure);
-		setMinimumSize(largeur/2.0, hauteur/2.0);
+		loadFromPicture(largeur,hauteur, imageForet, coef_brulure);
+		setMinimumSize(largeur/2.0,hauteur/2.0);
 		
 		return true;
 	}
@@ -853,6 +857,4 @@ void FireWidget::actionReceived(int x)
 	
 	drawChanged();
 	update();
-	emit endAction();
-// 	redraw();
 }

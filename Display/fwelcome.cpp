@@ -32,13 +32,22 @@ Fwelcome::Fwelcome(QWidget* parent, int _largeur, int _hauteur): QDialog(parent)
 
 
 Fwelcome::~Fwelcome(){
+	delete gridLay;
 	delete(haut_spin);
 	delete(larg_spin);
 	delete(p_value);
 	delete(c_value);
+	
 	delete(restoreBtn);
 	delete(cancel_btn);
+	delete valid_btn;
+	delete seedBtn;
+	delete loadFromImgBtn;
+	
 	delete(fileDialog);
+	
+	delete pictureForest;
+	delete file;	
 }
 
 /*#####################*/

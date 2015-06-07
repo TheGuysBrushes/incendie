@@ -83,17 +83,19 @@ FireScreen::FireScreen(): QMainWindow()
 
 FireScreen::~FireScreen()
 {
+	delete windWidget;
+	delete fWidget;
+	
+	delete menus;
+	
 	delete delai_lbl;
 	delete cpt_lbl;
 	
 	delete pause_btn;
 	delete play_btn;
 	delete next_btn;
-
 	delete actionBox;
 	delete timer;
-	delete menus;
-	delete fWidget;
 	
 	delete fileSaveDialog;
 }
@@ -114,12 +116,11 @@ void FireScreen::initSizes(int largeur, int hauteur)
 	int freePixHeight= QApplication::desktop()->screenGeometry().height()-45 ; // 45 pixel à cause des marges et menu (observé 43)
 	
 	int maxCellWidth= (freePixWidth - largeurMenu) / largeur;
-	int maxCellHeight= freePixHeight/hauteur; 
+	int maxCellHeight= freePixHeight/hauteur;
 	int tCellMax= std::min(maxCellWidth, maxCellHeight);
 	
-// 	setMaximumWidth( tCellMax * largeur +largeurMenu +25 );
-// 	setMaximumHeight( tCellMax * hauteur +45 );
-// 	setMaximumHeight( freePixHeight );
+	setMaximumWidth( QApplication::desktop()->screenGeometry().width() );
+	setMaximumHeight( QApplication::desktop()->screenGeometry().height() );
 	
 // 		resize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
 	// TODO mettre une largeur de base minimum, à partir de la hauteur du menu droite (calculer la taille d'une cellule si la hauteur de la fenetre est la hauteur du menu)
@@ -249,6 +250,7 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 
 	vert_lay1->setAlignment(titre,Qt::AlignHCenter);
 	
+	
 /***	SIGNAUX	***/
 
 	// Sliders
@@ -272,7 +274,7 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	// Coupure et retardateur
 	connect(fWidget,	SIGNAL(releaseSignal()),	this, SLOT(releaseOrdered()));
 	connect(this,	SIGNAL(actionSender(int)),		fWidget, SLOT(actionReceived(int)));
-	connect(fWidget,	SIGNAL(endAction()),			this, SLOT(start_timer()));
+	
 	
 /*** 	DEFINITTION DU STYLE DES ELEMENTS	***/
 	// Touches d'améliorations visuelles et d'initialisation de propriétés
@@ -313,7 +315,6 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 	
 // 	Definition de la taille selon les éléments
 	setMinimumHeight(lay->sizeHint().height() + menuBar()->sizeHint().height());
-// 	setMinimumWidth(vert_lay1->sizeHint().width());
 }
 
 
@@ -336,13 +337,11 @@ bool FireScreen::initForest(Fwelcome* fwel)
 		int hauteur= fwel->getHaut();
 		
 		if(  resExec==Load ){
-			QImage* picture= fwel->getImage();
-			fWidget->initialise(largeur,hauteur, picture, fwel->getCoef());
+			fWidget->initialise(largeur,hauteur, fwel->getImage(), fwel->getCoef());
 			windWidget->initValues(30, 80);
 		}
 		else if(  resExec==Restore ){
-			ifstream* file= fwel->getFile();
-			fWidget->initialise(largeur,hauteur, file);
+			fWidget->initialise(largeur,hauteur, fwel->getFile());
 			windWidget->initValues(30, 80);
 		}
 		else if( resExec==RestoreSeed ){
@@ -365,7 +364,8 @@ bool FireScreen::initForest(Fwelcome* fwel)
 	
 		return true;
 	}
-	else return false;
+	else
+		return false;
 }
 
 /**
@@ -378,10 +378,14 @@ bool FireScreen::initialisation()
 	
 	Fwelcome* fwel = new Fwelcome(this);
 	
-	if ( initForest(fwel) )		
+	if ( initForest(fwel) )	{
+		delete fwel;
 		return true;
-	else
+	}
+	else {
+		delete fwel;
 		return false;
+	}
 }
 
 
@@ -579,16 +583,12 @@ void FireScreen::releaseOrdered()
 		#if DEBUG_RETARD
 		std::cout << "demande de coupure" << std::endl;
 		#endif
-		stop_timer();
-		pause_btn->setEnabled(true);
 		emit actionSender(CUT);
 	}
 	else if(actionBox->currentIndex() == 2){
 		#if DEBUG_RETARD
 		std::cout << "demande de retardateur" << std::endl;
 		#endif
-		stop_timer();
-		pause_btn->setEnabled(true);
 		emit actionSender( DELAY );
 	}
 

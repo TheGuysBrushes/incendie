@@ -58,7 +58,7 @@ public:
 	virtual ~FireWidget();
 
 	/* Initialisations */
-	void initialise(int largeur, int hauteur, float proba = 0.60, float coef_brulure=1.0, std::time_t graine=time(0));
+	void initialise(int largeur, int hauteur, float proba = 0.60, float coef_brulure=1.0, std::time_t graine=std::time(0));
 	bool initialise(int largeur, int hauteur, std::ifstream* file);
 	bool initialise(int largeur, int hauteur, QImage* imageForet, float coef_brulure);
 
@@ -88,7 +88,6 @@ public:
 // 	bool eteindreFeu(int colonne, int ligne);
 	bool allumerFeu(int colonne, int ligne);
 	bool finirFeu(int colonne, int ligne);
-// 	void newForet(int _largeur, int _hauteur, float _proba, float _coef_brulure);
 
 	/* Affichage */
 	void drawCell(int colonne, int ligne);
@@ -116,8 +115,7 @@ public slots:
 	void actionReceived(int x);
 	
 signals:
-	void releaseSignal(); // Vers firescreen
-	void endAction();	// Vers firescreen
+	void releaseSignal(); // Vers firescreen, récupere l'action sélectionnée dans les menus
 	
 };
 
