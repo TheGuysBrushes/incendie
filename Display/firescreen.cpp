@@ -10,10 +10,6 @@
 
 using namespace std;
 
-/**
- * On initialise les composant graphiques de la classe (foret et menus, boutons), la barre des menus
- * @author Ugo et Florian
- */
 FireScreen::FireScreen(): QMainWindow()
 {
 	// Elements de la barre de menus
@@ -101,12 +97,23 @@ FireScreen::~FireScreen()
 }
 
 
-/**
- * Definit les tailles maximales de la fenetre
- * @author Florian et Ugo
- * @param largeur nombre de cases de la matrice en largeur
- * @param hauteur nombre de cases en hauteur
- */
+bool FireScreen::initialisation()
+{
+	initComponents();
+	
+	Fwelcome* fwel = new Fwelcome(this);
+	
+	if ( initForest(fwel) )	{
+		delete fwel;
+		return true;
+	}
+	else {
+		delete fwel;
+		return false;
+	}
+}
+
+
 void FireScreen::initSizes(int largeur, int hauteur)
 {
 	int largeurMenu= menus->sizeHint().width();
@@ -141,11 +148,6 @@ void FireScreen::initSizes(int largeur, int hauteur)
 	#endif
 }
 
-/**
- * Crée les menus sur la droite de la fenêtre et les place dans un layout
- * @author Ugo (organisation Florian)
- * @param HLayout layout horizontal dans lequel on place les menus
- */
 void FireScreen::initMenus(QHBoxLayout* HLayout)
 {
 	HLayout->addWidget(menus);
@@ -289,10 +291,6 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 
 }
 
-/**
- * Crée les menus et place tous les composants dans fenêtre
- * @author Ugo et Florian
- */
 void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 {
 /*** 	BOUTONS ET INTERFACE		***/
@@ -318,12 +316,6 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 }
 
 
-/**
- * Essai de créer un nouvelle forêt grâce à une fenêtre de paramétrage (Fwelcome)
- * @author Florian
- * @param fwel fenêtre de paramétrage
- * @return faux si l'utilisateur annule ou qu'il y a une erreur
- */
 bool FireScreen::initForest(Fwelcome* fwel)
 {
 	fwel->show();
@@ -368,26 +360,6 @@ bool FireScreen::initForest(Fwelcome* fwel)
 		return false;
 }
 
-/**
- * Initialise l'application et crée une nouvelle forêt, en utilisant une fenêtre dédiée (Fwelcome)
- * @author Florian et Ugo
- */
-bool FireScreen::initialisation()
-{
-	initComponents();
-	
-	Fwelcome* fwel = new Fwelcome(this);
-	
-	if ( initForest(fwel) )	{
-		delete fwel;
-		return true;
-	}
-	else {
-		delete fwel;
-		return false;
-	}
-}
-
 
 	// ##############################
 	/***		Autres methodes		***/
@@ -406,11 +378,6 @@ void FireScreen::majCompteur()
 // #############
 // 	Events
 // #############
-/**
- * Redéfinition de resizeEvent, utilisée seulement pour le debuggage,
- * pour connaitre la taille de la fenetre et des menus
- * @author Florian
- */
 void FireScreen::resizeEvent(QResizeEvent* Qevent)
 {
 	QWidget::resizeEvent(Qevent);
@@ -426,13 +393,24 @@ void FireScreen::resizeEvent(QResizeEvent* Qevent)
 	//################################
 	/***				Slots				***/
 	//################################
+	/*** Timers ***/
+void FireScreen::start_timer()
+{
+	timer->start(delai);
+	next_btn->setEnabled(false);
+	play_btn->setEnabled(false);
+	pause_btn->setEnabled(true);
+}
 
-/*** 	Sliders	***/
+void FireScreen::stop_timer()
+{
+	timer->stop();
+	next_btn->setEnabled(true);
+	play_btn->setEnabled(true);
+	pause_btn->setEnabled(false);
+}
 
-/**
- * Définit le nouveau pas utilisée lors de l'avancement continue
- * @author Ugo
- */
+	/*** 	Sliders	***/
 void FireScreen::set_delai(int x)
 {
 	delai = (long)x;
@@ -440,23 +418,17 @@ void FireScreen::set_delai(int x)
 	timer->setInterval(delai);
 }
 
-/**
- * Les paramètres du vent ont été modifiés.
- * On doit récupérer les valeurs et mettre à jour le vent
- */
-void FireScreen::updateWind(int angle, int vitesse)
+	/*** 	Boutons	***/
+void FireScreen::nextStep()
 {
-	fWidget->setWind(angle, vitesse);
+	if (fWidget->next()){
+		nb_tour += 1;
+		majCompteur();
+		windWidget->changeWindDir();
+	}
+	else stop_timer();
 }
 
-/*** 	Boutons	***/
-
-/**
- * Une nouvelle fenêtre de création de forêt est ouverte.
- * Si l'utilisateur valide, alors une nouvelle forêt est crée,
- * sinon, l'ancienne forêt est conservée
- * @author Florian et Ugo
- */
 void FireScreen::reset()
 {
 	stop_timer();
@@ -469,11 +441,7 @@ void FireScreen::reset()
 		fWidget->redraw();
 }    
 
-
-/**
- * Appelle la sauvegarde de la foret dans fWidget
- * @author Ugo et Florian
- */
+// SAUVEGARDES
 void FireScreen::saveData()
 {
 	fileSaveDialog = new QFileDialog(this);
@@ -484,13 +452,10 @@ void FireScreen::saveData()
 		cout <<"taille de "<< s<< " : "<< s.length() << endl;
 	}
 	
+	// Sauvegarde de la foret dans FireWidget qui effectue la procédure de Foret
 	fWidget->saveForest(s);
 }
 
-/**
- * Appelle la sauvegarde d'une image de foret dans fWidget
- * @author Ugo et Florian
- */
 void FireScreen::saveImage()
 {
 	fileSaveDialog = new QFileDialog(this);
@@ -501,13 +466,10 @@ void FireScreen::saveImage()
 		cout <<"taille de "<< s<< " : "<< s.length() << endl;
 	}
 	
+	// Sauvegarde de la foret dans FireWidget qui effectue la procédure de Foret
 	fWidget->saveImage(QString::fromStdString(s));
 }
 
-/**
- * Appelle la sauvegarde d'une graine de foret dans fWidget
- * @author Ugo et Florian
- */
 void FireScreen::saveSeed()
 {
 	fileSaveDialog = new QFileDialog(this);
@@ -518,60 +480,17 @@ void FireScreen::saveSeed()
 		cout <<"taille de "<< s<< " : "<< s.length() << endl;
 	}
 	
-	// Appel à la fonction de sauvegarde de fWidget
+	// Sauvegarde de la foret dans FireWidget qui effectue la procédure de Foret
 	fWidget->saveSeed(s);
 }
 
-
-	/* Déroulement */
-/**
- * Avance la progression de l'incendie d'un tour (t+1)
- * @author Florian
- */
-void FireScreen::nextStep()
+	/* Autres */
+void FireScreen::updateWind(int angle, int vitesse)
 {
-	if (fWidget->next()){
-		nb_tour += 1;
-		majCompteur();
-		windWidget->changeWindDir();
-	}
-	else stop_timer();
+	fWidget->setWind(angle, vitesse);
 }
 
-/**
- * Démarre le déroulement continue de l'incendie
- * @author Ugo
- */
-void FireScreen::start_timer()
-{
-	timer->start(delai);
-	next_btn->setEnabled(false);
-	play_btn->setEnabled(false);
-	pause_btn->setEnabled(true);
-}
-
-/**
- * Démarre le déroulement continue de l'incendie
- * @author Ugo
- */
-void FireScreen::stop_timer()
-{
-	timer->stop();
-	next_btn->setEnabled(true);
-	play_btn->setEnabled(true);
-	pause_btn->setEnabled(false);
-}
-
-/*** Coupure et retardateur ***/
-
-/**
- * Slot mis en place afin de transmettre l'action sélectionnée à appliquer
- * après une selection sur la matrice. Est connecté au signal émis lors du 
- * releaseMouseEvent de fwidget lorsque le clic droit était enfoncé.
- * Voir commentaire Slack pour mise en #define. Pour le moment, 
- * le signal 0 correspond à une coupure, le 1 à un retardateur.
- * @author Ugo
- */
+	/*** Coupure et retardateur ***/
 void FireScreen::releaseOrdered()
 {
 	if(actionBox->currentIndex() == 0){
