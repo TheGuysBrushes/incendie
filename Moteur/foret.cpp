@@ -761,10 +761,26 @@ void Foret::sparkAdjacentsWind(int posCol, int posRow, int hor, int vert)
 		x= -1;
 	if(vert<0)
 		y= -1;
+	
+	// Definition de la distance à laquelle les arbres qui sont dos au vent sont enflammés
+		// Si le vent est supérieur à "2 cases", seuls les arbres faces au vent sont enflammés
+	int inverseHor= x;
+	int inverseVert= y;
+	unsigned forceHor= abs(hor);
+	if(forceHor < 2)
+		inverseHor*= 2;
+	else if (forceHor>2)
+		inverseHor= 0;
+	
+	unsigned forceVert= abs(vert);
+	if(forceVert < 2)
+		inverseVert*= 2;
+	else if (forceVert>2)
+		inverseVert= 0;
 		
 	// On parcourt les cellules dans les sens du vent et 1 cellule de distance à l'opposé du vent (tranmission "arrière")
-	for(int i = hor+x; i !=-2*x; i-=x) {
-		for(int j = vert+y; j != -2*y; j-=y) {
+	for(int i = hor+x; i != -inverseHor; i-=x) {
+		for(int j = vert+y; j != -inverseVert; j-=y) {
 
 			// Test d'appartenance des coordonnées à la matrice
 			if( ( (posCol+i) >= 0 ) && ( (posCol+i) < (colonnes) ) && ( (posRow+j) >= 0 ) && ( (posRow+j) < (lignes) ) ){
