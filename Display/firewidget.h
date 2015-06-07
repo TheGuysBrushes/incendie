@@ -80,11 +80,9 @@ public:
 	
 	/* Gestion Sauvegardes */
 	void loadFromPicture(int largeurImage, int hauteurImage, QImage* imageForet, float coef_brulure);
-	bool loadForest(std::string filename);
-	void saveForest(std::string filepath) const;
-	bool saveImage(QString fileName);
-	//TODO FLO a toi de vérifier
-	bool saveSeed(QString fileName);
+	void saveForest(std::string& filePath) const;
+	void saveSeed(std::string& filePath) const;
+	bool saveImage(QString filename) const;
 	
 	/* Modifications de l'état des arbres */
 // 	bool eteindreFeu(int colonne, int ligne);

@@ -336,9 +336,11 @@ void Fwelcome::loadSeed(QString filename)
 	
 	// Chargements des parametres dans le fichier
 	file->read((char *)&(seed), sizeof(time_t));
+	cout<< "graine : "<< seed<< " "<< seed<< endl;
 	loadSizes();
-	file->read( (char*)&(burningCoef), sizeof(int));
+	file->read( (char*)&(burningCoef), sizeof(float));
 	
+	file->close();
 	done(RestoreSeed);
 }
 

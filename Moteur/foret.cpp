@@ -1005,7 +1005,7 @@ void Foret::loadMatrix(ifstream* file, LoadProgress* PB)
  * @param file fichier de sauvegarde de foret
  * @param PB barre de progression pour suivre le chargement de la foret IMPROVEIT
  */
-bool Foret::load(ifstream* file, LoadProgress* PB)
+bool Foret::load(ifstream* file, LoadProgress* progress)
 {
 	if (!file->is_open()){
 		cout<< "Echec ouverture fichier de sauvegarde"<< endl;
@@ -1014,7 +1014,7 @@ bool Foret::load(ifstream* file, LoadProgress* PB)
 	else {
 		loadBurningCoef(file);
 		loadEssences(file);
-		loadMatrix(file, PB);
+		loadMatrix(file, progress);
 		
 		file->close();
 		
@@ -1138,19 +1138,6 @@ cout<< "Enregistrement de l'arbre "<< ab->getPos().col<< "; "<< lignes<< endl;
 }
 
 
-void Foret::saveSeed(ofstream* file)
-{
-	string chemin= "foret.seed";
-	file= new ofstream(chemin.c_str(), std::ios::out|std::ios::binary);
-	
-	file->write( (char*)&(randomSeed), sizeof(std::time_t));
-	
-	file->write( (char*)&(colonnes), sizeof(int));
-	file->write( (char*)&(lignes), sizeof(int));
-	file->write( (char*)&(burningCoef), sizeof(int));
-}
-
-
 /**
  * Sauvegarde une forêt dans un fichier (tailles-essences-arbres)
  * @author Florian
@@ -1174,6 +1161,31 @@ bool Foret::save(string fileName)
 		file->close();
 		
 		return true;
+	}
+}
+
+/**
+ * Sauvegarde la taille et la graine aléatoire d'une forêt
+ * @author Florian
+ * @param file
+ */
+bool Foret::saveSeed(string filePath)
+{
+	ofstream* file= new ofstream(filePath.c_str(), std::ios::out|std::ios::binary);
+	
+	if (!file->is_open()){
+		cout<< "Echec ouverture fichier de sauvegarde"<< endl;
+		return false;
+	}
+	else {
+	
+	file->write( (char*)&(randomSeed), sizeof(time_t));
+	
+	saveProperties(file);
+
+	file->close();
+	
+	return true;
 	}
 }
 

@@ -136,11 +136,10 @@ public:
 	void saveEssences(std::ofstream* file);
 	void saveMatrix(std::ofstream* file);
 	
-	void saveSeed(std::ofstream* file);
-	
-	bool load(std::ifstream* file, LoadProgress* PB);
+	bool load(std::ifstream* file, LoadProgress* progress);
 	bool save(std::string filePath = "save_forest");
 	
+	bool saveSeed(std::string filePath = "save_forest");
 	
 	// Affichage attributs
 	void showEssences() const;

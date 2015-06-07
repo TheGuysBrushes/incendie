@@ -27,6 +27,18 @@ Programme :
  * 		 4_bis-	lecture pixel par pixel de l'image
  */
  
+ 
+/*	(firescreen)
+ * 
+ *	 DONE : 
+ * - Gestion du temps continu
+ *	- Extraire les paramètres pour initialiser la forêt :
+ * 	- AlertDialog au démarrage du programme
+ * 	
+ * - RAZ de la matrice :
+ * 	- AlertDialog puis création nouvelle forêt
+ */
+ 
  	
 Demandé à Vincent Barichard :
 	OK Upscaling/Downscaling du dessin de la foret :

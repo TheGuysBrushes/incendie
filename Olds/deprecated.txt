@@ -1,3 +1,34 @@
+07/06
+###################################	#
+#				firewidget.cpp				#
+#				loadForest					#
+###################################	#
+.h:
+	bool loadForest(std::string filename);
+
+/**
+ * Charge une foret à partir d'un nom de fichier, la foret est déja instanciée
+ * @author Ugo et Florian
+ * @deprecated
+ */
+bool FireWidget::loadForest(std::string filename)
+{	
+	ifstream* file = new ifstream(filename.c_str(), std::ios::in|std::ios::binary);
+
+	if (!file->is_open()){
+		std::cout<< "Echec ouverture fichier de sauvegarde"<< std::endl;
+		return false;
+	}
+	else {
+		// Réinitialisation des tailles de la matrice...
+		forest->loadSizes(file);
+		// ... puis chargement de la nouvelle matrice
+		forest->load(file,NULL);
+		return true;
+		
+	}
+}
+
 28/05
 ###################################	#
 #				firescreen.cpp				#

@@ -241,46 +241,34 @@ void FireWidget::loadFromPicture(int largeurImage, int hauteurImage, QImage* ima
 // 		QColormap map(pictureForest->tr);
 // 	img.trueMatrix()
 }
-	
-/**
- * Charge une foret à partir d'un nom de fichier
- * @author Ugo et Florian
- * @deprecated
- */
-bool FireWidget::loadForest(std::string filename)
-{	
-	ifstream* file = new ifstream(filename.c_str(), std::ios::in|std::ios::binary);
 
-	if (!file->is_open()){
-		std::cout<< "Echec ouverture fichier de sauvegarde"<< std::endl;
-		return false;
-	}
-	else {
-		// Réinitialisation des tailles de la matrice...
-		forest->loadSizes(file);
-		// ... puis chargement de la nouvelle matrice
-		forest->load(file,NULL);
-		return true;
-		
-	}
-}
 
 /**
  * Sauvegarde la foret dans un fichier de sauvegarde (IMPROVEIT par défaut pour l'instant)
  * @author Florian
  */
-void FireWidget::saveForest(string filepath) const
+void FireWidget::saveForest(string& filePath) const
 {
-	forest->save(filepath);
-	cout << "filePath fWidget : " << filepath << endl;
+	forest->save(filePath);
+	#if DEBUG_SAVE
+	cout << "sauvegarde foret, nom : " << filePath<< endl;
+	#endif
 }
 
-bool FireWidget::saveImage(QString fileName)
+void FireWidget::saveSeed(string& filePath) const
+{
+	forest->saveSeed(filePath);
+	#if DEBUG_SAVE
+	cout << "sauvegarde graine, nom : " << filePath<< endl;
+	#endif
+}
+
+bool FireWidget::saveImage(QString filename) const
 {
 	if ( !buffer->isNull() ){
 		// TEST verifier que la taille est correcte
 		QImage tmp= buffer->scaled(tailleCell*forest->width(), tailleCell*forest->height());
-		tmp.save(fileName);
+		tmp.save(filename);
 		return true;
 	}
 	else{
@@ -289,13 +277,6 @@ bool FireWidget::saveImage(QString fileName)
 		#endif
 		return false;
 	}
-}
-
-//TODO FLO reprise ici
-bool FireWidget::saveSeed(QString fileName)
-{
-
-	return  true;
 }
 
 
@@ -432,11 +413,11 @@ void FireWidget::drawTree(const Arbre* ab)
 	cout <<"draw tree ; "<< ab->getPos().col << ab->getPos().row ;
 	#endif
 }
+
 /**
  * Dessine l'ensemble des arbres de la liste passée en paramètre
- * @param list<Arbre*> liste des arbres à dessiner
+ * @param arbres liste des arbres à dessiner
  * @author Florian et Ugo (commentaires :p )
- * @deprecated
  */
 void FireWidget::drawList( list< Arbre* > * arbres){
 

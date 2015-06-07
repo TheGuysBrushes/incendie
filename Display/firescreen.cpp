@@ -28,19 +28,25 @@ FireScreen::FireScreen(): QMainWindow()
 	
 	QAction* saveData = new QAction(this);
 	QAction* saveImage = new QAction(this);
-	#if FRENCH
+	QAction* saveSeed = new QAction(this);
+#if FRENCH
+	QMenu* menuSave= menuBar()->addMenu("Sauvegardes...");
 	saveData->setText( "Foret complète" );
 	saveImage->setText( "sous forme d'Image" );
-	
-	#else
+	saveSeed->setText( "graine aléatoire" );
+#else
+	QMenu* menuSave= menuBar()->addMenu("Saves...");
 	saveData->setText( "complete Forest" );
 	saveImage->setText( "to Image" );
-	#endif
-	QMenu* menuSave= menuBar()->addMenu("Sauvegardes...");
+	saveSeed->setText( "random seed" );
+#endif
+	
 	menuSave->addAction(saveData);
 	menuSave->addAction(saveImage);
+	menuSave->addAction(saveSeed);
 	connect(saveData, 	SIGNAL(triggered()), SLOT(saveData()) );
 	connect(saveImage, 	SIGNAL(triggered()), SLOT(saveImage()) );
+	connect(saveSeed, 	SIGNAL(triggered()), SLOT(saveSeed()) );
 
 	// Composants Qt de la classe
 	fWidget= new FireWidget();
@@ -509,7 +515,7 @@ void FireScreen::saveSeed()
 	}
 	
 	// Appel à la fonction de sauvegarde de fWidget
-	
+	fWidget->saveSeed(s);
 }
 
 
