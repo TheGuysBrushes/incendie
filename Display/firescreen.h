@@ -89,7 +89,7 @@ private:
 	 */
 	bool initForest(Fwelcome* fwel);
 	
-	/* Methodes diverses */
+/* Methodes diverses */
 	void majCompteur();
 		
 protected:

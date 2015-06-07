@@ -53,10 +53,6 @@ Fwelcome::~Fwelcome(){
 /*#####################*/
 /*** Autres Méthodes ***/
 /*#####################*/
-/**
- * Initialise les composants graphiques attributs de la classe
- * @author Ugo et Florian
- */
 void Fwelcome::createComponents()
 {
 	// Initialisation des composants dynamiques (SpinBox exceptées)
@@ -207,10 +203,6 @@ void Fwelcome::initComponents(){
 
 /*######################*/
 
-/**
- * Ajoute le bouton cancel à l'interface de création de forêt
- * @author Florian et Ugo
- */
 void Fwelcome::addCancel() const
 {
 	gridLay->removeWidget(valid_btn);
@@ -224,23 +216,11 @@ void Fwelcome::addCancel() const
 /***	 Setters	 ***/
 /*################*/
 
-/**
- * Met à jour la valeur de la probabilité qu'une cellule soit un arbre
- * et affiche la valeur courante.
- * @param int Probabilité qu'une cellule devienne un arbre.
- * @author Ugo
- */
 void Fwelcome::setProba(int x){
 	proba = (float) x/100;
 	p_value->setText(QString::number(proba, 'f', 2));
 }
 
-/**
- * Met à jour la valeur du coefficient de combustion de l'incendie
- * et affiche la valeur courante
- * @param int Coefficient de combustion
- * @author Ugo
- */
 void Fwelcome::setCoef(int x){
 	burningCoef = (float) x/100;
 	c_value->setText(QString::number(burningCoef, 'f', 2));
@@ -250,11 +230,6 @@ void Fwelcome::setCoef(int x){
 /*######################*/
 /***	 Chargements	 ***/
 /*######################*/
-/**
- * Ouvre un fichier à partir de son chemin, enregistré dans fwelcome
- * @author Florian
- * @param filename chemin du fichier à ouvrir
- */
 void Fwelcome::openFile(QString filename)
 {
 	std::string filePath= filename.toStdString();
@@ -262,10 +237,6 @@ void Fwelcome::openFile(QString filename)
 	file->open(filePath.c_str(), ios::in|ios::binary);
 }
 
-/**
- * Lit les tailles d'une forêt dans et les assigne aux spinboxs
- * @author Florian
- */
 void Fwelcome::loadSizes()
 {
 	int x; // x est utilisé pour la largeur ET la hauteur
@@ -285,11 +256,6 @@ void Fwelcome::loadSizes()
 
 /*######################*/
 
-/**
- * Restaure une forêt stockée dans un fichier
- * @author Florian
- * @param filename chemin du fichier de sauvegarde
- */
 void Fwelcome::restore(QString filename)
 {
 	openFile(filename);
@@ -304,11 +270,6 @@ void Fwelcome::restore(QString filename)
 	}
 }
 
-/**
- * Crée un forêt à partir d'une image
- * @author Florian
- * @param filename chemin de l'image
- */
 void Fwelcome::loadFromImg(QString filename)
 {
 	delete pictureForest;
@@ -334,11 +295,6 @@ void Fwelcome::loadFromImg(QString filename)
 	 
 }
 
-/**
- * Utilise une graine aléatoire stockée dans un fichier pour créer une forêt
- * @author Florian
- * @param filename chemin du fichier contenant la graine
- */
 void Fwelcome::loadSeed(QString filename)
 {
 	openFile(filename);
@@ -357,12 +313,6 @@ void Fwelcome::loadSeed(QString filename)
 /*################*/
 /***	 SLOTS	 ***/
 /*################*/
-/**
- * Slot déclenché lors du clic sur le bouton d'importation d'image.
- * Ouvre une fenetre de selection d'un fichier image et appelle
- * la fonction de chargement d'image.
- * @author Ugo
- */
 void Fwelcome::popImageDIalog()
 {
 	fileDialog = new QFileDialog(this);
@@ -379,11 +329,6 @@ void Fwelcome::popImageDIalog()
 	
 }
 
-/**
- * Slot déclenché lors du clic sur le bouton de chargement d'une sauvegarde.
- * Ouvre une fenetre de sélection d'un fichier charge la forêt de ce fichier.
- * @author Ugo
- */
 void Fwelcome::popSaveDialog()
 {
 	fileDialog = new QFileDialog(this);
@@ -399,12 +344,6 @@ void Fwelcome::popSaveDialog()
 	restore(fileName);
 }
 
-
-/**
- * Slot déclenché lors du clic sur le bouton de chargement d'une graine.
- * Ouvre une fenetre de sélection d'un fichier et crée une forêt grâce à ce fichier.
- * @author Ugo et Florian
- */
 void Fwelcome::popSeedDialog()
 {
 	fileDialog = new QFileDialog(this);
@@ -419,4 +358,3 @@ void Fwelcome::popSeedDialog()
 	
 	loadSeed(fileName);
 }
-
