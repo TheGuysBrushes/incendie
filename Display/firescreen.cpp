@@ -455,6 +455,8 @@ void FireScreen::saveData()
 {
 	fileSaveDialog = new QFileDialog(this);
 	fileSaveDialog->setAcceptMode(QFileDialog::AcceptSave);
+	fileDialog->setNameFilter(tr("Sauvegarde (*.data *.dat *.frt *.sav *.save)"));
+	
 	string s;
 	if(fileSaveDialog->exec()){
 		s= fileSaveDialog->selectedFiles().at(0).toStdString();
@@ -469,6 +471,8 @@ void FireScreen::saveImage()
 {
 	fileSaveDialog = new QFileDialog(this);
 	fileSaveDialog->setAcceptMode(QFileDialog::AcceptSave);
+	fileDialog->setNameFilter(tr("Images (*.png *.jpg *.jpeg *.tif *.tiff *.bmp)"));
+	
 	string s;
 	if(fileSaveDialog->exec()){
 		s= fileSaveDialog->selectedFiles()[0].toStdString();
@@ -483,6 +487,8 @@ void FireScreen::saveSeed()
 {
 	fileSaveDialog = new QFileDialog(this);
 	fileSaveDialog->setAcceptMode(QFileDialog::AcceptSave);
+	fileDialog->setNameFilter(tr("Sauvegarde (*.seed)"));
+	
 	string s;
 	if(fileSaveDialog->exec()){
 		s = fileSaveDialog->selectedFiles()[0].toStdString();
