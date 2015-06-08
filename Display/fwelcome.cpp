@@ -315,46 +315,40 @@ void Fwelcome::loadSeed(QString filename)
 /*################*/
 void Fwelcome::popImageDIalog()
 {
-	fileDialog = new QFileDialog(this);
+	fileDialog = new QFileDialog(this, "Chargement d'une Image",  "../Resources/Pictures");
 	fileDialog->setViewMode(QFileDialog::Detail);
 	fileDialog->setNameFilter(tr("Images (*.png *.jpg *.jpeg *.tif *.tiff *.bmp)"));
 	
 	QString fileName;
-	if(fileDialog->exec())
-		fileName = fileDialog->selectedFiles().at(0);
-	else
-		fileName = "../foret_pay.png";
-	
-	loadFromImg(fileName);
-	
+	// Si l'utilisateur choisit un fichier
+	if(fileDialog->exec()) {
+		loadFromImg( fileDialog->selectedFiles()[0] );
+	}
+
 }
 
 void Fwelcome::popSaveDialog()
 {
-	fileDialog = new QFileDialog(this);
+	fileDialog = new QFileDialog(this, "Chargement d'une Sauvegarde", "../Resources/");
 	fileDialog->setViewMode(QFileDialog::Detail);
-	fileDialog->setNameFilter(tr("Sauvegarde (*.data *.dat *.frt *.sav *.save)"));
+	fileDialog->setNameFilter(tr("Sauvegarde de foret (*.data *.dat *.frt *.sav *.save)"));
 	
 	QString fileName;
-	if(fileDialog->exec())
-		fileName = fileDialog->selectedFiles().at(0);
-	else
-		fileName = "./Resources/foret1.dat";
+	// Si l'utilisateur choisit un fichier
+	if(fileDialog->exec()) {
+		restore( fileDialog->selectedFiles()[0] );
+	}
 	
-	restore(fileName);
 }
 
 void Fwelcome::popSeedDialog()
 {
-	fileDialog = new QFileDialog(this);
+	fileDialog = new QFileDialog(this, "Chargement d'une Graine",  "../Resources/");
 	fileDialog->setViewMode(QFileDialog::Detail);
-	fileDialog->setNameFilter(tr("Sauvegarde (*.seed)"));
+	fileDialog->setNameFilter(tr("Sauvegarde de graine (*.seed)"));
 	
-	QString fileName;
-	if(fileDialog->exec())
-		fileName = fileDialog->selectedFiles().at(0);
-	else
-		fileName = "./Resources/foret1.seed";
-	
-	loadSeed(fileName);
+	// Si l'utilisateur choisit un fichier
+	if(fileDialog->exec()) {
+		loadSeed( fileDialog->selectedFiles()[0] );
+	}
 }
