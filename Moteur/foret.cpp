@@ -13,16 +13,6 @@ using namespace std;
 // ###################################
 //		Constructeurs et destructeur
 // ################################### 
-
-/**
- * Constructeurs de forêt aléatoirement, à partir de paramètres
- * @author Florian
- * 
- * @param _largeur nombre de colonnes de la matrice représentant la forêt, sa largeur
- * @param _hauteur nombre de lignes de la matrice, la hauteur
- * @param proba, probabilite qu'il y ait un arbre, pour chaque case de la matrice. C'est environ le pourcentage d'arbres
- * @param _coefFeu coefficient de propagation du feu : 1 forêt "classique"; <1 progression plus lente (humidité...); >1 progression plus rapide (sécheresse ?)
- */
 Foret::Foret(int _largeur, int _hauteur, float proba, float _coefFeu, time_t graine)
 : lignes(_hauteur), colonnes(_largeur), burningCoef(_coefFeu), randomSeed(graine)
 {
@@ -32,16 +22,6 @@ Foret::Foret(int _largeur, int _hauteur, float proba, float _coefFeu, time_t gra
 	wind = new Vent();
 }
 
-
-/**
- * Constructeurs de forêt aléatoirement, à partir d'un fichier de sauvegarde
- * @author Florian
- * 
- * @param _largeur nombre de colonnes de la matrice représentant la forêt, sa largeur
- * @param _hauteur nombre de lignes de la matrice, la hauteur
- * @param file fichier de sauvegarde d'une foret précédente, contenant les essences et l'emplacement des arbres et leur indice d'essence
- * @param PB barre de progression Qt, pour afficher l'avancement du chargement
- */
 Foret::Foret(int _largeur, int _hauteur, ifstream * file, LoadProgress* PB)
 	:lignes(_hauteur), colonnes(_largeur)
 {
@@ -49,15 +29,6 @@ Foret::Foret(int _largeur, int _hauteur, ifstream * file, LoadProgress* PB)
 	load(file, PB);
 }
 
-
-/**
- * Constructeurs de forêt aléatoirement, à partir d'une image
- * @author Florian
- * 
- * @param _largeur nombre de colonnes de la matrice représentant la forêt, sa largeur
- * @param _hauteur nombre de lignes de la matrice, la hauteur
- * @param matrice matrice d'intensités de couleur verte selon l'emplacement dans l'image
- */
 Foret::Foret(int _largeur, int _hauteur, vector< std::vector< int > >* matrice,float coef_brulure)
 	: lignes(_hauteur), colonnes(_largeur), burningCoef(coef_brulure)
 {
@@ -70,10 +41,6 @@ Foret::Foret(int _largeur, int _hauteur, vector< std::vector< int > >* matrice,f
 }
 
 
-/**
- * On vide également les listes, mêmes si c'est fait automatiquement TODO-SE RENSEIGNER si ca n'empeche pas un probleme de "double libération" des arbres et l'ordre libérer-vider
- * @author Florian
- */
 Foret::~Foret()
 {
 	for (int i= 0; i< lignes; ++i){
@@ -82,6 +49,7 @@ Foret::~Foret()
 		}
 	}
 	
+	// a priori, inutile de vider les listes
 	onFire.clear();
 	burned.clear();
 	carbonized.clear();
@@ -828,7 +796,7 @@ void Foret::loadMatrix(ifstream* file, LoadProgress* progress)
 		
 		int newProgression= (row*100) / (lignes);
 		progress->setProgress(newProgression);
-		#if DEBUG_LOAD_PROGRESS
+		#if DEBUG_PROGRESS
 		cout<< "progression : "<< newProgression<< "%"<< endl;
 		#endif
 	}
@@ -991,7 +959,6 @@ bool Foret::saveSeed(string filePath)
 	return true;
 	}
 }
-
 
 // #########################
 // #	Affichage attributs	#

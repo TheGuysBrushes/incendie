@@ -43,12 +43,42 @@ private:
 	
 // METHODES
 public:
-	// Constructeur et destructeur
+// Constructeur et destructeur
+	/**
+	 * Constructeurs de forêt aléatoirement, à partir de paramètres
+	 * @author Florian
+	 * 
+	 * @param _largeur nombre de colonnes de la matrice représentant la forêt, sa largeur
+	 * @param _hauteur nombre de lignes de la matrice, la hauteur
+	 * @param proba, probabilite qu'il y ait un arbre, pour chaque case de la matrice. C'est environ le pourcentage d'arbres
+	 * @param _coefFeu coefficient de propagation du feu : 1 forêt "classique"; <1 progression plus lente (humidité...); >1 progression plus rapide (sécheresse ?)
+	 */
 	Foret(int _largeur, int _hauteur, float proba = 0.60, float _coefFeu = 0.5, std::time_t graine=std::time(0));
 // 	Foret(int _largeur, int _hauteur, std::time_t graine, float proba = 0.60, float _coefFeu = 0.5);
 // 	Foret(Foret& other, float proba=0.60);
+	/**
+	 * Constructeurs de forêt aléatoirement, à partir d'un fichier de sauvegarde
+	 * @author Florian
+	 * 
+	 * @param _largeur nombre de colonnes de la matrice représentant la forêt, sa largeur
+	 * @param _hauteur nombre de lignes de la matrice, la hauteur
+	 * @param file fichier de sauvegarde d'une foret précédente, contenant les essences et l'emplacement des arbres et leur indice d'essence
+	 * @param PB barre de progression Qt, pour afficher l'avancement du chargement
+	 */
 	Foret(int _largeur, int _hauteur, std::ifstream* file, LoadProgress* PB);
+	/**
+	 * Constructeurs de forêt aléatoirement, à partir d'une image
+	 * @author Florian
+	 * 
+	 * @param _largeur nombre de colonnes de la matrice représentant la forêt, sa largeur
+	 * @param _hauteur nombre de lignes de la matrice, la hauteur
+	 * @param matrice matrice d'intensités de couleur verte selon l'emplacement dans l'image
+	 */
 	Foret(int _largeur, int _hauteur, std::vector< std::vector< int > >* matrice, float coef_brulure);
+	/**
+	 * On vide également les listes, mêmes si c'est fait automatiquement TODO-SE RENSEIGNER si ca n'empeche pas un probleme de "double libération" des arbres et l'ordre libérer-vider
+	 * @author Florian
+	 */
 	virtual ~Foret();
 	
 	/**

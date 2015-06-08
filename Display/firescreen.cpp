@@ -104,9 +104,11 @@ bool FireScreen::initialisation()
 	Fwelcome* fwel = new Fwelcome(this);
 	
 	if ( initForest(fwel) )	{
+		delete fwel;
 		return true;
 	}
 	else {
+		delete fwel;
 		return false;
 	}
 }
@@ -247,9 +249,20 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	vert_lay1->addWidget(www);
 	vert_lay1->addWidget(ww3);
 	vert_lay1->addWidget(ww4);
+	
+	// 	QVBoxLayout* lay_info= new QVBoxLayout(this);
+// 	QWidget* WInfos= new QWidget();
+	QLabel* signature= new QLabel("Auteurs : Florian DAVID et Ugo RAYER"/*, WInfos*/);
+	QLabel* about= new QLabel("Dans le cadre d'un projet en 3eme annee de licence"/*, WInfos*/);
+	QLabel* coordonnees= new QLabel("f.david5@laposte.net ou ugo.rayer@laposte.net"/*, WInfos*/);
+	QLabel* depot= new QLabel("Depot : github.com/flodavid/incendie"/*, WInfos*/);
+	vert_lay1->addWidget(signature);
+	vert_lay1->addWidget(about);
+	vert_lay1->addWidget(coordonnees);
+	vert_lay1->addWidget(depot);
 
 	vert_lay1->setAlignment(titre,Qt::AlignHCenter);
-	
+
 	
 /***	SIGNAUX	***/
 
@@ -286,6 +299,10 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	cpt_lbl->setStyleSheet("QLabel { color : darkblue; }");
 	delai_lbl->setStyleSheet("QLabel { color : darkblue; }");
 	actionLabel->setStyleSheet("QLabel { color : darkblue; }");
+	signature->setStyleSheet("QLabel  {color : darkblue; font : 8px}");
+	about->setStyleSheet("QLabel  {color : darkblue; font : 8px}");
+	coordonnees->setStyleSheet("QLabel  {color : darkblue; font : 8px}");
+	depot->setStyleSheet("QLabel  {color : darkblue; font : 8px}");
 
 }
 
@@ -317,10 +334,9 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 bool FireScreen::initForest(Fwelcome* fwel)
 {
 	fwel->show();
-	
 	int resExec= fwel->exec();
 	if (resExec>0){
-		
+		fWidget->delForest();
 		fWidget->delPicture();
 		nb_tour = 0;
 		int largeur= fwel->getLarg();

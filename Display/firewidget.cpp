@@ -53,7 +53,7 @@ bool FireWidget::initialise(int largeur, int hauteur, ifstream * file)
 		forest= new Foret(largeur, hauteur, file, progressWindow);
 		
 		progressWindow->closeProgress();
-		delete progressWindow;
+// 		delete progressWindow;
 		
 		setMinimumSize(largeur/2.0, hauteur/2.0);
 		
@@ -73,6 +73,7 @@ bool FireWidget::initialise(int largeur, int hauteur, QImage* imageForet, float 
 		// on crée une copie de l'image, pour éviter de pointer sur une image détruite, 
 		//		on pourrait enlever la destruction de pictureForest dans fwelcome pour gagner en performance,
 		//		mais il y a un risque de fuite mémoire en cas d'une utilisation différente de fwelcome
+		delPicture();
 		pictureForest= new QImage(*imageForet);
 		#if DEBUG_CREA_FORET
 		cout << "Réussite ouverture fichier, creation foret à partir de l'image"<< endl;
@@ -124,7 +125,7 @@ void FireWidget::setColor(int colorIndice)
 			this->color->setRgb(46,139,87);
 			break;
 		case Gray:
-			this->color->setRgb(60,60,60);
+			this->color->setRgb(45,45,45);
 			break;
 		case Orange:
 			this->color->setRgb(255,165,00);
@@ -503,26 +504,26 @@ void FireWidget::drawChanged()
 	bufferPainter->end();
 }
 
-// Debuggage
-#if DEBUG_CURRENT
+// Test perf
+#if PERF_REDRAW
 int num_redraw= 0;
 #endif
 
 void FireWidget::redraw()
 {
-	#if DEBUG_CURRENT
+	#if PERF_REDRAW
 	++num_redraw;
-	cout << "test redraw "<< num_redraw<< " TO DELETE (ligne 449 firewidget)"<< endl;
+	cout << "test redraw firewidget"<< num_redraw<< endl;
 	#endif
 	
 	if (!buffer->isNull()){
 		delete(buffer);
 	}
 	buffer = new QImage(forest->width(), forest->height(), QImage::Format_ARGB32);
-// 	drawPicture();
+
 	drawForest();
 	drawChanged();
-	update();	// TODO apparemment non utile
+	update();	// TODO apparemment non utile, update fait resize
 }
 
 // ###################
@@ -541,8 +542,8 @@ void FireWidget::paintEvent(QPaintEvent* event)
  */
 void FireWidget::resizeEvent(QResizeEvent* event)
 {
-	#if DEBUG_CURRENT
-	cout << "test resizeEvent TO DELETE (ligne 471 firewidget)"<< endl;
+	#if PERF_RESIZE
+	cout << "test resizeEvent firewidget"<< endl;
 	#endif
 	
 	int nbCol= forest->width();
@@ -579,7 +580,7 @@ void FireWidget::mousePressEvent(QMouseEvent* event)
 	{
 		initRubber(event);
 		
-		#if DEBUG_COLOR
+		#if DEBUG_IMAGE_COLOR
 		QColor* pix= new QColor(pictureForest->pixel(colonne, ligne));
 		cout << "qté vert en "<< colonne<< " ; "<< ligne<<" : "<< pix->green();
 		cout << "\tqté red : " << pix->red() << " ; bleu : "<< pix->blue()<< endl;

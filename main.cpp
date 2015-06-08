@@ -29,5 +29,5 @@ Remarque générales :
  * 	une partie des feuilles des arbres peuvent se superposer à d'autres celles d'autres arbres et le placement devient plus compliqué.
  * 	Lors des chargements d'images, il faudrait identifier chaque arbre de l'image.
  * 
- * 
+ * Ralentissment de l'exécution lorsqu'il y a beaucoup d'arbres en feu en même temps
  */
