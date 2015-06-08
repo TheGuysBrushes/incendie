@@ -13,23 +13,12 @@
 
 using namespace std;
 
-/**
- * Construit un arbre à partir d'une position
- * @param age age de l'arbre, permet de calculer ses PV
- * @param all paramètres d'initialisation des attributs de l'arbre
- */
 Arbre::Arbre(int col, int row, const Essence* const _essence, unsigned age, unsigned _humidite, int _coefficient)
 	: Cellule(1), pos(col, row), essence(_essence), humidity(_humidite), coefficient(_coefficient)
 {	
 	initialise(age);
 }
 
-/**
- * Construit un arbre "à partir" d'une cellule
- * @param cell cellule à remplacer, elle est désallouée
- * @param age age de l'arbre, permet de calculer ses PV
- * @param all paramètres d'initialisation des attributs de l'arbre
- */
 Arbre::Arbre(Cellule* cell, int col, int row, const Essence*const _essence, unsigned age, unsigned int _humidite, int _coefficient)
 	: Cellule(1), pos(col, row), essence(_essence), humidity(_humidite), coefficient(_coefficient)
 {
@@ -38,11 +27,6 @@ Arbre::Arbre(Cellule* cell, int col, int row, const Essence*const _essence, unsi
 	delete(cell);
 }
 
-/**
- * Construit un arbre par dessus une cellule, en donnant des PV plutot que de les calculer avec l'age
- * @param cell cellule à remplacer, elle est désallouée
- * @param all paramètres d'initialisation des attributs de l'arbre
- */
 Arbre::Arbre(int col, int row, Cellule* cell, const Essence* const _essence, unsigned int _humidite, int _hp, int _coefficient)
 	: Cellule(1), pos(col, row), essence(_essence), humidity(_humidite), coefficient(_coefficient), hp(_hp)
 {
@@ -52,12 +36,6 @@ Arbre::Arbre(int col, int row, Cellule* cell, const Essence* const _essence, uns
 }
 
 
-
-/**
- * Initialise les points de vie de l'arbre en fonction des caractères de son essence
- * et de ses propriétés discrètes
- * @author Ugo Florian
- */
 void Arbre::initialise(unsigned age)
 {
 	/*
@@ -118,12 +96,6 @@ void Arbre::delay(float coefRalentissement)
 // ###############
 // 	Actions
 // ###############
-
-/**
- * L'arbre reçoit des flammes d'un voisin et risque de s'enflammer
- * @author Florian
- * @param coefTransmission force de transmisson de l'arbre en feu au voisin, correspond à un rapport (force du vent)/(dist à l'arbre en feu)
- */
 void Arbre::spark(float coefTransmission)
 {
 	int taux= (coefTransmission*coefficient)/humidity *100;
@@ -149,11 +121,6 @@ void Arbre::spark(float coefTransmission)
 }
 
 
-/**
- * Retire un nombre de points de vie à l'arbre
- * @author Florian
- * @param coef
- */
 bool Arbre::burn(float coefBrulure)
 {
 	// On va déterminer le nombre de points de vie à enlever.
