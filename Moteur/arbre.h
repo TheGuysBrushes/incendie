@@ -52,7 +52,7 @@ public:
 	 */
 	void initialise(unsigned age);
 		
-	// Getters 
+// Getters 
 	virtual int getState()	const	{ return state; };
 	int getPv()	const					{ return hp;};
 	float	getCoeff()	const			{ return coefficient; };
@@ -60,10 +60,10 @@ public:
 	const Coordonnee& getPos()		const	{ return pos; };
 	const Essence* getEssence()	const	{ return essence; };
 	
-	// Setters
+// Setters
 	void setCoefficient(float x);
 
-	// Autres méthodes
+// Autres méthodes
 	/**
 	 * L'arbre reçoit des flammes d'un voisin et risque de s'enflammer
 	 * @author Florian

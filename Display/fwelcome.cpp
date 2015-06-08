@@ -317,7 +317,7 @@ void Fwelcome::popImageDIalog()
 {
 	fileDialog = new QFileDialog(this);
 	fileDialog->setViewMode(QFileDialog::Detail);
-	fileDialog->setNameFilter(tr("Images (*.png *.jpeg *.tif)"));
+	fileDialog->setNameFilter(tr("Images (*.png *.jpg *.jpeg *.tif *.tiff *.bmp)"));
 	
 	QString fileName;
 	if(fileDialog->exec())
@@ -333,7 +333,7 @@ void Fwelcome::popSaveDialog()
 {
 	fileDialog = new QFileDialog(this);
 	fileDialog->setViewMode(QFileDialog::Detail);
-	fileDialog->setNameFilter(tr("Sauvegarde (*.data *.frt *.dat *.sav)"));
+	fileDialog->setNameFilter(tr("Sauvegarde (*.data *.dat *.frt *.sav *.save)"));
 	
 	QString fileName;
 	if(fileDialog->exec())
