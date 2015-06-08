@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'firescreen.h'
 **
-** Created: Sun Jun 7 16:07:39 2015
+** Created: Mon Jun 8 17:27:18 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_FireScreen[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      11,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -44,6 +44,7 @@ static const uint qt_meta_data_FireScreen[] = {
      116,   11,   11,   11, 0x0a,
      141,  127,   11,   11, 0x0a,
      161,   11,   11,   11, 0x0a,
+     178,   11,   11,   11, 0x0a,
 
        0        // eod
 };
@@ -53,7 +54,7 @@ static const char qt_meta_stringdata_FireScreen[] = {
     "start_timer()\0stop_timer()\0set_delai(int)\0"
     "nextStep()\0reset()\0saveData()\0saveImage()\0"
     "saveSeed()\0angle,vitesse\0updateWind(int,int)\0"
-    "releaseOrdered()\0"
+    "releaseOrdered()\0popAbout()\0"
 };
 
 void FireScreen::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -73,6 +74,7 @@ void FireScreen::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 8: _t->saveSeed(); break;
         case 9: _t->updateWind((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 10: _t->releaseOrdered(); break;
+        case 11: _t->popAbout(); break;
         default: ;
         }
     }
@@ -110,9 +112,9 @@ int FireScreen::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 12;
     }
     return _id;
 }

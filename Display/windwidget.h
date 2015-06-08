@@ -89,11 +89,11 @@ public slots:
 signals:
 	/** TODO Ugo comment
 	 * 
-	 * @author Ugo
-	 * @param nom?
-	 * @param nom?
+	 * @author Ugo et Floriant
+	 * @param angle
+	 * @param vitesse
 	 */
-	void modif_value(int, int);
+	void modif_value(int angle, int vitesse);
 };
 
 #endif // WINDWIDGET_H

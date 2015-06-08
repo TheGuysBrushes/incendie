@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'windwidget.h'
 **
-** Created: Sun Jun 7 16:07:39 2015
+** Created: Mon Jun 8 17:27:18 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -31,20 +31,20 @@ static const uint qt_meta_data_WindWidget[] = {
        1,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
-      14,   12,   11,   11, 0x05,
+      26,   12,   11,   11, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      35,   11,   11,   11, 0x0a,
-      54,   46,   11,   11, 0x0a,
-      68,   11,   11,   11, 0x0a,
+      47,   11,   11,   11, 0x0a,
+      66,   58,   11,   11, 0x0a,
+      80,   11,   11,   11, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_WindWidget[] = {
-    "WindWidget\0\0,\0modif_value(int,int)\0"
-    "majAngle()\0vitesse\0majSpeed(int)\0"
-    "changeWindDir()\0"
+    "WindWidget\0\0angle,vitesse\0"
+    "modif_value(int,int)\0majAngle()\0vitesse\0"
+    "majSpeed(int)\0changeWindDir()\0"
 };
 
 void WindWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)

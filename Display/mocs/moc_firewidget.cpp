@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'firewidget.h'
 **
-** Created: Sun Jun 7 16:07:39 2015
+** Created: Mon Jun 8 17:27:18 2015
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

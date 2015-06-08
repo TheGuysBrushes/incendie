@@ -25,24 +25,31 @@ FireScreen::FireScreen(): QMainWindow()
 	QAction* saveData = new QAction(this);
 	QAction* saveImage = new QAction(this);
 	QAction* saveSeed = new QAction(this);
+	
+	QAction* about = new QAction(this);
 #if FRENCH
 	QMenu* menuSave= menuBar()->addMenu("Sauvegardes...");
 	saveData->setText( "Foret complète" );
 	saveImage->setText( "sous forme d'Image" );
 	saveSeed->setText( "graine aléatoire" );
+	about->setText("A propos");
 #else
-	QMenu* menuSave= menuBar()->addMenu("Saves...");
+	QMenu* menuSave= menuBar()->addMenu("Others");
 	saveData->setText( "complete Forest" );
 	saveImage->setText( "to Image" );
 	saveSeed->setText( "random seed" );
+	about->setText("About");
 #endif
 	
 	menuSave->addAction(saveData);
 	menuSave->addAction(saveImage);
 	menuSave->addAction(saveSeed);
+	
+	menuSave->addAction(about);
 	connect(saveData, 	SIGNAL(triggered()), SLOT(saveData()) );
 	connect(saveImage, 	SIGNAL(triggered()), SLOT(saveImage()) );
 	connect(saveSeed, 	SIGNAL(triggered()), SLOT(saveSeed()) );
+	connect(about, SIGNAL(triggered()), SLOT(popAbout()) );
 
 	// Composants Qt de la classe
 	fWidget= new FireWidget();
@@ -75,6 +82,7 @@ FireScreen::FireScreen(): QMainWindow()
 	
 	cpt_lbl = new QLabel();
 	delai_lbl = new QLabel();
+	aboutWidget = NULL;
 }
 
 FireScreen::~FireScreen()
@@ -250,17 +258,6 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	vert_lay1->addWidget(ww3);
 	vert_lay1->addWidget(ww4);
 	
-	// 	QVBoxLayout* lay_info= new QVBoxLayout(this);
-// 	QWidget* WInfos= new QWidget();
-	QLabel* signature= new QLabel("Auteurs : Florian DAVID et Ugo RAYER"/*, WInfos*/);
-	QLabel* about= new QLabel("Dans le cadre d'un projet en 3eme annee de licence"/*, WInfos*/);
-	QLabel* coordonnees= new QLabel("f.david5@laposte.net ou ugo.rayer@laposte.net"/*, WInfos*/);
-	QLabel* depot= new QLabel("Depot : github.com/flodavid/incendie"/*, WInfos*/);
-	vert_lay1->addWidget(signature);
-	vert_lay1->addWidget(about);
-	vert_lay1->addWidget(coordonnees);
-	vert_lay1->addWidget(depot);
-
 	vert_lay1->setAlignment(titre,Qt::AlignHCenter);
 
 	
@@ -299,12 +296,10 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	cpt_lbl->setStyleSheet("QLabel { color : darkblue; }");
 	delai_lbl->setStyleSheet("QLabel { color : darkblue; }");
 	actionLabel->setStyleSheet("QLabel { color : darkblue; }");
-	signature->setStyleSheet("QLabel  {color : darkblue; font : 8px}");
-	about->setStyleSheet("QLabel  {color : darkblue; font : 8px}");
-	coordonnees->setStyleSheet("QLabel  {color : darkblue; font : 8px}");
-	depot->setStyleSheet("QLabel  {color : darkblue; font : 8px}");
+
 
 }
+
 
 void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 {
@@ -525,4 +520,21 @@ void FireScreen::releaseOrdered()
 		emit actionSender( DELAY );
 	}
 
+}
+
+void FireScreen::popAbout()
+{
+	if(aboutWidget == NULL){
+		aboutWidget = new QWidget();
+		QVBoxLayout* VLay= new QVBoxLayout(aboutWidget);
+		QLabel* signature= new QLabel("Florian DAVID et Ugo RAYER");
+		QLabel* about= new QLabel("Projet de 3eme annee de licence");
+		QLabel* coordonnees= new QLabel("f.david5@laposte.net et ugo.rayer@laposte.net");
+		QLabel* depot= new QLabel("Depot : github.com/flodavid/incendie");
+		VLay->addWidget(signature);
+		VLay->addWidget(about);
+		VLay->addWidget(coordonnees);
+		VLay->addWidget(depot);
+	}
+	aboutWidget->show();
 }

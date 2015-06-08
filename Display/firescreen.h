@@ -27,6 +27,7 @@ private:
 	FireWidget* fWidget;
 	
 	QWidget* menus; // utile pour connaitre sa largeur
+	QWidget* aboutWidget;
 	
 	QLabel* cpt_lbl;
 	QLabel* delai_lbl;
@@ -91,6 +92,8 @@ private:
 	
 /* Methodes diverses */
 	void majCompteur();
+	
+	
 		
 protected:
 	/**
@@ -168,6 +171,12 @@ public slots:
 	 * @author Ugo
 	 */
 	void releaseOrdered();
+		
+	/** 
+	 * Slot mis en place afin de faire pop la fenetre d'information
+	 * sur les développeurs de l'application
+	 */
+	void popAbout();
 	
 signals:
 	/**
