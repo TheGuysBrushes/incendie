@@ -2,8 +2,8 @@
 #define FRENCH		0
 
 // All
-#define DEBUG_CURRENT	1
-#define DEBUG_DELETE	1
+#define DEBUG_CURRENT	0
+#define DEBUG_DELETE		0	// dans les destructeurs, ne marche pas
 
 #define PERF_REDRAW		0
 #define PERF_RESIZE		0

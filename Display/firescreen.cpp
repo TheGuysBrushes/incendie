@@ -161,14 +161,12 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	HLayout->addWidget(menus);
 	// Propriétés utiles?
 		menus->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Minimum);
-// 			menus->setMaximumWidth(300);
-// 			menus->setMinimumWidth(300);
 	
 	QVBoxLayout* vert_lay1 = new QVBoxLayout(menus);
-	QWidget* ww1 = new QWidget(menus);
-	QWidget* ww2 = new QWidget(menus);
-	QWidget* ww3 = new QWidget(menus);
-	QWidget* ww4 = new QWidget(menus);
+	QWidget* ww1 = new QWidget();
+	QWidget* ww2 = new QWidget();
+	QWidget* ww3 = new QWidget();
+	QWidget* ww4 = new QWidget();
 	
 	QGridLayout* grid_lay1 = new QGridLayout(ww1);
 	QGridLayout* grid_lay2 = new QGridLayout(ww2);
@@ -499,6 +497,27 @@ void FireScreen::updateWind(int angle, int vitesse)
 	fWidget->setWind(angle, vitesse);
 }
 
+
+void FireScreen::popAbout()
+{
+	if(aboutWidget == NULL){
+		aboutWidget = new QWidget();
+		QVBoxLayout* VLay= new QVBoxLayout(aboutWidget);
+		QLabel* signature= new QLabel("Florian DAVID et Ugo RAYER");
+		QLabel* about= new QLabel("Projet de 3eme annee de licence");
+		QLabel* coordonnees= new QLabel("f.david5@laposte.net et ugo.rayer@laposte.net");
+		QLabel* depot= new QLabel("Depot : github.com/flodavid/incendie");
+		VLay->addWidget(signature);
+		VLay->addWidget(about);
+		VLay->addWidget(coordonnees);
+		VLay->addWidget(depot);
+		
+		QPushButton* valid= new QPushButton("OK", aboutWidget);
+		connect(valid, SIGNAL(triggered()), aboutWidget, SLOT(close()) );
+	}
+	aboutWidget->show();
+}
+
 	/*** Coupure et retardateur ***/
 void FireScreen::releaseOrdered()
 {
@@ -520,21 +539,4 @@ void FireScreen::releaseOrdered()
 		emit actionSender( DELAY );
 	}
 
-}
-
-void FireScreen::popAbout()
-{
-	if(aboutWidget == NULL){
-		aboutWidget = new QWidget();
-		QVBoxLayout* VLay= new QVBoxLayout(aboutWidget);
-		QLabel* signature= new QLabel("Florian DAVID et Ugo RAYER");
-		QLabel* about= new QLabel("Projet de 3eme annee de licence");
-		QLabel* coordonnees= new QLabel("f.david5@laposte.net et ugo.rayer@laposte.net");
-		QLabel* depot= new QLabel("Depot : github.com/flodavid/incendie");
-		VLay->addWidget(signature);
-		VLay->addWidget(about);
-		VLay->addWidget(coordonnees);
-		VLay->addWidget(depot);
-	}
-	aboutWidget->show();
 }
