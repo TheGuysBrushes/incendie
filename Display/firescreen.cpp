@@ -195,7 +195,7 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	QLabel* tour_lbl = new QLabel("Nombre de tours :");
 	QPushButton* saveStateBtn = new QPushButton("Sauvegarder l'etat courant");
 	QPushButton* saveSeedBtn = new QPushButton("Sauvegarder la graine");
-	
+	QPushButton* saveImageBtn  = new QPushButton("Sauvegarder enn  image");	
 #else 
 	QLabel* titre = new QLabel("Cellular automaton");
 	QLabel* info_vent= new QLabel("Wind's settings :");
@@ -206,6 +206,7 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	QPushButton* reset_btn = new QPushButton("Reset ! Be careful");
 	QPushButton* saveStateBtn = new QPushButton("Save current state");
 	QPushButton* saveSeedBtn = new QPushButton("Save seed's forest");
+	QPushButton* saveImageBtn  = new QPushButton("Save as image");
 	
 	// Compteur de tours et Slider
 	QLabel* trans_con = new QLabel("Continuous transmission : ");	
@@ -236,6 +237,7 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 
 	grid_lay3->addWidget(saveStateBtn,0,0);
 	grid_lay3->addWidget(saveSeedBtn, 0, 1);
+	grid_lay3->addWidget(saveImageBtn,0,2);
 	grid_lay3->addWidget(reset_btn,1,0,1,0);
 	
 	h_lay1->addWidget(tour_lbl);
@@ -282,6 +284,8 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	// Coupure et retardateur
 	connect(fWidget,	SIGNAL(releaseSignal()),	this, SLOT(releaseOrdered()));
 	connect(this,	SIGNAL(actionSender(int)),		fWidget, SLOT(actionReceived(int)));
+	
+	connect(saveImageBtn, SIGNAL (clicked()), this,  SLOT(saveImage()));
 	
 	
 /*** 	DEFINITTION DU STYLE DES ELEMENTS	***/
