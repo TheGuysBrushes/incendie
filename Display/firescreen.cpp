@@ -513,16 +513,22 @@ void FireScreen::popAbout()
 		QLabel* about= new QLabel("Projet de 3eme annee de licence");
 		QLabel* coordonnees= new QLabel("f.david5@laposte.net et ugo.rayer@laposte.net");
 		QLabel* depot= new QLabel("Depot : github.com/flodavid/incendie");
+		QPushButton* valid= new QPushButton("OK", aboutWidget);
 		VLay->addWidget(signature);
 		VLay->addWidget(about);
 		VLay->addWidget(coordonnees);
 		VLay->addWidget(depot);
+		VLay->addWidget(valid);
 		
-		QPushButton* valid= new QPushButton("OK", aboutWidget);
-		connect(valid, SIGNAL(triggered()), aboutWidget, SLOT(close()) );
+		signature->setStyleSheet("QLabel {color : darkblue;  }");
+		about->setStyleSheet("QLabel {color : darkblue;  }");
+		coordonnees->setStyleSheet("QLabel {color : darkblue;  }");
+		depot->setStyleSheet("QLabel {color : darkblue;  }");
+		connect(valid, SIGNAL(clicked()), aboutWidget, SLOT(close()) );
 	}
 	aboutWidget->show();
 }
+
 
 	/*** Coupure et retardateur ***/
 void FireScreen::releaseOrdered()

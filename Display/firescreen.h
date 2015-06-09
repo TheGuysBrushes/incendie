@@ -177,6 +177,7 @@ public slots:
 	 * sur les développeurs de l'application
 	 */
 	void popAbout();
+// 	void  close(bool);
 	
 signals:
 	/**
