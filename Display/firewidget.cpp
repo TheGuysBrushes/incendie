@@ -45,7 +45,7 @@ void FireWidget::initialise(int largeur, int hauteur, float proba, float coef_br
 	setMinimumSize(largeur/2.0, hauteur/2.0);
 }
 
-bool FireWidget::initialise(int largeur, int hauteur, ifstream * file)
+bool FireWidget::tryInitialise(int largeur, int hauteur, ifstream * file)
 {
 	if (file->is_open()){
 
@@ -67,7 +67,7 @@ bool FireWidget::initialise(int largeur, int hauteur, ifstream * file)
 	}
 }
 
-bool FireWidget::initialise(int largeur, int hauteur, QImage* imageForet, float coef_brulure)
+bool FireWidget::tryInitialise(int largeur, int hauteur, QImage* imageForet, float coef_brulure)
 {
 	if (!imageForet->isNull()){
 		// on crée une copie de l'image, pour éviter de pointer sur une image détruite, 
@@ -194,23 +194,17 @@ void FireWidget::loadFromPicture(int largeurImage, int hauteurImage, QImage* ima
 }
 
 
-void FireWidget::saveForest(string& filePath) const
+bool FireWidget::trySaveForest(string& filePath) const
 {
-	forest->save(filePath);
-	#if DEBUG_SAVE
-	cout << "sauvegarde foret, nom : " << filePath<< endl;
-	#endif
+	return forest->trySave(filePath);
 }
 
-void FireWidget::saveSeed(string& filePath) const
+bool FireWidget::trySaveSeed(string& filePath) const
 {
-	forest->saveSeed(filePath);
-	#if DEBUG_SAVE
-	cout << "sauvegarde graine, nom : " << filePath<< endl;
-	#endif
+	return forest->trySaveSeed(filePath);
 }
 
-bool FireWidget::saveImage(QString filename) const
+bool FireWidget::trySaveImage(QString filename) const
 {
 	if ( !buffer->isNull() ){
 		// TEST verifier que la taille est correcte
@@ -254,7 +248,7 @@ bool FireWidget::saveImage(QString filename) const
 // 	return false;
 // }
 
-bool FireWidget::allumerFeu(int colonne, int ligne)
+bool FireWidget::tryAllumerFeu(int colonne, int ligne)
 {
 	#if DEBUG_ALLUME
 	cout << "allumer cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
@@ -278,7 +272,7 @@ bool FireWidget::allumerFeu(int colonne, int ligne)
 	return false;
 }
 
-bool FireWidget::finirFeu(int colonne, int ligne)
+bool FireWidget::tryFinirFeu(int colonne, int ligne)
 {
 	#if DEBUG_ALLUME
 	cout << "embraser cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
@@ -341,7 +335,7 @@ void FireWidget::drawList( list< Arbre* > * arbres){
 void FireWidget::drawForest()
 {
 	// essai de dessin de l'image de fond, et de la foret, si présente
-	if (!drawPictureForest()){
+	if (!tryDrawPictureForest()){
 		// si il n"y a oas d'image, on dessine toute la foret dont les arbre
 
 		bufferPainter->begin(buffer);
@@ -408,7 +402,7 @@ void FireWidget::drawForest()
 	}
 }
 
-bool FireWidget::drawPicture()
+bool FireWidget::tryDrawPicture()
 {
 	if (!pictureForest->isNull()){
 		bufferPainter->begin(buffer);
@@ -420,10 +414,10 @@ bool FireWidget::drawPicture()
 	else return false;
 }
 
-bool FireWidget::drawPictureForest()
+bool FireWidget::tryDrawPictureForest()
 {
 	// essai de dessin de l'image de fond, si présente
-	if (drawPicture()){
+	if (tryDrawPicture()){
 		// si il y a une image de fond, on ne dessine pas les arbres "neutres"
 		
 		bufferPainter->begin(buffer);
@@ -573,9 +567,9 @@ void FireWidget::mousePressEvent(QMouseEvent* event)
 	int ligne= event->y()/tailleCell;
 	
 	if (event->button()==Qt::LeftButton)
-		allumerFeu(colonne, ligne);
+		tryAllumerFeu(colonne, ligne);
 	else if (event->button()==Qt::MiddleButton)
-		finirFeu(colonne, ligne);
+		tryFinirFeu(colonne, ligne);
 	else if (event->button()==Qt::RightButton)
 	{
 		initRubber(event);
@@ -608,9 +602,9 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 	int ligne= event->y()/tailleCell;
 	
 	if (event->buttons().testFlag(Qt::LeftButton) )
-		allumerFeu(colonne, ligne);
+		tryAllumerFeu(colonne, ligne);
 	else if (event->buttons().testFlag(Qt::MiddleButton) )
-		finirFeu(colonne, ligne);
+		tryFinirFeu(colonne, ligne);
 	else if (event->buttons().testFlag(Qt::RightButton) ){
 		if(rubber)
 			rubber->setGeometry(QRect(origin,event->pos()).normalized());

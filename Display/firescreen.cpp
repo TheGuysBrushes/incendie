@@ -105,13 +105,13 @@ FireScreen::~FireScreen()
 }
 
 
-bool FireScreen::initialisation()
+bool FireScreen::tryInitialisation()
 {
 	initComponents();
 	
 	Fwelcome* fwel = new Fwelcome(this);
 	
-	if ( initForest(fwel) )	{
+	if ( tryInitForest(fwel) )	{
 		delete fwel;
 		return true;
 	}
@@ -328,7 +328,7 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 }
 
 
-bool FireScreen::initForest(Fwelcome* fwel)
+bool FireScreen::tryInitForest(Fwelcome* fwel)
 {
 	fwel->show();
 	int resExec= fwel->exec();
@@ -340,19 +340,23 @@ bool FireScreen::initForest(Fwelcome* fwel)
 		int hauteur= fwel->getHaut();
 		
 		if(  resExec==Load ){
-			fWidget->initialise(largeur,hauteur, fwel->getImage(), fwel->getCoef());
+// 		  Crée une forêt à partir de l'analyse d'une photo (de forêt de préférence, btw)
+			fWidget->tryInitialise(largeur,hauteur, fwel->getImage(), fwel->getCoef());
 			windWidget->initValues(30, 80);
 		}
 		else if(  resExec==Restore ){
-			fWidget->initialise(largeur,hauteur, fwel->getFile());
+// 		  Restore une forêt à partir d'une fichier
+			fWidget->tryInitialise(largeur,hauteur, fwel->getFile());
 			windWidget->initValues(30, 80);
 		}
 		else if( resExec==RestoreSeed ){
+// 		  réutilise la graine aléatoire déjà
 			fWidget->initialise(largeur,hauteur,
 									fwel->getProba(), fwel->getCoef(), fwel->getSeed() );
 			windWidget->initValues(30, 80);
 		}		
 		else if( resExec==Accepted ){
+// 		  Crée une nouvelle forêt aléatoirement, a partr d'une graine aléatoire
 			fWidget->initialise(largeur,hauteur,
 									fwel->getProba(), fwel->getCoef()	);
 			windWidget->initValues(30, 80);
@@ -448,7 +452,7 @@ void FireScreen::reset()
 	fwel.addCancel();
 	fwel.setModal(true);
 	
-	if ( initForest(&fwel) )
+	if ( tryInitForest(&fwel) )
 		fWidget->redraw();
 }
 
@@ -466,7 +470,7 @@ void FireScreen::saveData()
 	}
 	
 	// Sauvegarde de la foret dans FireWidget qui effectue la procédure de Foret
-	fWidget->saveForest(s);
+	fWidget->trySaveForest(s);
 }
 
 void FireScreen::saveImage()
@@ -482,7 +486,7 @@ void FireScreen::saveImage()
 	}
 	
 	// Sauvegarde de la foret dans FireWidget qui effectue la procédure de Foret
-	fWidget->saveImage(QString::fromStdString(s));
+	fWidget->trySaveImage(QString::fromStdString(s));
 }
 
 void FireScreen::saveSeed()
@@ -498,7 +502,7 @@ void FireScreen::saveSeed()
 	}
 	
 	// Sauvegarde de la foret dans FireWidget qui effectue la procédure de Foret
-	fWidget->saveSeed(s);
+	fWidget->trySaveSeed(s);
 }
 
 	/* Autres */

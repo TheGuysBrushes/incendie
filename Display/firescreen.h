@@ -60,8 +60,9 @@ public:
 	/**
 	 * Initialise l'application et crée une nouvelle forêt, en utilisant une fenêtre dédiée (Fwelcome)
 	 * @author Florian et Ugo
+	 * @return vrai si l'initialisation a réussi
 	 */
-	bool initialisation();
+	bool tryInitialisation();
 	
 	/**
 	 * Definit les tailles maximales de la fenetre
@@ -88,7 +89,7 @@ private:
 	 * @param fwel fenêtre de paramétrage
 	 * @return faux si l'utilisateur annule ou qu'il y a une erreur
 	 */
-	bool initForest(Fwelcome* fwel);
+	bool tryInitForest(Fwelcome* fwel);
 	
 /* Methodes diverses */
 	void majCompteur();

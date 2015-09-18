@@ -138,7 +138,7 @@ public:
 	 * @param fileName nom du fichier qui contient les essences
 	 * @return vrai si le fichier a été ouvert, faux sinon
 	 */
-	bool loadEssences(const std::string& fileName);
+	bool tryLoadEssences(const std::string& fileName);
 	
 	/**
 	 * Crée une foret à partir d'une matrice de niveau de couleur de vert
@@ -370,8 +370,9 @@ public:
 	 * @author Florian
 	 * @param file fichier de sauvegarde de foret
 	 * @param PB barre de progression pour suivre le chargement de la foret IMPROVEIT
+	 * @return vrai si le chargement a reussi ? TODO vérifier
 	 */
-	bool load(std::ifstream* file, LoadProgress* progress);
+	bool tryLoad(std::ifstream* file, LoadProgress* progress);
 	
 	/**
 	 * Sauvegarde les tailles et le coefficient de brulure de la foret dans un fichier de sauvegarde
@@ -395,15 +396,17 @@ public:
 	 * Sauvegarde une forêt dans un fichier (tailles-essences-arbres)
 	 * @author Florian
 	 * @param filename chemin où sauvegarder le fichier de sauvegarde
+	 * @return vrai si la sauvegarde a réussi ? TODO vérifier
 	 */
-	bool save(std::string filePath = "save_forest");
+	bool trySave(std::string filePath = "save_forest");
 	
 	/**
 	 * Sauvegarde la taille et la graine aléatoire d'une forêt
 	 * @author Florian
 	 * @param file
+	 * @return vrai si la sauvegarde a réussi ? TODO vérifier
 	 */
-	bool saveSeed(std::string filePath = "save_forest");
+	bool trySaveSeed(std::string filePath = "save_forest");
 	
 // Affichage attributs
 	/**

@@ -68,24 +68,29 @@ public:
 
 /* Initialisations */
 	/**
-	 * Fonction de création d'une foret ALEATOIRE lors de la (ré)initialisation
+	 * Fonction de création d'une foret ALEATOIRE lors de la (ré)initialisation,
+	 * aléatoirement
 	 * @author Florian et Ugo
 	 * @param all identiques au constructeur de Foret aléatoire
 	 */
 	void initialise(int largeur, int hauteur, float proba = 0.60, float coef_brulure=1.0, std::time_t graine=std::time(0));
+	
 	/**
-	 * Fonction de création d'une foret A PARTIR D'UNE SAUVEGARDE,
-	 * dans un fichier ouvert dont les tailles ont déjà été lues, lors de la (ré)initialisation
+	 * Fonction de création d'une foret,
+	 * à partir d'un fichier de sauvegarde OUVERT
 	 * @author Florian et Ugo
 	 * 
 	 * @param largeur de la nouvelle forêt
 	 * @param hauteur de la nouvelle forêt
-	 * @param file fichier binaire, ouvert, contenant la sauvegarde de la forêt (essences-arbres)
+	 * @param file fichier binaire, ouvert, contenant la sauvegarde de la forêt (essences-arbres),
+	 * dont les tailles ont déjà été lues lors de la (ré)initialisation
 	 * @return vrai si le fichier est ouvert
 	 */
-	bool initialise(int largeur, int hauteur, std::ifstream* file);
+	bool tryInitialise(int largeur, int hauteur, std::ifstream* file);
+	
 	/**
-	 * Fonction de création d'une foret ALEATOIRE lors de la (ré)initialisation
+	 * Fonction de création d'une foret ALEATOIRE lors de la (ré)initialisation,
+	 * à partir d'une image
 	 * @author Florian et Ugo
 	 * 
 	 * @param largeur de la nouvelle forêt
@@ -93,7 +98,7 @@ public:
 	 * @param imageForet image d'une foret, pour l'instant une image converie du jpg au tif
 	 * @return vrai si l'image est chargée
 	 */
-	bool initialise(int largeur, int hauteur, QImage* imageForet, float coef_brulure);
+	bool tryInitialise(int largeur, int hauteur, QImage* imageForet, float coef_brulure);
 
 private:
 	LoadWindow* createProgressWindow() const;
@@ -135,24 +140,28 @@ public:
 	 * @param others taille de l'image/forêt
 	 */
 	void loadFromPicture(int largeurImage, int hauteurImage, QImage* imageForet, float coef_brulure);
+	
 	/**
 	 * Sauvegarde la foret dans un fichier de sauvegarde
 	 * @author Florian
 	 * @param filePath chemin du nouveau fichier de sauvegarde
+	 * @return vrai si la sauvegarde réussie
 	 */
-	void saveForest(std::string& filePath) const;
+	bool trySaveForest(std::string& filePath) const;
 	/**
 	 * Sauvegarde la graine aléatoire et les caractéristiques de la forêt dans un fichier de sauvegarde
 	 * @author Florian
 	 * @param filePath chemin du nouveau fichier de sauvegarde
 	 */
-	void saveSeed(std::string& filePath) const;
+	bool trySaveSeed(std::string& filePath) const;
+	
 	/**
 	 * Sauvegarde la forêt sous forme d'image
 	 * @author Florian
 	 * @param filePath chemin du nouveau fichier de sauvegarde
+	 * @return vrai si la sauvegarde réussi
 	 */
-	bool saveImage(QString filename) const;
+	bool trySaveImage(QString filename) const;
 	
 	/* Modifications de l'état des arbres */
 	/**
@@ -161,7 +170,7 @@ public:
 	 * @param int/int indices de la colonne et de la ligne de l'arbre à éteindre
 	 * @return vrai si il y avait un arbre en feu
 	 */
-// 	bool eteindreFeu(int colonne, int ligne);
+// 	bool tryEteindreFeu(int colonne, int ligne);
 	/**
 	 * Allume un feu sur un arbre "vivant"
 	 * @author Florian
@@ -169,7 +178,7 @@ public:
 	 * @param ligne de l'arbre à enflammer
 	 * @return vrai si il y avait un arbre enflammable
 	 */
-	bool allumerFeu(int colonne, int ligne);
+	bool tryAllumerFeu(int colonne, int ligne);
 	/**
 	 * Opere une combustion complete sur un arbre en feu (IMPROVEIT faire sur les arbres non en feu ?)
 	 * @author Florian
@@ -177,7 +186,7 @@ public:
 	 * @param colonne ligne et colonne de l'arbre à bruler totalement
 	 * @return vrai si il y avait un arbre en feu
 	 */
-	bool finirFeu(int colonne, int ligne);
+	bool tryFinirFeu(int colonne, int ligne);
 
 /* Affichage */
 	/**
@@ -205,16 +214,17 @@ public:
 	 */
 	void drawForest();
 	/**
-	 * Fonction à commenter par son auteur :p
+	 * Tente de dessiner la photo de foret dans le buffer
 	 * @author Florian
+	 * @return faux si il n'y a pas d'image de forêt de chargée
 	 */
-	bool drawPicture();
+	bool tryDrawPicture();
 	/**
 	 * Dessine la forêt avec une image en dessous
 	 * 	Les arbres ne sont donc pas dessinés
 	 * @author Florian
 	 */
-	bool drawPictureForest();
+	bool tryDrawPictureForest();
 	/**
 	 * Redessine les arbres qui ont changés d'état, sur l'ancienne matrice
 	 * On réutilise les cellules non susceptibles d'avoir été modifiées

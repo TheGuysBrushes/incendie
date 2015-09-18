@@ -16,7 +16,7 @@ using namespace std;
 Foret::Foret(int _largeur, int _hauteur, float proba, float _coefFeu, time_t graine)
 : lignes(_hauteur), colonnes(_largeur), burningCoef(_coefFeu), randomSeed(graine)
 {
-	loadEssences("../Moteur/essence_data.txt");
+	tryLoadEssences("../Moteur/essence_data.txt");
 	randomMatrix(proba);
 	
 	wind = new Vent();
@@ -26,14 +26,14 @@ Foret::Foret(int _largeur, int _hauteur, ifstream * file, LoadProgress* PB)
 	:lignes(_hauteur), colonnes(_largeur)
 {
 	wind = new Vent();
-	load(file, PB);
+	tryLoad(file, PB);
 }
 
 Foret::Foret(int _largeur, int _hauteur, vector< std::vector< int > >* matrice,float coef_brulure)
 	: lignes(_hauteur), colonnes(_largeur), burningCoef(coef_brulure)
 {
 	wind = new Vent();
-	loadEssences("../Moteur/essence_data.txt");
+	tryLoadEssences("../Moteur/essence_data.txt");
 	#if DEBUG_ARBRE_PLANTE
 	cout<< "création de la foret à partir d'une matrice d'intensité, de taille "<< _largeur<< "x"<< _hauteur<< endl;
 	#endif
@@ -177,7 +177,7 @@ void Foret::setWind(int angle, int vitesse)
 }
 
 
-bool Foret::loadEssences(const string& fileName)
+bool Foret::tryLoadEssences(const string& fileName)
 {
 	// Initialisation du vecteur d'essence
 	ifstream f (fileName.c_str());
@@ -802,7 +802,7 @@ void Foret::loadMatrix(ifstream* file, LoadProgress* progress)
 	}
 }
 
-bool Foret::load(ifstream* file, LoadProgress* progress)
+bool Foret::tryLoad(ifstream* file, LoadProgress* progress)
 {
 	if (!file->is_open()){
 		cout<< "Echec ouverture fichier de sauvegarde"<< endl;
@@ -919,20 +919,20 @@ cout<< "Enregistrement de l'arbre "<< ab->getPos().col<< "; "<< lignes<< endl;
 }
 
 
-bool Foret::save(string fileName)
+bool Foret::trySave(string fileName)
 {
 	string chemin= fileName+".dat";
 	ofstream* file= new ofstream(chemin.c_str(), std::ios::out|std::ios::binary);
 	
 	if (!file->is_open()){
-		cout<< "Echec ouverture fichier de sauvegarde"<< endl;
+		cout<< "Echec ouverture fichier de sauvegarde "<< fileName<< endl;
 		return false;
 	}
 	else {
-		cout<< "Sauvegarde ..."<< endl;
 		saveProperties(file);
 		saveEssences(file);
 		saveMatrix(file);
+		cout<< "Sauvegarde dans "<< fileName<< " réussie"<< endl;
 		
 		file->close();
 		
@@ -940,16 +940,19 @@ bool Foret::save(string fileName)
 	}
 }
 
-bool Foret::saveSeed(string filePath)
+bool Foret::trySaveSeed(string filePath)
 {
 	ofstream* file= new ofstream(filePath.c_str(), std::ios::out|std::ios::binary);
 	
 	if (!file->is_open()){
-		cout<< "Echec ouverture fichier de sauvegarde"<< endl;
+		cout<< "Echec ouverture fichier de sauvegarde : " << filePath<< endl; // TODO émettre une alerte à l'utilisateur
 		return false;
 	}
 	else {
-	
+	#if DEBUG_SAVE
+	  cout<< "Sauvegarde de la graine réussie dans le fichier " << filePath<< endl;
+	#endif
+	  
 	file->write( (char*)&(randomSeed), sizeof(time_t));
 	
 	saveProperties(file);
