@@ -89,7 +89,7 @@ public slots:
 signals:
 	/** TODO Ugo comment
 	 * 
-	 * @author Ugo et Floriant
+	 * @author Ugo et Florian
 	 * @param angle
 	 * @param vitesse
 	 */
