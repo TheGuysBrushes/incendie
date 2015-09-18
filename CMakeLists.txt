@@ -13,7 +13,7 @@ add_subdirectory(Display)
 
 qt4_automoc(${Headers_SRCS})
 
-set(Moteur_SRCS Moteur/coordonnee.cpp Moteur/vent.cpp Moteur/cellule.cpp Moteur/essence.cpp Moteur/arbre.cpp Moteur/loadprogress.cpp Moteur/foret.cpp)
+set(Moteur_SRCS Moteur/coordonnee.cpp Moteur/vent.cpp Moteur/cellule.cpp Moteur/essence.cpp Moteur/cellulevide.cpp Moteur/arbre.cpp Moteur/loadprogress.cpp Moteur/foret.cpp)
 
 #set(Mocs_SRCS Display/mocs/moc_windcircle.cpp Display/mocs/moc_windwidget.cpp Display/mocs/moc_fwelcome.cpp Display/mocs/moc_firewidget.cpp Display/mocs/moc_firescreen.cpp) ${Mocs_SRCS}
 

@@ -15,7 +15,7 @@ Vent::Vent(const Vent& other)
 {
 }
 
-// Vent::~Vent(){}
+Vent::~Vent(){}
 
 void Vent::setPower_h(float val)
 {

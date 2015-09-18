@@ -12,7 +12,7 @@
 #include <ctime>
 
 #include "../debug.h"
-#include "cellule.h"
+#include "cellulevide.h"
 #include "essence.h"
 #include "arbre.h"
 #include "vent.h"

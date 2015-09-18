@@ -19,7 +19,7 @@ public:
 	Vent();
 	Vent(float _power_h, float _power_v);
 	Vent(const Vent& other);
-// 	virtual ~Vent();
+	virtual ~Vent();
 	
 	// Getters and setters
 	void setPower_h(float val);

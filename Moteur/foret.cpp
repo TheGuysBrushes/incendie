@@ -71,7 +71,7 @@ void Foret::initEmpty()
 		std::vector< Cellule* > tmp;
 		
 		for (int j= 0; j< colonnes; ++j){
-			tmp.push_back( new Cellule(0) );
+			tmp.push_back( new CelluleVide );
 		}
 		
 		// ajout de la ligne dans la matrice

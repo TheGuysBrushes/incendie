@@ -14,13 +14,13 @@
 using namespace std;
 
 Arbre::Arbre(int col, int row, const Essence* const _essence, unsigned age, unsigned _humidite, int _coefficient)
-	: Cellule(1), pos(col, row), essence(_essence), humidity(_humidite), coefficient(_coefficient)
+	: Cellule(), state(1), pos(col, row), essence(_essence), humidity(_humidite), coefficient(_coefficient)
 {	
 	initialise(age);
 }
 
 Arbre::Arbre(Cellule* cell, int col, int row, const Essence*const _essence, unsigned age, unsigned int _humidite, int _coefficient)
-	: Cellule(1), pos(col, row), essence(_essence), humidity(_humidite), coefficient(_coefficient)
+	: Cellule(), state(1), pos(col, row), essence(_essence), humidity(_humidite), coefficient(_coefficient)
 {
 	initialise(age);
 	// suppression ancienne cellule 
@@ -28,7 +28,7 @@ Arbre::Arbre(Cellule* cell, int col, int row, const Essence*const _essence, unsi
 }
 
 Arbre::Arbre(int col, int row, Cellule* cell, const Essence* const _essence, unsigned int _humidite, int _hp, int _coefficient)
-	: Cellule(1), pos(col, row), essence(_essence), humidity(_humidite), coefficient(_coefficient), hp(_hp)
+	: Cellule(), state(1), pos(col, row), essence(_essence), humidity(_humidite), coefficient(_coefficient), hp(_hp)
 {
 
 	// suppression ancienne cellule 
@@ -85,6 +85,10 @@ void Arbre::initialise(unsigned age)
 void Arbre::setCoefficient(float x)
 {
 	coefficient = x;
+}
+
+void Arbre::setState(int x){
+	state= x;
 }
 
 void Arbre::delay(float coefRalentissement)

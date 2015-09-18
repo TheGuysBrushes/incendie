@@ -13,6 +13,7 @@
 class Arbre: public Cellule
 {
 private:
+	int state;
 	Coordonnee pos;
 	// les essences sont constantes et un arbre a toujours la même essence
 	const Essence * const essence;
@@ -23,26 +24,31 @@ private:
 	int hp;	// calculés lors de la création
 	
 public:
+	
+// Setters
+	void setState(int x);
+  
 // Constructeurs et destructeur
 	/**
-	 * Construit un arbre à partir d'une position
+	 * Construit un arbre non enflammé à partir d'une position
 	 * @param age age de l'arbre, permet de calculer ses PV
 	 * @param all paramètres d'initialisation des attributs de l'arbre
 	 */
 	Arbre(int col, int row, const Essence*const _essence, unsigned int _age = 0, unsigned int _humidite = 20, int _coefficient = 1);
 	/**
-	 * Construit un arbre "à partir" d'une cellule
+	 * Construit un arbre non enflammé "à partir" d'une cellule
 	 * @param cell cellule à remplacer, elle est désallouée
 	 * @param age age de l'arbre, permet de calculer ses PV
 	 * @param all paramètres d'initialisation des attributs de l'arbre
 	 */
 	Arbre(Cellule* cell, int col, int row, const Essence* const _essence, unsigned int age = 0, unsigned int _humidite = 20, int _coefficient = 1);
 	/**
-	 * Construit un arbre par dessus une cellule, en donnant des PV plutot que de les calculer avec l'age
+	 * Construit un arbre non enflammé par dessus une cellule, en donnant des PV plutot que de les calculer avec l'age
 	 * @param cell cellule à remplacer, elle est désallouée
 	 * @param all paramètres d'initialisation des attributs de l'arbre
 	 */
 	Arbre(int col, int row, Cellule* cell, const Essence* const _essence, unsigned int _humidite, int _hp, int _coefficient = 1);
+	
 	
 	
 	/**
