@@ -109,16 +109,18 @@ bool FireScreen::tryInitialisation()
 {
 	initComponents();
 	
-	Fwelcome* fwel = new Fwelcome(this);
-	
-	if ( tryInitForest(fwel) )	{
-		delete fwel;
-		return true;
-	}
-	else {
-		delete fwel;
-		return false;
-	}
+// 	Fwelcome* fwel = new Fwelcome(this);
+// 	
+// 	if ( tryInitForest(fwel) )	{
+// 		delete fwel;
+// 		return true;
+// 	}
+// 	else {
+// 		delete fwel;
+// 		return false;
+// 	}
+
+	return true;
 }
 
 
@@ -317,7 +319,7 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 	
 // PLACEMENT DES ELEMENTS
 	// Partie gauche
-	lay->addWidget(fWidget);
+	lay->addWidget(fWidget); //	BUG fait planter sous linux mint 
 	lay->setStretchFactor(fWidget, 1);
 	lay->minimumHeightForWidth(1);
 	// Partie droite, menus
