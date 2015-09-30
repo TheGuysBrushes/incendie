@@ -109,18 +109,18 @@ bool FireScreen::tryInitialisation()
 {
 	initComponents();
 	
-// 	Fwelcome* fwel = new Fwelcome(this);
-// 	
-// 	if ( tryInitForest(fwel) )	{
-// 		delete fwel;
-// 		return true;
-// 	}
-// 	else {
-// 		delete fwel;
-// 		return false;
-// 	}
+	Fwelcome* fwel = new Fwelcome(this);
+	
+	if ( tryInitForest(fwel) )	{
+		delete fwel;
+		return true;
+	}
+	else {
+		delete fwel;
+		return false;
+	}
 
-	return true;
+// 	return true;
 }
 
 
@@ -190,14 +190,13 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	QLabel* trans_p2p = new QLabel("Transmission pas-a-pas : ");
 	
 	QPushButton* reset_btn = new QPushButton("RAZ ! Attention");
-	QPushButton* save_btn = new QPushButton("Sauvegarder");
-	QPushButton* load_btn = new QPushButton("Charger");
+	QPushButton* saveStateBtn = new QPushButton("Sauvegarde état courant");
+	QPushButton* saveSeedBtn = new QPushButton("Sauvegarde graine aléatoire");
+	QPushButton* saveImageBtn  = new QPushButton("Exporter en image");
+	
 	// Compteur de tours et Slider
 	QLabel* trans_con = new QLabel("Transmission continue : ");	
 	QLabel* tour_lbl = new QLabel("Nombre de tours :");
-	QPushButton* saveStateBtn = new QPushButton("Sauvegarder l'etat courant");
-	QPushButton* saveSeedBtn = new QPushButton("Sauvegarder la graine");
-	QPushButton* saveImageBtn  = new QPushButton("Sauvegarder enn  image");	
 #else 
 	QLabel* titre = new QLabel("Cellular automaton");
 	QLabel* info_vent= new QLabel("Wind's settings :");
@@ -319,7 +318,7 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 	
 // PLACEMENT DES ELEMENTS
 	// Partie gauche
-	lay->addWidget(fWidget); //	BUG fait planter sous linux mint 
+	lay->addWidget(fWidget);
 	lay->setStretchFactor(fWidget, 1);
 	lay->minimumHeightForWidth(1);
 	// Partie droite, menus
@@ -335,7 +334,8 @@ bool FireScreen::tryInitForest(Fwelcome* fwel)
 	fwel->show();
 	int resExec= fwel->exec();
 	if (resExec>0){
-		fWidget->delForest();
+
+// 		fWidget->delForest(); WARNING Fuite mémoire car l'ancienne forêt n'est pas supprimée, revoir où elle est crée et où l'effacer
 		fWidget->delPicture();
 		nb_tour = 0;
 		int largeur= fwel->getLarg();
@@ -347,7 +347,7 @@ bool FireScreen::tryInitForest(Fwelcome* fwel)
 			windWidget->initValues(30, 80);
 		}
 		else if(  resExec==Restore ){
-// 		  Restore une forêt à partir d'une fichier
+// 		  Restaure une forêt à partir d'une fichier
 			fWidget->tryInitialise(largeur,hauteur, fwel->getFile());
 			windWidget->initValues(30, 80);
 		}

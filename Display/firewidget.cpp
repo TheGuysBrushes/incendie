@@ -50,10 +50,11 @@ bool FireWidget::tryInitialise(int largeur, int hauteur, ifstream * file)
 	if (file->is_open()){
 
 		LoadWindow* progressWindow= createProgressWindow();
+		delForest(); // WARNING pour empêcher fuite mémoire
 		forest= new Foret(largeur, hauteur, file, progressWindow);
 		
 		progressWindow->closeProgress();
-// 		delete progressWindow;
+// 		delete progressWindow; WARNING pourquoi en commentaire ?
 		
 		setMinimumSize(largeur/2.0, hauteur/2.0);
 		

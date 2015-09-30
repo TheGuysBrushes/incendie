@@ -1,5 +1,5 @@
 // Langue
-#define FRENCH		0
+#define FRENCH		1
 
 // All
 #define DEBUG_CURRENT	0
