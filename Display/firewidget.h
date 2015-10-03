@@ -265,7 +265,13 @@ public slots:
 	void actionReceived(int x);
 	
 signals:
-	void releaseSignal(); // Vers firescreen, récupere l'action sélectionnée dans les menus
+	/**
+	 * Récupere l'action sélectionnée dans les menus
+	 * 
+	 * @author Ugo
+	 * TODO Ugo comment
+	 */
+	void releaseSignal(); // Vers firescreen
 	
 };
 

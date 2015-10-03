@@ -18,6 +18,7 @@ FireWidget::FireWidget(): QWidget()
 	pictureForest= new QImage;
 	
 	rubber = NULL;
+	forest = NULL;
 }
 
 FireWidget::~FireWidget()
@@ -40,6 +41,7 @@ void FireWidget::initialise(int largeur, int hauteur, float proba, float coef_br
 	cout<< "Creation d'une foret aléatoire à partir de paramètres"<< endl;
 	#endif
 
+	delForest(); // Pour empêcher fuite mémoire
 	forest= new Foret(largeur,hauteur, proba, coef_brulure, graine);
 	
 	setMinimumSize(largeur/2.0, hauteur/2.0);
@@ -50,7 +52,7 @@ bool FireWidget::tryInitialise(int largeur, int hauteur, ifstream * file)
 	if (file->is_open()){
 
 		LoadWindow* progressWindow= createProgressWindow();
-		delForest(); // WARNING pour empêcher fuite mémoire
+		delForest(); //Pour empêcher fuite mémoire
 		forest= new Foret(largeur, hauteur, file, progressWindow);
 		
 		progressWindow->closeProgress();
@@ -107,6 +109,8 @@ LoadWindow* FireWidget::createProgressWindow() const
 //######################
 /*** 		Setters 		***/
 //######################
+
+// TODO setColor : sauvegarder l'indice précédent pour éviter de redéfinir la mm couleur ?
 void FireWidget::setColor(int colorIndice)
 {
 	switch(colorIndice){
@@ -152,6 +156,10 @@ void FireWidget::setColor(int colorIndice)
 /*** 		Gestion de la foret		***/
 // #################################
 void FireWidget::delForest(){
+	#if DEBUG_CREA_FORET
+	cout << "effacement foret"<< endl;
+	#endif
+	
 	delete(forest);
 }
 
@@ -189,6 +197,8 @@ void FireWidget::loadFromPicture(int largeurImage, int hauteurImage, QImage* ima
 		}
 		matrice->push_back(ligne);
 	}
+	
+	delForest();
 	forest= new Foret(largeurImage, hauteurImage, matrice,coef_brulure);
 // 		QColormap map(pictureForest->tr);
 // 	img.trueMatrix()
@@ -297,13 +307,6 @@ bool FireWidget::tryFinirFeu(int colonne, int ligne)
 	return false;
 }
 
-/**
- * @deprecated opération faite dans le .h
- */
-// void FireWidget::setWind(float _hor, float _ver)
-// {
-// 	forest->setWind(_hor, _ver);
-// }
 
 // ########################
 /***		Affichages	***/

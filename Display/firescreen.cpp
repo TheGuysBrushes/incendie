@@ -335,7 +335,6 @@ bool FireScreen::tryInitForest(Fwelcome* fwel)
 	int resExec= fwel->exec();
 	if (resExec>0){
 
-// 		fWidget->delForest(); WARNING Fuite mémoire car l'ancienne forêt n'est pas supprimée, revoir où elle est crée et où l'effacer
 		fWidget->delPicture();
 		nb_tour = 0;
 		int largeur= fwel->getLarg();
@@ -352,15 +351,15 @@ bool FireScreen::tryInitForest(Fwelcome* fwel)
 			windWidget->initValues(30, 80);
 		}
 		else if( resExec==RestoreSeed ){
-// 		  réutilise la graine aléatoire déjà
+// 		  réutilise la graine aléatoire déjà existante
 			fWidget->initialise(largeur,hauteur,
-									fwel->getProba(), fwel->getCoef(), fwel->getSeed() );
+							fwel->getProba(), fwel->getCoef(), fwel->getSeed() );
 			windWidget->initValues(30, 80);
 		}		
 		else if( resExec==Accepted ){
 // 		  Crée une nouvelle forêt aléatoirement, a partr d'une graine aléatoire
 			fWidget->initialise(largeur,hauteur,
-									fwel->getProba(), fwel->getCoef()	);
+							fwel->getProba(), fwel->getCoef()	);
 			windWidget->initValues(30, 80);
 		}
 		else {
@@ -454,8 +453,9 @@ void FireScreen::reset()
 	fwel.addCancel();
 	fwel.setModal(true);
 	
-	if ( tryInitForest(&fwel) )
-		fWidget->redraw();
+	if ( tryInitForest(&fwel) ){
+	    fWidget->redraw();
+	}
 }
 
 // SAUVEGARDES

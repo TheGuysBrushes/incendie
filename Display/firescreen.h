@@ -188,7 +188,7 @@ signals:
 	 * @param x
 	 * TODO Ugo : comment
 	 */
-	void actionSender(int x);
+	void actionSender(int x); //Vers firewidget
 
 };
 
