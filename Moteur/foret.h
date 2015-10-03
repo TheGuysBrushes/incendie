@@ -76,8 +76,8 @@ public:
 	 */
 	Foret(int _largeur, int _hauteur, std::vector< std::vector< int > >* matrice, float coef_brulure);
 	/**
-	 * On vide également les listes, mêmes si c'est fait automatiquement TODO-SE RENSEIGNER si ca n'empeche pas un probleme de "double libération" des arbres et l'ordre libérer-vider
-	 * @author Florian
+	 * On vide également les listes, mêmes si c'est fait automatiquement TODO-SE RENSEIGNER si ca n'entraine pas de "double libération"
+-	 * @author Florian
 	 */
 	virtual ~Foret();
 	
