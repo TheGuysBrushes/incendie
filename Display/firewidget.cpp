@@ -74,15 +74,17 @@ bool FireWidget::tryInitialise(int largeur, int hauteur, QImage* imageForet, flo
 {
 	if (!imageForet->isNull()){
 		// on crée une copie de l'image, pour éviter de pointer sur une image détruite, 
-		//		on pourrait enlever la destruction de pictureForest dans fwelcome pour gagner en performance,
+		//		on pourrait enlever la destruction de pictureForest dans fwelcome pour gagner en "performance",
 		//		mais il y a un risque de fuite mémoire en cas d'une utilisation différente de fwelcome
 		delPicture();
-		pictureForest= new QImage(*imageForet);
+// 		on copie l'adresse de l'image dans FireWidget
+		pictureForest= imageForet;
+		imageForet= NULL;
 		#if DEBUG_CREA_FORET
 		cout << "Réussite ouverture fichier, creation foret à partir de l'image"<< endl;
 		#endif
 		
-		loadFromPicture(largeur,hauteur, imageForet, coef_brulure);
+		loadFromPicture(largeur,hauteur, pictureForest, coef_brulure);
 		setMinimumSize(largeur/2.0,hauteur/2.0);
 		
 		return true;

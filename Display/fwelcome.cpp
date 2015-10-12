@@ -46,7 +46,7 @@ Fwelcome::~Fwelcome(){
 	
 	delete(fileDialog);
 	
-	delete pictureForest;
+// 	delete pictureForest; WARNING fait planter
 	delete file;	
 }
 
@@ -114,7 +114,7 @@ void Fwelcome::initComponents(){
 		
 		larg_spin = new QSpinBox(WSettings);
 			larg_spin->setMinimum(100);
-			larg_spin->setMaximum( (QApplication::desktop()->screenGeometry().width() -largeurMaximaleMenusDroite -40)*1.5);
+			larg_spin->setMaximum( (QApplication::desktop()->screenGeometry().width() -largeurMaximaleMenusDroite -20)*1.5);
 			larg_spin->setValue(450);
 			larg_spin->setSingleStep(25);
 			larg_spin->setAccelerated(1);

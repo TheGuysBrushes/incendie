@@ -162,7 +162,7 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 {
 	HLayout->addWidget(menus);
 	// Propriétés utiles?
-		menus->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Minimum);
+		menus->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
 	
 	QVBoxLayout* vert_lay1 = new QVBoxLayout(menus);
 	QWidget* ww1 = new QWidget();
@@ -190,9 +190,10 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	QLabel* trans_p2p = new QLabel("Transmission pas-a-pas : ");
 	
 	QPushButton* reset_btn = new QPushButton("RAZ ! Attention");
-	QPushButton* saveStateBtn = new QPushButton("Sauvegarde état courant");
-	QPushButton* saveSeedBtn = new QPushButton("Sauvegarde graine aléatoire");
-	QPushButton* saveImageBtn  = new QPushButton("Exporter en image");
+	QLabel* save_text = new QLabel("Sauvegardes et création: ");
+	QPushButton* saveStateBtn = new QPushButton("Etat courant");
+	QPushButton* saveSeedBtn = new QPushButton("Graine aléatoire");
+	QPushButton* saveImageBtn  = new QPushButton("Export d'image");
 	
 	// Compteur de tours et Slider
 	QLabel* trans_con = new QLabel("Transmission continue : ");	
@@ -205,9 +206,10 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	QLabel* trans_p2p = new QLabel("Step-to-step transmission : ");
 	
 	QPushButton* reset_btn = new QPushButton("Reset ! Be careful");
-	QPushButton* saveStateBtn = new QPushButton("Save current state");
-	QPushButton* saveSeedBtn = new QPushButton("Save seed's forest");
-	QPushButton* saveImageBtn  = new QPushButton("Save as image");
+	QLabel* save_text = new QLabel("Saves and creation: ");
+	QPushButton* saveStateBtn = new QPushButton("Current state");
+	QPushButton* saveSeedBtn = new QPushButton("Seed's forest");
+	QPushButton* saveImageBtn  = new QPushButton("As image");
 	
 	// Compteur de tours et Slider
 	QLabel* trans_con = new QLabel("Continuous transmission : ");	
@@ -233,7 +235,7 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	grid_lay2->addWidget(play_btn,0,0);
 	grid_lay2->addWidget(pause_btn,0,1);
 	grid_lay2->addWidget(slider,1,0);
-	grid_lay2->addWidget(delai_lbl,1,1);
+// 	grid_lay2->addWidget(delai_lbl,1,1);
 	
 
 	grid_lay3->addWidget(saveStateBtn,0,0);
@@ -257,6 +259,7 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	vert_lay1->addWidget(ww2);
 	vert_lay1->addWidget(www);
 	vert_lay1->addWidget(ww3);
+	vert_lay1->addWidget(save_text);
 	vert_lay1->addWidget(ww4);
 	
 	vert_lay1->setAlignment(titre,Qt::AlignHCenter);
@@ -294,6 +297,7 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	titre->setStyleSheet("color : darkblue; font : bold italic 20px;");
 	trans_con->setStyleSheet("text-decoration : underline; color : darkblue ; font : italic 14px");
 	trans_p2p->setStyleSheet("text-decoration : underline; color : darkblue ; font : italic 14px");
+	save_text->setStyleSheet("text-decoration : underline; color : darkblue ; font : italic 14px");
 	info_vent->setStyleSheet("text-decoration : underline; color : darkblue ; font : italic 14px");
 	tour_lbl->setStyleSheet("QLabel {  color : darkblue; }");
 	cpt_lbl->setStyleSheet("QLabel { color : darkblue; }");
