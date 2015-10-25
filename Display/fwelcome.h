@@ -31,7 +31,7 @@ class Fwelcome : public QDialog
 {
 Q_OBJECT
 private:
-	QGridLayout* gridLay;
+	QGridLayout* gridLayButtons;
 	QSpinBox* haut_spin;
 	QSpinBox* larg_spin;
 	QLabel* p_value;
