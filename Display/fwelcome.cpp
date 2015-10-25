@@ -13,16 +13,13 @@ using namespace std;
 Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
 {
 	createComponents();
-	file= new ifstream;
-	fileDialog = NULL;
+	
 	initComponents();
 }
 
 Fwelcome::Fwelcome(QWidget* parent, int _largeur, int _hauteur): QDialog(parent)
 {
 	createComponents();
-	file= new ifstream;
-	fileDialog = NULL;
 	
 	initComponents();
 	
@@ -55,30 +52,36 @@ Fwelcome::~Fwelcome(){
 /*#####################*/
 void Fwelcome::createComponents()
 {
+	haut_spin= NULL;
+	larg_spin= NULL;
+
 	// Initialisation des composants dynamiques (SpinBox exceptées)
-	p_value = new QLabel();	
-	c_value = new QLabel();
+	p_value = new QLabel;	
+	c_value = new QLabel;
 	
-	pictureForest= new QImage();
+	pictureForest= new QImage;
 	
+	QGridLayout gridLayButtons = NULL;
 	#if FRENCH
-	valid_btn = new QPushButton("Valider");
-	cancel_btn = new QPushButton("Annuler");
-	restoreBtn= new QPushButton("Charger une foret");
+	valid_btn = 	new QPushButton("Valider");
+	cancel_btn = 	new QPushButton("Annuler");
 	loadFromImgBtn = new QPushButton("Importer une image");
-	seedBtn = new QPushButton("Charger une graine");
+	restoreBtn= 	new QPushButton("Charger une foret");
+	seedBtn = 	new QPushButton("Charger une graine");
 	#else 
-	valid_btn = new QPushButton("Confirm");
-	cancel_btn = new QPushButton("Cancel");
-	restoreBtn= new QPushButton("Load forest");
+	valid_btn = 	new QPushButton("Confirm");
+	cancel_btn = 	new QPushButton("Cancel");
 	loadFromImgBtn = new QPushButton("Create from image");
-	seedBtn = new QPushButton("Load a seed");
+	restoreBtn= 	new QPushButton("Load forest");
+	seedBtn = 	new QPushButton("Load a seed");
 	#endif
 	
-	cancel_btn->setVisible(false);
+	fileDialog = NULL;
+	file= new ifstream;
 }
 
 void Fwelcome::initComponents(){
+	cancel_btn->setVisible(false);
 
 	/* Conteneurs */
 	QVBoxLayout* lay = new QVBoxLayout(this);
@@ -98,7 +101,7 @@ void Fwelcome::initComponents(){
 	present->setMinimumSize(400, 60);
 	
 // REGLAGES
-	QWidget* WSettings = new QWidget();
+	QWidget* WSettings = new QWidget;
 	
 	QGridLayout* grid_lay_settings = new QGridLayout(WSettings);
 	
@@ -174,11 +177,11 @@ void Fwelcome::initComponents(){
 			
 	
 	// BOUTONS
-	QWidget* WButtons= new QWidget();
+	QWidget* WButtons= new QWidget;
 		// TODO remettre dans le constructeur les création ?
 		// Placement des boutons de la fenetre d'accueil, situés en bas de celle-ci
 			// après avoir cliqué sur un des boutons, si une création de forêt est validé, la fenêtre se ferme
-		QGridLayout gridLayButtons = new QGridLayout(WButtons);			
+		QGridLayout gridLayButtons = new QGridLayout(WButtons);
 		gridLayButtons->addWidget(valid_btn, 0,0, 1,0);
 		gridLayButtons->addWidget(restoreBtn, 1,0);
 		gridLayButtons->addWidget(loadFromImgBtn, 1,1);
