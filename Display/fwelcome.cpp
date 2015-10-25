@@ -32,7 +32,7 @@ Fwelcome::Fwelcome(QWidget* parent, int _largeur, int _hauteur): QDialog(parent)
 
 
 Fwelcome::~Fwelcome(){
-	delete gridLay;
+	delete gridLayButtons;
 	delete(haut_spin);
 	delete(larg_spin);
 	delete(p_value);
@@ -100,7 +100,7 @@ void Fwelcome::initComponents(){
 // REGLAGES
 	QWidget* WSettings = new QWidget();
 	
-	QGridLayout* grid_lay = new QGridLayout(WSettings);
+	QGridLayout* grid_lay_settings = new QGridLayout(WSettings);
 	
 	// SPINBOXS
 		// SpinBox largeur
@@ -158,29 +158,31 @@ void Fwelcome::initComponents(){
 		slide_c->setMinimum(1);
 				
 	/* Emboitements */
-	grid_lay->addWidget(l_lbl, 0,0);
-	grid_lay->addWidget(larg_spin, 0,1);
+	grid_lay_settings->addWidget(l_lbl, 0,0);
+	grid_lay_settings->addWidget(larg_spin, 0,1);
 	
-	grid_lay->addWidget(h_lbl, 1,0);
-	grid_lay->addWidget(haut_spin, 1,1);
+	grid_lay_settings->addWidget(h_lbl, 1,0);
+	grid_lay_settings->addWidget(haut_spin, 1,1);
 	
-	grid_lay->addWidget(p_lbl,2,0);
-	grid_lay->addWidget(slide_p,2,1);
-	grid_lay->addWidget(p_value,2,2);
+	grid_lay_settings->addWidget(p_lbl,2,0);
+	grid_lay_settings->addWidget(slide_p,2,1);
+	grid_lay_settings->addWidget(p_value,2,2);
 	
-	grid_lay->addWidget(c_lbl,3,0);
-	grid_lay->addWidget(slide_c,3,1);
-	grid_lay->addWidget(c_value,3,2);
+	grid_lay_settings->addWidget(c_lbl,3,0);
+	grid_lay_settings->addWidget(slide_c,3,1);
+	grid_lay_settings->addWidget(c_value,3,2);
 			
 	
 	// BOUTONS
 	QWidget* WButtons= new QWidget();
 		// TODO remettre dans le constructeur les création ?
-		gridLay = new QGridLayout(WButtons);			
-		gridLay->addWidget(valid_btn, 0,0, 1,0);
-		gridLay->addWidget(restoreBtn, 1,0);
-		gridLay->addWidget(loadFromImgBtn, 1,1);
-		gridLay->addWidget(seedBtn, 1, 2);
+		// Placement des boutons de la fenetre d'accueil, situés en bas de celle-ci
+			// après avoir cliqué sur un des boutons, si une création de forêt est validé, la fenêtre se ferme
+		QGridLayout gridLayButtons = new QGridLayout(WButtons);			
+		gridLayButtons->addWidget(valid_btn, 0,0, 1,0);
+		gridLayButtons->addWidget(restoreBtn, 1,0);
+		gridLayButtons->addWidget(loadFromImgBtn, 1,1);
+		gridLayButtons->addWidget(seedBtn, 1, 2);
 
 	lay->addWidget(present);
 	lay->addWidget(WSettings);
@@ -205,9 +207,9 @@ void Fwelcome::initComponents(){
 
 void Fwelcome::addCancel() const
 {
-	gridLay->removeWidget(valid_btn);
-	gridLay->addWidget(valid_btn, 0,0);
-	gridLay->addWidget(cancel_btn, 0,1);
+	gridLayButtons->removeWidget(valid_btn);
+	gridLayButtons->addWidget(valid_btn, 0,0);
+	gridLayButtons->addWidget(cancel_btn, 0,1);
 	cancel_btn->setVisible(true);
 }
 
