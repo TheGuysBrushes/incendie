@@ -180,6 +180,9 @@ void Foret::setWind(int angle, int vitesse)
 bool Foret::tryLoadEssences(const string& fileName)
 {
 	// Initialisation du vecteur d'essence
+	
+	// QXmlStreamReader reader(&file); TODO utiliser pour lire fichier xml
+	
 	ifstream f (fileName.c_str());
 	#if DEBUG_FILE
 	cout<< "fichier ouvert?" <<endl;

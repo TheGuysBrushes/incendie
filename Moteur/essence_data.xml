@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<essence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="essence_data.xsd">
+	<nom>Epicea</nom>
+	<masse-vol>1000</masse-vol>
+	<diametre>1.25</diametre>
+	<hauteur>40</hauteur>
+	<age_matur>40</age_matur>
+	<isFeuillu>0</isFeuillu>
+</essence>
+	
+<essence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="essence_data.xsd">
+	<nom></nom>
+	<masse-vol></masse-vol>
+	<diametre></diametre>
+	<hauteur></hauteur>
+	<age_matur></age_matur>
+	<isFeuillu>0</isFeuillu>
+</essence>
