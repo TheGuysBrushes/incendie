@@ -44,7 +44,7 @@ Fwelcome::~Fwelcome(){
 	delete(fileDialog);
 	
 // 	delete pictureForest; WARNING fait planter
-	delete file;	
+	delete file;
 }
 
 /*#####################*/
@@ -56,12 +56,12 @@ void Fwelcome::createComponents()
 	larg_spin= NULL;
 
 	// Initialisation des composants dynamiques (SpinBox exceptées)
-	p_value = new QLabel;	
+	p_value = new QLabel;
 	c_value = new QLabel;
 	
 	pictureForest= new QImage;
 	
-	QGridLayout gridLayButtons = NULL;
+	gridLayButtons = NULL;
 	#if FRENCH
 	valid_btn = 	new QPushButton("Valider");
 	cancel_btn = 	new QPushButton("Annuler");
@@ -181,7 +181,7 @@ void Fwelcome::initComponents(){
 		// TODO remettre dans le constructeur les création ?
 		// Placement des boutons de la fenetre d'accueil, situés en bas de celle-ci
 			// après avoir cliqué sur un des boutons, si une création de forêt est validé, la fenêtre se ferme
-		QGridLayout gridLayButtons = new QGridLayout(WButtons);
+		gridLayButtons = new QGridLayout(WButtons);
 		gridLayButtons->addWidget(valid_btn, 0,0, 1,0);
 		gridLayButtons->addWidget(restoreBtn, 1,0);
 		gridLayButtons->addWidget(loadFromImgBtn, 1,1);
