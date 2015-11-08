@@ -186,9 +186,23 @@ void Foret::setWind(int angle, int vitesse)
 }
 
 
+#include "../TinyXML/tinyxml.h"
 bool Foret::tryLoadEssences(const string& fileName)
 {
 	// Initialisation du vecteur d'essence
+    
+	TiXmlDocument doc("../Resources/essence_data.xml");
+	bool loadOkay = doc.LoadFile();
+	if (loadOkay)
+	{
+		printf("\n%s:\n", "../Resources/essence_data.xml");
+// 		dump_to_stdout( &doc ); // defined later in the tutorial
+	}
+	else
+	{
+		printf("Failed to load file \"%s\"\n", "../Resources/essence_data.xml");
+	}
+    
 	ifstream f (fileName.c_str());
 	#if DEBUG_FILE
 	cout<< "fichier ouvert?" <<endl;
