@@ -2,6 +2,7 @@
 
 // Valeur du nombre pi, utilisée pour les calcul de trigonométrie
 #define PI 3.14159265
+#define ESSENCE_PATH "../Resources/essence_data.txt"
 
 // ages et humidité min et max
 int hMin= 20;
@@ -16,7 +17,7 @@ using namespace std;
 Foret::Foret(int _largeur, int _hauteur, float proba, float _coefFeu, time_t graine)
 : lignes(_hauteur), colonnes(_largeur), burningCoef(_coefFeu), randomSeed(graine)
 {
-	if (tryLoadEssences("../Resources/essence_data.txt")){
+	if (tryLoadEssences(ESSENCE_PATH)){
 	    randomMatrix(proba);
 	    
 	    wind = new Vent();  
@@ -41,7 +42,7 @@ Foret::Foret(int _largeur, int _hauteur, vector< std::vector< int > >* matrice,f
 	: lignes(_hauteur), colonnes(_largeur), burningCoef(coef_brulure)
 {
 	wind = new Vent();
-	tryLoadEssences("../Moteur/essence_data.txt");
+	tryLoadEssences(ESSENCE_PATH);
 	#if DEBUG_ARBRE_PLANTE
 	cout<< "création de la foret à partir d'une matrice d'intensité, de taille "<< _largeur<< "x"<< _hauteur<< endl;
 	#endif
