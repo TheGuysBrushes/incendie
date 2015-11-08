@@ -8,8 +8,21 @@
 		<age_matur>40</age_matur>
 		<isFeuillu>0</isFeuillu>
 	</essence>
+	
+	<essence>
+		<nom>Hetre</nom>
+		<masse-vol>1000</masse-vol>
+		<diametre>1.4</diametre>
+		<hauteur>20</hauteur>
+		<age_matur>50</age_matur>
+		<isFeuillu>1</isFeuillu>
+	</essence>
 
 <!--	
+Pin_sylvestre 900 0.9 30 20 0
+Sapin_blanc 940 1.3 60 30 0
+Chataigner 1050 2 30 35 1
+	
 	<essence>
 		<nom></nom>
 		<masse-vol></masse-vol>

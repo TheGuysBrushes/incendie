@@ -21,6 +21,7 @@
 // foret
 #define DEBUG_FILE		0
 #define DEBUG_ESSENCE		0	// beaucoup de texte
+#define DEBUG_XML_ESSENCES	1	// beaucoup de texte
 #define DEBUG_ARBRE_PLANTE	0	// long
 #define DEBUG_SAVE		0
 #define DEBUG_SAVE_POS		0	// long
