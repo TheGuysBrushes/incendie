@@ -10,7 +10,7 @@
 
 //firewidget
 #define DEBUG_IMAGE		0
-#define DEBUG_IMAGE_POS		1	// long
+#define DEBUG_IMAGE_POS		0	// long
 #define DEBUG_IMAGE_COLOR	0
 #define DEBUG_SELECT 		0
 #define DEBUG_RETARD 		0
@@ -19,9 +19,9 @@
 #define DEBUG_RETARD		0
 
 // foret
-#define DEBUG_FILE		0
-#define DEBUG_ESSENCE		0	// beaucoup de texte
-#define DEBUG_ARBRE_PLANTE	0	// long
+#define DEBUG_FILE		1
+#define DEBUG_ESSENCE		1	// beaucoup de texte
+#define DEBUG_ARBRE_PLANTE	1	// long
 #define DEBUG_SAVE		0
 #define DEBUG_SAVE_POS		0	// long
 #define DEBUG_LOAD		0
@@ -45,7 +45,7 @@
 #define DEBUG_ALLUME		0
 
 // creation
-#define DEBUG_CREA_FORET	0
+#define DEBUG_CREA_FORET	1
 
 // WinWidget
 #define DEBUG_VAR 		0

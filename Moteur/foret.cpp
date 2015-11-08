@@ -16,10 +16,18 @@ using namespace std;
 Foret::Foret(int _largeur, int _hauteur, float proba, float _coefFeu, time_t graine)
 : lignes(_hauteur), colonnes(_largeur), burningCoef(_coefFeu), randomSeed(graine)
 {
-	tryLoadEssences("../Moteur/essence_data.txt");
-	randomMatrix(proba);
+	if (tryLoadEssences("../Resources/essence_data.txt")){
+	    randomMatrix(proba);
+	    
+	    wind = new Vent();  
+	}
+	else {
+	    cerr << "Impossible de charger le fichier d'essences"<< endl
+	    << "FIN DU PROGRAMME"<< endl;
+	    exit(0);
+	}    
 	
-	wind = new Vent();
+// 	else throw (exception); // TODO redefinir l'exception
 }
 
 Foret::Foret(int _largeur, int _hauteur, ifstream * file, LoadProgress* PB)
