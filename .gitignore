@@ -1,0 +1,9 @@
+*.Release
+*.o
+release/moc_firescreen.cpp
+release/moc_windcircle.cpp
+release/moc_fwelcome.cpp
+*.Debug
+object_script.incendie.Debug
+object_script.incendie.Debug
+*.Release
