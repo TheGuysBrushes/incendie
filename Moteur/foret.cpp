@@ -174,6 +174,13 @@ void Foret::setWind(int angle, int vitesse)
 #include "../TinyXML/tinyxml.h"
 bool Foret::tryLoadEssences(const string& fileName)
 {
+<<<<<<< HEAD
+	// Initialisation du vecteur d'essence
+	
+	// QXmlStreamReader reader(&file); TODO utiliser pour lire fichier xml
+	
+	ifstream f (fileName.c_str());
+=======
     // Initialisation du vecteur d'essence
     #if DEBUG_FILE
     cout << endl<< "--Tentative de lecture de "<< "../Resources/essence_data.xml"<< " : "<< endl;
@@ -183,6 +190,7 @@ bool Foret::tryLoadEssences(const string& fileName)
     bool loadOkay = doc.LoadFile();
     if (loadOkay)
     {	
+>>>>>>> origin/master
 	#if DEBUG_FILE
 	cout << "Ouverture réussie de : " << "../Resources/essence_data.xml"<< endl;
 	#endif
