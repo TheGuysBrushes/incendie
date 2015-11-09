@@ -1,7 +1,88 @@
 07/06
 ###################################	#
-#				firewidget.cpp				#
-#				loadForest					#
+#	foret.cpp		#
+# tryLoadEssence (utilisait explode)	#
+# Chargement du fichier texte d'essences#
+###################################	#
+
+vector< string >& Foret::explode(const string& str)
+{
+	istringstream split(str);
+	vector< string >* tokens = new vector<string>;
+	
+	for(string each; getline(split, each, ' '); tokens->push_back( each.c_str()) );
+	
+	#if DEBUG_FILE
+	cout << "vecteur : \t";
+	for (vector<string>::const_iterator i(tokens->begin()); i!= tokens->end(); ++i){
+		cout << *i<< "|";
+	}
+	cout << endl;
+	#endif
+
+	return *tokens;
+}
+
+// 	ifstream f (fileName.c_str());
+// 	#if DEBUG_FILE
+// 	cout<< "fichier ouvert?" <<endl;
+// 	#endif
+// 	if(f){
+// 		#if DEBUG_FILE
+// 		cout <<"oui"<< endl;
+// 		#endif
+// 		
+// 		string line;
+// 		
+// 		int indice = 0;
+// 		while(getline(f,line)){
+// 			#if DEBUG_FILE
+// 			cout << endl<< "ligne : \t"<< line<< endl;
+// 			#endif
+// 			
+// 			vector<string>& tokens = explode(line);	
+// 			
+// 			// remplacement des underscores par des espaces
+// 			if ( tokens[0].find('_')!= string::npos ){
+// 				int ind= tokens[0].find('_');
+// 				#if DEBUG_FILE
+// 				cout << "ind de _ : "<< ind<< endl;
+// 				#endif
+// 				
+// 				tokens[0][ind]= ' ';
+// 			}
+// 			
+// 			// conversion du diametre en float
+// 			float diam; istringstream(tokens[2])>> diam;
+// 			float	haut;	istringstream(tokens[3])>> haut;
+// 			essences.push_back( Essence(indice, tokens[0],
+// 											atoi(tokens[1].c_str()),
+// 											diam,
+// 											haut,
+// 											atoi(tokens[4].c_str()),
+// 											atoi(tokens[5].c_str())		) );
+// 			
+// 			indice +=1;
+// 			// suppression du vecteur de strings instancié en pointeur
+// 			delete &tokens;
+// 		}
+// 		#if DEBUG_FILE
+// 		showEssences();
+// 		#endif
+// 		
+// 		return true;
+// 	}
+// 	else {
+// 		#if DEBUG_FILE
+// 		cout << "non" <<endl;
+// 		#endif
+// 		return false;
+// 	}
+
+07/06
+###################################	#
+#	firewidget.cpp		#
+#	loadForest			#
 ###################################	#
 .h:
 	bool loadForest(std::string filename);
@@ -78,40 +159,6 @@ bool FireWidget::loadForest(std::string filename)
 // 	initSizes(largeur, hauteur);
 // }
 
-
-22/05
-###############################	#
-#			firewidget					#
-# constructeur avec crea foret	#
-###############################	#
-.h :
-// 	FireWidget(int _largeur, int _hauteur, float proba = 0.60, float coef_brulure=1.0);
-
-.cpp :
-/**
- * Constructeur de classe. Initialise les différents pointeurs
- * et fixe la taille minimale du widget
- * @param int _largeur : nombre de colonnes de la matrice 
- * @param int _hauteur : nombre de lignes de la matrice
- * @param float _proba : probabilité qu'une cellule deviennent un arbre
- * @param float _coef : coefficient de combustion de l'incendie
- * @author Ugo et Florian
- * @deprecated
- */
-// FireWidget::FireWidget(int _largeur, int _hauteur, float proba, float coef_brulure): QWidget()
-// {
-// 	buffer = new QImage();
-// 	color = new QColor(Qt::black);
-// 	bufferPainter= new QPainter(); 	
-// 	pictureForest= new QImage();
-// 
-// 	initialise(_largeur, _hauteur, proba, coef_brulure);
-// // 	loadFromPicture("../foret_pay.tif");
-// 	
-// 	rubber = NULL;
-// }
-
-
 22/04
 ###############################	#
 #			firewidget.cpp				#
@@ -171,17 +218,6 @@ bool FireWidget::loadForest(std::string filename)
 //     }
 // }
 
-22/04
-################################
-#			firewidget.h			#
-#	drawForest/Variable();		#
-################################
-	// 	void drawVariable(int posWidth, int posHeight, const Cellule* cell);
-	// 	void drawForest(void(*pDraw)(int, int, const Cellule*) );
-	// 	void drawForest(void* drawCell(int, int, const Cellule*));
-	// 	void drawForest(std::function<void(void)> drawCell );
-	
-
 ################################
 #			foret.cpp			#
 #			explode()			#
@@ -236,19 +272,3 @@ vector< const char* >& explode(const string& str)
 // 		if (cell->getEtat()==1)
 // 			liste.push_back( dynamic_cast < Arbre* >(cell) );
 // 	}
-
-################################
-#			foret.cpp			#
-#			NextMove()			#
-################################
-après bool modif = false;
-// 		for_each<Cellule>(matrice[i].begin(), matrice[i].end(), transition);
-
-################################
-#			foret.h/cpp			#
-#			eteindre();			#
-################################
-
-void Foret::eteindre(int row, int col){
-	dynamic_cast < Arbre* >(matrice[row][col])->blast();
-}

@@ -2,6 +2,7 @@
 
 // Valeur du nombre pi, utilisée pour les calcul de trigonométrie
 #define PI 3.14159265
+#define ESSENCE_PATH "../Resources/essence_data.xml"
 
 // ages et humidité min et max
 int hMin= 20;
@@ -16,10 +17,18 @@ using namespace std;
 Foret::Foret(int _largeur, int _hauteur, float proba, float _coefFeu, time_t graine)
 : lignes(_hauteur), colonnes(_largeur), burningCoef(_coefFeu), randomSeed(graine)
 {
-	tryLoadEssences("../Moteur/essence_data.txt");
-	randomMatrix(proba);
+	if (tryLoadEssences(ESSENCE_PATH)){
+	    randomMatrix(proba);
+	    
+	    wind = new Vent();  
+	}
+	else {
+	    cerr << "Impossible de charger le fichier d'essences"<< endl
+	    << "FIN DU PROGRAMME"<< endl;
+	    exit(0);
+	}    
 	
-	wind = new Vent();
+// 	else throw (exception); // TODO redefinir l'exception
 }
 
 Foret::Foret(int _largeur, int _hauteur, ifstream * file, LoadProgress* PB)
@@ -33,7 +42,7 @@ Foret::Foret(int _largeur, int _hauteur, vector< std::vector< int > >* matrice,f
 	: lignes(_hauteur), colonnes(_largeur), burningCoef(coef_brulure)
 {
 	wind = new Vent();
-	tryLoadEssences("../Moteur/essence_data.txt");
+	tryLoadEssences(ESSENCE_PATH);
 	#if DEBUG_ARBRE_PLANTE
 	cout<< "création de la foret à partir d'une matrice d'intensité, de taille "<< _largeur<< "x"<< _hauteur<< endl;
 	#endif
@@ -79,25 +88,6 @@ void Foret::initEmpty()
 	}
 }
 
-
-vector< string >& Foret::explode(const string& str)
-{
-	istringstream split(str);
-	vector< string >* tokens = new vector<string>;
-	
-	for(string each; getline(split, each, ' '); tokens->push_back( each.c_str()) );
-	
-	#if DEBUG_FILE
-	cout << "vecteur : \t";
-	for (vector<string>::const_iterator i(tokens->begin()); i!= tokens->end(); ++i){
-		cout << *i<< "|";
-	}
-	cout << endl;
-	#endif
-
-	return *tokens;
-}
-
 unsigned Foret::essenceRandom(int col, int row, unsigned distOthers){
 	
 	// Initialisation du tableau de pondération
@@ -118,6 +108,7 @@ unsigned Foret::essenceRandom(int col, int row, unsigned distOthers){
 	for(unsigned l=0; l<essences.size(); ++l)
 		index_max += probaEss[l];
 	
+	// Choix de l'essence aléatoirement, grace aux tableaux de probabilites
 	unsigned index = rand()%index_max;
 	unsigned ess = 0;
 	while(index >= probaEss[ess] && ess < essences.size()){
@@ -176,70 +167,94 @@ void Foret::setWind(int angle, int vitesse)
 	#endif
 }
 
+// ###############
+// 	Others
+// ###############
 
+#include "../TinyXML/tinyxml.h"
 bool Foret::tryLoadEssences(const string& fileName)
 {
+<<<<<<< HEAD
 	// Initialisation du vecteur d'essence
 	
 	// QXmlStreamReader reader(&file); TODO utiliser pour lire fichier xml
 	
 	ifstream f (fileName.c_str());
+=======
+    // Initialisation du vecteur d'essence
+    #if DEBUG_FILE
+    cout << endl<< "--Tentative de lecture de "<< "../Resources/essence_data.xml"<< " : "<< endl;
+    #endif
+
+    TiXmlDocument doc(fileName.c_str());
+    bool loadOkay = doc.LoadFile();
+    if (loadOkay)
+    {	
+>>>>>>> origin/master
 	#if DEBUG_FILE
-	cout<< "fichier ouvert?" <<endl;
+	cout << "Ouverture réussie de : " << "../Resources/essence_data.xml"<< endl;
 	#endif
-	if(f){
-		#if DEBUG_FILE
-		cout <<"oui"<< endl;
-		#endif
+	
+	TiXmlElement* racine= doc.FirstChildElement();
+	    TiXmlElement* essence= racine->FirstChildElement();		    
+	#if DEBUG_FILE
+	cout << "Racine : "<< racine->Value()<< endl;
+	    cout << " 1er fils : "<< essence->Value()<< endl;
+	#endif
+	    
+	int indice = 0;
+	do{
+//		Recuperation des valeurs de l'essence d'arbre courante
+	    string name= essence->FirstChildElement("nom")->GetText();
+	    string masse_vol= essence->FirstChildElement("masse-vol")->GetText();
+	    string diametre= essence->FirstChildElement("diametre")->GetText();
+	    string hauteur= essence->FirstChildElement("hauteur")->GetText();
+	    string age_matur= essence->FirstChildElement("age_matur")->GetText();
+	    string isFeuillu= essence->FirstChildElement("isFeuillu")->GetText();
 		
-		string line;
-		
-		int indice = 0;
-		while(getline(f,line)){
-			#if DEBUG_FILE
-			cout << endl<< "ligne : \t"<< line<< endl;
-			#endif
-			
-			vector<string>& tokens = explode(line);	
-			
-			// remplacement des underscores par des espaces
-			if ( tokens[0].find('_')!= string::npos ){
-				int ind= tokens[0].find('_');
-				#if DEBUG_FILE
-				cout << "ind de _ : "<< ind<< endl;
-				#endif
-				
-				tokens[0][ind]= ' ';
-			}
-			
-			// conversion du diametre en float
-			float diam; istringstream(tokens[2])>> diam;
-			float	haut;	istringstream(tokens[3])>> haut;
-			essences.push_back( Essence(indice, tokens[0],
-											atoi(tokens[1].c_str()),
-											diam,
-											haut,
-											atoi(tokens[4].c_str()),
-											atoi(tokens[5].c_str())		) );
-			
-			indice +=1;
-			// suppression du vecteur de strings instancié en pointeur
-			delete &tokens;
-		}
-		#if DEBUG_FILE
-		showEssences();
-		#endif
-		
-		return true;
-	}
-	else {
-		#if DEBUG_FILE
-		cout << "non" <<endl;
-		#endif
-		return false;
-	}
+	    #if DEBUG_FILE
+	    cout << "nom : "<< name<< endl;
+	    cout << "masse volumique : "<< masse_vol<< endl;
+	    cout << "diametre : "<< diametre<< endl;
+	    cout << "hauteur : "<< hauteur<< endl;
+	    cout << "age maturite : "<< age_matur<< endl;
+	    cout << "est Feuillu : "<< isFeuillu<< endl<< endl;
+	    #endif
+	    
+// 	    Création d'une essence
+	    // conversion hauteur et diametre en float
+	    float diam; istringstream(diametre)>> diam;
+	    float	haut;	istringstream(hauteur)>> haut;
+	    
+	    essences.push_back( Essence(indice, name,
+					atoi(masse_vol.c_str()),
+					diam,
+					haut,
+					atoi(age_matur.c_str()),
+					atoi(isFeuillu.c_str())		) );
+
+	    ++indice;
+	    essence = essence->NextSiblingElement("essence");
+	} while ( essence != NULL);
+	
+	#if DEBUG_XML_ESSENCES
+	cout << "Lecture réussie de : " << fileName<< endl;
+	showEssences();
+	#endif
+	return true;
+    } 
+    else {
+	#if DEBUG_FILE
+	cout << "Echec de la lecture"<< endl;
+	#endif
+	return false;
+    }
 }
 
+
+// #############################
+// 	Actions sur les arbres
+// #############################
 std::list< list< Arbre* > >* Foret::getChanged()
 {
 	list< list< Arbre* > >* listes= new list< list< Arbre* > >();
