@@ -11,3 +11,5 @@ object_script.incendie.Debug
 release/moc_windwidget.cpp
 *.cpp
 object_script.incendie.Release
+*.Release
+Makefile.Release
