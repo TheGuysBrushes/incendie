@@ -7,3 +7,7 @@ release/moc_fwelcome.cpp
 object_script.incendie.Debug
 object_script.incendie.Debug
 *.Release
+*.exe
+release/moc_windwidget.cpp
+*.cpp
+object_script.incendie.Release
