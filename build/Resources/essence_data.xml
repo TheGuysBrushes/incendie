@@ -18,11 +18,51 @@
 		<isFeuillu>1</isFeuillu>
 	</essence>
 
-<!--	
-Pin_sylvestre 900 0.9 30 20 0
-Sapin_blanc 940 1.3 60 30 0
-Chataigner 1050 2 30 35 1
+	<essence>
+		<nom>Pin sylvestre</nom>
+		<masse-vol>900</masse-vol>
+		<diametre>0.9</diametre>
+		<hauteur>30</hauteur>
+		<age_matur>20</age_matur>
+		<isFeuillu>0</isFeuillu>
+	</essence>
 	
+	<essence>
+		<nom>Sapin blanc</nom>
+		<masse-vol>940</masse-vol>
+		<diametre>1.3</diametre>
+		<hauteur>600</hauteur>
+		<age_matur>30</age_matur>
+		<isFeuillu>0</isFeuillu>
+	</essence>
+	
+	<essence>
+		<nom>Chataigner</nom>
+		<masse-vol>1050</masse-vol>
+		<diametre>2</diametre>
+		<hauteur>30</hauteur>
+		<age_matur>35</age_matur>
+		<isFeuillu>1</isFeuillu>
+	</essence>
+	
+	<essence>
+		<nom>Noisetier</nom>
+		<masse-vol>820</masse-vol>
+		<diametre>0.2</diametre>
+		<hauteur>3</hauteur>
+		<age_matur>6</age_matur>
+		<isFeuillu>1</isFeuillu>
+	</essence>
+	
+	<essence>
+		<nom>Murier</nom>
+		<masse-vol>800</masse-vol>
+		<diametre>0.12</diametre>
+		<hauteur>2</hauteur>
+		<age_matur>3</age_matur>
+		<isFeuillu>1</isFeuillu>
+	</essence>
+<!--		
 	<essence>
 		<nom></nom>
 		<masse-vol></masse-vol>
