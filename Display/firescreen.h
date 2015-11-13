@@ -65,6 +65,14 @@ public:
 	bool tryInitialisation();
 	
 	/**
+	 * Initialise l'application et crée une nouvelle forêt, a partir d'une image
+	 * @author Florian
+	 * @return vrai si l'initialisation a réussi
+	 */
+	bool tryInitialisation(int argc, char* argv[]);
+	
+	
+	/**
 	 * Definit les tailles maximales de la fenetre
 	 * @author Florian et Ugo
 	 * @param largeur nombre de cases de la matrice en largeur

@@ -8,15 +8,21 @@ using namespace std;
 /**
  * @author Ugo et Florian
  */
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
 	QApplication app(argc, argv);
 	
 	cout << "test" << endl;
 	
-	FireScreen* screen = new FireScreen();
-	if ( screen->tryInitialisation() )
-		screen->show();
+	FireScreen* test = new FireScreen(); 
+	if (test->tryInitialisation(argc, argv) ) {
+		test->show();
+	}else {
+		
+		FireScreen* screen = new FireScreen();
+		if ( screen->tryInitialisation() )
+			screen->show();
+	}
 	
 	return app.exec();
 }

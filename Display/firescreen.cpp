@@ -124,6 +124,45 @@ bool FireScreen::tryInitialisation()
 }
 
 
+bool FireScreen::tryInitialisation(int argc, char* argv[])
+{
+	if (argc != 2)
+		return false;
+	
+	initComponents();
+	
+	Fwelcome* fwel = new Fwelcome(this);
+	QString ch=argv[1];
+	//ch+="\\";
+	//ch+=argv[1];
+	QWidget* pop= new QWidget();
+		QVBoxLayout* VLay= new QVBoxLayout(pop);
+		QLabel* arg= new QLabel(ch);
+		VLay->addWidget(arg);
+	pop->show();
+	
+	fwel->loadFromImg(ch);
+	
+		
+	// fWidget->delPicture();
+	nb_tour = 0;
+	int largeur= fwel->getLarg();
+	int hauteur= fwel->getHaut();
+	
+	// Crée une forêt à partir de l'analyse d'une photo (de forêt de préférence, btw)
+	if (fWidget->tryInitialise(largeur,hauteur, fwel->getImage(), 0.5))	{  // WARNING coef par défaut, soit 0.5 lors ouverture depuis image
+		delete fwel;
+		windWidget->initValues(30, 80);
+		return true;
+	}
+	else {
+		delete fwel;
+		return false;
+	}
+
+// 	return true;
+}
+
 void FireScreen::initSizes(int largeur, int hauteur)
 {
 	int largeurMenu= menus->sizeHint().width();

@@ -20,3 +20,8 @@ Makefile.Release
 *.Debug
 Makefile.Release
 *.Debug
+build/Resources/Pictures/AAA Pictures - Shortcut.lnk
+*.Release
+object_script.incendie.Debug
+*.Debug
+build/release-Windows/foret_grise.jpeg
