@@ -350,11 +350,6 @@ void FireWidget::drawForest()
 				else if(cell->getState() == 1){
 					
 					if (pictureForest->isNull()){
-<<<<<<< HEAD
-						// Il faut ici vérifier l'essence de l'arbre pour lui attribuer une variante de vert
-						unsigned char indice= dynamic_cast < Arbre* >(cell)->getEssence()->getIndice();
-=======
->>>>>>> origin/master
 						// On vérifie ici si l'arbre a recu un retardateur
 						// i.e son coefficient est inférieur à 1
 						if(dynamic_cast < Arbre* >(cell)->getCoeff() < 1)
