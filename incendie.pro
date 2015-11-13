@@ -6,6 +6,15 @@ TEMPLATE = app
 TARGET = ../build/release-Windows/Incendie
 DEPENDPATH += . Display Moteur TinyXML
 INCLUDEPATH += .
+# edit the file Path-To-Qt-SDK\qt_static\mkspecs\win32-g+.conf and add the bold (with * ) marked stuff
+QMAKE_CFLAGS_RELEASE = -Os -momit-leaf-frame-pointer
+QMAKE_LFLAGS = -static -static-libgcc
+DEFINES= QT_STATIC_BUILD
+#edit Path-To-Qt-SDK\qt_static\qmake\Makefile.win32-g++
+LFLAGS = -static -static-libgcc
+#edit Path-To-Qt-SDK\qt_static\src\3rdparty\webkit\WebKit.pri
+#add 'CONFIG = staticlib* on the top
+#CONFIG = staticlib*
 
 # Input
 HEADERS += debug.h \
