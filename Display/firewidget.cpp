@@ -1,9 +1,5 @@
 #include "firewidget.h"
-
 #include <QtGui/QVBoxLayout> // fenetre chargement
-
-enum Colors{Green0, Green1, Green2, Green3, Green4, Gray, Red, Orange, BlueTrans, BrownCut, Brownie};
-
 
 using namespace std;
 
@@ -113,45 +109,59 @@ LoadWindow* FireWidget::createProgressWindow() const
 //######################
 
 // TODO setColor : sauvegarder l'indice précédent pour éviter de redéfinir la mm couleur ?
-void FireWidget::setColor(int colorIndice)
+void FireWidget::setColor(Colors colorIndice)
 {
-	switch(colorIndice){
-		case Green0:
-			this->color->setRgb(01,100,00);
-			break;
-		case Green1:
-			this->color->setRgb(34,139,34	);
-			break;
-		case Green2:
-			this->color->setRgb(107,142,35);
-			break;
-		case Green3:
-			this->color->setRgb(00,205,00);
-			break;
-		case Green4:
-			this->color->setRgb(46,139,87);
-			break;
-		case Gray:
-			this->color->setRgb(45,45,45);
-			break;
-		case Orange:
-			this->color->setRgb(255,165,00);
-			break;
-		case BlueTrans:
-			this->color->setRgb(83,104,120,	200);
-			break;
-		case BrownCut:
-			this->color->setRgb(150,75,0,	200);
-			break;
-		case Red:
-			this->color->setRgb(255,0,0);
-			break;
-		case Brownie:
-			this->color->setRgb(40, 30, 20);
-			break;
-		default :
-			this->color->setRgb(255,255,255);
-	}
+    switch(colorIndice){
+// 	    case Green0:
+// 		    this->color->setRgb(01,100,00);
+// 		    break;
+// 	    case Green1:
+// 		    this->color->setRgb(34,139,34	);
+// 		    break;
+// 	    case Green2:
+// 		    this->color->setRgb(107,142,35);
+// 		    break;
+// 	    case Green3:
+// 		    this->color->setRgb(00,205,00);
+// 		    break;
+// 	    case Green4:
+// 		    this->color->setRgb(46,139,87);
+// 		    break;
+	case Gray:
+	    this->color->setRgb(45,45,45);
+	    break;
+	case Orange:
+	    this->color->setRgb(255,165,00);
+	    break;
+	case BlueTrans:
+	    this->color->setRgb(83,104,120,	200);
+	    break;
+	case BrownCut:
+	    this->color->setRgb(150,75,0,	200);
+	    break;
+	case Red:
+	    this->color->setRgb(255,0,0);
+	    break;
+	case Brownie:
+	    this->color->setRgb(40, 30, 20);
+	    break;
+	default :
+	    this->color->setRgb(255, 255, 255);
+    }
+}
+
+void FireWidget::setColor(const Essence* essence)
+{
+    unsigned ind= essence->getIndice();
+    float nbEss= (float)forest->nbEssences();
+	
+    #if DEBUG_TREE_COLORS
+    std::cout << ind<<
+	" R:"<< (2- (2*ind)/nbEss) * 50 <<
+	" G:"<< 160 + 95 * ind/nbEss <<
+	" B:"<< 90 * ind/nbEss <<	 std::endl;
+    #endif
+    this->color->setRgb((2- (2*ind)/nbEss) * 50, 160 + 95 * ind/nbEss, 90 * ind/nbEss);
 }
 
 // #################################
@@ -237,29 +247,6 @@ bool FireWidget::trySaveImage(QString filename) const
 //######################################
 /* Modifications de l'état des arbres */
 //######################################
-// bool FireWidget::eteindreFeu(int colonne, int ligne)
-// {
-// 	#if DEBUG_ALLUME
-// 	cout << "eteindre cellule ? : (l,c)"<< ligne<< " : "<< colonne << endl; 
-// 	#endif
-// 
-// 	if(ligne>=0 && ligne < forest->height()){
-// 		vector< Cellule* >* line= (*forest)[ligne];
-// 
-// 		if (colonne>=0 && colonne < forest->width()){
-// 			Cellule* cell= (*line)[colonne];	
-// 
-// 			if (cell->getState()==2){
-// 				Arbre* ab= dynamic_cast< Arbre* >(cell);
-// 				forest->delay(ab);
-// 
-// 				return true;
-// 			}
-// 		}
-// 	}
-// 	// cas d'erreur par défaut
-// 	return false;
-// }
 
 bool FireWidget::tryAllumerFeu(int colonne, int ligne)
 {
@@ -363,13 +350,20 @@ void FireWidget::drawForest()
 				else if(cell->getState() == 1){
 					
 					if (pictureForest->isNull()){
+<<<<<<< HEAD
 						// Il faut ici vérifier l'essence de l'arbre pour lui attribuer une variante de vert
 						unsigned char indice= dynamic_cast < Arbre* >(cell)->getEssence()->getIndice();
+=======
+>>>>>>> origin/master
 						// On vérifie ici si l'arbre a recu un retardateur
 						// i.e son coefficient est inférieur à 1
 						if(dynamic_cast < Arbre* >(cell)->getCoeff() < 1)
 							setColor(BlueTrans);
-						else setColor(indice);
+						else{
+						    // Il faut ici vérifier l'essence de l'arbre pour lui attribuer une variante de vert
+						    const Essence* ess= dynamic_cast < Arbre* >(cell)->getEssence();
+						    setColor(ess);
+						}
 						
 						drawCell(current_largeur, current_hauteur);
 					}

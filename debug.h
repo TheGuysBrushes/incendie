@@ -12,6 +12,7 @@
 #define DEBUG_IMAGE		0
 #define DEBUG_IMAGE_POS		0	// long
 #define DEBUG_IMAGE_COLOR	0
+#define DEBUG_TREE_COLORS	1
 #define DEBUG_SELECT 		0
 #define DEBUG_RETARD 		0
 
@@ -21,7 +22,7 @@
 // foret
 #define DEBUG_FILE		0
 #define DEBUG_ESSENCE		0	// beaucoup de texte
-#define DEBUG_XML_ESSENCES	1	// beaucoup de texte
+#define DEBUG_XML_ESSENCES	0	// beaucoup de texte
 #define DEBUG_ARBRE_PLANTE	0	// long
 #define DEBUG_SAVE		0
 #define DEBUG_SAVE_POS		0	// long

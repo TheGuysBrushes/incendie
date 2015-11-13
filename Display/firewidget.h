@@ -23,6 +23,10 @@
 #include "fwelcome.h"
 #include "loadwindow.h"
 
+
+enum Colors{Gray, Red, Orange, BlueTrans, BrownCut, Brownie, NBColorsBeforeGreens, Green0, Green1};
+
+
 /**
  * Widget d'affichage de l'automate cellulaire. Ce composant
  * permet de suivre graphiquement l'évolution de l'automate. 
@@ -104,11 +108,18 @@ private:
 	LoadWindow* createProgressWindow() const;
 	/**
 	 * Fonction permettant de fixer la couleur à utiliser pour dessiner un arbre
-	 * @param int indice de l'essence de l'arbre
+	 * @param Colors indice de la couleur de la case, parmi ceux de l'enum Colors
+	 * @author Florian et Ugo
+	 */
+	void setColor(Colors colorIndice);
+	
+	/**
+	 * Fonction permettant de fixer la couleur à utiliser pour dessiner un arbre
+	 * @param Essence essence de l'arbre
 	 * @author Florian et Ugo
 	 * IMPROVEIT plus de nuances de couleurs ?, une couleur par cellule : on utiliserai une methode differente de "peinture" ? 
 	 */
-	void setColor(int colorIndice);
+	void setColor(const Essence* essence);
 	
 public:
 /* Setters */

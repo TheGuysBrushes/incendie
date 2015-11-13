@@ -127,6 +127,7 @@ public:
 /* Getters */
 	int width()	const { return colonnes; };
 	int height()	const { return lignes; };
+	int nbEssences(){ return essences.size() ; };
 	const Vent* getVent() const { return wind; };
 	std::vector< Cellule* >* operator[](int ligne) { return &(matrix[ligne]); };
 	
