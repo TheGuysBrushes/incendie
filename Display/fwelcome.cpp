@@ -4,6 +4,9 @@
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QGridLayout>
+#include <QtGui/QDesktopServices>
+
+#include <QtCore/QUrl>
 /*
  * TODO Commenter les fonctions de fwelcome
  */
@@ -323,6 +326,11 @@ void Fwelcome::popImageDIalog()
 	fileDialog = new QFileDialog(this, "Chargement d'une Image");
 	fileDialog->setViewMode(QFileDialog::Detail);
 	fileDialog->setDirectory(picturesBrowserLocation);
+	QList<QUrl> urls= fileDialog->sidebarUrls();
+		urls << QUrl::fromLocalFile(QDir::toNativeSeparators(picturesBrowserLocation.absolutePath()))
+			 << QUrl::fromLocalFile(QDesktopServices::storageLocation(QDesktopServices::PicturesLocation));
+    fileDialog->setSidebarUrls(urls);
+	
 	fileDialog->setNameFilter(tr("Images (*.png *.jpg *.jpeg *.tif *.tiff *.bmp)"));
 	
 	
