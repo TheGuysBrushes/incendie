@@ -10,14 +10,14 @@
 
 using namespace std;
 
-Fwelcome::Fwelcome(QWidget* parent): QDialog(parent)
+Fwelcome::Fwelcome(QWidget* parent): QDialog(parent), picturesBrowserLocation("../Resources/Pictures")
 {
 	createComponents();
 	
 	initComponents();
 }
 
-Fwelcome::Fwelcome(QWidget* parent, int _largeur, int _hauteur): QDialog(parent)
+Fwelcome::Fwelcome(QWidget* parent, int _largeur, int _hauteur): QDialog(parent), picturesBrowserLocation("../Resources/Pictures")
 {
 	createComponents();
 	
@@ -320,16 +320,19 @@ void Fwelcome::loadSeed(QString filename)
 /*################*/
 void Fwelcome::popImageDIalog()
 {
-	fileDialog = new QFileDialog(this, "Chargement d'une Image",  "../Resources/Pictures");
+	fileDialog = new QFileDialog(this, "Chargement d'une Image");
 	fileDialog->setViewMode(QFileDialog::Detail);
+	fileDialog->setDirectory(picturesBrowserLocation);
 	fileDialog->setNameFilter(tr("Images (*.png *.jpg *.jpeg *.tif *.tiff *.bmp)"));
+	
 	
 	QString fileName;
 	// Si l'utilisateur choisit un fichier
 	if(fileDialog->exec()) {
 		loadFromImg( fileDialog->selectedFiles()[0] );
+		picturesBrowserLocation= fileDialog->directory();
 	}
-
+	//delete fileDialog;
 }
 
 void Fwelcome::popSaveDialog()

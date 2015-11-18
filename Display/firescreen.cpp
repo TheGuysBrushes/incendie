@@ -78,6 +78,7 @@ FireScreen::FireScreen(): QMainWindow()
 
 	pause_btn->setDisabled(true);
 	
+	fwel = new Fwelcome(this);
 	fileSaveDialog = NULL;
 	
 	cpt_lbl = new QLabel();
@@ -109,14 +110,14 @@ bool FireScreen::tryInitialisation()
 {
 	initComponents();
 	
-	Fwelcome* fwel = new Fwelcome(this);
+	//Fwelcome* fwel = new Fwelcome(this);
 	
-	if ( tryInitForest(fwel) )	{
-		delete fwel;
+	if ( tryInitForest() )	{
+		//delete fwel;
 		return true;
 	}
 	else {
-		delete fwel;
+		//delete fwel;
 		return false;
 	}
 
@@ -131,7 +132,6 @@ bool FireScreen::tryInitialisation(int argc, char* argv[])
 	
 	initComponents();
 	
-	Fwelcome* fwel = new Fwelcome(this);
 	QString ch=argv[1];
 	//ch+="\\";
 	//ch+=argv[1];
@@ -151,12 +151,14 @@ bool FireScreen::tryInitialisation(int argc, char* argv[])
 	
 	// Crée une forêt à partir de l'analyse d'une photo (de forêt de préférence, btw)
 	if (fWidget->tryInitialise(largeur,hauteur, fwel->getImage(), 0.5))	{  // WARNING coef par défaut, soit 0.5 lors ouverture depuis image
-		delete fwel;
+		//delete fwel;
+		fwel->hide();
 		windWidget->initValues(30, 80);
 		return true;
 	}
 	else {
-		delete fwel;
+		//delete fwel;
+		fwel->hide();
 		return false;
 	}
 
@@ -372,10 +374,11 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 }
 
 
-bool FireScreen::tryInitForest(Fwelcome* fwel)
+bool FireScreen::tryInitForest()
 {
 	fwel->show();
 	int resExec= fwel->exec();
+	fwel->hide();
 	if (resExec>0){
 
 		fWidget->delPicture();
@@ -492,11 +495,11 @@ void FireScreen::reset()
 {
 	stop_timer();
 	
-	Fwelcome fwel(this, fWidget->getForet()->width(), fWidget->getForet()->height());
-	fwel.addCancel();
-	fwel.setModal(true);
+	//Fwelcome fwel(this, fWidget->getForet()->width(), fWidget->getForet()->height());
+	fwel->addCancel();
+	fwel->setModal(true);
 	
-	if ( tryInitForest(&fwel) ){
+	if ( tryInitForest() ){
 	    fWidget->redraw();
 	}
 }

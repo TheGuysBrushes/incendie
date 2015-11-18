@@ -40,6 +40,7 @@ private:
 	QComboBox* actionBox;
 	QTimer* timer;
 	
+	Fwelcome* fwel;
 	QFileDialog* fileSaveDialog;
 	
 	int nb_tour;
@@ -97,7 +98,7 @@ private:
 	 * @param fwel fenêtre de paramétrage
 	 * @return faux si l'utilisateur annule ou qu'il y a une erreur
 	 */
-	bool tryInitForest(Fwelcome* fwel);
+	bool tryInitForest();
 	
 /* Methodes diverses */
 	void majCompteur();
