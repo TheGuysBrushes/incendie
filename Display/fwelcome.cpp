@@ -10,10 +10,11 @@
 /*
  * TODO Commenter les fonctions de fwelcome
  */
-
+#define FORESTPICTURESLOCATION "../Resources/Pictures"
+ 
 using namespace std;
 
-Fwelcome::Fwelcome(QWidget* parent): QDialog(parent), picturesBrowserLocation("../Resources/Pictures")
+Fwelcome::Fwelcome(QWidget* parent): QDialog(parent), picturesBrowserLocation(QDir::toNativeSeparators(FORESTPICTURESLOCATION))
 {
 	createComponents();
 	
@@ -327,8 +328,8 @@ void Fwelcome::popImageDIalog()
 	fileDialog->setViewMode(QFileDialog::Detail);
 	fileDialog->setDirectory(picturesBrowserLocation);
 	QList<QUrl> urls= fileDialog->sidebarUrls();
-		urls << QUrl::fromLocalFile(QDir::toNativeSeparators(picturesBrowserLocation.absolutePath()))
-			 << QUrl::fromLocalFile(QDesktopServices::storageLocation(QDesktopServices::PicturesLocation));
+		urls << QUrl::fromLocalFile(QDir::toNativeSeparators(QDesktopServices::storageLocation(QDesktopServices::PicturesLocation)))
+			 << QUrl::fromLocalFile(QDir::toNativeSeparators(FORESTPICTURESLOCATION));
     fileDialog->setSidebarUrls(urls);
 	
 	fileDialog->setNameFilter(tr("Images (*.png *.jpg *.jpeg *.tif *.tiff *.bmp)"));
