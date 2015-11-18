@@ -3,7 +3,7 @@
 <h2>Fonctionnalités à ajouter :</h2>
   - % de brulure de la foret
   - liens pour l'envoi d'e-mail lorsque l'on clic sur les adresses (mailto)
-  - 
+  - Afficher les valeurs max pour la taille de la forêt
 
 
 <h1>Suivi de l'avancée du projet</h1>
