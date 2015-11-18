@@ -102,6 +102,8 @@ FireScreen::~FireScreen()
 	delete menus;
 	
 	delete timer;
+	
+	delete fwel;
 	delete fileSaveDialog;
 }
 

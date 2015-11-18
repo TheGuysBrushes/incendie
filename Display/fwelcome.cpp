@@ -41,7 +41,6 @@ Fwelcome::~Fwelcome(){
 	delete seedBtn;
 	delete loadFromImgBtn;
 	
-	delete fwel;
 	delete(fileDialog);
 	
 // 	delete pictureForest; WARNING fait planter
