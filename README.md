@@ -1,6 +1,12 @@
 # incendie
 <h1>Automate de simulation d'incendie</h1>
+<h2>Fonctionnalités à ajouter :</h2>
+  - % de brulure de la foret
+  - liens pour l'envoi d'e-mail lorsque l'on clic sur les adresses (mailto)
+  - 
 
+
+<h1>Suivi de l'avancée du projet</h1>
 <h2>Semaine 1</h2>
 
 <h3>Mardi</h3>
