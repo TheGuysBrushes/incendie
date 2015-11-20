@@ -1,11 +1,11 @@
 #include "firescreen.h"
 
 // Composants Qt qui ne sont pas des attributs de classe
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QGridLayout>
-#include <QtGui/QSlider>
-#include <QtGui/QAction>
-#include <QtGui/QMenuBar>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QSlider>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QMenuBar>
 #include <QtGui/QImage>
 
 using namespace std;

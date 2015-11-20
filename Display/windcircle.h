@@ -6,7 +6,7 @@
 #include <QtCore/QEvent>
 #include <QtGui/qevent.h>	// event de la partie graphique
 #include <QtGui/QPainter>
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 #include <QtGui/QImage>
 
 #include <cmath>

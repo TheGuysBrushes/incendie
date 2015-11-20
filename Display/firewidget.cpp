@@ -1,5 +1,5 @@
 #include "firewidget.h"
-#include <QtGui/QVBoxLayout> // fenetre chargement
+#include <QtWidgets/QVBoxLayout> // fenetre chargement
 
 using namespace std;
 

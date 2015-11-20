@@ -1,7 +1,7 @@
 #ifndef FORET_H
 #define FORET_H
 
-#include <QtGui/QProgressBar> // IMPROVEIT ?
+#include <QtWidgets/QProgressBar> // IMPROVEIT ?
 
 #include <vector>
 #include <list>

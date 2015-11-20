@@ -1,11 +1,11 @@
 #include "windwidget.h"
 
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QGridLayout>
-#include <QtGui/QSlider>
-#include <QtGui/QPushButton>
-#include <QtGui/QCheckBox>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QSlider>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QCheckBox>
 
 using namespace std;
 

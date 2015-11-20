@@ -1,7 +1,7 @@
 #include "loadwindow.h"
 
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QLabel>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QLabel>
 
 LoadWindow::LoadWindow(): QWidget()
 {

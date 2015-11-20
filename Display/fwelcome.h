@@ -1,18 +1,18 @@
 #ifndef FWELCOME_H
 #define FWELCOME_H
 
-#include <QtGui/QDialog>
-#include <QtGui/QLabel>
-#include <QtGui/QPushButton>
-#include <QtGui/QSpinBox>
-#include <QtGui/QSlider>
-#include <QtGui/QProgressBar>
-#include <QtGui/QGridLayout>
 #include <QtGui/QImage>
-#include <QtGui/QFileDialog>
+#include <QtWidgets/QDialog>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpinBox>
+#include <QtWidgets/QSlider>
+#include <QtWidgets/QProgressBar>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QFileDialog>
 // Pour les valeurs max des SpinBox
-#include <QtGui/QDesktopWidget>
-#include <QtGui/QApplication>
+#include <QtWidgets/QDesktopWidget>
+#include <QtWidgets/QApplication>
 
 #include <iostream>
 #include <fstream>

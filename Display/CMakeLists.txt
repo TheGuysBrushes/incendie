@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
-find_package(Qt4 REQUIRED)
+find_package(Qt5Widgets)
+find_package(Qt5Core)
+find_package(Qt5Gui)
 
 add_definitions(-Wall)
 

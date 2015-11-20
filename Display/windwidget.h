@@ -3,10 +3,10 @@
 
 #include <QtCore/QString>
 #include <QtCore/QTimer>
-#include <QtGui/QWidget>
-#include <QtGui/QLabel>
-#include <QtGui/QSlider>
-#include <QtGui/QCheckBox>
+#include <QtWidgets/QWidget>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QSlider>
+#include <QtWidgets/QCheckBox>
 
 #include <iostream>
 

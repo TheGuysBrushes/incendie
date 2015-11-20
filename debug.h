@@ -12,7 +12,7 @@
 #define DEBUG_IMAGE		0
 #define DEBUG_IMAGE_POS		0	// long
 #define DEBUG_IMAGE_COLOR	0
-#define DEBUG_TREE_COLORS	1
+#define DEBUG_TREE_COLORS	0	// long
 #define DEBUG_SELECT 		0
 #define DEBUG_RETARD 		0
 

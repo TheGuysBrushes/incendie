@@ -3,14 +3,14 @@
 
 #include <QtCore/QTimer>
 #include <QtCore/QString>
-#include <QtGui/QMainWindow>
-#include <QtGui/QLabel>
-#include <QtGui/QPushButton>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QDesktopWidget>
-#include <QtGui/QApplication>
-#include <QtGui/QComboBox>
-#include <QtGui/QFileDialog>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QDesktopWidget>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QFileDialog>
 
 #include <cmath>
 

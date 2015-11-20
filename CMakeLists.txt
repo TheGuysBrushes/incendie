@@ -1,6 +1,8 @@
 project(Automate)
 cmake_minimum_required(VERSION 2.6)
-find_package(Qt4 REQUIRED)
+find_package(Qt5Widgets)
+find_package(Qt5Core)
+find_package(Qt5Gui)
 
 add_definitions(-Wall)
 
@@ -12,4 +14,4 @@ add_subdirectory(Display)# must set ${Display_SRCS}
 set(Automate_SRCS ${Moteur_SRCS} ${Display_SRCS} main.cpp)
 
 add_executable(Automate ${Automate_SRCS})
-target_link_libraries(Automate ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY})
+target_link_libraries(Automate ${Qt5Widgets_LIBRARIES} ${Qt5Core_LIBRARIES} ${Qt5Gui_LIBRARIES})

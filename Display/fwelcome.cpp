@@ -1,9 +1,9 @@
 #include "fwelcome.h"
 
 // Composants Qt qui ne sont pas des attributs de classe
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QGridLayout>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QGridLayout>
 /*
  * TODO Commenter les fonctions de fwelcome
  */
@@ -321,7 +321,7 @@ void Fwelcome::loadSeed(QString filename)
 void Fwelcome::popImageDIalog()
 {
 	fileDialog = new QFileDialog(this, "Chargement d'une Image",  "../Resources/Pictures");
-	fileDialog->setViewMode(QFileDialog::Detail);
+// 	fileDialog->setViewMode(QFileDialog::Detail);
 	fileDialog->setNameFilter(tr("Images (*.png *.jpg *.jpeg *.tif *.tiff *.bmp)"));
 	
 	QString fileName;

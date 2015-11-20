@@ -4,12 +4,12 @@
 #include <QtCore/QByteArray>
 #include <QtCore/QPoint>
 
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 #include <QtGui/QImage>
 #include <QtGui/QPainter>
 #include <QtGui/QColor>
-#include <QtGui/QRubberBand>
-#include <QtGui/QProgressBar>
+#include <QtWidgets/QRubberBand>
+#include <QtWidgets/QProgressBar>
 #include <QtGui/qevent.h>	// IMPROVEIT pas d'equivalent sans .h ?
 
 #include <vector>
