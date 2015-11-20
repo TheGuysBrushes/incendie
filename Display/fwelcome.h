@@ -46,6 +46,7 @@ private:
 	QImage* pictureForest;
 	
 	QFileDialog* fileDialog;
+	QDir picturesBrowserLocation;
 	
 	float proba;
 	float burningCoef;
