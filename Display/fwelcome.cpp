@@ -1,18 +1,13 @@
 #include "fwelcome.h"
 
 // Composants Qt qui ne sont pas des attributs de classe
-<<<<<<< HEAD
+
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QGridLayout>
-=======
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QGridLayout>
 #include <QtGui/QDesktopServices>
 
 #include <QtCore/QUrl>
->>>>>>> 69fe0583122a0c9a0c72e0fbe083cbd704432b4f
 /*
  * TODO Commenter les fonctions de fwelcome
  */
@@ -330,23 +325,16 @@ void Fwelcome::loadSeed(QString filename)
 /*################*/
 void Fwelcome::popImageDIalog()
 {
-<<<<<<< HEAD
-	fileDialog = new QFileDialog(this, "Chargement d'une Image",  "../Resources/Pictures");
-// 	fileDialog->setViewMode(QFileDialog::Detail);
-=======
 	fileDialog = new QFileDialog(this, "Chargement d'une Image");
 	fileDialog->setViewMode(QFileDialog::Detail);
 	fileDialog->setDirectory(picturesBrowserLocation);
 	QList<QUrl> urls= fileDialog->sidebarUrls();
-		urls << QUrl::fromLocalFile(QDir::toNativeSeparators(QDesktopServices::storageLocation(QDesktopServices::PicturesLocation)))
-			 << QUrl::fromLocalFile(QDir::toNativeSeparators(FORESTPICTURESLOCATION));
+//		urls << QUrl::fromLocalFile(QDir::toNativeSeparators(QDesktopServices::storageLocation(QDesktopServices::PicturesLocation)))
+        urls << QUrl::fromLocalFile(QDir::toNativeSeparators(FORESTPICTURESLOCATION));
     fileDialog->setSidebarUrls(urls);
-	
->>>>>>> 69fe0583122a0c9a0c72e0fbe083cbd704432b4f
+
 	fileDialog->setNameFilter(tr("Images (*.png *.jpg *.jpeg *.tif *.tiff *.bmp)"));
-	
-	
-	QString fileName;
+
 	// Si l'utilisateur choisit un fichier
 	if(fileDialog->exec()) {
 		loadFromImg( fileDialog->selectedFiles()[0] );
