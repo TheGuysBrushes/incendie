@@ -4,3 +4,6 @@ mocs: firescreen.h firewidget.h fwelcome.h windcircle.h windcircle.h windwidget.
 	moc fwelcome.h 		-o ./mocs/moc_fwelcome.cpp
 	moc windcircle.h	-o ./mocs/moc_windcircle.cpp
 	moc windwidget.h	-o ./mocs/moc_windwidget.cpp
+
+clean:
+	rm mocs/*.cpp
