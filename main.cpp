@@ -12,16 +12,17 @@ int main(int argc, char* argv[])
 {
 	QApplication app(argc, argv);
 	
-	cout << "test" << endl;
+    cout << "test main" << endl;
 	
-	FireScreen* test = new FireScreen(); 
-	if (test->tryInitialisation(argc, argv) ) {
-		test->show();
+    FireScreen* screen = new FireScreen();
+    if (screen->tryInitialisation(argc, argv) ) {
+        screen->show();
 	}else {
 		
-		FireScreen* screen = new FireScreen();
+//        FireScreen* screen = new FireScreen();
 		if ( screen->tryInitialisation() )
 			screen->show();
+        else screen->close();
 	}
 	
 	return app.exec();

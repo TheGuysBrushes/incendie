@@ -111,8 +111,9 @@ void WindCircle::effaceBuffer(){
  * Copie le buffer sur le widget
  * @author Ugo
  */
-void WindCircle::paintEvent(QPaintEvent* event){
-	QPainter paint(this);
+void WindCircle::paintEvent(QPaintEvent* Qevent){
+    QWidget::paintEvent(Qevent);
+    QPainter paint(this);
 	paint.drawImage(0, 0, *buffer);
 }
 

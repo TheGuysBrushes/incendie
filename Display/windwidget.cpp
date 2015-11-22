@@ -103,7 +103,9 @@ void WindWidget::setAngle(int angle)
 
 /*** Events ***/
 void WindWidget::resizeEvent(QResizeEvent* Qevent)
-{}
+{
+    QWidget::resizeEvent(Qevent);
+}
 
 
 /*** Slots ***/

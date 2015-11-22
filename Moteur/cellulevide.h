@@ -7,11 +7,7 @@
 class CelluleVide : public Cellule
 {
 public:
-  CelluleVide();
-  CelluleVide(const CelluleVide& other);
-  virtual ~CelluleVide();
-  
-  int getState() const { return 0; };
+  int getState() const { return 0; }
 };
 
 #endif // CELLULEVIDE_H

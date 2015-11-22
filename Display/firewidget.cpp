@@ -520,6 +520,7 @@ void FireWidget::redraw()
 // ##################
 void FireWidget::paintEvent(QPaintEvent* event)
 {
+    QWidget::paintEvent(event);
 	QPainter paint(this);
 	paint.scale(tailleCell, tailleCell);
 	paint.drawImage(0, 0, *buffer);
@@ -611,6 +612,7 @@ void FireWidget::mouseMoveEvent(QMouseEvent* event)
 
 void FireWidget::mouseReleaseEvent(QMouseEvent* event)
 {
+    QWidget::mouseReleaseEvent(event);
 	if(rubber){
 		rubber->hide();
 		// Sauvegarde des points du rubber pour parcours de la matrice

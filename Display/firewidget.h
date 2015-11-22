@@ -5,11 +5,11 @@
 #include <QtCore/QPoint>
 
 #include <QtWidgets/QWidget>
+#include <QtWidgets/QRubberBand>
+#include <QtWidgets/QProgressBar>
 #include <QtGui/QImage>
 #include <QtGui/QPainter>
 #include <QtGui/QColor>
-#include <QtWidgets/QRubberBand>
-#include <QtWidgets/QProgressBar>
 #include <QtGui/qevent.h>	// IMPROVEIT pas d'equivalent sans .h ?
 
 #include <vector>

@@ -60,6 +60,8 @@ Vent& Vent::operator/(float coefficient)
 
 Vent& Vent::operator=(const Vent& other)
 {
+    power_h= other.getPower_h();
+    power_v= other.getPower_v();
 	return *this;
 }
 
