@@ -1,5 +1,6 @@
-# incendie
+# Voir : http://flodavid.github.io/incendie
 <h1>Automate de simulation d'incendie</h1>
+<h1>Suivi du projet :</h1>
 <h2>Fonctionnalités à ajouter :</h2>
   - % de brulure de la foret
   - liens pour l'envoi d'e-mail lorsque l'on clic sur les adresses (mailto)
@@ -189,8 +190,6 @@
 <h3> Jeudi (28/05) </h3>
     
 <h3> Vendredi (29/05) </h3>
-
-
 
 
 <h2> Semaine X </h2>
