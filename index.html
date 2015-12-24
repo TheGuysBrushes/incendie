@@ -1,5 +1,430 @@
-<?php
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Incendie by flodavid and Seymour49</title>
 
-phpinfo();
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Incendie</h1>
+        <p class="header">Automate de simulation d&#39;incendie de forêt</p>
 
-?>
+	<p class="header"><b>	Downloads : </b></p>
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/flodavid/incendie/zipball/master">Source ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/flodavid/incendie/tarball/master">Source TAR</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/flodavid/incendie/releases/download/1.2.2/Incendie_1.2.2_Windows.zip">Windows 1.2.2</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/flodavid/incendie/releases/download/1.2/Incendie_1.2.0_Linux.tar.gz">Linux 1.2.0</a></li>
+          <li><a class="buttons github" href="https://github.com/flodavid/incendie">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/flodavid">flodavid</a> and <a class="header name" href="https://github.com/seymour49">Seymour49</a></p>
+
+
+      </header>
+      <section>
+        <h1>
+<a id="incendie" class="anchor" href="#incendie" aria-hidden="true"><span class="octicon octicon-link"></span></a>incendie</h1>
+
+<h1>
+<a id="automate-de-simulation-dincendie" class="anchor" href="#automate-de-simulation-dincendie" aria-hidden="true"><span class="octicon octicon-link"></span></a>Automate de simulation d'incendie</h1>
+
+<h2>
+<a id="fonctionnalités-en-attente" class="anchor" href="#fonctionnalit%C3%A9s-en-attente" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fonctionnalités en attente:</h2>
+
+<ul>
+<li>% de brulure et taille de la foret</li>
+<li>liens pour l'envoi d'e-mail lorsque l'on clic sur les adresses (mailto)</li>
+<li>Afficher les valeurs max pour la taille de la forêt lors de la création</li>
+<li>Ouverture d'une image et des fichiers binaires avec l'application depuis l'explorateur de fichiers</li>
+</ul>
+
+<h2>
+<a id="améliorations-à-apporter-optimisations-et-autres-" class="anchor" href="#am%C3%A9liorations-%C3%A0-apporter-optimisations-et-autres-" aria-hidden="true"><span class="octicon octicon-link"></span></a>Améliorations à apporter (optimisations et autres :</h2>
+
+<ul>
+<li>Réimplémenter la mise à jour de l'angle du vent proprement (setAngle et majAngle)</li>
+<li>Améliorer la compilations et ajouter différentes version (32/64 bits, différents compilateurs ...)</li>
+<li>Améliorer la taille de la fenetre principale et son redimensionnement</li>
+</ul>
+
+<h1>
+<a id="suivi-de-lavancée-du-projet" class="anchor" href="#suivi-de-lavanc%C3%A9e-du-projet" aria-hidden="true"><span class="octicon octicon-link"></span></a>Suivi de l'avancée du projet</h1>
+
+<h2>
+<a id="semaine-1" class="anchor" href="#semaine-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Semaine 1</h2>
+
+<h3>
+<a id="mardi" class="anchor" href="#mardi" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mardi</h3>
+
+<ul>
+<li>Réfléxion commune </li>
+</ul>
+
+<h3>
+<a id="mercredi" class="anchor" href="#mercredi" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mercredi</h3>
+
+<ul>
+<li>Flo : génération et affichage matrice</li>
+<li>Ugo : Cahiers des charges et réflexion</li>
+</ul>
+
+<h3>
+<a id="jeudi" class="anchor" href="#jeudi" aria-hidden="true"><span class="octicon octicon-link"></span></a>Jeudi</h3>
+
+<ul>
+<li>Flo : déclenchement d'un incendie et propagation simple </li>
+<li>Ugo : réflexion sur SDD et != arbres</li>
+</ul>
+
+<h3>
+<a id="vendredi" class="anchor" href="#vendredi" aria-hidden="true"><span class="octicon octicon-link"></span></a>Vendredi</h3>
+
+<ul>
+<li>Flo : Passage des fonctions via pointeurs et nettoyage du code </li>
+<li>Ugo : reflexion sur la modélisation des !=arbres</li>
+</ul>
+
+<h2>
+<a id="semaine-2" class="anchor" href="#semaine-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Semaine 2</h2>
+
+<h3>
+<a id="lundi" class="anchor" href="#lundi" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lundi</h3>
+
+<ul>
+<li>
+<p>Flo :</p>
+
+<ul>
+<li>les cellules/arbres sont stockés par pointeurs dans le vecteur de vecteurs</li>
+<li>la cellule ne contient qu'un état, si c'est un arbre (dynamic_cast) il a des attributs spécifiques</li>
+<li>faire une sous-classe de arbre : arbre en cendres ? ou alors sous-classe de cellule ou seulement arbre dans état brulé (3) : plus simple</li>
+<li>Nettoyage du code et commentaire.</li>
+</ul>
+</li>
+<li><p>Ugo : Implémentation de la notion d'essence.</p></li>
+</ul>
+
+<h3>
+<a id="mardi-1" class="anchor" href="#mardi-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mardi</h3>
+
+<ul>
+<li>Intégration de la notion d'essence dans une forêt (Gestion moteur et graphique)</li>
+<li>Gestion couleurs != abres
+
+<ul>
+<li>Florian : Cellule adjacentes en diagonale</li>
+</ul>
+</li>
+</ul>
+
+<h3>
+<a id="mercredi-1" class="anchor" href="#mercredi-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mercredi</h3>
+
+<ul>
+<li>Calcul et prise en compte des points de vie en fonction des paramètres de l'essence et des caractères discrets de l'arbre.</li>
+</ul>
+
+<h3>
+<a id="jeudi-1" class="anchor" href="#jeudi-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Jeudi</h3>
+
+<ul>
+<li>Sélection aléatoire essence avec notion de bosquet. Nettoyage du code, debugage, tests mémoires ( concluant).</li>
+</ul>
+
+<h3>
+<a id="vendredi-1" class="anchor" href="#vendredi-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Vendredi</h3>
+
+<ul>
+<li>Ugo : Transmission liée à l'humidité, réflexion sur modification système pv. </li>
+<li>Florian  : Recherches sur vents + creation de la classe et des opérations sur les vecteurs de vents</li>
+</ul>
+
+<h2>
+<a id="semaine-3" class="anchor" href="#semaine-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Semaine 3</h2>
+
+<h3>
+<a id="lundi-1" class="anchor" href="#lundi-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lundi</h3>
+
+<ul>
+<li>Mise en place de l'intégration Qt.
+
+<ul>
+<li>Florian : création de quelques primitives de calculs pour le vent.</li>
+</ul>
+</li>
+</ul>
+
+<h3>
+<a id="mardi-2" class="anchor" href="#mardi-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mardi</h3>
+
+<ul>
+<li>Premières optimisations de l'affichage de la foret + bouton pas à pas.
+
+<ul>
+<li>Ugo : ajout de différentes couleurs d'arbres.</li>
+<li>Florian : ajout des clics de la souris pour enflammer des arbres 
+=&gt; Problème étrange lorsqu'on "glisse" la souris.
+Résolution : on s'est aperçu que l'application plantait lorsque la souris sortait de la foret, on tentait d'accéder à une cellule qui était en dehors de la matrice : ajout d'une vérification qu'il y a une cellule à la position demandée.</li>
+</ul>
+</li>
+</ul>
+
+<h3>
+<a id="mercredi-2" class="anchor" href="#mercredi-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mercredi</h3>
+
+<ul>
+<li>Mise en place de l'interface, enrobage graphique.
+
+<ul>
+<li>Florian : Correction du calculs de PV et des essences, optimisations.</li>
+</ul>
+</li>
+</ul>
+
+<h3>
+<a id="jeudi-2" class="anchor" href="#jeudi-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Jeudi</h3> 
+
+<ul>
+<li>Ugo : Ajout de fonctionnalités de l'interface.</li>
+<li>Florian : Modification du redimensionnement de la foret et optimisation du déroulement de l'affichage : Ajout dans la foret d'une liste d'arbre qui viennent de s'eteindre suite à une combustion total.</li>
+</ul>
+
+<h3>
+<a id="vendredi-2" class="anchor" href="#vendredi-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Vendredi</h3>
+
+<ul>
+<li>Gestion des tailles minimales et maximales de la fenetre selon la taille de la foret et de l'écran.</li>
+<li>Organisation du code.</li>
+<li>Passage en revue des commentaires "inutiles" du code, nettoyage et ajout de commentaires.
+
+<ul>
+<li>Ugo : Amélioration du bouton reset.</li>
+<li>Florian : ajout dans la foret d'une liste d'arbre qui viennent de s'allumer pour optimiser l'affichage, voir si ce sera toujours pertinent lorsque l'on ajoutera des "phases de brulure" aux arbres.</li>
+</ul>
+</li>
+<li>Florian : Mise en page du readme et ajouts d'étapes et détails.</li>
+</ul>
+
+<h2>
+<a id="-semaine-4-" class="anchor" href="#-semaine-4-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Semaine 4 </h2>
+
+<h3>
+<a id="-lundi-" class="anchor" href="#-lundi-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Lundi </h3>
+
+<ul>
+<li>Ugo : Réfléxion sur la mise en place des vents, reprise de la classe dédiée et améliorations</li>
+<li>Florian : mise à jour du code et nettoyage à partir des TODO et autres commentaires</li>
+</ul>
+
+<h3>
+<a id="-mardi-" class="anchor" href="#-mardi-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Mardi </h3>
+
+<ul>
+<li>Ugo : Implémentation et tests de l'algorithme de transition avec prise en compte du vent.</li>
+<li>Florian : homogénisation du lors de l'utilisation de Colonnes / Lignes et Width / Height</li>
+</ul>
+
+<h3>
+<a id="-mercredi-" class="anchor" href="#-mercredi-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Mercredi </h3>
+
+<ul>
+<li>Ugo : Mise en place de la dynamisation du vent au cours du temps via widget dédié.</li>
+<li>Florian : Divers correctif de dimension, factorisation du code pour la création et la recréation des fôrets.</li>
+</ul>
+
+<h3>
+<a id="-jeudi-" class="anchor" href="#-jeudi-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Jeudi </h3>
+
+<ul>
+<li>Samed Incorporation du widget WindWidget, mise en place, tests et détection des bugs.</li>
+<li>Debut des recherches de possibilité d'implémentation des images satellites et de sauvegarde/création de matrice à partir d'images.</li>
+</ul>
+
+<h3>
+<a id="-samedi-" class="anchor" href="#-samedi-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Samedi </h3>
+
+<p>-Florian : Premiere implémentation basique de test d'ajout d'image dans le programme.</p>
+
+<h2>
+<a id="-semaine-5-" class="anchor" href="#-semaine-5-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Semaine 5 </h2>
+
+<h3>
+<a id="-lundi-405-" class="anchor" href="#-lundi-405-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Lundi (4/05) </h3>
+
+<ul>
+<li>Ugo : Correction des bugs sur le vents, détection de nouveaux bugs, clarification du code</li>
+<li>Florian : Travaux sur la matrice d'arbres avec des images<h3>
+<a id="-lundi--1" class="anchor" href="#-lundi--1" aria-hidden="true"><span class="octicon octicon-link"></span></a> Lundi </h3>
+</li>
+</ul>
+
+<h3>
+<a id="-mardi-505-" class="anchor" href="#-mardi-505-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Mardi (5/05) </h3>
+
+<ul>
+<li>Florian : Ajouts et modif pour les couleurs d'arbres et les dimensions de la fenetre, commentaires et corrections.</li>
+<li>Ugo : Nettoyage du code, réflexion sur le système de coupure.</li>
+</ul>
+
+<h3>
+<a id="-mercredi-605-" class="anchor" href="#-mercredi-605-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Mercredi (6/05) </h3>
+
+<ul>
+<li>Ugo : Mise en place de la zone de selection et des bouttons coupure/retardateur</li>
+<li>Florian : homogenisation de la langue du code (anglais pour variables et méthodes de classes) et modif diverses</li>
+</ul>
+
+<h3>
+<a id="-jeudi-705-" class="anchor" href="#-jeudi-705-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Jeudi (7/05) </h3>
+
+<ul>
+<li>Ugo : Liaison couche graphique/matrice pour la coupure (point à détailler dans le rapport SIGNALS/SLOTS ) </li>
+<li>Florian : Angliscisation du code et ajout possibilité de suppression des arbres.</li>
+</ul>
+
+<h3>
+<a id="-vendredi-805-férié-" class="anchor" href="#-vendredi-805-f%C3%A9ri%C3%A9-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Vendredi (8/05) (férié) </h3>
+
+<ul>
+<li>Ugo : Réflexion sur implémentation coupure/retardateur au sein du moteur</li>
+<li>Florian : Organisation des fichiers en dossiers et essais d'amélioration DES CMakeLists, moteur indépendant de l'affichage.</li>
+</ul>
+
+<h2>
+<a id="-semaine-6-" class="anchor" href="#-semaine-6-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Semaine 6 </h2>
+
+<h3>
+<a id="-lundi-1105-" class="anchor" href="#-lundi-1105-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Lundi (11/05) </h3>
+
+<ul>
+<li>Ugo : Mise en place coupure/retardateur dans moteur</li>
+<li>Florian :
+
+<ul>
+<li>Modification des setteurs et signaux de vents (angle et force)</li>
+<li>commentaires et TODOS</li>
+</ul>
+</li>
+</ul>
+
+<h3>
+<a id="-mardi-1205-" class="anchor" href="#-mardi-1205-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Mardi (12/05) </h3>
+
+<ul>
+<li>Ugo : Reprise du système d'orientation du vent, mise du 0 au Nord.</li>
+<li>Florian :
+
+<ul>
+<li>Mode français/anglais de l'interface.</li>
+<li>Ajout de l'aléatoire dans la transimission du feu, probabilité selon l'humidité de l'arbre.</li>
+<li>Correction de la transmission aux arbres en contact direct et ajout d'une décrémentation de la valeur de transmission du feu proportionnelement à la distance à l'arbre en feu à partir d'une récursion, ATTENTION coûteux en ressources, retiré ensuite en attendant de vérifier la pertinence.</li>
+</ul>
+</li>
+</ul>
+
+<h3>
+<a id="-mercredi-1305-" class="anchor" href="#-mercredi-1305-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Mercredi (13/05) </h3>
+
+<ul>
+<li>Ugo : Correction différents bugs, tests graphiques pour coupure/retardateur</li>
+<li>Florian :
+
+<ul>
+<li>Corrections : quelques inversions colonne/ligne (burnAdjacentsWind), signaux doubles, et intensité de la transmission du feu selon distance (avec i*j)</li>
+<li>Recherche de possibilité et première ébauche d'enregistrement d'une foret dans un fichier(binaire).</li>
+</ul>
+</li>
+</ul>
+
+<h3>
+<a id="-jeudi-1405férié-" class="anchor" href="#-jeudi-1405f%C3%A9ri%C3%A9-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Jeudi (14/05)(férié) </h3>
+
+<ul>
+<li>Ugo : férié, indisponible</li>
+<li>Florian : Ajout ébauche de chargement d'une forêt.</li>
+</ul>
+
+<h3>
+<a id="-vendredi-1505pont-" class="anchor" href="#-vendredi-1505pont-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Vendredi (15/05)(pont) </h3>
+
+<ul>
+<li>Ugo : indisponible</li>
+<li>Florian : Première version de la sauvegarde et du chargement de la fôret finalisée, ajout d'une barre de progression triviale. (Je laisse à Ugo le soin de s'occuper d'implémenter proprement dans l'interface les boutons de saave/load)</li>
+</ul>
+
+<h3>
+<a id="-samedi-1605-" class="anchor" href="#-samedi-1605-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Samedi (16/05) </h3>
+
+<ul>
+<li>Ugo : Amélioration direction vent,comment pour TODOs</li>
+</ul>
+
+<h2>
+<a id="-semaine-7-" class="anchor" href="#-semaine-7-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Semaine 7 </h2>
+
+<h3>
+<a id="-lundi-1805-" class="anchor" href="#-lundi-1805-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Lundi (18/05) </h3>
+
+<ul>
+<li>Ugo : Validation coupure/retardateur, correction "problème" KDev (TODO et autres)</li>
+<li>Florian : Commentaires, corrections d'erreurs, TODOs de fais, optimisation pour performances et ajout d'un fichier avec ajout de remarques pour le rapport.</li>
+</ul>
+
+<h3>
+<a id="-mardi-1905-" class="anchor" href="#-mardi-1905-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Mardi (19/05) </h3>
+
+<ul>
+<li>Ugo : Correction marqueurs KDev (TODOs, IMPROVE_IT Etc)</li>
+<li>Florian :
+
+<ul>
+<li>Autres TODOs de fais, corrections diverses</li>
+<li>Essai de sauvegarde/chargement de la chaine de caractère du nom de l'Essence</li>
+<li>Reprise des recherches pour création d'une forêt à partir d'une image et lecture de l'intensité de vert pour chaque pixel.</li>
+</ul>
+</li>
+</ul>
+
+<h3>
+<a id="-mercredi-2005-" class="anchor" href="#-mercredi-2005-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Mercredi (20/05) </h3>
+
+<ul>
+<li>Ugo : Mise en place varation automatique du vent avec bouton d'activation. Début rapport</li>
+<li>Florian :
+
+<ul>
+<li>Correction QProgressBar</li>
+<li>Début de création d'une fôret à partir d'une image.</li>
+</ul>
+</li>
+</ul>
+
+<h3>
+<a id="-jeudi-2105-" class="anchor" href="#-jeudi-2105-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Jeudi (21/05) </h3>
+
+<ul>
+<li>Florian : Mise à jour du Readme et ajouts pour commencer le rapport.</li>
+</ul>
+
+<h3>
+<a id="-vendredi-2205-" class="anchor" href="#-vendredi-2205-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Vendredi (22/05) </h3>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
