@@ -51,8 +51,8 @@ public:
 	void initValues(int angle, int vitesse);
 	
 /* Getters */
-	int getAngle() const { return wind->getAngle(); };
-	int getSpeed() const { return speed; };
+    int getAngle() const { return wind->getAngle(); }
+    int getSpeed() const { return speed; }
 	
 /* Setters */
 private:
