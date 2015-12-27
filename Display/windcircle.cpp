@@ -3,6 +3,8 @@
 #include "../debug.h"
 // Valeur du nombre pi, utilisée pour les calcul de trigonométrie
 #define PI 3.14159265
+// doit etre positif strictement, sinon il n'y a pas de variation
+#define WIND_VARIATION 9
 
 using namespace std;
 
@@ -27,10 +29,29 @@ WindCircle::~WindCircle(){
 
 
 /*** Getters and Setters ***/
-void WindCircle::setAngle(int x){
-	angle = x;
-	drawDir();
-	update();
+void WindCircle::varyAngle(){
+    // Choisi une valeur entre -WIND_VARIATION et WIND_VARIATION
+    float coef = rand()%(2*WIND_VARIATION +1) - WIND_VARIATION;
+#if DEBUG_VAR
+    cout << "coef variation : "<< coef<< endl;
+#endif
+    // change modifie la valeur de l'angle avec la valeur choisie
+    int new_angle = angle + coef;
+    if(new_angle > 630)
+        new_angle -= 360;
+    if(new_angle < 270)
+        new_angle += 360;
+    #if DEBUG_VAR
+    cout << "angle après modif " << angle << endl;
+    #endif
+    updateAngle(new_angle);
+}
+
+void WindCircle::updateAngle(int x){
+    angle = x;
+    drawDir();
+    update();
+    emit modifAngle();
 }
 
 void WindCircle::setDirection(int angle){
@@ -61,7 +82,7 @@ void WindCircle::drawCircle(){
 }
 
 void WindCircle::drawDir(){
-	effaceBuffer();
+    cleanBuffer();
 	setDirection(angle);
 	#if DEBUG_VENT
 	cout << "angle de windcircle" << angle << endl;
@@ -116,6 +137,5 @@ void WindCircle::mousePressEvent(QMouseEvent* event)
 	cout << "Angle de windcircle : " << angle << endl;
 	cout << "Angle résultat ? : " << (int)result << endl;
 	#endif
-	setAngle((int)result);
-	emit modifAngle();
+    updateAngle((int)result);
 }
