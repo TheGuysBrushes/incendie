@@ -35,11 +35,17 @@ Fwelcome::Fwelcome(QWidget* parent, int _largeur, int _hauteur): QDialog(parent)
 
 Fwelcome::~Fwelcome(){
 	delete gridLayButtons;
+
 	delete(haut_spin);
 	delete(larg_spin);
 	delete(p_value);
 	delete(c_value);
-	
+
+    delete max_width_btn ;
+    delete min_width_btn ;
+    delete max_height_btn ;
+    delete min_height_btn ;
+
 	delete(restoreBtn);
 	delete(cancel_btn);
 	delete valid_btn;
@@ -80,6 +86,11 @@ void Fwelcome::createComponents()
 	restoreBtn= 	new QPushButton("Load forest");
 	seedBtn = 	new QPushButton("Load a seed");
 	#endif
+    max_width_btn = 	new QPushButton("max");
+    min_width_btn = 	new QPushButton("min");
+
+    max_height_btn = 	new QPushButton("max");
+    min_height_btn = 	new QPushButton("min");
 	
 	fileDialog = NULL;
 	file= new ifstream;
@@ -118,11 +129,9 @@ void Fwelcome::initComponents(){
 		QLabel* l_lbl = new QLabel("Width : ");
 		#endif
 		
-		int largeurMaximaleMenusDroite= 300;
-		
 		larg_spin = new QSpinBox(WSettings);
 			larg_spin->setMinimum(100);
-			larg_spin->setMaximum( (QApplication::desktop()->screenGeometry().width() -largeurMaximaleMenusDroite -20)*1.5);
+            larg_spin->setMaximum( Max_larg );
 			larg_spin->setValue(450);
 			larg_spin->setSingleStep(25);
 			larg_spin->setAccelerated(1);
@@ -134,11 +143,9 @@ void Fwelcome::initComponents(){
 		QLabel* h_lbl = new QLabel("Height : ");
 		#endif
 		
-		int hauteurMaximaleBarresFenetre= 45;
-		
 		haut_spin = new QSpinBox(WSettings);
 			haut_spin->setMinimum(100);
-			haut_spin->setMaximum( (QApplication::desktop()->screenGeometry().height() -hauteurMaximaleBarresFenetre -25)*1.5); // 45 pixel à cause des marges et menu (observé 43)
+            haut_spin->setMaximum( Max_haut );
 			haut_spin->setValue(300);
 			haut_spin->setSingleStep(25);
 			haut_spin->setAccelerated(1);
@@ -149,8 +156,8 @@ void Fwelcome::initComponents(){
 		QLabel* p_lbl = new QLabel("Probabilite : ");
 		#else
 		QLabel* p_lbl = new QLabel("Probability : ");
-		#endif
-		
+        #endif
+
 		QSlider * slide_p = new QSlider(Qt::Horizontal, 0);
 		slide_p->setMaximum(100);
 		slide_p->setMinimum(1);
@@ -165,21 +172,33 @@ void Fwelcome::initComponents(){
 		slide_c->setMaximum(100);
 		slide_c->setMinimum(1);
 				
-	/* Emboitements */
-	grid_lay_settings->addWidget(l_lbl, 0,0);
-	grid_lay_settings->addWidget(larg_spin, 0,1);
-	
-	grid_lay_settings->addWidget(h_lbl, 1,0);
-	grid_lay_settings->addWidget(haut_spin, 1,1);
-	
+    /* Emboitements */
+    grid_lay_settings->setSpacing(1);
+        p_value->setAlignment(Qt::AlignCenter);
+        p_value->setFrameStyle(2);
+        c_value->setAlignment(Qt::AlignCenter);
+        c_value->setFrameStyle(2);
+
+    grid_lay_settings->addWidget(l_lbl, 0,0);
+    grid_lay_settings->addWidget(larg_spin, 0,1, 1,2);
+    grid_lay_settings->addWidget(min_width_btn, 0,3);
+    grid_lay_settings->addWidget(max_width_btn, 0,4);
+//    grid_lay_settings->addLayout(width_btn_box, 0,3);
+
+    grid_lay_settings->addWidget(h_lbl, 1,0);
+    grid_lay_settings->addWidget(haut_spin, 1,1, 1,2);
+    grid_lay_settings->addWidget(min_height_btn, 1,3);
+    grid_lay_settings->addWidget(max_height_btn, 1,4);
+//    grid_lay_settings->addLayout(height_btn_box, 1,3);
+
 	grid_lay_settings->addWidget(p_lbl,2,0);
-	grid_lay_settings->addWidget(slide_p,2,1);
-	grid_lay_settings->addWidget(p_value,2,2);
+    grid_lay_settings->addWidget(slide_p,2,1, 1,3);
+    grid_lay_settings->addWidget(p_value,2,4);
 	
 	grid_lay_settings->addWidget(c_lbl,3,0);
-	grid_lay_settings->addWidget(slide_c,3,1);
-	grid_lay_settings->addWidget(c_value,3,2);
-			
+    grid_lay_settings->addWidget(slide_c,3,1, 1,3);
+    grid_lay_settings->addWidget(c_value,3,4);
+//    grid_lay_settings->setAlignment(p_value);
 	
 	// BOUTONS
 	QWidget* WButtons= new QWidget;
@@ -200,11 +219,16 @@ void Fwelcome::initComponents(){
 	connect(slide_p,	SIGNAL(valueChanged(int)), this, SLOT(setProba(int)) );
 	connect(slide_c,	SIGNAL(valueChanged(int)), this, SLOT(setCoef(int)) );
 	
-	connect(valid_btn,	SIGNAL(clicked()), this, SLOT(accept()) );
+    connect(valid_btn,	SIGNAL(clicked()), this, SLOT(accept()) );
 	connect(cancel_btn,	SIGNAL(clicked()), this, SLOT(reject()) );
 	connect(restoreBtn,	SIGNAL(clicked()), this, SLOT(popSaveDialog()) );
 	connect(loadFromImgBtn,	SIGNAL(clicked()), this, SLOT(popImageDIalog()) );
 	connect(seedBtn,		SIGNAL(clicked()), this, SLOT(popSeedDialog()) );
+    connect(min_width_btn,		SIGNAL(clicked()), SLOT(giveMinWidth()) );
+    connect(max_width_btn,		SIGNAL(clicked()), SLOT(giveMaxWidth()) );
+    connect(min_height_btn,		SIGNAL(clicked()), SLOT(giveMinHeight()) );
+    connect(max_height_btn,		SIGNAL(clicked()), SLOT(giveMaxHeight()) );
+//    connect(min_height_btn,		SIGNAL(clicked()), this,  );
 
 	// Appel à setValue pour déclencer l'affichage de la valeur à la construction du widget
 	slide_c->setValue(50);
@@ -212,7 +236,6 @@ void Fwelcome::initComponents(){
 }
 
 /*######################*/
-
 void Fwelcome::addCancel() const
 {
 	gridLayButtons->removeWidget(valid_btn);

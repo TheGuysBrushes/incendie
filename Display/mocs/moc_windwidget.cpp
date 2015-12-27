@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_WindWidget_t {
     QByteArrayData data[8];
-    char stringdata0[70];
+    char stringdata0[71];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -30,16 +30,16 @@ struct qt_meta_stringdata_WindWidget_t {
 static const qt_meta_stringdata_WindWidget_t qt_meta_stringdata_WindWidget = {
     {
 QT_MOC_LITERAL(0, 0, 10), // "WindWidget"
-QT_MOC_LITERAL(1, 11, 11), // "modif_value"
-QT_MOC_LITERAL(2, 23, 0), // ""
-QT_MOC_LITERAL(3, 24, 5), // "angle"
-QT_MOC_LITERAL(4, 30, 7), // "vitesse"
-QT_MOC_LITERAL(5, 38, 8), // "majAngle"
-QT_MOC_LITERAL(6, 47, 8), // "majSpeed"
-QT_MOC_LITERAL(7, 56, 13) // "changeWindDir"
+QT_MOC_LITERAL(1, 11, 12), // "wind_changed"
+QT_MOC_LITERAL(2, 24, 0), // ""
+QT_MOC_LITERAL(3, 25, 5), // "angle"
+QT_MOC_LITERAL(4, 31, 7), // "vitesse"
+QT_MOC_LITERAL(5, 39, 8), // "majAngle"
+QT_MOC_LITERAL(6, 48, 8), // "majSpeed"
+QT_MOC_LITERAL(7, 57, 13) // "changeWindDir"
 
     },
-    "WindWidget\0modif_value\0\0angle\0vitesse\0"
+    "WindWidget\0wind_changed\0\0angle\0vitesse\0"
     "majAngle\0majSpeed\0changeWindDir"
 };
 #undef QT_MOC_LITERAL
@@ -82,7 +82,7 @@ void WindWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         WindWidget *_t = static_cast<WindWidget *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->modif_value((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 0: _t->wind_changed((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 1: _t->majAngle(); break;
         case 2: _t->majSpeed((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 3: _t->changeWindDir(); break;
@@ -93,7 +93,7 @@ void WindWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         void **func = reinterpret_cast<void **>(_a[1]);
         {
             typedef void (WindWidget::*_t)(int , int );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&WindWidget::modif_value)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&WindWidget::wind_changed)) {
                 *result = 0;
             }
         }
@@ -137,7 +137,7 @@ int WindWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void WindWidget::modif_value(int _t1, int _t2)
+void WindWidget::wind_changed(int _t1, int _t2)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
