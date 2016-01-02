@@ -1,7 +1,6 @@
 #ifndef WINDWIDGET_H
 #define WINDWIDGET_H
 
-#include <QtCore/QString>
 #include <QtCore/QTimer>
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QLabel>

@@ -3,9 +3,17 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = ../build/release-Windows/Incendie
+TARGET = ../../incendie/build/release-Windows/Incendie_debug
 DEPENDPATH += . Display Moteur TinyXML
-INCLUDEPATH += .
+INCLUDEPATH += ./Display ./Moteur
+TRANSLATIONS =  incendie_fr.ts \
+                incendie_de.ts \
+                incendie_en.ts
+
+QT += core gui widgets
+
+#greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
+
 # edit the file Path-To-Qt-SDK\qt_static\mkspecs\win32-g+.conf and add the bold (with * ) marked stuff
 QMAKE_CFLAGS_RELEASE = -Os -momit-leaf-frame-pointer
 QMAKE_LFLAGS = -static -static-libgcc
@@ -45,7 +53,6 @@ SOURCES += main.cpp \
            Display/windwidget.cpp \
            Moteur/arbre.cpp \
            Moteur/cellule.cpp \
-           Moteur/cellulevide.cpp \
            Moteur/coordonnee.cpp \
            Moteur/essence.cpp \
            Moteur/foret.cpp \

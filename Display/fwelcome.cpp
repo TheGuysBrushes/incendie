@@ -67,19 +67,12 @@ void Fwelcome::createComponents()
 	pictureForest= new QImage;
 	
 	gridLayButtons = NULL;
-	#if FRENCH
-	valid_btn = 	new QPushButton("Valider");
-	cancel_btn = 	new QPushButton("Annuler");
-	loadFromImgBtn = new QPushButton("Importer une image");
-	restoreBtn= 	new QPushButton("Charger une foret");
-	seedBtn = 	new QPushButton("Charger une graine");
-	#else 
-	valid_btn = 	new QPushButton("Confirm");
-	cancel_btn = 	new QPushButton("Cancel");
-	loadFromImgBtn = new QPushButton("Create from image");
-	restoreBtn= 	new QPushButton("Load forest");
-	seedBtn = 	new QPushButton("Load a seed");
-	#endif
+
+    valid_btn = 	new QPushButton(tr("Confirm"));
+    cancel_btn = 	new QPushButton(tr("Cancel"));
+    loadFromImgBtn = new QPushButton(tr("Create from image"));
+    restoreBtn= 	new QPushButton(tr("Load forest"));
+    seedBtn = 	new QPushButton(tr("Load a seed"));
 	
 	fileDialog = NULL;
 	file= new ifstream;
@@ -94,13 +87,9 @@ void Fwelcome::initComponents(){
 	/* Initialisation des composants statiques (hors SpinBox ) */
 	
 	// TEXTE
-	#if FRENCH
-	QString s = " Bienvenue sur l'automate de simulation de feux de foret. Veuillez renseigner les differents parametres, puis validez.\n";
-	#else
-	QString s = "Welcome on the automaton of forest fire simulation. Please, enter parameters, then confirm\n";
-	#endif
+    QString s = tr("Welcome on the automaton of forest fire simulation. Please, enter parameters, then confirm");
 	
-	QLabel* present = new QLabel(s);
+    QLabel* present = new QLabel(s + "\n");
 	present->setWordWrap(true);
 	present->setAlignment(Qt::AlignCenter);
 	present->setMinimumSize(400, 60);
@@ -112,11 +101,7 @@ void Fwelcome::initComponents(){
 	
 	// SPINBOXS
 		// SpinBox largeur
-		#if FRENCH
-		QLabel* l_lbl = new QLabel("Largeur : ");
-		#else
-		QLabel* l_lbl = new QLabel("Width : ");
-		#endif
+        QLabel* l_lbl = new QLabel(tr("Width : "));
 		
 		int largeurMaximaleMenusDroite= 300;
 		
@@ -128,12 +113,8 @@ void Fwelcome::initComponents(){
 			larg_spin->setAccelerated(1);
 		
 		// SpinBox Hauteur
-		#if FRENCH
-		QLabel* h_lbl = new QLabel("Hauteur : ");
-		#else
-		QLabel* h_lbl = new QLabel("Height : ");
-		#endif
-		
+        QLabel* h_lbl = new QLabel(tr("Height : "));
+
 		int hauteurMaximaleBarresFenetre= 45;
 		
 		haut_spin = new QSpinBox(WSettings);
@@ -145,21 +126,14 @@ void Fwelcome::initComponents(){
 	
 	// SLIDERS
 		// Probabilite
-		#if FRENCH
-		QLabel* p_lbl = new QLabel("Probabilite : ");
-		#else
-		QLabel* p_lbl = new QLabel("Probability : ");
-		#endif
+        QLabel* p_lbl = new QLabel(tr("Probability : "));
 		
 		QSlider * slide_p = new QSlider(Qt::Horizontal, 0);
 		slide_p->setMaximum(100);
 		slide_p->setMinimum(1);
 
 		// Coefficient
-	// 	#if FRENCH
-	// 	#else
-	// 	#endif
-		QLabel* c_lbl = new QLabel("Coefficient : ");
+        QLabel* c_lbl = new QLabel( tr("Coefficient : ") );
 		
 		QSlider* slide_c = new QSlider(Qt::Horizontal, 0);
 		slide_c->setMaximum(100);

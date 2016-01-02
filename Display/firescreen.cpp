@@ -14,12 +14,9 @@ FireScreen::FireScreen(): QMainWindow()
 {
 	// Elements de la barre de menus
 	QAction* exit = new QAction(this);
-	#if FRENCH
-	exit->setText( "Quitter" );
-	#else
-	exit->setText( "Quit" );
-	#endif
-	menuBar()->addAction(exit);
+        exit->setText(tr("Quit"));
+
+    menuBar()->addAction(exit);
 	connect(exit, 	SIGNAL(triggered()), SLOT(close()) );
 	
 	QAction* saveData = new QAction(this);
@@ -27,19 +24,13 @@ FireScreen::FireScreen(): QMainWindow()
 	QAction* saveSeed = new QAction(this);
 	
 	QAction* about = new QAction(this);
-#if FRENCH
-	QMenu* menuSave= menuBar()->addMenu("Sauvegardes...");
-	saveData->setText( "Foret complète" );
-	saveImage->setText( "sous forme d'Image" );
-	saveSeed->setText( "graine aléatoire" );
-	about->setText("A propos");
-#else
-	QMenu* menuSave= menuBar()->addMenu("Others");
-	saveData->setText( "complete Forest" );
-	saveImage->setText( "to Image" );
-	saveSeed->setText( "random seed" );
-	about->setText("About");
-#endif
+
+    QMenu* menuSave= menuBar()->addMenu( tr("Others") );
+    saveData->setText( tr("complete Forest") );
+    saveImage->setText( tr("to Image") );
+    saveSeed->setText( tr("random seed") );
+    //: Presentation menu for the app
+    about->setText(tr("About"));
 	
 	menuSave->addAction(saveData);
 	menuSave->addAction(saveImage);
@@ -60,21 +51,11 @@ FireScreen::FireScreen(): QMainWindow()
 	actionBox = new QComboBox(this);
 	actionBox->addItem("");
 	
-
-#if FRENCH
-	next_btn = new QPushButton("Suivant");
-	play_btn = new QPushButton("Démarrer");
-	pause_btn = new QPushButton("Pause");
-	actionBox->addItem("Coupure");
-	actionBox->addItem("Retardateur");	
-#else
-	next_btn = new QPushButton("Next");
-	play_btn = new QPushButton("Play");
-	pause_btn = new QPushButton("Pause");
-	actionBox->addItem("Cutting");
-	actionBox->addItem("Retardator");	
-
-#endif
+    next_btn = new QPushButton( tr("Next") );
+    play_btn = new QPushButton( tr("Play") );
+    pause_btn = new QPushButton( tr("Pause") );
+    actionBox->addItem( tr("Cutting") );
+    actionBox->addItem( tr("Retardator") );
 
 	pause_btn->setDisabled(true);
 	
@@ -224,40 +205,24 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
 	
 	//ELEMENTS
 	
-	// Element du panneau de direction de l'automate
-#if FRENCH
-	QLabel* titre = new QLabel("Automate cellulaire");
-	QLabel* info_vent= new QLabel("Parametres du vent :");
+    // Element du panneau de direction de l'automate
+    QLabel* titre = new QLabel(tr("Cellular automaton") );
+    QLabel* info_vent= new QLabel( tr("Wind's settings :") );
 	
 	// Boutons
-	QLabel* trans_p2p = new QLabel("Transmission pas-a-pas : ");
+    QLabel* trans_p2p = new QLabel( tr("Step-to-step transmission : ") );
 	
-	QPushButton* reset_btn = new QPushButton("RAZ ! Attention");
-	QLabel* save_text = new QLabel("Sauvegardes et création: ");
-	QPushButton* saveStateBtn = new QPushButton("Etat courant");
-	QPushButton* saveSeedBtn = new QPushButton("Graine aléatoire");
-	QPushButton* saveImageBtn  = new QPushButton("Export d'image");
+    QPushButton* reset_btn = new QPushButton( tr("Reset ! Be careful") );
+    QLabel* save_text = new QLabel( tr("Saves and creation: ") );
+    QPushButton* saveStateBtn = new QPushButton( tr("Current state") );
+    QPushButton* saveSeedBtn = new QPushButton( tr("Seed's forest") );
+    QPushButton* saveImageBtn  = new QPushButton( tr("As image") );
 	
-	// Compteur de tours et Slider
-	QLabel* trans_con = new QLabel("Transmission continue : ");	
-	QLabel* tour_lbl = new QLabel("Nombre de tours :");
-#else 
-	QLabel* titre = new QLabel("Cellular automaton");
-	QLabel* info_vent= new QLabel("Wind's settings :");
-	
-	// Boutons
-	QLabel* trans_p2p = new QLabel("Step-to-step transmission : ");
-	
-	QPushButton* reset_btn = new QPushButton("Reset ! Be careful");
-	QLabel* save_text = new QLabel("Saves and creation: ");
-	QPushButton* saveStateBtn = new QPushButton("Current state");
-	QPushButton* saveSeedBtn = new QPushButton("Seed's forest");
-	QPushButton* saveImageBtn  = new QPushButton("As image");
-	
-	// Compteur de tours et Slider
-	QLabel* trans_con = new QLabel("Continuous transmission : ");	
-	QLabel* tour_lbl = new QLabel("Number of turns :");
-#endif
+    // Compteur de tours et Slider
+        //: Sous-titre
+    QLabel* trans_con = new QLabel( tr("Continuous transmission : ") );
+        //: Compteur de tours
+    QLabel* tour_lbl = new QLabel( tr("Number of turns :") );
 	
 	int interTempsInit= 200;
 	

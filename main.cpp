@@ -2,6 +2,9 @@
 
 #include "debug.h"
 #include "Display/firescreen.h"
+//Objects of QTranslator class provide translations for user-visible text.
+#include <QTranslator>
+#include <QLocale>
 
 using namespace std;
 
@@ -11,8 +14,24 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	QApplication app(argc, argv);
-	
     cout << "test main" << endl;
+
+//    Creates a QTranslator object without a parent.
+    QTranslator translator;
+//    Tries to load a translation file corresponding to the system language.
+//    No error will occur if the file is not found.
+    #if FRENCH
+        QString locale= "fr";
+    #else
+        #if ENGLISH
+          QString locale= "en";
+        #else  QString locale = QLocale::system().name();
+        #endif
+    #endif
+    clog<< "Locale : "<< locale.toStdString()<< endl;
+
+    translator.load(QString("incendie_") + locale);
+    app.installTranslator(&translator);
 	
     FireScreen* screen = new FireScreen();
     if (screen->tryInitialisation(argc, argv) ) {
@@ -23,7 +42,7 @@ int main(int argc, char* argv[])
 		if ( screen->tryInitialisation() )
 			screen->show();
         else screen->close();
-	}
+    }
 	
 	return app.exec();
 }

@@ -75,10 +75,14 @@ void WindCircle::drawCircle(){
 	paint.drawLine(*center, QPointF(center->rx()-rayon-6, center->ry())); // Ouest
 	
 	// Dessin des caractères cardinaux (NSEO)
-	paint.drawText(QPointF(center->rx()-4, center->ry()+rayon+20), QString("S"));
-	paint.drawText(QPointF(center->rx()-4, center->ry()-rayon-10), QString("N"));
-	paint.drawText(QPointF(center->rx()+rayon+10, center->ry()+4), QString("E"));
-	paint.drawText(QPointF(center->rx()-rayon-20, center->ry()+4), QString("O"));
+        //: Première lettre de Sud
+    paint.drawText(QPointF(center->rx()-4, center->ry()+rayon+20), QString( tr("S") ));
+        //: Première lettre de Nord
+    paint.drawText(QPointF(center->rx()-4, center->ry()-rayon-10), QString( tr("N") ));
+        //: Première lettre de Est
+    paint.drawText(QPointF(center->rx()+rayon+10, center->ry()+4), QString( tr("E") ));
+        //: Première lettre de Ouest
+    paint.drawText(QPointF(center->rx()-rayon-20, center->ry()+4), QString( tr("W") ));
 }
 
 /**
