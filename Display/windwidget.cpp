@@ -15,7 +15,7 @@ WindWidget::WindWidget()
 	// Initialisation des composants de la classe
 	speed_lbl = new QLabel();
 	speed_lbl->setFixedWidth(25);
-	wind = new WindCircle();
+    wind_dir = new WindCircle();
 	angle_lbl = new QLabel();
 	angle_lbl->setFixedWidth(100);
 	
@@ -30,7 +30,7 @@ WindWidget::WindWidget()
 }
 
 WindWidget::~WindWidget(){
-	delete(wind);
+    delete(wind_dir);
 	delete timer;
 
 	delete(angle_lbl);
@@ -76,30 +76,21 @@ void WindWidget::initComponents()
 	testLay->addWidget(speed_container);
 	testLay->addWidget(varAngleBox);
 
-	grid_lay->addWidget(wind,1);
+    grid_lay->addWidget(wind_dir, 1);
 	grid_lay->addWidget(container);
 	// Connexion des sliders avec les setters de la classe :
 	// 	permet de gérer dynamiquement les changements de valeurs;
 	connect(slider_vitesse,	SIGNAL(valueChanged(int)),		this, SLOT(majSpeed(int)));
-	connect(wind, SIGNAL(modifAngle()), this, SLOT(majAngle()));
+    connect(wind_dir, SIGNAL(modifAngle()), this, SLOT(majAngle()));
 }
 
 void WindWidget::initValues(int angle, int vitesse)
 {
 	slider_vitesse->setValue(vitesse);
 	// Appel à la fonction setAngle pour que l'initialisation des composants se fasse parfaitement
-	setAngle(angle);
+    wind_dir->initAngle(angle);
+    speed= vitesse;
 }
-
-
-void WindWidget::setAngle(int angle)
-{
-	#if DEBUG_VENT
-	cout << "angle de windwidget envoyé a windcircle" << angle+270 << endl;
-	#endif
-	emit modif_value(wind->getAngle(), speed);
-}
-
 
 /*** Events ***/
 void WindWidget::resizeEvent(QResizeEvent* Qevent)
@@ -111,37 +102,25 @@ void WindWidget::resizeEvent(QResizeEvent* Qevent)
 /*** Slots ***/
 void WindWidget::majAngle()
 {
-	#if DEBUG_VENT
+    #if DEBUG_VENT
 // 	cout << "angle de windwidget par appel de majAngle" << alpha << endl;
-	#endif
-	// Signal émis vers firescreen
-	emit modif_value(wind->getAngle(), speed);
+    #endif
+    // Signal émis vers firescreen
+    emit wind_changed(wind_dir->getAngle(), speed);
 }
 
 void WindWidget::majSpeed(int vitesse){
 	
 	speed_lbl->setText(QString::number(vitesse));
 	speed = vitesse;
-	emit modif_value(wind->getAngle(), speed);
+    emit wind_changed(wind_dir->getAngle(), speed);
 }
 
 
 void WindWidget::changeWindDir()
 {
-	int variation= 2;
+    // On ne change la direction du vent que si la case est cochée
 	if (varAngleBox->isChecked()){
-		float coef = rand()%(2*variation +1) - variation;
-		int angle = wind->getAngle()*(1.0+(coef/100.0));
-		
-		if(angle > 630)
-			angle -= 360;
-		if(angle < 270)
-			angle += 360;
-		#if DEBUG_VAR
-		cout << "angle après modif " << angle << endl;
-		#endif
-		wind->setAngle(angle);
-		
-		majAngle();
+        wind_dir->varyAngle();
 	}
 }

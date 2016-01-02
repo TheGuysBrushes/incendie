@@ -20,6 +20,10 @@
 
 #include "../debug.h"
 
+#define COEF_TAILLE_MAX_FORET 1.9
+#define LargeurMaximaleMenusDroite 300
+#define HauteurMaximaleBarresFenetre 45
+
 enum DialogCode{Rejected, Accepted, Load, Restore, RestoreSeed};
 
 /**
@@ -31,9 +35,18 @@ class Fwelcome : public QDialog
 {
 Q_OBJECT
 private:
+    int Max_larg = (QApplication::desktop()->screenGeometry().width() -LargeurMaximaleMenusDroite -20)*COEF_TAILLE_MAX_FORET;
+    int Max_haut = (QApplication::desktop()->screenGeometry().height() -HauteurMaximaleBarresFenetre -25)*COEF_TAILLE_MAX_FORET; // 45 pixel à cause des marges et menu (observé 43)
+
 	QGridLayout* gridLayButtons;
-	QSpinBox* haut_spin;
+
+    QSpinBox* haut_spin;
 	QSpinBox* larg_spin;
+    QPushButton* max_width_btn ;
+    QPushButton* min_width_btn ;
+    QPushButton* max_height_btn ;
+    QPushButton* min_height_btn ;
+
 	QLabel* p_value;
 	QLabel* c_value;
 	
@@ -98,15 +111,16 @@ public slots:
 	
 public:
 /* Getters */
-	int getHaut() const	{ return haut_spin->value(); };
-	int getLarg() const	{ return larg_spin->value(); };
-	float getProba() const	{ return proba; };
-	float getCoef() const	{ return burningCoef; };
-	float getSeed() const	{ return seed; };
+    int getHaut() const	{ return haut_spin->value(); }
+    int getLarg() const	{ return larg_spin->value(); }
+    float getProba() const	{ return proba; }
+    float getCoef() const	{ return burningCoef; }
+    float getSeed() const	{ return seed; }
 	
-	std::ifstream* getFile() { return file; };
-	QImage* getImage() { return pictureForest; };
-	
+    std::ifstream* getFile() { return file; }
+    QImage* getImage() { return pictureForest; }
+
+public:
 /* Chargements */
 	/**
 	* Ouvre un fichier à partir de son chemin, enregistré dans fwelcome
@@ -138,6 +152,14 @@ public:
 	 * @param filename chemin du fichier contenant la graine
 	 */
 	void loadSeed(QString filename);
+
+
+private slots:
+    /*** Fonctions pour donner les tailles min et max de la forêt ***/
+    void giveMinWidth() {larg_spin->setValue(100);}
+    void giveMaxWidth() {larg_spin->setValue(Max_larg);}
+    void giveMinHeight()    {haut_spin->setValue(100);}
+    void giveMaxHeight()    {haut_spin->setValue(Max_haut);}
 
 public slots:
 	// Slots d'ouverture FileDialog pour chargement

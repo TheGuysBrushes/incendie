@@ -3,15 +3,12 @@
 #include "../debug.h"
 // Valeur du nombre pi, utilisée pour les calcul de trigonométrie
 #define PI 3.14159265
+// doit etre positif strictement, sinon il n'y a pas de variation
+#define WIND_VARIATION 9
 
 using namespace std;
 
 /*** Constructeur et destructeur ***/
-/**
- * Constructeur de classe
- * @param int Valeur de l'angle initial
- * @author Ugo
- */
 WindCircle::WindCircle()
 {
 	buffer = new QImage();
@@ -32,35 +29,38 @@ WindCircle::~WindCircle(){
 
 
 /*** Getters and Setters ***/
-/**
- * Met à jour la valeur de l'angle et redessine la ligne d'angle
- * @param int Valeur de l'angle
- * @author Ugo
- */
-void WindCircle::setAngle(int x){
-	angle = x;
-	drawDir();
-	update();
+void WindCircle::varyAngle(){
+    // Choisi une valeur entre -WIND_VARIATION et WIND_VARIATION
+    float coef = rand()%(2*WIND_VARIATION +1) - WIND_VARIATION;
+#if DEBUG_VAR
+    cout << "coef variation : "<< coef<< endl;
+#endif
+    // change modifie la valeur de l'angle avec la valeur choisie
+    int new_angle = angle + coef;
+    if(new_angle > 630)
+        new_angle -= 360;
+    if(new_angle < 270)
+        new_angle += 360;
+    #if DEBUG_VAR
+    cout << "angle après modif " << angle << endl;
+    #endif
+    updateAngle(new_angle);
 }
 
-/**
- * Permet de calculer le point d'arrivée du segment 
- * sur le cercle trigonométrique en fonction de l'angle passé 
- * en paramètre.
- * @param int Valeur de l'angle choisi
- * @author Ugo
- */
+void WindCircle::updateAngle(int x){
+    angle = x;
+    drawDir();
+    update();
+    emit modifAngle();
+}
+
 void WindCircle::setDirection(int angle){
 	float rayon =(float)height()/2.0 - 25.0;
 	direction->setX(cos(PI*(float)angle/180.0)*rayon+center->rx());
 	direction->setY(sin(PI*(float)angle/180.0)*rayon+center->ry());
 }
 
-/*** Autres Méthodes ***/
-/**
- * Affiche le cercle de la boussole
- * @author Ugo
- */
+/*** Méthodes Graphiques ***/
 void WindCircle::drawCircle(){
 	QPainter paint(buffer);
 	
@@ -85,12 +85,8 @@ void WindCircle::drawCircle(){
     paint.drawText(QPointF(center->rx()-rayon-20, center->ry()+4), QString( tr("W") ));
 }
 
-/**
- * Affiche la ligne directionnelle de la boussole
- * @author Ugo
- */
 void WindCircle::drawDir(){
-	effaceBuffer();
+    cleanBuffer();
 	setDirection(angle);
 	#if DEBUG_VENT
 	cout << "angle de windcircle" << angle << endl;
@@ -101,30 +97,18 @@ void WindCircle::drawDir(){
 	paint.drawLine(*center, *direction);
 }
 
-/**
- * Vide le buffer 
- * @author Ugo
- */
-void WindCircle::effaceBuffer(){
-	buffer->fill(1);
-	drawCircle();
+void WindCircle::cleanBuffer(){
+    buffer->fill(1);
+    drawCircle();
 }
 
 /*** Events ***/
-/**
- * Copie le buffer sur le widget
- * @author Ugo
- */
 void WindCircle::paintEvent(QPaintEvent* Qevent){
     QWidget::paintEvent(Qevent);
     QPainter paint(this);
 	paint.drawImage(0, 0, *buffer);
 }
 
-/**
- * Replace le centre du cercle et redessine la ligne de l'angle
- * @author Ugo
- */
 void WindCircle::resizeEvent(QResizeEvent* event){
     if (!buffer->isNull()){
 		delete(buffer);
@@ -140,12 +124,7 @@ void WindCircle::resizeEvent(QResizeEvent* event){
   	drawCircle();
 	drawDir();
 }
-/**
- * Nous avons redéfini cet Event dans le but de pouvoir faire varier la valeur de l'angle
- * dynamiquement à l'aide du clic sur le widget
- * Signale à windwidget que l'angle est modifié
- * @author Ugo
- */
+
 void WindCircle::mousePressEvent(QMouseEvent* event)
 {
 	float param = event->x()-center->x();
@@ -162,7 +141,5 @@ void WindCircle::mousePressEvent(QMouseEvent* event)
 	cout << "Angle de windcircle : " << angle << endl;
 	cout << "Angle résultat ? : " << (int)result << endl;
 	#endif
-	setAngle((int)result);
-	emit modifAngle();
+    updateAngle((int)result);
 }
-

@@ -15,6 +15,7 @@ QT += core gui widgets
 #greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
 
 # edit the file Path-To-Qt-SDK\qt_static\mkspecs\win32-g+.conf and add the bold (with * ) marked stuff
+CONFIG += c++11
 QMAKE_CFLAGS_RELEASE = -Os -momit-leaf-frame-pointer
 QMAKE_LFLAGS = -static -static-libgcc
 DEFINES= QT_STATIC_BUILD
