@@ -163,7 +163,7 @@
     <message>
         <location filename="Display/fwelcome.cpp" line="80"/>
         <source>Load forest</source>
-        <translation>Charger une graine</translation>
+        <translation>Charger une forêt</translation>
     </message>
     <message>
         <location filename="Display/fwelcome.cpp" line="81"/>

@@ -164,7 +164,7 @@
     <message>
         <location filename="Display/fwelcome.cpp" line="81"/>
         <source>Load a seed</source>
-        <translation>Load forest</translation>
+        <translation>Load seed</translation>
     </message>
     <message>
         <location filename="Display/fwelcome.cpp" line="83"/>
