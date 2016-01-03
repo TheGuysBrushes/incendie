@@ -185,6 +185,10 @@ void FireScreen::initSizes(int largeur, int hauteur)
 
 void FireScreen::initMenus(QHBoxLayout* HLayout)
 {
+    HLayout->addWidget(menus);
+    // Propriétés utiles?
+        menus->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+
 	QVBoxLayout* vert_lay1 = new QVBoxLayout(menus);
 	QWidget* ww1 = new QWidget();
 	QWidget* ww2 = new QWidget();
@@ -471,7 +475,7 @@ void FireScreen::saveData()
 {
     fileSaveDialog = new QFileDialog(this);
     fileSaveDialog->setAcceptMode(QFileDialog::AcceptSave);
-    fileSaveDialog->setNameFilter(tr("Sauvegarde (*.data *.dat *.frt *.sav *.save)"));
+    fileSaveDialog->setNameFilter(tr("Sauvegarde") +" (*.data *.dat *.frt *.sav *.save)");
 
     string s;
     if(fileSaveDialog->exec()){
@@ -487,7 +491,7 @@ void FireScreen::saveImage()
 {
     fileSaveDialog = new QFileDialog(this);
     fileSaveDialog->setAcceptMode(QFileDialog::AcceptSave);
-    fileSaveDialog->setNameFilter(tr("Images (*.png *.jpg *.jpeg *.tif *.tiff *.bmp)"));
+    fileSaveDialog->setNameFilter(tr("Images") +" (*.png *.jpg *.jpeg *.tif *.tiff *.bmp)");
 
     string s;
     if(fileSaveDialog->exec()){
@@ -503,7 +507,7 @@ void FireScreen::saveSeed()
 {
     fileSaveDialog = new QFileDialog(this);
     fileSaveDialog->setAcceptMode(QFileDialog::AcceptSave);
-    fileSaveDialog->setNameFilter(tr("Sauvegarde (*.seed)"));
+    fileSaveDialog->setNameFilter(tr("Sauvegarde") +" (*.seed)");
 
     string s;
     if(fileSaveDialog->exec()){

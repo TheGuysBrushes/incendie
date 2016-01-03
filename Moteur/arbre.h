@@ -1,6 +1,7 @@
 #ifndef ARBRE_H
 #define ARBRE_H
 
+#define _USE_MATH_DEFINES
 #include <cmath>
 #include <cstdlib>
 #include <iostream>

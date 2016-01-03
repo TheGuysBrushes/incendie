@@ -4,18 +4,18 @@
 <context>
     <name>FireScreen</name>
     <message>
-        <location filename="Display/firescreen.cpp" line="479"/>
         <source>Sauvegarde (*.data *.dat *.frt *.sav *.save)</source>
-        <translation>Save</translation>
+        <translation type="vanished">Save (*.data *.dat *.frt *.sav *.save)</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="495"/>
         <source>Images (*.png *.jpg *.jpeg *.tif *.tiff *.bmp)</source>
-        <translation>Pictures</translation>
+        <translation type="vanished">Images (*.png *.jpg *.jpeg *.tif *.tiff *.bmp)</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="511"/>
-        <source>Sauvegarde (*.seed)</source>
+        <location filename="Display/firescreen.cpp" line="478"/>
+        <location filename="Display/firescreen.cpp" line="510"/>
+        <source>Sauvegarde</source>
+        <oldsource>Sauvegarde (*.seed)</oldsource>
         <translation>Save</translation>
     </message>
     <message>
@@ -50,149 +50,182 @@
         <translation>About</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="54"/>
+        <location filename="Display/firescreen.cpp" line="55"/>
         <source>Next</source>
         <translation>Next</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="55"/>
+        <location filename="Display/firescreen.cpp" line="56"/>
         <source>Play</source>
         <translation>Play</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="56"/>
+        <location filename="Display/firescreen.cpp" line="57"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="57"/>
+        <location filename="Display/firescreen.cpp" line="60"/>
         <source>Cutting</source>
         <translation>Cutting</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="58"/>
+        <location filename="Display/firescreen.cpp" line="61"/>
         <source>Retardator</source>
         <translation>Retardator</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="209"/>
+        <location filename="Display/firescreen.cpp" line="210"/>
         <source>Cellular automaton</source>
         <translation>Cellular automaton</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="210"/>
+        <location filename="Display/firescreen.cpp" line="211"/>
         <source>Wind&apos;s settings :</source>
         <translation>Wind&apos;s settings :</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="213"/>
+        <location filename="Display/firescreen.cpp" line="214"/>
         <source>Step-to-step transmission : </source>
         <translation>Step-to-step transmission : </translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="215"/>
+        <location filename="Display/firescreen.cpp" line="216"/>
         <source>Reset ! Be careful</source>
         <translation>Reset ! Be careful</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="216"/>
+        <location filename="Display/firescreen.cpp" line="217"/>
         <source>Saves and creation: </source>
         <translation>Saves and creation: </translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="217"/>
+        <location filename="Display/firescreen.cpp" line="218"/>
         <source>Current state</source>
         <translation>Current state</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="218"/>
+        <location filename="Display/firescreen.cpp" line="219"/>
         <source>Seed&apos;s forest</source>
         <translation>Seed&apos;s forest</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="219"/>
+        <location filename="Display/firescreen.cpp" line="220"/>
         <source>As image</source>
         <translation>As image</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="223"/>
+        <location filename="Display/firescreen.cpp" line="224"/>
         <source>Continuous transmission : </source>
         <extracomment>Sous-titre</extracomment>
         <translation>Continuous transmission : </translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="225"/>
+        <location filename="Display/firescreen.cpp" line="226"/>
         <source>Number of turns :</source>
         <extracomment>Compteur de tours</extracomment>
         <translation>Number of turns :</translation>
+    </message>
+    <message>
+        <location filename="Display/firescreen.cpp" line="258"/>
+        <source>Action of right clic :</source>
+        <translation>Action of right clic :</translation>
+    </message>
+    <message>
+        <location filename="Display/firescreen.cpp" line="494"/>
+        <source>Images</source>
+        <oldsource>Images)</oldsource>
+        <translation>Picture</translation>
     </message>
 </context>
 <context>
     <name>Fwelcome</name>
     <message>
-        <location filename="Display/fwelcome.cpp" line="71"/>
+        <location filename="Display/fwelcome.cpp" line="77"/>
         <source>Confirm</source>
         <translation>Confirm</translation>
     </message>
     <message>
-        <location filename="Display/fwelcome.cpp" line="72"/>
+        <location filename="Display/fwelcome.cpp" line="78"/>
         <source>Cancel</source>
         <translation>Cancel</translation>
     </message>
     <message>
-        <location filename="Display/fwelcome.cpp" line="73"/>
+        <location filename="Display/fwelcome.cpp" line="79"/>
         <source>Create from image</source>
-        <translation>Create from image</translation>
+        <translation>Create from picture</translation>
     </message>
     <message>
-        <location filename="Display/fwelcome.cpp" line="74"/>
+        <location filename="Display/fwelcome.cpp" line="80"/>
         <source>Load forest</source>
         <translatorcomment>Could use forest loading ?</translatorcomment>
         <translation>Load forest</translation>
     </message>
     <message>
-        <location filename="Display/fwelcome.cpp" line="75"/>
+        <location filename="Display/fwelcome.cpp" line="81"/>
         <source>Load a seed</source>
         <translation>Load forest</translation>
     </message>
     <message>
-        <location filename="Display/fwelcome.cpp" line="90"/>
+        <location filename="Display/fwelcome.cpp" line="83"/>
+        <location filename="Display/fwelcome.cpp" line="86"/>
+        <source>max</source>
+        <translation>max</translation>
+    </message>
+    <message>
+        <location filename="Display/fwelcome.cpp" line="84"/>
+        <location filename="Display/fwelcome.cpp" line="87"/>
+        <source>min</source>
+        <translation>min</translation>
+    </message>
+    <message>
+        <location filename="Display/fwelcome.cpp" line="102"/>
         <source>Welcome on the automaton of forest fire simulation. Please, enter parameters, then confirm</source>
         <translation>Welcome on the automaton of forest fire simulation. Please, enter parameters, then confirm</translation>
     </message>
     <message>
-        <location filename="Display/fwelcome.cpp" line="104"/>
+        <location filename="Display/fwelcome.cpp" line="116"/>
         <source>Width : </source>
         <translation>Width : </translation>
     </message>
     <message>
-        <location filename="Display/fwelcome.cpp" line="116"/>
+        <location filename="Display/fwelcome.cpp" line="126"/>
         <source>Height : </source>
         <translation>Height : </translation>
     </message>
     <message>
-        <location filename="Display/fwelcome.cpp" line="129"/>
+        <location filename="Display/fwelcome.cpp" line="137"/>
         <source>Probability : </source>
         <translation>Probability : </translation>
     </message>
     <message>
-        <location filename="Display/fwelcome.cpp" line="136"/>
+        <location filename="Display/fwelcome.cpp" line="144"/>
         <source>Coefficient : </source>
         <translation>Coefficient : </translation>
     </message>
     <message>
-        <location filename="Display/fwelcome.cpp" line="310"/>
-        <source>Images (*.png *.jpg *.jpeg *.tif *.tiff *.bmp)</source>
-        <translation>Pictures</translation>
+        <location filename="Display/fwelcome.cpp" line="334"/>
+        <source>Images</source>
+        <translation>Picture</translation>
     </message>
     <message>
-        <location filename="Display/fwelcome.cpp" line="324"/>
-        <source>Sauvegarde de foret (*.data *.dat *.frt *.sav *.save)</source>
+        <location filename="Display/fwelcome.cpp" line="348"/>
+        <source>Sauvegarde de foret</source>
+        <oldsource>Sauvegarde de foret)</oldsource>
         <translation>Forest save</translation>
     </message>
     <message>
-        <location filename="Display/fwelcome.cpp" line="338"/>
-        <source>Sauvegarde de graine (*.seed)</source>
+        <source>Images (*.png *.jpg *.jpeg *.tif *.tiff *.bmp)</source>
+        <translation type="vanished">Pictures</translation>
+    </message>
+    <message>
+        <source>Sauvegarde de foret (*.data *.dat *.frt *.sav *.save)</source>
+        <translation type="vanished">Forest save</translation>
+    </message>
+    <message>
+        <location filename="Display/fwelcome.cpp" line="362"/>
+        <source>Sauvegarde de graine</source>
+        <oldsource>Sauvegarde de graine)</oldsource>
         <translation>Seed save</translation>
     </message>
 </context>

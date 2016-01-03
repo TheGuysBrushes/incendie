@@ -24,8 +24,9 @@ int main(int argc, char* argv[])
         QString locale= "fr";
     #else
         #if ENGLISH
-          QString locale= "en";
-        #else  QString locale = QLocale::system().name();
+            QString locale= "en";
+        #else
+            QString locale = QLocale::system().name();
         #endif
     #endif
     clog<< "Locale : "<< locale.toStdString()<< endl;

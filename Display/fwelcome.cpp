@@ -81,7 +81,7 @@ void Fwelcome::createComponents()
     seedBtn = 	new QPushButton(tr("Load a seed"));
 
     max_width_btn = 	new QPushButton(tr("max"));
-    min_width_btn = 	new QPushButton(tr("min");
+    min_width_btn = 	new QPushButton(tr("min"));
 
     max_height_btn = 	new QPushButton(tr("max"));
     min_height_btn = 	new QPushButton(tr("min"));
@@ -331,7 +331,7 @@ void Fwelcome::popImageDIalog()
         urls << QUrl::fromLocalFile(QDir::toNativeSeparators(FORESTPICTURESLOCATION));
     fileDialog->setSidebarUrls(urls);
 
-	fileDialog->setNameFilter(tr("Images (*.png *.jpg *.jpeg *.tif *.tiff *.bmp)"));
+    fileDialog->setNameFilter( tr("Images") +" (*.png *.jpg *.jpeg *.tif *.tiff *.bmp)");
 
 	// Si l'utilisateur choisit un fichier
 	if(fileDialog->exec()) {
@@ -345,7 +345,7 @@ void Fwelcome::popSaveDialog()
 {
 	fileDialog = new QFileDialog(this, "Chargement d'une Sauvegarde", "../Resources/");
 	fileDialog->setViewMode(QFileDialog::Detail);
-	fileDialog->setNameFilter(tr("Sauvegarde de foret (*.data *.dat *.frt *.sav *.save)"));
+    fileDialog->setNameFilter(tr("Sauvegarde de foret") +" (*.data *.dat *.frt *.sav *.save)");
 	
 	QString fileName;
 	// Si l'utilisateur choisit un fichier
@@ -359,7 +359,7 @@ void Fwelcome::popSeedDialog()
 {
 	fileDialog = new QFileDialog(this, "Chargement d'une Graine",  "../Resources/");
 	fileDialog->setViewMode(QFileDialog::Detail);
-	fileDialog->setNameFilter(tr("Sauvegarde de graine (*.seed)"));
+    fileDialog->setNameFilter(tr("Sauvegarde de graine") + " (*.seed)");
 	
 	// Si l'utilisateur choisit un fichier
 	if(fileDialog->exec()) {
