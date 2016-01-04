@@ -162,6 +162,13 @@ public slots:
      */
     void saveSeed();
 
+    /**
+     * Modifie le fichier de langue avec la langue choisie
+     *  Le changement de langue prend effet au prochain lancement
+     * @return vrai si on a réussi à ouvrir et modifier le fichier
+     */
+//    bool tryChangeLanguage(QLocale lang);
+
     /* Autres */
     /**
      * Slot mis en place afin de transmettre l'action sélectionnée à appliquer

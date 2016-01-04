@@ -23,7 +23,7 @@ FireScreen::FireScreen(): QMainWindow()
 	QAction* saveImage = new QAction(this);
 	QAction* saveSeed = new QAction(this);
 	
-	QAction* about = new QAction(this);
+    QAction* about = new QAction(this);
 
     QMenu* menuSave= menuBar()->addMenu( tr("Others") );
     saveData->setText( tr("complete Forest") );
@@ -37,6 +37,11 @@ FireScreen::FireScreen(): QMainWindow()
 	menuSave->addAction(saveSeed);
 	
 	menuSave->addAction(about);
+    QMenu* menuLang= menuSave->addMenu( tr("Languages") );
+        menuLang->addAction( "English");
+        menuLang->addAction( "Français");
+        menuLang->addAction( "Deutsch");
+
 	connect(saveData, 	SIGNAL(triggered()), SLOT(saveData()) );
 	connect(saveImage, 	SIGNAL(triggered()), SLOT(saveImage()) );
 	connect(saveSeed, 	SIGNAL(triggered()), SLOT(saveSeed()) );

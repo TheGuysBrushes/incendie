@@ -3,7 +3,7 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = ../../incendie/build/release-Windows/Incendie_debug
+TARGET = ../../incendie/build/release-Windows/Incendie_1.2.5
 DEPENDPATH += . Display Moteur TinyXML
 INCLUDEPATH += ./Display ./Moteur
 TRANSLATIONS =  incendie_fr.ts \
