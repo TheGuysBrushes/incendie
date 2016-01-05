@@ -24,14 +24,16 @@ int main(int argc, char* argv[])
     QString locale;
     const QString &incendieTrPath = QCoreApplication::applicationDirPath()
             + QLatin1String("/translations");
+    clog << "(main)chemin translation : "<< incendieTrPath.toStdString()<< endl;
 
     ifstream lang;
     lang.open("./translations/incendie.lang", ios::in|ios::binary);
     if (lang.is_open()) {
         // Chargements des parametres dans le fichier
+        clog<< "(main)chargement fichier lang"<< endl;
         char language[2];
         lang.read((char *)&(language), 2*sizeof(char));
-        cout<< "langue : "<< language[0]<< language[1]<<  endl;
+        cout<< "(main)langue : "<< language[0]<< language[1]<<  endl;
 
         lang.close();
 
@@ -56,11 +58,11 @@ int main(int argc, char* argv[])
                 break;
             }
         }
-        // Ajoute le fichier de traduction au programme
-        app.installTranslator(&translator);
-        app.setProperty("incendie_locale", locale);
-        clog<< "Locale : "<< locale.toStdString()<< endl;
     }
+    // Ajoute le fichier de traduction au programme
+    app.installTranslator(&translator);
+    app.setProperty("incendie_locale", locale);
+    clog<< "Locale : "<< locale.toStdString()<< endl;
 
     FireScreen* screen = new FireScreen();
     if (screen->tryInitialisation(argc, argv) ) {
@@ -79,9 +81,10 @@ Remarque générales :
 
  * On pourrait placer les fonctions de chargements et de sauvegarde dans une classe ou un fichier
  * 
- * Les tailles des arbres sont fixes, on pourrait utiliser la taille moyenne et l'age de l"arbre pour calculer
- * 	et afficher différentes tailles, l'entité arbre serait différente(tronc et feuillage),
- * 	une partie des feuilles des arbres peuvent se superposer à d'autres celles d'autres arbres et le placement devient plus compliqué.
+ * Les tailles des arbres sont fixes, on pourrait utiliser la taille moyenne et l'age de l"arbre
+ *  pour calculer et afficher différentes tailles, l'entité arbre serait différente(tronc et feuillage),
+ * 	une partie des feuilles des arbres peuvent se superposer à d'autres celles d'autres arbres
+ *  et le placement devient plus compliqué.
  * 	Lors des chargements d'images, il faudrait identifier chaque arbre de l'image.
  * 
  * Ralentissment de l'exécution lorsqu'il y a beaucoup d'arbres en feu en même temps

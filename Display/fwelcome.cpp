@@ -20,6 +20,7 @@ Fwelcome::Fwelcome(QWidget* parent): QDialog(parent), picturesBrowserLocation(QD
 	createComponents();
 	
 	initComponents();
+    initEvents();
 }
 
 Fwelcome::Fwelcome(QWidget* parent, int _largeur, int _hauteur): QDialog(parent), picturesBrowserLocation("../Resources/Pictures")
@@ -27,6 +28,7 @@ Fwelcome::Fwelcome(QWidget* parent, int _largeur, int _hauteur): QDialog(parent)
 	createComponents();
 	
 	initComponents();
+    initEvents();
 	
 	larg_spin->setValue(_largeur);
 	haut_spin->setValue(_hauteur);
@@ -90,7 +92,8 @@ void Fwelcome::createComponents()
 	file= new ifstream;
 }
 
-void Fwelcome::initComponents(){
+void Fwelcome::initComponents()
+{
 	cancel_btn->setVisible(false);
 
 	/* Conteneurs */
@@ -193,21 +196,24 @@ void Fwelcome::initComponents(){
 	/* Connexion entre les différents éléments */
 	connect(slide_p,	SIGNAL(valueChanged(int)), this, SLOT(setProba(int)) );
 	connect(slide_c,	SIGNAL(valueChanged(int)), this, SLOT(setCoef(int)) );
-	
-    connect(valid_btn,	SIGNAL(clicked()), this, SLOT(accept()) );
-	connect(cancel_btn,	SIGNAL(clicked()), this, SLOT(reject()) );
-	connect(restoreBtn,	SIGNAL(clicked()), this, SLOT(popSaveDialog()) );
-	connect(loadFromImgBtn,	SIGNAL(clicked()), this, SLOT(popImageDIalog()) );
-	connect(seedBtn,		SIGNAL(clicked()), this, SLOT(popSeedDialog()) );
-    connect(min_width_btn,		SIGNAL(clicked()), SLOT(giveMinWidth()) );
-    connect(max_width_btn,		SIGNAL(clicked()), SLOT(giveMaxWidth()) );
-    connect(min_height_btn,		SIGNAL(clicked()), SLOT(giveMinHeight()) );
-    connect(max_height_btn,		SIGNAL(clicked()), SLOT(giveMaxHeight()) );
-//    connect(min_height_btn,		SIGNAL(clicked()), this,  );
+
 
 	// Appel à setValue pour déclencer l'affichage de la valeur à la construction du widget
 	slide_c->setValue(50);
 	slide_p->setValue(50);
+}
+
+void Fwelcome::initEvents()
+{
+    connect(valid_btn,	SIGNAL(clicked()), this, SLOT(accept()) );
+    connect(cancel_btn,	SIGNAL(clicked()), this, SLOT(reject()) );
+    connect(restoreBtn,	SIGNAL(clicked()), this, SLOT(popSaveDialog()) );
+    connect(loadFromImgBtn,	SIGNAL(clicked()), this, SLOT(popImageDIalog()) );
+    connect(seedBtn,		SIGNAL(clicked()), this, SLOT(popSeedDialog()) );
+    connect(min_width_btn,		SIGNAL(clicked()), SLOT(giveMinWidth()) );
+    connect(max_width_btn,		SIGNAL(clicked()), SLOT(giveMaxWidth()) );
+    connect(min_height_btn,		SIGNAL(clicked()), SLOT(giveMinHeight()) );
+    connect(max_height_btn,		SIGNAL(clicked()), SLOT(giveMaxHeight()) );
 }
 
 /*######################*/
@@ -219,17 +225,25 @@ void Fwelcome::addCancel() const
 	cancel_btn->setVisible(true);
 }
 
+void Fwelcome::closeEvent(QCloseEvent *e)
+{
+    if (!parentWidget()->isVisible()) parentWidget()->deleteLater();
+    QDialog::closeEvent(e);
 
-/*################*/
+}
+
+/*######################*/
 /***	 Setters	 ***/
-/*################*/
+/*######################*/
 
-void Fwelcome::setProba(int x){
+void Fwelcome::setProba(int x)
+{
 	proba = (float) x/100;
 	p_value->setText(QString::number(proba, 'f', 2));
 }
 
-void Fwelcome::setCoef(int x){
+void Fwelcome::setCoef(int x)
+{
 	burningCoef = (float) x/100;
 	c_value->setText(QString::number(burningCoef, 'f', 2));
 }
@@ -241,7 +255,6 @@ void Fwelcome::setCoef(int x){
 void Fwelcome::openFile(QString filename)
 {
 	std::string filePath= filename.toStdString();
-	
 	file->open(filePath.c_str(), ios::in|ios::binary);
 }
 
@@ -263,68 +276,73 @@ void Fwelcome::loadSizes()
 }
 
 /*######################*/
+void Fwelcome::checkInitFileDialog(QString window_name){
+    if (fileDialog == NULL) {
+        fileDialog = new QFileDialog(this, window_name,  "../Resources/");
+        fileDialog->setViewMode(QFileDialog::Detail);
+    }
+    else fileDialog->setWindowTitle(window_name);
+}
 
 void Fwelcome::restore(QString filename)
 {
-	openFile(filename);
-	
-	if (!file->is_open()){
-		std::cout<< "Echec ouverture fichier de sauvegarde"<< std::endl;
-	}
-	else {
-		loadSizes();
-		
-		done(Restore);
-	}
+    openFile(filename);
+
+    if (!file->is_open()){
+        std::cout<< "Echec ouverture fichier de sauvegarde"<< std::endl;
+    }
+    else {
+        loadSizes();
+
+        done(Restore);
+    }
 }
 
 void Fwelcome::loadFromImg(QString filename)
 {
-	delete pictureForest;
-	pictureForest= new QImage();
-	pictureForest->load(filename);
-	
-	if (pictureForest->isNull()){
-		std::cout<< "Echec ouverture fichier de sauvegarde"<< std::endl;
-	}
-	else {
-		larg_spin->setValue(pictureForest->width());
-		#if DEBUG_LOAD
-		cout<< "Taille : " << pictureForest->width()<< " en largeur ";
-		#endif
-		
-		haut_spin->setValue(pictureForest->height());
-		#if DEBUG_LOAD
-		cout<< pictureForest->height()<< " en hauteur" <<endl;
-		#endif
-		
-		done(Load);
-	}
-	 
+    delete pictureForest;
+    pictureForest= new QImage();
+    pictureForest->load(filename);
+
+    if (pictureForest->isNull()){
+        std::cout<< "Echec ouverture fichier de sauvegarde"<< std::endl;
+    }
+    else {
+        larg_spin->setValue(pictureForest->width());
+        #if DEBUG_LOAD
+        cout<< "Taille : " << pictureForest->width()<< " en largeur ";
+        #endif
+
+        haut_spin->setValue(pictureForest->height());
+        #if DEBUG_LOAD
+        cout<< pictureForest->height()<< " en hauteur" <<endl;
+        #endif
+
+        done(Load);
+    }
+
 }
 
 void Fwelcome::loadSeed(QString filename)
 {
-	openFile(filename);
-	
-	// Chargements des parametres dans le fichier
-	file->read((char *)&(seed), sizeof(time_t));
-	cout<< "graine : "<< seed<< endl;
-	loadSizes();
-	file->read( (char*)&(burningCoef), sizeof(float));
-	
-	file->close();
-	done(RestoreSeed);
-}
+    openFile(filename);
 
+    // Chargements des parametres dans le fichier
+    file->read((char *)&(seed), sizeof(time_t));
+    cout<< "graine : "<< seed<< endl;
+    loadSizes();
+    file->read( (char*)&(burningCoef), sizeof(float));
+
+    file->close();
+    done(RestoreSeed);
+}
 
 /*################*/
 /***	 SLOTS	 ***/
 /*################*/
 void Fwelcome::popImageDIalog()
 {
-	fileDialog = new QFileDialog(this, "Chargement d'une Image");
-	fileDialog->setViewMode(QFileDialog::Detail);
+    checkInitFileDialog("Chargement d'une Image");
 	fileDialog->setDirectory(picturesBrowserLocation);
 	QList<QUrl> urls= fileDialog->sidebarUrls();
 //		urls << QUrl::fromLocalFile(QDir::toNativeSeparators(QDesktopServices::storageLocation(QDesktopServices::PicturesLocation)))
@@ -343,8 +361,8 @@ void Fwelcome::popImageDIalog()
 
 void Fwelcome::popSaveDialog()
 {
-	fileDialog = new QFileDialog(this, "Chargement d'une Sauvegarde", "../Resources/");
-	fileDialog->setViewMode(QFileDialog::Detail);
+    checkInitFileDialog("Chargement d'une Sauvegarde");
+
     fileDialog->setNameFilter(tr("Sauvegarde de foret") +" (*.data *.dat *.frt *.sav *.save)");
 	
 	QString fileName;
@@ -357,8 +375,7 @@ void Fwelcome::popSaveDialog()
 
 void Fwelcome::popSeedDialog()
 {
-	fileDialog = new QFileDialog(this, "Chargement d'une Graine",  "../Resources/");
-	fileDialog->setViewMode(QFileDialog::Detail);
+    checkInitFileDialog("Chargement d'une Graine");
     fileDialog->setNameFilter(tr("Sauvegarde de graine") + " (*.seed)");
 	
 	// Si l'utilisateur choisit un fichier

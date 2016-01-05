@@ -13,39 +13,19 @@ using namespace std;
 FireScreen::FireScreen(): QMainWindow()
 {
     // Elements de la barre de menus
-    QAction* exit = new QAction(this);
-        exit->setText(tr("Quit"));
+    exit= menuBar()->addAction(tr("Quit"));
 
-    menuBar()->addAction(exit);
-    connect(exit, 	SIGNAL(triggered()), SLOT(close()) );
-
-    QAction* about = new QAction(this);
-
-    QMenu* menuSave= menuBar()->addMenu( tr("Others") );
+    menuSave= menuBar()->addMenu( tr("Others") );
         saveDataAction = menuSave->addAction( tr("complete Forest") );
         saveImageAction = menuSave->addAction( tr("to Image") );
         saveSeedAction = menuSave->addAction( tr("random seed") );
-
         //: Presentation menu for the app
-        about->setText(tr("About"));
-        menuSave->addAction(about);
+        about = menuSave->addAction(tr("About"));
 
-    QMenu* menuLang= menuSave->addMenu( tr("Languages") );
+    menuLang= menuSave->addMenu( tr("Languages") );
         setLangENAction= menuLang->addAction( "English");
         setLangFRAction= menuLang->addAction( "Français");
         setLangDEAction= menuLang->addAction( "Deutsch");
-
-    /***  SIGNAUX    ***/
-    // Saves
-    connect(saveDataAction, 	SIGNAL(triggered()), SLOT(saveData()) );
-    connect(saveImageAction, 	SIGNAL(triggered()), SLOT(saveImage()) );
-    connect(saveSeedAction, 	SIGNAL(triggered()), SLOT(saveSeed()) );
-    // Langues
-    connect(setLangENAction, 	SIGNAL(triggered()), SLOT(setLangEN()) );
-    connect(setLangFRAction, 	SIGNAL(triggered()), SLOT(setLangFR()) );
-    connect(setLangDEAction, 	SIGNAL(triggered()), SLOT(setLangDE()) );
-    // A propos
-    connect(about, SIGNAL(triggered()), SLOT(popAbout()) );
 
     // Composants Qt de la classe
     fWidget= new FireWidget();
@@ -62,6 +42,7 @@ FireScreen::FireScreen(): QMainWindow()
     pause_btn = new QPushButton( tr("Pause") );
         pause_btn->setDisabled(true);
 
+    // Menu déroulant d'actions du clic droit
     actionBox->addItem( tr("Cutting") );
     actionBox->addItem( tr("Retardator") );
 
@@ -78,27 +59,36 @@ FireScreen::~FireScreen()
     delete windWidget;
     delete fWidget;
 
-    delete delai_lbl;
+    delete menus;
+    delete aboutWidget;
+
     delete cpt_lbl;
+    delete delai_lbl;
 
     // BARRE de menus
-    delete saveDataAction;
-    delete saveImageAction;
-    delete saveSeedAction;
-    delete setLangENAction;
-    delete setLangFRAction;
-    delete setLangDEAction;
+    delete exit;
+
+    delete menuSave;
+        delete saveDataAction;
+        delete saveImageAction;
+        delete saveSeedAction;
+    delete about;
+    delete menuLang;
+        delete setLangENAction;
+        delete setLangFRAction;
+        delete setLangDEAction;
 
     delete pause_btn;
     delete play_btn;
     delete next_btn;
+    delete delay_btn;
     delete actionBox;
-
-    delete menus;
-
     delete timer;
 
     delete fwel;
+    delete mainWidget;
+    delete mainLay;
+
     delete fileSaveDialog;
 }
 
@@ -106,28 +96,24 @@ FireScreen::~FireScreen()
 bool FireScreen::tryInitialisation()
 {
     initComponents();
-
-    //Fwelcome* fwel = new Fwelcome(this);
+    initEvents();
 
     if ( tryInitForest() )	{
-        //delete fwel;
         return true;
     }
     else {
-        //delete fwel;
         return false;
     }
-
-    // 	return true;
 }
 
-
+/// A CORRIGER (pop est show(), mais jamais hide())
 bool FireScreen::tryInitialisation(int argc, char* argv[])
 {
     if (argc != 2)
         return false;
 
     initComponents();
+    initEvents();
 
     QString ch=argv[1];
     //ch+="\\";
@@ -140,14 +126,14 @@ bool FireScreen::tryInitialisation(int argc, char* argv[])
 
     fwel->loadFromImg(ch);
 
-
     // fWidget->delPicture();
     nb_tour = 0;
     int largeur= fwel->getLarg();
     int hauteur= fwel->getHaut();
 
     // Crée une forêt à partir de l'analyse d'une photo (de forêt de préférence, btw)
-    if (fWidget->tryInitialise(largeur,hauteur, fwel->getImage(), 0.5))	{  // WARNING coef par défaut, soit 0.5 lors ouverture depuis image
+    // WARNING coef par défaut, soit 0.5 lors ouverture depuis image
+    if (fWidget->tryInitialise(largeur,hauteur, fwel->getImage(), 0.5))	{
         //delete fwel;
         fwel->hide();
         windWidget->initValues(30, 80);
@@ -159,7 +145,9 @@ bool FireScreen::tryInitialisation(int argc, char* argv[])
         return false;
     }
 
-    // 	return true;
+//    delete pop;
+//    delete VLay;
+//    delete arg;
 }
 
 void FireScreen::initSizes(int largeur, int hauteur)
@@ -167,8 +155,10 @@ void FireScreen::initSizes(int largeur, int hauteur)
     int largeurMenu= menus->sizeHint().width();
 
     // Maximums
-    int freePixWidth= QApplication::desktop()->screenGeometry().width() -25; // les 25 pixels car il doit y avoir des marges (observé 14 puis 24 ??)
-    int freePixHeight= QApplication::desktop()->screenGeometry().height()-45 ; // 45 pixel à cause des marges et menu (observé 43)
+    // les 25 pixels car il doit y avoir des marges (observé 14 puis 24 ??)
+    int freePixWidth= QApplication::desktop()->screenGeometry().width() -25;
+    // 45 pixel à cause des marges et menu (observé 43)
+    int freePixHeight= QApplication::desktop()->screenGeometry().height()-45 ;
 
     int maxCellWidth= (freePixWidth - largeurMenu) / largeur;
     int maxCellHeight= freePixHeight/hauteur;
@@ -177,17 +167,20 @@ void FireScreen::initSizes(int largeur, int hauteur)
     setMaximumWidth( QApplication::desktop()->screenGeometry().width() );
     setMaximumHeight( QApplication::desktop()->screenGeometry().height() );
 
-    // 		resize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
-    // TODO mettre une largeur de base minimum, à partir de la hauteur du menu droite (calculer la taille d'une cellule si la hauteur de la fenetre est la hauteur du menu)
+    // resize(lay->sizeHint().height()+250 +10, lay->sizeHint().height() +menuBar()->sizeHint().height());
+    // TODO mettre une largeur de base minimum, à partir de la hauteur du menu droite
+        // (calculer la taille d'une cellule si la hauteur de la fenetre est la hauteur du menu)
     resize( (tCellMax+1)/2 * largeur + largeurMenu +25, (tCellMax + 1)/2 * hauteur +45 );
 
-    /// ATTENTION les valeurs max sont redéfinies dans ce debug, il faut transposer les valeurs correctes au dessus (pour "performances")
+    /// ATTENTION les valeurs max sont redéfinies dans ce debug,
+    ///  il faut transposer les valeurs correctes au dessus (pour "performances")
 #if DEBUG_DIMENSION
     std::cout<< "taille cell max : "<< tCellMax<< std::endl;
 
     int maxLarg= tCellMax * largeur + largeurMenu +25;
     setMaximumWidth( maxLarg);
-    std::cout<< "larg max window "<< maxLarg<< "px sur "<< freePixWidth	<< " dont "<< largeurMenu<< " menus, dispos"<<std::endl;
+    std::cout<< "larg max window "<< maxLarg<< "px sur "<< freePixWidth	<<
+                " dont "<< largeurMenu<< " menus, dispos"<<std::endl;
 
     int maxHaut= tCellMax * hauteur +45;
     setMaximumHeight(maxHaut);
@@ -334,24 +327,40 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 
     // CONTENEURS
     // Conteneur général
-    QWidget* w = new QWidget(this);
-    setCentralWidget(w);
+    mainWidget = new QWidget(this);
+    setCentralWidget(mainWidget);
 
     // Sous-conteneurs
-    QHBoxLayout* lay = new QHBoxLayout(w);
+    mainLay= new QHBoxLayout(mainWidget);
 
     // PLACEMENT DES ELEMENTS
     // Partie gauche
-    lay->addWidget(fWidget);
-    lay->setStretchFactor(fWidget, 1);
-    lay->minimumHeightForWidth(1);
+    mainLay->addWidget(fWidget);
+    mainLay->setStretchFactor(fWidget, 1);
+    mainLay->minimumHeightForWidth(1);
     // Partie droite, menus
-    initMenus(lay);
+    initMenus(mainLay);
 
     // 	Definition de la taille selon les éléments
-    setMinimumHeight(lay->sizeHint().height() + menuBar()->sizeHint().height());
+    setMinimumHeight(mainLay->sizeHint().height() + menuBar()->sizeHint().height());
 }
 
+void FireScreen::initEvents()
+{
+    /***  SIGNAUX MENUS   ***/
+    // Quitter
+    connect(exit, 	SIGNAL(triggered()), SLOT(close()) );
+    // Saves
+    connect(saveDataAction, 	SIGNAL(triggered()), SLOT(saveData()) );
+    connect(saveImageAction, 	SIGNAL(triggered()), SLOT(saveImage()) );
+    connect(saveSeedAction, 	SIGNAL(triggered()), SLOT(saveSeed()) );
+    // Langues
+    connect(setLangENAction, 	SIGNAL(triggered()), SLOT(setLangEN()) );
+    connect(setLangFRAction, 	SIGNAL(triggered()), SLOT(setLangFR()) );
+    connect(setLangDEAction, 	SIGNAL(triggered()), SLOT(setLangDE()) );
+    // A propos
+    connect(about, SIGNAL(triggered()), SLOT(popAbout()) );
+}
 
 bool FireScreen::tryInitForest()
 {
@@ -422,6 +431,8 @@ bool FireScreen::tryChangeLanguage(QLocale lang)
 
     if (!file->is_open()){
         cerr<< "Echec ouverture fichier de langue"<< chemin<< endl;
+        delete file;
+
         return false;
     }
     else {
@@ -436,6 +447,7 @@ bool FireScreen::tryChangeLanguage(QLocale lang)
         clog<< "Sauvegarde de la langue dans "<< chemin<< " réussie"<< endl;
 
         file->close();
+        delete file;
 
         return true;
     }
@@ -451,7 +463,8 @@ void FireScreen::resizeEvent(QResizeEvent* Qevent)
 #if DEBUG_DIMENSION
     std::cout << "WWindow: "<< Qevent->size().width()<< " HWindow: "<< Qevent->size().height()<< std::endl;
     std::cout << "WMenu: "<< menus->sizeHint().width()<< " HMenu: "<<menus->sizeHint().height()<< std::endl;
-    std::cout << "WDispo: "<<  Qevent->size().width() - menus->sizeHint().width()<< " HDispo: "<< Qevent->size().height() - menus->sizeHint().height()<< std::endl;
+    std::cout << "WDispo: "<<  Qevent->size().width() - menus->sizeHint().width()<<
+                 " HDispo: "<< Qevent->size().height() - menus->sizeHint().height()<< std::endl;
 #endif
 }
 
@@ -509,52 +522,56 @@ void FireScreen::reset()
 }
 
 // SAUVEGARDES
+void FireScreen::checkInitFileSaveDialog(){
+    if (fileSaveDialog == NULL) {
+        fileSaveDialog = new QFileDialog(this);
+        fileSaveDialog->setAcceptMode(QFileDialog::AcceptSave);
+    }
+}
+
 void FireScreen::saveData()
 {
-    fileSaveDialog = new QFileDialog(this);
-    fileSaveDialog->setAcceptMode(QFileDialog::AcceptSave);
+    checkInitFileSaveDialog();
     fileSaveDialog->setNameFilter(tr("Sauvegarde") +" (*.data *.dat *.frt *.sav *.save)");
 
     string s;
-    if(fileSaveDialog->exec()){
+    if(fileSaveDialog->exec() == QDialog::Accepted){
         s= fileSaveDialog->selectedFiles().at(0).toStdString();
         cout <<"taille de "<< s<< " : "<< s.length() << endl;
-    }
 
-    // Sauvegarde de la foret dans FireWidget qui effectue la procédure de Foret
-    fWidget->trySaveForest(s);
+        // Sauvegarde de la foret dans FireWidget qui effectue la procédure de Foret
+        fWidget->trySaveForest(s);
+    }
 }
 
 void FireScreen::saveImage()
 {
-    fileSaveDialog = new QFileDialog(this);
-    fileSaveDialog->setAcceptMode(QFileDialog::AcceptSave);
+    checkInitFileSaveDialog();
     fileSaveDialog->setNameFilter(tr("Images") +" (*.png *.jpg *.jpeg *.tif *.tiff *.bmp)");
 
     string s;
-    if(fileSaveDialog->exec()){
+    if(fileSaveDialog->exec() == QDialog::Accepted){
         s= fileSaveDialog->selectedFiles()[0].toStdString();
         cout <<"taille de "<< s<< " : "<< s.length() << endl;
-    }
 
-    // Sauvegarde de la foret dans FireWidget qui effectue la procédure de Foret
-    fWidget->trySaveImage(QString::fromStdString(s));
+        // Sauvegarde de la foret dans FireWidget qui effectue la procédure de Foret
+        fWidget->trySaveImage(QString::fromStdString(s));
+    }
 }
 
 void FireScreen::saveSeed()
 {
-    fileSaveDialog = new QFileDialog(this);
-    fileSaveDialog->setAcceptMode(QFileDialog::AcceptSave);
+    checkInitFileSaveDialog();
     fileSaveDialog->setNameFilter(tr("Sauvegarde") +" (*.seed)");
 
     string s;
-    if(fileSaveDialog->exec()){
+    if(fileSaveDialog->exec() == QDialog::Accepted){
         s = fileSaveDialog->selectedFiles()[0].toStdString();
         cout <<"taille de "<< s<< " : "<< s.length() << endl;
-    }
 
-    // Sauvegarde de la foret dans FireWidget qui effectue la procédure de Foret
-    fWidget->trySaveSeed(s);
+        // Sauvegarde de la foret dans FireWidget qui effectue la procédure de Foret
+        fWidget->trySaveSeed(s);
+    }
 }
 
 void FireScreen::setLangEN()

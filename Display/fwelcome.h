@@ -35,8 +35,11 @@ class Fwelcome : public QDialog
 {
 Q_OBJECT
 private:
-    int Max_larg = (QApplication::desktop()->screenGeometry().width() -LargeurMaximaleMenusDroite -20)*COEF_TAILLE_MAX_FORET;
-    int Max_haut = (QApplication::desktop()->screenGeometry().height() -HauteurMaximaleBarresFenetre -25)*COEF_TAILLE_MAX_FORET; // 45 pixel à cause des marges et menu (observé 43)
+    int Max_larg = (QApplication::desktop()->screenGeometry().width()
+                    -LargeurMaximaleMenusDroite -20)*COEF_TAILLE_MAX_FORET;
+    // 45 pixel à cause des marges et menu (observé 43)
+    int Max_haut = (QApplication::desktop()->screenGeometry().height()
+                    -HauteurMaximaleBarresFenetre -25)*COEF_TAILLE_MAX_FORET;
 
 	QGridLayout* gridLayButtons;
 
@@ -86,11 +89,21 @@ public:
 	 * @author Ugo et Florian
 	 */
 	void initComponents();
+    /**
+     * Crée les connections entre signaux et slots
+     */
+    void initEvents();
 	/**
 	 * Ajoute le bouton cancel à l'interface de création de forêt
 	 * @author Florian et Ugo
 	 */
 	void addCancel() const;
+
+    /**
+     * Redéfinition de la fermeture, afin de fermer le parent s'il n'est pas visible
+     * @param e
+     */
+    virtual void  closeEvent(QCloseEvent * e);
 	
 	/* Setters */
 public slots:
@@ -133,7 +146,13 @@ public:
 	 * @author Florian
 	 */
 	void loadSizes();
-	
+
+    /**
+     * Vérifie que la fenêtre de sauvegarde est initialisée,
+     *  si ce n'est pas le cas, elle est initialisée
+     */
+    void checkInitFileDialog(QString windows_name);
+
 	/**
 	 * Restaure une forêt stockée dans un fichier
 	 * @author Florian

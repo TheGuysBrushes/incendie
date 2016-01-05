@@ -33,16 +33,24 @@ private:
     QLabel* delai_lbl;
 
     // BARRE de menus
+    // Quitter
+    QAction* exit;
 
     //Saves
-    QAction* saveDataAction;
-    QAction* saveImageAction;
-    QAction* saveSeedAction;
+    QMenu* menuSave;
+        QAction* saveDataAction;
+        QAction* saveImageAction;
+        QAction* saveSeedAction;
+
+    //About
+    QAction* about;
 
     //Langues
-    QAction* setLangFRAction;
-    QAction* setLangENAction;
-    QAction* setLangDEAction;
+    QMenu* menuLang;
+        QAction* setLangFRAction;
+        QAction* setLangENAction;
+        QAction* setLangDEAction;
+
 
     QPushButton* pause_btn;	// pour pouvoir le griser
     QPushButton* play_btn;	// pour pouvoir le griser
@@ -53,6 +61,8 @@ private:
     QTimer* timer;
 
     Fwelcome* fwel;
+    QWidget* mainWidget;
+    QHBoxLayout* mainLay;
     QFileDialog* fileSaveDialog;
 
     int nb_tour;
@@ -105,6 +115,10 @@ private:
      */
     void initComponents();
     /**
+     * Crée les connections entre signaux et slots
+     */
+    void initEvents();
+    /**
      * Essai de créer un nouvelle forêt grâce à une fenêtre de paramétrage (Fwelcome)
      * @author Florian
      * @param fwel fenêtre de paramétrage
@@ -124,6 +138,12 @@ private:
      * @return vrai si on a réussi à ouvrir et modifier le fichier
      */
     bool tryChangeLanguage(QLocale lang);
+
+    /**
+     * Vérifie que la fenêtre de sauvegarde est initialisée,
+     *  si ce n'est pas le cas, elle est initialisée
+     */
+    void checkInitFileSaveDialog();
 
 protected:
     /**
