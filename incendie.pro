@@ -3,7 +3,36 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = ../../incendie/build/release-Windows/Incendie_1.2.5
+VERSION= 1.2.6
+
+CONFIG(debug, debug|release) {
+    TARGET = ../../incendie/build/release-Windows/Incendie_debug
+#    DLLDESTDIR += $$quote(rbuild/release-Windows)
+    message("Copying to Debug Directory.")
+} else {
+    TARGET = ../../incendie/build/last_release/bin/Incendie_"$$VERSION"
+    #DLLDESTDIR += $$quote(build/last_release)
+    message("Copying to Release Directory.")
+
+#    lightTarget.target = ../../incendie/build/last_release_light/bin/Incendie_"$$VERSION"
+#    lightTarget.commands = cp "$$TARGET".exe "$$lightTarget.target".exe
+    message("Cible de compilation : $$TARGET")
+    EXE_DIR = ..\incendie\build\last_release\bin\Incendie_"$$VERSION".exe
+
+    devTarget.target= devExeCopy
+    devTarget.commands = copy $$EXE_DIR ..\incendie\build\last_release_dev_very_light\bin\Incendie_"$$VERSION".exe
+
+    lightTarget.target= lightExeCopy
+    lightTarget.commands = copy $$EXE_DIR ..\incendie\build\last_release_light\bin\Incendie_"$$VERSION".exe
+
+    versionTarget.target= versioning
+    versionTarget.commands = @echo VERSION : $$VERSION
+
+    QMAKE_EXTRA_TARGETS += lightTarget devTarget versionTarget
+    PRE_TARGETDEPS += $$versionTarget.target
+    POST_TARGETDEPS += $$devTarget.target $$lightTarget.target
+}
+
 DEPENDPATH += . Display Moteur TinyXML
 INCLUDEPATH += ./Display ./Moteur
 TRANSLATIONS =  incendie_fr.ts \
@@ -63,4 +92,3 @@ SOURCES += main.cpp \
            TinyXML/tinyxml.cpp \
            TinyXML/tinyxmlerror.cpp \
            TinyXML/tinyxmlparser.cpp \
-

@@ -12,8 +12,8 @@
         <translation type="vanished">Images (*.png *.jpg *.jpeg *.tif *.tiff *.bmp)</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="478"/>
-        <location filename="Display/firescreen.cpp" line="510"/>
+        <location filename="Display/firescreen.cpp" line="516"/>
+        <location filename="Display/firescreen.cpp" line="548"/>
         <source>Sauvegarde</source>
         <oldsource>Sauvegarde (*.seed)</oldsource>
         <translation>Save</translation>
@@ -24,115 +24,120 @@
         <translation>Quit</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="28"/>
+        <location filename="Display/firescreen.cpp" line="24"/>
         <source>Others</source>
         <translation>Others</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="29"/>
+        <location filename="Display/firescreen.cpp" line="25"/>
         <source>complete Forest</source>
         <translation>complete forest</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="30"/>
+        <location filename="Display/firescreen.cpp" line="26"/>
         <source>to Image</source>
         <translation>to image</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="31"/>
+        <location filename="Display/firescreen.cpp" line="27"/>
         <source>random seed</source>
         <translation>random seed</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="33"/>
+        <location filename="Display/firescreen.cpp" line="30"/>
         <source>About</source>
         <extracomment>Presentation menu for the app</extracomment>
         <translation>About</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="55"/>
+        <location filename="Display/firescreen.cpp" line="33"/>
+        <source>Languages</source>
+        <translation>Languages</translation>
+    </message>
+    <message>
+        <location filename="Display/firescreen.cpp" line="60"/>
         <source>Next</source>
         <translation>Next</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="56"/>
+        <location filename="Display/firescreen.cpp" line="61"/>
         <source>Play</source>
         <translation>Play</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="57"/>
+        <location filename="Display/firescreen.cpp" line="62"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="60"/>
+        <location filename="Display/firescreen.cpp" line="65"/>
         <source>Cutting</source>
         <translation>Cutting</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="61"/>
+        <location filename="Display/firescreen.cpp" line="66"/>
         <source>Retardator</source>
         <translation>Retardator</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="210"/>
+        <location filename="Display/firescreen.cpp" line="223"/>
         <source>Cellular automaton</source>
         <translation>Cellular automaton</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="211"/>
+        <location filename="Display/firescreen.cpp" line="224"/>
         <source>Wind&apos;s settings :</source>
         <translation>Wind&apos;s settings :</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="214"/>
+        <location filename="Display/firescreen.cpp" line="227"/>
         <source>Step-to-step transmission : </source>
         <translation>Step-to-step transmission : </translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="216"/>
+        <location filename="Display/firescreen.cpp" line="229"/>
         <source>Reset ! Be careful</source>
         <translation>Reset ! Be careful</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="217"/>
+        <location filename="Display/firescreen.cpp" line="230"/>
         <source>Saves and creation: </source>
         <translation>Saves and creation: </translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="218"/>
+        <location filename="Display/firescreen.cpp" line="231"/>
         <source>Current state</source>
         <translation>Current state</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="219"/>
+        <location filename="Display/firescreen.cpp" line="232"/>
         <source>Seed&apos;s forest</source>
         <translation>Seed&apos;s forest</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="220"/>
+        <location filename="Display/firescreen.cpp" line="233"/>
         <source>As image</source>
         <translation>As image</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="224"/>
+        <location filename="Display/firescreen.cpp" line="237"/>
         <source>Continuous transmission : </source>
         <extracomment>Sous-titre</extracomment>
         <translation>Continuous transmission : </translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="226"/>
+        <location filename="Display/firescreen.cpp" line="239"/>
         <source>Number of turns :</source>
         <extracomment>Compteur de tours</extracomment>
         <translation>Number of turns :</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="258"/>
+        <location filename="Display/firescreen.cpp" line="271"/>
         <source>Action of right clic :</source>
         <translation>Action of right clic :</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="494"/>
+        <location filename="Display/firescreen.cpp" line="532"/>
         <source>Images</source>
         <oldsource>Images)</oldsource>
         <translation>Picture</translation>

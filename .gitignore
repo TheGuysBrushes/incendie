@@ -4,6 +4,7 @@
 *.exe
 build/release-Windows/*
 build/windows-QtCreator/*
+build/last_release*
 release/moc*.cpp
 object_script.Incendie
 object_script.incendie.Debug

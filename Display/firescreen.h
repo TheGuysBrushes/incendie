@@ -32,6 +32,18 @@ private:
     QLabel* cpt_lbl;
     QLabel* delai_lbl;
 
+    // BARRE de menus
+
+    //Saves
+    QAction* saveDataAction;
+    QAction* saveImageAction;
+    QAction* saveSeedAction;
+
+    //Langues
+    QAction* setLangFRAction;
+    QAction* setLangENAction;
+    QAction* setLangDEAction;
+
     QPushButton* pause_btn;	// pour pouvoir le griser
     QPushButton* play_btn;	// pour pouvoir le griser
     QPushButton* next_btn;	// pour pouvoir le griser
@@ -101,9 +113,17 @@ private:
     bool tryInitForest();
 
     /* Methodes diverses */
+    /**
+     * Met à jour l'affichage du compteur de tours
+     */
     void majCompteur();
 
-
+    /**
+     * Modifie le fichier de langue avec la langue choisie
+     *  Le changement de langue prend effet au prochain lancement
+     * @return vrai si on a réussi à ouvrir et modifier le fichier
+     */
+    bool tryChangeLanguage(QLocale lang);
 
 protected:
     /**
@@ -163,11 +183,17 @@ public slots:
     void saveSeed();
 
     /**
-     * Modifie le fichier de langue avec la langue choisie
-     *  Le changement de langue prend effet au prochain lancement
-     * @return vrai si on a réussi à ouvrir et modifier le fichier
+     * Configure la langue du prochain redémarrage en anglais
      */
-//    bool tryChangeLanguage(QLocale lang);
+    void setLangEN();
+    /**
+     * Configure la langue du prochain redémarrage en français
+     */
+    void setLangFR();
+    /**
+     * Configure la langue du prochain redémarrage en allemand
+     */
+    void setLangDE();
 
     /* Autres */
     /**

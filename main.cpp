@@ -22,55 +22,50 @@ int main(int argc, char* argv[])
 //    Creates a QTranslator object without a parent.
     QTranslator translator;
     QString locale;
+    const QString &incendieTrPath = QCoreApplication::applicationDirPath()
+            + QLatin1String("/translations");
 
     ifstream lang;
     lang.open("./translations/incendie.lang", ios::in|ios::binary);
     if (lang.is_open()) {
         // Chargements des parametres dans le fichier
-        char* language;
+        char language[2];
         lang.read((char *)&(language), 2*sizeof(char));
-        cout<< "langue : "<< language<< endl;
+        cout<< "langue : "<< language[0]<< language[1]<<  endl;
 
         lang.close();
 
-        locale= QString::fromStdString(language);
-    } else {
+        locale.append(language[0]);
+        locale.append(language[1]);
+
         //    Tries to load a translation file corresponding to the system language.
         //    No error will occur if the file is not found.
-        translator.load(QString("./translations/incendie_") + locale);
-        app.installTranslator(&translator);
-
-        //
+        translator.load(QLatin1String("incendie_") + locale, incendieTrPath);
+    } else {
         QStringList uiLanguages;
         uiLanguages = QLocale::system().uiLanguages();
         for (auto it_locale= uiLanguages.cbegin() ; it_locale != uiLanguages.cend(); ++it_locale) {
             locale = QLocale(*it_locale).name();
-            const QString &incendieTrPath = QCoreApplication::applicationDirPath()
-                    + QLatin1String("/translations");
             if (translator.load(QLatin1String("incendie_") + locale, incendieTrPath)) {
-                app.installTranslator(&translator);
-                app.setProperty("incendie_locale", locale);
                 break;
             } else if (locale == QLatin1String("C") /* overrideLanguage == "English" */) {
-                translator.load(QLatin1String("incendie_en") + locale, incendieTrPath);
-                app.setProperty("incendie_locale", locale);
+                translator.load(QLatin1String("incendie_en"), incendieTrPath);
                 break;
             } else if (locale.startsWith(QLatin1String("en")) /* "English" is built-in */) {
-                translator.load(QLatin1String("incendie_en") + locale, incendieTrPath);
-                app.setProperty("incendie_locale", locale);
+                translator.load(QLatin1String("incendie_en"), incendieTrPath);
                 break;
             }
         }
+        // Ajoute le fichier de traduction au programme
+        app.installTranslator(&translator);
+        app.setProperty("incendie_locale", locale);
         clog<< "Locale : "<< locale.toStdString()<< endl;
     }
-     //
-	
+
     FireScreen* screen = new FireScreen();
     if (screen->tryInitialisation(argc, argv) ) {
         screen->show();
-	}else {
-		
-//        FireScreen* screen = new FireScreen();
+    }else {
 		if ( screen->tryInitialisation() )
 			screen->show();
         else screen->close();

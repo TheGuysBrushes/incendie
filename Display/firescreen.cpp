@@ -12,51 +12,51 @@ using namespace std;
 
 FireScreen::FireScreen(): QMainWindow()
 {
-	// Elements de la barre de menus
-	QAction* exit = new QAction(this);
+    // Elements de la barre de menus
+    QAction* exit = new QAction(this);
         exit->setText(tr("Quit"));
 
     menuBar()->addAction(exit);
-	connect(exit, 	SIGNAL(triggered()), SLOT(close()) );
-	
-	QAction* saveData = new QAction(this);
-	QAction* saveImage = new QAction(this);
-	QAction* saveSeed = new QAction(this);
-	
+    connect(exit, 	SIGNAL(triggered()), SLOT(close()) );
+
     QAction* about = new QAction(this);
 
     QMenu* menuSave= menuBar()->addMenu( tr("Others") );
-    saveData->setText( tr("complete Forest") );
-    saveImage->setText( tr("to Image") );
-    saveSeed->setText( tr("random seed") );
-    //: Presentation menu for the app
-    about->setText(tr("About"));
-	
-	menuSave->addAction(saveData);
-	menuSave->addAction(saveImage);
-	menuSave->addAction(saveSeed);
-	
-	menuSave->addAction(about);
+        saveDataAction = menuSave->addAction( tr("complete Forest") );
+        saveImageAction = menuSave->addAction( tr("to Image") );
+        saveSeedAction = menuSave->addAction( tr("random seed") );
+
+        //: Presentation menu for the app
+        about->setText(tr("About"));
+        menuSave->addAction(about);
+
     QMenu* menuLang= menuSave->addMenu( tr("Languages") );
-        menuLang->addAction( "English");
-        menuLang->addAction( "Français");
-        menuLang->addAction( "Deutsch");
+        setLangENAction= menuLang->addAction( "English");
+        setLangFRAction= menuLang->addAction( "Français");
+        setLangDEAction= menuLang->addAction( "Deutsch");
 
-	connect(saveData, 	SIGNAL(triggered()), SLOT(saveData()) );
-	connect(saveImage, 	SIGNAL(triggered()), SLOT(saveImage()) );
-	connect(saveSeed, 	SIGNAL(triggered()), SLOT(saveSeed()) );
-	connect(about, SIGNAL(triggered()), SLOT(popAbout()) );
+    /***  SIGNAUX    ***/
+    // Saves
+    connect(saveDataAction, 	SIGNAL(triggered()), SLOT(saveData()) );
+    connect(saveImageAction, 	SIGNAL(triggered()), SLOT(saveImage()) );
+    connect(saveSeedAction, 	SIGNAL(triggered()), SLOT(saveSeed()) );
+    // Langues
+    connect(setLangENAction, 	SIGNAL(triggered()), SLOT(setLangEN()) );
+    connect(setLangFRAction, 	SIGNAL(triggered()), SLOT(setLangFR()) );
+    connect(setLangDEAction, 	SIGNAL(triggered()), SLOT(setLangDE()) );
+    // A propos
+    connect(about, SIGNAL(triggered()), SLOT(popAbout()) );
 
-	// Composants Qt de la classe
-	fWidget= new FireWidget();
-	windWidget = new WindWidget();
-	menus = new QWidget();
-	timer = new QTimer();
+    // Composants Qt de la classe
+    fWidget= new FireWidget();
+    windWidget = new WindWidget();
+    menus = new QWidget();
+    timer = new QTimer();
 
-	// COMBOBOX des différentes actions
-	actionBox = new QComboBox(this);
-	actionBox->addItem("");
-	
+    // COMBOBOX des différentes actions
+    actionBox = new QComboBox(this);
+    actionBox->addItem("");
+
     next_btn = new QPushButton( tr("Next") );
     play_btn = new QPushButton( tr("Play") );
     pause_btn = new QPushButton( tr("Pause") );
@@ -80,6 +80,14 @@ FireScreen::~FireScreen()
 
     delete delai_lbl;
     delete cpt_lbl;
+
+    // BARRE de menus
+    delete saveDataAction;
+    delete saveImageAction;
+    delete saveSeedAction;
+    delete setLangENAction;
+    delete setLangFRAction;
+    delete setLangDEAction;
 
     delete pause_btn;
     delete play_btn;
@@ -194,91 +202,91 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
     // Propriétés utiles?
         menus->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
 
-	QVBoxLayout* vert_lay1 = new QVBoxLayout(menus);
-	QWidget* ww1 = new QWidget();
-	QWidget* ww2 = new QWidget();
-	QWidget* ww3 = new QWidget();
-	QWidget* ww4 = new QWidget();
-	
-	QGridLayout* grid_lay1 = new QGridLayout(ww1);
-	QGridLayout* grid_lay2 = new QGridLayout(ww2);
-	QGridLayout* grid_lay3 = new QGridLayout(ww4);
-	
-	QWidget* www = new QWidget(ww2);
-	
-	QHBoxLayout* h_lay1 = new QHBoxLayout(www);
-	QHBoxLayout* h_lay2 = new QHBoxLayout(ww3);
-	
-	//ELEMENTS
-	
+    QVBoxLayout* vert_lay1 = new QVBoxLayout(menus);
+    QWidget* ww1 = new QWidget();
+    QWidget* ww2 = new QWidget();
+    QWidget* ww3 = new QWidget();
+    QWidget* ww4 = new QWidget();
+
+    QGridLayout* grid_lay1 = new QGridLayout(ww1);
+    QGridLayout* grid_lay2 = new QGridLayout(ww2);
+    QGridLayout* grid_lay3 = new QGridLayout(ww4);
+
+    QWidget* www = new QWidget(ww2);
+
+    QHBoxLayout* h_lay1 = new QHBoxLayout(www);
+    QHBoxLayout* h_lay2 = new QHBoxLayout(ww3);
+
+    //ELEMENTS
+
     // Element du panneau de direction de l'automate
     QLabel* titre = new QLabel(tr("Cellular automaton") );
     QLabel* info_vent= new QLabel( tr("Wind's settings :") );
-	
-	// Boutons
+
+    // Boutons
     QLabel* trans_p2p = new QLabel( tr("Step-to-step transmission : ") );
-	
+
     QPushButton* reset_btn = new QPushButton( tr("Reset ! Be careful") );
     QLabel* save_text = new QLabel( tr("Saves and creation: ") );
     QPushButton* saveStateBtn = new QPushButton( tr("Current state") );
     QPushButton* saveSeedBtn = new QPushButton( tr("Seed's forest") );
     QPushButton* saveImageBtn  = new QPushButton( tr("As image") );
-	
+
     // Compteur de tours et Slider
         //: Sous-titre
     QLabel* trans_con = new QLabel( tr("Continuous transmission : ") );
         //: Compteur de tours
     QLabel* tour_lbl = new QLabel( tr("Number of turns :") );
-	
-	int interTempsInit= 200;
-	
-	// 	majCompteur(); REMOVEIT ?
-	
-	// Ajouter la scrollbar horizontale
-	set_delai(interTempsInit);
-	
-	QSlider* slider = new QSlider(Qt::Horizontal);
-	slider->setMinimum(10);
-	slider->setMaximum(500);
-	slider->setValue(interTempsInit);	// position initiale du slider
-	
-	
-// Ajout des éléments dans les conteneurs
-	grid_lay1->addWidget(next_btn,0,0);
-	
-	grid_lay2->addWidget(play_btn,0,0);
-	grid_lay2->addWidget(pause_btn,0,1);
-	grid_lay2->addWidget(slider,1,0);
-// 	grid_lay2->addWidget(delai_lbl,1,1);
-	
 
-	grid_lay3->addWidget(saveStateBtn,0,0);
-	grid_lay3->addWidget(saveSeedBtn, 0, 1);
-	grid_lay3->addWidget(saveImageBtn,0,2);
-	grid_lay3->addWidget(reset_btn,1,0,1,0);
-	
-	h_lay1->addWidget(tour_lbl);
-	h_lay1->addWidget(cpt_lbl);
-	
+    int interTempsInit= 200;
+
+    // 	majCompteur(); REMOVEIT ?
+
+    // Ajouter la scrollbar horizontale
+    set_delai(interTempsInit);
+
+    QSlider* slider = new QSlider(Qt::Horizontal);
+    slider->setMinimum(10);
+    slider->setMaximum(500);
+    slider->setValue(interTempsInit);	// position initiale du slider
+
+
+// Ajout des éléments dans les conteneurs
+    grid_lay1->addWidget(next_btn,0,0);
+
+    grid_lay2->addWidget(play_btn,0,0);
+    grid_lay2->addWidget(pause_btn,0,1);
+    grid_lay2->addWidget(slider,1,0);
+// 	grid_lay2->addWidget(delai_lbl,1,1);
+
+
+    grid_lay3->addWidget(saveStateBtn,0,0);
+    grid_lay3->addWidget(saveSeedBtn, 0, 1);
+    grid_lay3->addWidget(saveImageBtn,0,2);
+    grid_lay3->addWidget(reset_btn,1,0,1,0);
+
+    h_lay1->addWidget(tour_lbl);
+    h_lay1->addWidget(cpt_lbl);
+
     QLabel* actionLabel = new QLabel( tr("Action of right clic :") );
 
-	h_lay2->addWidget(actionLabel);
-	h_lay2->addWidget(actionBox);
-	vert_lay1->addWidget(titre);
-	vert_lay1->addWidget(info_vent);
-	vert_lay1->addWidget(windWidget);
-	vert_lay1->addWidget(trans_p2p);
-	vert_lay1->addWidget(ww1);
-	vert_lay1->addWidget(trans_con);
-	vert_lay1->addWidget(ww2);
-	vert_lay1->addWidget(www);
-	vert_lay1->addWidget(ww3);
-	vert_lay1->addWidget(save_text);
-	vert_lay1->addWidget(ww4);
-	
-	vert_lay1->setAlignment(titre,Qt::AlignHCenter);
+    h_lay2->addWidget(actionLabel);
+    h_lay2->addWidget(actionBox);
+    vert_lay1->addWidget(titre);
+    vert_lay1->addWidget(info_vent);
+    vert_lay1->addWidget(windWidget);
+    vert_lay1->addWidget(trans_p2p);
+    vert_lay1->addWidget(ww1);
+    vert_lay1->addWidget(trans_con);
+    vert_lay1->addWidget(ww2);
+    vert_lay1->addWidget(www);
+    vert_lay1->addWidget(ww3);
+    vert_lay1->addWidget(save_text);
+    vert_lay1->addWidget(ww4);
 
-	
+    vert_lay1->setAlignment(titre,Qt::AlignHCenter);
+
+
 /***	SIGNAUX	***/
 
     // Sliders
@@ -304,19 +312,19 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
     connect(this,	SIGNAL(actionSender(int)),		fWidget, SLOT(actionReceived(int)));
 
     connect(saveImageBtn, SIGNAL (clicked()), this,  SLOT(saveImage()));
-	
-	
+
+
 /*** 	DEFINITTION DU STYLE DES ELEMENTS	***/
-	// Touches d'améliorations visuelles et d'initialisation de propriétés
-	titre->setStyleSheet("color : darkblue; font : bold italic 20px;");
-	trans_con->setStyleSheet("text-decoration : underline; color : darkblue ; font : italic 14px");
-	trans_p2p->setStyleSheet("text-decoration : underline; color : darkblue ; font : italic 14px");
-	save_text->setStyleSheet("text-decoration : underline; color : darkblue ; font : italic 14px");
-	info_vent->setStyleSheet("text-decoration : underline; color : darkblue ; font : italic 14px");
-	tour_lbl->setStyleSheet("QLabel {  color : darkblue; }");
-	cpt_lbl->setStyleSheet("QLabel { color : darkblue; }");
-	delai_lbl->setStyleSheet("QLabel { color : darkblue; }");
-	actionLabel->setStyleSheet("QLabel { color : darkblue; }");
+    // Touches d'améliorations visuelles et d'initialisation de propriétés
+    titre->setStyleSheet("color : darkblue; font : bold italic 20px;");
+    trans_con->setStyleSheet("text-decoration : underline; color : darkblue ; font : italic 14px");
+    trans_p2p->setStyleSheet("text-decoration : underline; color : darkblue ; font : italic 14px");
+    save_text->setStyleSheet("text-decoration : underline; color : darkblue ; font : italic 14px");
+    info_vent->setStyleSheet("text-decoration : underline; color : darkblue ; font : italic 14px");
+    tour_lbl->setStyleSheet("QLabel {  color : darkblue; }");
+    cpt_lbl->setStyleSheet("QLabel { color : darkblue; }");
+    delai_lbl->setStyleSheet("QLabel { color : darkblue; }");
+    actionLabel->setStyleSheet("QLabel { color : darkblue; }");
 }
 
 
@@ -407,6 +415,31 @@ void FireScreen::majCompteur()
     cpt_lbl->setText(QString::number(nb_tour));
 }
 
+bool FireScreen::tryChangeLanguage(QLocale lang)
+{
+    string chemin= "./translations/incendie.lang";
+    ofstream* file= new ofstream(chemin.c_str(), std::ios::out|std::ios::binary);
+
+    if (!file->is_open()){
+        cerr<< "Echec ouverture fichier de langue"<< chemin<< endl;
+        return false;
+    }
+    else {
+        char word[2];
+        word[0]= lang.name().at(0).toLatin1();
+        word[1]= lang.name().at(1).toLatin1();
+
+        //Ecriture dans le fichier
+        file->write( (char *)&word[0], sizeof(char));
+        file->write( (char *)&word[1], sizeof(char));
+
+        clog<< "Sauvegarde de la langue dans "<< chemin<< " réussie"<< endl;
+
+        file->close();
+
+        return true;
+    }
+}
 
 // #############
 // 	Events
@@ -424,7 +457,7 @@ void FireScreen::resizeEvent(QResizeEvent* Qevent)
 
 
 //################################
-/***				Slots				***/
+/***		Slots				***/
 //################################
 /*** Timers ***/
 void FireScreen::start_timer()
@@ -523,6 +556,25 @@ void FireScreen::saveSeed()
     // Sauvegarde de la foret dans FireWidget qui effectue la procédure de Foret
     fWidget->trySaveSeed(s);
 }
+
+void FireScreen::setLangEN()
+{
+    QLocale lang("en");
+    tryChangeLanguage(lang);
+}
+
+void FireScreen::setLangFR()
+{
+    QLocale lang("fr");
+    tryChangeLanguage(lang);
+}
+
+void FireScreen::setLangDE()
+{
+    QLocale lang("de");
+    tryChangeLanguage(lang);
+}
+
 
 void FireScreen::popAbout()
 {

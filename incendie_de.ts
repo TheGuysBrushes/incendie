@@ -9,121 +9,127 @@
         <translation>Aufgeben</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="28"/>
+        <location filename="Display/firescreen.cpp" line="24"/>
         <source>Others</source>
         <translation>Andere Optionen</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="29"/>
+        <location filename="Display/firescreen.cpp" line="25"/>
         <source>complete Forest</source>
         <translation>ganzen Wald</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="30"/>
+        <location filename="Display/firescreen.cpp" line="26"/>
         <source>to Image</source>
         <translation>zu Bild</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="31"/>
+        <location filename="Display/firescreen.cpp" line="27"/>
         <source>random seed</source>
         <translation>ungewissen Samen</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="33"/>
+        <location filename="Display/firescreen.cpp" line="30"/>
         <source>About</source>
         <extracomment>Presentation menu for the app</extracomment>
         <translation>Über der Automat</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="55"/>
+        <location filename="Display/firescreen.cpp" line="33"/>
+        <source>Languages</source>
+        <translatorcomment>Par Florian, pas sur</translatorcomment>
+        <translation>Sprachen</translation>
+    </message>
+    <message>
+        <location filename="Display/firescreen.cpp" line="60"/>
         <source>Next</source>
         <translation>Nächsten Schritt</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="56"/>
+        <location filename="Display/firescreen.cpp" line="61"/>
         <source>Play</source>
         <translation>starten</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="57"/>
+        <location filename="Display/firescreen.cpp" line="62"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="60"/>
+        <location filename="Display/firescreen.cpp" line="65"/>
         <source>Cutting</source>
         <translation>Abschaltung</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="61"/>
+        <location filename="Display/firescreen.cpp" line="66"/>
         <source>Retardator</source>
         <translation>Selbstauslöser</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="210"/>
+        <location filename="Display/firescreen.cpp" line="223"/>
         <source>Cellular automaton</source>
         <translation>Zellulärer Automat</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="211"/>
+        <location filename="Display/firescreen.cpp" line="224"/>
         <source>Wind&apos;s settings :</source>
         <translation>Wind Parameter :</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="214"/>
+        <location filename="Display/firescreen.cpp" line="227"/>
         <source>Step-to-step transmission : </source>
         <translation>Schritt für Schritt Kraftübertragung :</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="216"/>
+        <location filename="Display/firescreen.cpp" line="229"/>
         <source>Reset ! Be careful</source>
         <translation>Zurücksetzung ! Seien Sie vorsichtig</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="217"/>
+        <location filename="Display/firescreen.cpp" line="230"/>
         <source>Saves and creation: </source>
         <translation>Sichern und Gründung:</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="218"/>
+        <location filename="Display/firescreen.cpp" line="231"/>
         <source>Current state</source>
         <translation>Laufend Zustand</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="219"/>
+        <location filename="Display/firescreen.cpp" line="232"/>
         <source>Seed&apos;s forest</source>
         <translation>Wald von Samen</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="220"/>
+        <location filename="Display/firescreen.cpp" line="233"/>
         <source>As image</source>
         <translation>Nach Bild</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="224"/>
+        <location filename="Display/firescreen.cpp" line="237"/>
         <source>Continuous transmission : </source>
         <extracomment>Sous-titre</extracomment>
         <translation>kontinuierliches Kraftübertragung :</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="226"/>
+        <location filename="Display/firescreen.cpp" line="239"/>
         <source>Number of turns :</source>
         <extracomment>Compteur de tours</extracomment>
         <translation>Drehzahl :</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="258"/>
+        <location filename="Display/firescreen.cpp" line="271"/>
         <source>Action of right clic :</source>
         <translation>Handlung des rechte Klick :</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="478"/>
-        <location filename="Display/firescreen.cpp" line="510"/>
+        <location filename="Display/firescreen.cpp" line="516"/>
+        <location filename="Display/firescreen.cpp" line="548"/>
         <source>Sauvegarde</source>
         <translation>Sichern</translation>
     </message>
     <message>
-        <location filename="Display/firescreen.cpp" line="494"/>
+        <location filename="Display/firescreen.cpp" line="532"/>
         <source>Images</source>
         <oldsource>Images)</oldsource>
         <translation>Bilder</translation>

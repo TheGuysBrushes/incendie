@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_FireScreen_t {
-    QByteArrayData data[17];
-    char stringdata0[152];
+    QByteArrayData data[16];
+    char stringdata0[150];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -41,17 +41,17 @@ QT_MOC_LITERAL(8, 69, 5), // "reset"
 QT_MOC_LITERAL(9, 75, 8), // "saveData"
 QT_MOC_LITERAL(10, 84, 9), // "saveImage"
 QT_MOC_LITERAL(11, 94, 8), // "saveSeed"
-QT_MOC_LITERAL(12, 103, 10), // "updateWind"
-QT_MOC_LITERAL(13, 114, 5), // "angle"
-QT_MOC_LITERAL(14, 120, 7), // "vitesse"
-QT_MOC_LITERAL(15, 128, 14), // "releaseOrdered"
-QT_MOC_LITERAL(16, 143, 8) // "popAbout"
+QT_MOC_LITERAL(12, 103, 17), // "tryChangeLanguage"
+QT_MOC_LITERAL(13, 121, 4), // "lang"
+QT_MOC_LITERAL(14, 126, 14), // "releaseOrdered"
+QT_MOC_LITERAL(15, 141, 8) // "popAbout"
 
     },
     "FireScreen\0actionSender\0\0x\0start_timer\0"
     "stop_timer\0set_delai\0nextStep\0reset\0"
-    "saveData\0saveImage\0saveSeed\0updateWind\0"
-    "angle\0vitesse\0releaseOrdered\0popAbout"
+    "saveData\0saveImage\0saveSeed\0"
+    "tryChangeLanguage\0lang\0releaseOrdered\0"
+    "popAbout"
 };
 #undef QT_MOC_LITERAL
 
@@ -80,9 +80,9 @@ static const uint qt_meta_data_FireScreen[] = {
        9,    0,   84,    2, 0x0a /* Public */,
       10,    0,   85,    2, 0x0a /* Public */,
       11,    0,   86,    2, 0x0a /* Public */,
-      12,    2,   87,    2, 0x0a /* Public */,
-      15,    0,   92,    2, 0x0a /* Public */,
-      16,    0,   93,    2, 0x0a /* Public */,
+      12,    1,   87,    2, 0x0a /* Public */,
+      14,    0,   90,    2, 0x0a /* Public */,
+      15,    0,   91,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int,    3,
@@ -96,7 +96,7 @@ static const uint qt_meta_data_FireScreen[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,   13,   14,
+    QMetaType::Bool, QMetaType::QLocale,   13,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -118,7 +118,8 @@ void FireScreen::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 6: _t->saveData(); break;
         case 7: _t->saveImage(); break;
         case 8: _t->saveSeed(); break;
-        case 9: _t->updateWind((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 9: { bool _r = _t->tryChangeLanguage((*reinterpret_cast< QLocale(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         case 10: _t->releaseOrdered(); break;
         case 11: _t->popAbout(); break;
         default: ;
