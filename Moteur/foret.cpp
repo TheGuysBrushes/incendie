@@ -44,7 +44,8 @@ Foret::Foret(int _largeur, int _hauteur, vector< std::vector< int > >* matrice,f
 	wind = new Vent();
 	tryLoadEssences(ESSENCE_PATH);
 	#if DEBUG_ARBRE_PLANTE
-	cout<< "création de la foret à partir d'une matrice d'intensité, de taille "<< _largeur<< "x"<< _hauteur<< endl;
+    cout<< "création de la foret à partir d'une matrice d'intensité, de taille "<<
+           _largeur<< "x"<< _hauteur<< endl;
 	#endif
 	create(_largeur, _hauteur, matrice);
 }
@@ -58,13 +59,13 @@ Foret::~Foret()
 		}
 	}
 	
-	// a priori, inutile de vider les listes
-	onFire.clear();
-	burned.clear();
-	carbonized.clear();
-	delayBurned.clear();
-	delayed.clear();
-	uprooted.clear();
+    // a priori, inutile de vider les listes TODO se renseigner
+    onFire.clear();
+    burned.clear();
+    carbonized.clear();
+    delayBurned.clear();
+    delayed.clear();
+    uprooted.clear();
 	
 	delete wind;
 }
@@ -98,8 +99,10 @@ unsigned Foret::essenceRandom(int col, int row, unsigned distOthers){
 	
 	// Récupération des voisins
 	list<Arbre*> voisins = adjacents(col, row, distOthers);
-	// Pondération du tableau
-	unsigned densite= 5;	// plus le parametre est élevé, plus les chances que les arbres soit les mêmes que leurs voisins est forte (formation bosquets)
+    // Pondération du tableau
+    // Plus le parametre est élevé, plus les chances que les arbres
+    //    soient les mêmes que leurs voisins est forte (formation bosquets)
+    unsigned densite= 5;
 	for (list< Arbre* >::const_iterator a(voisins.begin()); a!=voisins.end(); ++a){
 		probaEss[(*a)->getEssence()->getIndice()] += densite;
 	}
@@ -281,7 +284,9 @@ void Foret::plantTree(int col, int row)
 	
 	const Essence* pEss= &(essences[ess]);
 	// pour l'instant, on considere que tous les arbres ont atteint leur maturite
-	Arbre* ab= new Arbre(matrix[row][col], col,row, pEss, rand()%ecartAgeMax +pEss->getAgeMaturite(), rand()%ecartHMax +hMin );
+    Arbre* ab= new Arbre(matrix[row][col], col,row, pEss,
+                         rand()%ecartAgeMax +pEss->getAgeMaturite(),
+                         rand()%ecartHMax +hMin );
 	matrix[row][col]= ab;
 }
 
@@ -308,8 +313,9 @@ void Foret::plantTree(int col, int row, unsigned int numEss, int PdV, float humi
 	matrix[row][col]= ab;
 }
 
-// IMPROVEIT Il faudrait pouvoir choisir une sensibilité au vert ou à la luminosité, ou bien calculer la luminosité moyenne de l'image pour la prendre en compte
-// 	On peut avoir des résultat étranges en changeant la luminosité ou l'etalonnage d'une même image
+// IMPROVEIT Il faudrait pouvoir choisir une sensibilité au vert ou à la luminosité,
+//  ou bien calculer la luminosité moyenne de l'image pour la prendre en compte
+// @SEE On peut avoir des résultat étranges en changeant la luminosité ou l'etalonnage d'une même image
 void Foret::create(int largeur, int hauteur, vector< vector< int > >* matrice)
 {
 	initEmpty();
@@ -417,7 +423,8 @@ void Foret::clearChanged()
 // 	Modification des éléments
 // ##################################
 
-// IMPROVEIT couper un arbre : supprimer arbre puis créer cellule ?, laisser l'arbre ? (pour l'instant l'arbre est laissé)
+// @SEE couper un arbre : supprimer arbre puis créer cellule ?
+// (pour l'instant l'arbre est laissé)
 void Foret::uproot(Arbre* ab)
 {
 	ab->uproot();
@@ -472,8 +479,10 @@ void Foret::blast(Arbre* ab)
 // BURNING
 void Foret::spark(Arbre* ab, int intensite)
 {
-// NOTE : on pourrait augmenter 	la brulure de l'arbre quand un de ses voisins lui transmet du feu, voir un concept de chaleur.
-// 	On pourrait egalement aller plus loin et introduire une antité feu, une humidite de zone qui évolue selon la quantité de feu..
+// NOTE : on pourrait augmenter la brulure de l'arbre quand un de ses voisins lui transmet du feu,
+//    voire un concept de chaleur.
+// 	On pourrait egalement aller plus loin et introduire une antité feu,
+//    une humidite de zone qui évolue selon la quantité de feu..
 // 	Dans ce cas, il faudrait prendre en compte différentes tailles d'arbres pour être précis ...
 // 	On a décidé de se restreindre sur ce point afin de se concentrer sur d'autre points.
 // 	if (ab->getState==2){
@@ -533,7 +542,6 @@ void Foret::delay(int xDep, int yDep, int xArr, int yArr)
 
 std::list< Arbre* > Foret::adjacents(int col, int row, int distance) const
 {
-//	Voir les images pour modif ? calcul transmission selon distance (1.4/distance) -0.4 ? : transmission proportionnelle inverse à distance de 0 à 3.33
 	list< Arbre* > liste;
 	
 	// on prend la taille de la case, sans adjacents supposé
@@ -626,12 +634,14 @@ void Foret::sparkAdjacentsWind(int posCol, int posRow, int hor, int vert)
 	else if (forceVert>2)
 		inverseVert= 0;
 		
-	// On parcourt les cellules dans les sens du vent et 1 cellule de distance à l'opposé du vent (tranmission "arrière")
+    // On parcourt les cellules dans les sens du vent et 1 cellule de distance,
+    //  à l'opposé du vent (tranmission "arrière")
 	for(int i = hor+x; i != -inverseHor; i-=x) {
 		for(int j = vert+y; j != -inverseVert; j-=y) {
 
 			// Test d'appartenance des coordonnées à la matrice
-			if( ( (posCol+i) >= 0 ) && ( (posCol+i) < (colonnes) ) && ( (posRow+j) >= 0 ) && ( (posRow+j) < (lignes) ) ){
+            if( ( (posCol+i) >= 0 )&& ( (posCol+i) < colonnes )
+                    && ( (posRow+j) >= 0 ) && ( (posRow+j) < lignes ) ){
 				#if DEBUG_VENT2
 				cout << "transmission à cellule en "<< posRow + (hor -i)<< " ; "<< posCol + (vert -j)<< endl;
 				#endif
@@ -931,7 +941,7 @@ cout<< "Enregistrement de l'arbre "<< ab->getPos().col<< "; "<< lignes<< endl;
 
 bool Foret::trySave(string fileName)
 {
-	string chemin= fileName+".dat";
+    string chemin= fileName;
 	ofstream* file= new ofstream(chemin.c_str(), std::ios::out|std::ios::binary);
 	
 	if (!file->is_open()){
@@ -955,7 +965,8 @@ bool Foret::trySaveSeed(string filePath)
 	ofstream* file= new ofstream(filePath.c_str(), std::ios::out|std::ios::binary);
 	
 	if (!file->is_open()){
-		cout<< "Echec ouverture fichier de sauvegarde : " << filePath<< endl; // TODO émettre une alerte à l'utilisateur
+        // TODO émettre une alerte à l'utilisateur
+        cout<< "Echec ouverture fichier de sauvegarde : " << filePath<< endl;
 		return false;
 	}
 	else {
@@ -978,7 +989,8 @@ bool Foret::trySaveSeed(string filePath)
 // #########################
 void Foret::showEssences() const
 {
-	cout << "| Nom\t\t||"<< " indice\t||"<< " masseV\t||"<< " diam\t||"<< " haut\t||"<< " type\t||"<< " ageM\t|"<< endl;
+    cout << "| Nom\t\t||"<< " indice\t||"<< " masseV\t||"<<
+            " diam\t||"<< " haut\t||"<< " type\t||"<< " ageM\t|"<< endl;
 	cout << "-------------------------------------------------------------------------------"<< endl;
 	
 	for(vector<Essence>::const_iterator i(essences.begin()); i!=essences.end(); ++i){

@@ -1,8 +1,6 @@
 #ifndef FORET_H
 #define FORET_H
 
-#include <QtWidgets/QProgressBar> // IMPROVEIT ?
-
 #include <vector>
 #include <list>
 #include <iostream>
@@ -25,8 +23,10 @@ class Foret
 private:
 	int lignes;
 	int colonnes;
-	
-	float burningCoef; // ralenti la progression du feu, il lui faut plus de tours pour avancer (peut affecter la précision des mesures)
+
+    // altère la progression du feu, il lui faut plus de tours pour progresser
+    //   si la valeur est faible peut affecter la précision des mesures)
+    float burningCoef;
 	
 	std::time_t randomSeed;
 	
@@ -50,8 +50,10 @@ public:
 	 * 
 	 * @param _largeur nombre de colonnes de la matrice représentant la forêt, sa largeur
 	 * @param _hauteur nombre de lignes de la matrice, la hauteur
-	 * @param proba, probabilite qu'il y ait un arbre, pour chaque case de la matrice. C'est environ le pourcentage d'arbres
-	 * @param _coefFeu coefficient de propagation du feu : 1 forêt "classique"; <1 progression plus lente (humidité...); >1 progression plus rapide (sécheresse ?)
+     * @param proba, probabilite qu'il y ait un arbre, pour chaque case de la matrice.
+     *  C'est environ le pourcentage d'arbres
+     * @param _coefFeu coefficient de propagation du feu :
+     *  1 forêt "classique"; <1 progression plus lente (humidité...); >1 progression plus rapide (sécheresse ?)
 	 */
 	Foret(int _largeur, int _hauteur, float proba = 0.60, float _coefFeu = 0.5, std::time_t graine=std::time(0));
 // 	Foret(int _largeur, int _hauteur, std::time_t graine, float proba = 0.60, float _coefFeu = 0.5);
@@ -62,7 +64,8 @@ public:
 	 * 
 	 * @param _largeur nombre de colonnes de la matrice représentant la forêt, sa largeur
 	 * @param _hauteur nombre de lignes de la matrice, la hauteur
-	 * @param file fichier de sauvegarde d'une foret précédente, contenant les essences et l'emplacement des arbres et leur indice d'essence
+     * @param file fichier de sauvegarde d'une foret précédente,
+     *  contenant les essences et l'emplacement des arbres et leur indice d'essence
 	 * @param PB barre de progression Qt, pour afficher l'avancement du chargement
 	 */
 	Foret(int _largeur, int _hauteur, std::ifstream* file, LoadProgress* PB);
@@ -76,7 +79,7 @@ public:
 	 */
 	Foret(int _largeur, int _hauteur, std::vector< std::vector< int > >* matrice, float coef_brulure);
 	/**
-	 * On vide également les listes, mêmes si c'est fait automatiquement TODO-SE RENSEIGNER si ca n'entraine pas de "double libération"
+     * On vide également les listes @SEE utile ?
 -	 * @author Florian
 	 */
 	virtual ~Foret();
@@ -125,11 +128,11 @@ public:
 	void setWind(int angle, int vitesse);
 	
 /* Getters */
-	int width()	const { return colonnes; };
-	int height()	const { return lignes; };
-	int nbEssences(){ return essences.size() ; };
-	const Vent* getVent() const { return wind; };
-	std::vector< Cellule* >* operator[](int ligne) { return &(matrix[ligne]); };
+    int width()	const { return colonnes; }
+    int height()	const { return lignes; }
+    int nbEssences(){ return essences.size() ; }
+    const Vent* getVent() const { return wind; }
+    std::vector< Cellule* >* operator[](int ligne) { return &(matrix[ligne]); }
 	
 // Initialisations
 	/**
@@ -162,25 +165,26 @@ public:
 	 */
 	void clean();
 	
-	const std::list< Arbre* >* getOnFire() const	{ return &onFire; };
-	std::list< Arbre* >* getUprooted()		{ return &uprooted; };
-	std::list< Arbre* >* getDelayed()		{ return &delayed; };
-	std::list< Arbre* >* getDelayBurned()	{ return &delayBurned; };
-	std::list< Arbre* >* getCarbonized()	{ return &carbonized; };
-	std::list< Arbre* >* getBurned()			{ return &burned; };
+    const std::list< Arbre* >* getOnFire() const	{ return &onFire; }
+    std::list< Arbre* >* getUprooted()		{ return &uprooted; }
+    std::list< Arbre* >* getDelayed()		{ return &delayed; }
+    std::list< Arbre* >* getDelayBurned()	{ return &delayBurned; }
+    std::list< Arbre* >* getCarbonized()	{ return &carbonized; }
+    std::list< Arbre* >* getBurned()			{ return &burned; }
 	/**
 	 * Retourne les listes d'éléments modfiés
 	 * @author Florian
-	 *	IMPROVEIT ? Inutilisé, car il faudrait regarder pour chaque élément avec quelle couleur l'afficher au lieu d'une couleur par liste
+     *	IMPROVEIT ? Inutilisé, car il faudrait regarder pour chaque élément avec quelle couleur l'afficher
+     *   au lieu d'une couleur par liste
 	 */
 	std::list< std::list< Arbre* > >* getChanged();
 	
 	// Vidage des listes
-	void clearUprooted()	{ uprooted.clear(); };
-	void clearDelayed()	{ delayed.clear(); };
-	void clearDelayBurned()	{ delayBurned.clear(); };
-	void clearCarbonized()	{ carbonized.clear(); };
-	void clearBurned()	{ burned.clear(); };
+    void clearUprooted()	{ uprooted.clear(); }
+    void clearDelayed()	{ delayed.clear(); }
+    void clearDelayBurned()	{ delayBurned.clear(); }
+    void clearCarbonized()	{ carbonized.clear(); }
+    void clearBurned()	{ burned.clear(); }
 	/**
 	 * Vide les listes d'éléments modifiés
 	 * @author Florian
