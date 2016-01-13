@@ -140,7 +140,7 @@
         <location filename="Display/firescreen.cpp" line="532"/>
         <source>Images</source>
         <oldsource>Images)</oldsource>
-        <translation>Picture</translation>
+        <translation>Pictures</translation>
     </message>
 </context>
 <context>

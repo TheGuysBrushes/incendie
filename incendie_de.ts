@@ -109,7 +109,7 @@
         <location filename="Display/firescreen.cpp" line="237"/>
         <source>Continuous transmission : </source>
         <extracomment>Sous-titre</extracomment>
-        <translation>kontinuierliches Kraftübertragung :</translation>
+        <translation>kontinuierliches Kraftübertragung : </translation>
     </message>
     <message>
         <location filename="Display/firescreen.cpp" line="239"/>

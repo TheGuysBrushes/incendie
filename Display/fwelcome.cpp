@@ -342,10 +342,9 @@ void Fwelcome::loadSeed(QString filename)
 /*################*/
 void Fwelcome::popImageDIalog()
 {
-    checkInitFileDialog("Chargement d'une Image");
+    checkInitFileDialog(tr("Chargement d'une Image"));
 	fileDialog->setDirectory(picturesBrowserLocation);
 	QList<QUrl> urls= fileDialog->sidebarUrls();
-//		urls << QUrl::fromLocalFile(QDir::toNativeSeparators(QDesktopServices::storageLocation(QDesktopServices::PicturesLocation)))
         urls << QUrl::fromLocalFile(QDir::toNativeSeparators(FORESTPICTURESLOCATION));
     fileDialog->setSidebarUrls(urls);
 
@@ -355,13 +354,12 @@ void Fwelcome::popImageDIalog()
 	if(fileDialog->exec()) {
 		loadFromImg( fileDialog->selectedFiles()[0] );
 		picturesBrowserLocation= fileDialog->directory();
-	}
-	//delete fileDialog;
+    }
 }
 
 void Fwelcome::popSaveDialog()
 {
-    checkInitFileDialog("Chargement d'une Sauvegarde");
+    checkInitFileDialog(tr("Chargement d'une Sauvegarde"));
 
     fileDialog->setNameFilter(tr("Sauvegarde de foret") +" (*.data *.dat *.frt *.sav *.save)");
 	
@@ -375,7 +373,7 @@ void Fwelcome::popSaveDialog()
 
 void Fwelcome::popSeedDialog()
 {
-    checkInitFileDialog("Chargement d'une Graine");
+    checkInitFileDialog(tr("Chargement d'une Graine"));
     fileDialog->setNameFilter(tr("Sauvegarde de graine") + " (*.seed)");
 	
 	// Si l'utilisateur choisit un fichier

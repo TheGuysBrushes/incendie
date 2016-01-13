@@ -1,4 +1,4 @@
-#include "firescreen.h"
+﻿#include "firescreen.h"
 
 // Composants Qt qui ne sont pas des attributs de classe
 #include <QtWidgets/QVBoxLayout>
@@ -81,8 +81,14 @@ FireScreen::~FireScreen()
     delete pause_btn;
     delete play_btn;
     delete next_btn;
-    delete delay_btn;
+    delete slider;
     delete actionBox;
+
+    delete  reset_btn;
+    delete  saveStateBtn;
+    delete  saveSeedBtn;
+    delete  saveImageBtn;
+
     delete timer;
 
     delete fwel;
@@ -219,11 +225,11 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
     // Boutons
     QLabel* trans_p2p = new QLabel( tr("Step-to-step transmission : ") );
 
-    QPushButton* reset_btn = new QPushButton( tr("Reset ! Be careful") );
     QLabel* save_text = new QLabel( tr("Saves and creation: ") );
-    QPushButton* saveStateBtn = new QPushButton( tr("Current state") );
-    QPushButton* saveSeedBtn = new QPushButton( tr("Seed's forest") );
-    QPushButton* saveImageBtn  = new QPushButton( tr("As image") );
+    saveStateBtn = new QPushButton( tr("Current state") );
+    saveSeedBtn = new QPushButton( tr("Seed's forest") );
+    saveImageBtn  = new QPushButton( tr("As image") );
+    reset_btn = new QPushButton( tr("Reset ! Be careful") );
 
     // Compteur de tours et Slider
         //: Sous-titre
@@ -238,10 +244,10 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
     // Ajouter la scrollbar horizontale
     set_delai(interTempsInit);
 
-    QSlider* slider = new QSlider(Qt::Horizontal);
-    slider->setMinimum(10);
-    slider->setMaximum(500);
-    slider->setValue(interTempsInit);	// position initiale du slider
+    slider = new QSlider(Qt::Horizontal);
+        slider->setMinimum(10);
+        slider->setMaximum(500);
+        slider->setValue(interTempsInit);	// position initiale du slider
 
 
 // Ajout des éléments dans les conteneurs
@@ -250,8 +256,6 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
     grid_lay2->addWidget(play_btn,0,0);
     grid_lay2->addWidget(pause_btn,0,1);
     grid_lay2->addWidget(slider,1,0);
-// 	grid_lay2->addWidget(delai_lbl,1,1);
-
 
     grid_lay3->addWidget(saveStateBtn,0,0);
     grid_lay3->addWidget(saveSeedBtn, 0, 1);
@@ -278,34 +282,6 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
     vert_lay1->addWidget(ww4);
 
     vert_lay1->setAlignment(titre,Qt::AlignHCenter);
-
-
-/***	SIGNAUX	***/
-
-    // Sliders
-    connect(slider,	SIGNAL(valueChanged(int)),		this, SLOT( set_delai(int)) );
-    connect(windWidget,	SIGNAL(wind_changed(int, int)),	fWidget, SLOT(setWind(int, int)) );
-
-    // Boutons
-    /* Gestion foret */
-    connect(reset_btn,	SIGNAL(clicked()), 	this,	SLOT( reset()) );
-    connect(saveStateBtn,	SIGNAL(clicked()),	this, SLOT( saveData()) );
-    connect(saveSeedBtn, SIGNAL(clicked()), this, SLOT( saveSeed()) );
-
-    /* Déroulement*/
-    connect(next_btn,	SIGNAL(clicked()), 		this,	SLOT( nextStep()) );
-    connect(play_btn,	SIGNAL(clicked()), 		this,	SLOT( start_timer()) );
-    connect(pause_btn,	SIGNAL(clicked()),	this,	SLOT( stop_timer()) );
-
-    // Autres signaux déroulement
-    connect(timer,	SIGNAL(timeout()), this,	SLOT( nextStep()) );
-
-    // Coupure et retardateur
-    connect(fWidget,	SIGNAL(releaseSignal()),	this, SLOT(releaseOrdered()));
-    connect(this,	SIGNAL(actionSender(int)),		fWidget, SLOT(actionReceived(int)));
-
-    connect(saveImageBtn, SIGNAL (clicked()), this,  SLOT(saveImage()));
-
 
 /*** 	DEFINITTION DU STYLE DES ELEMENTS	***/
     // Touches d'améliorations visuelles et d'initialisation de propriétés
@@ -347,7 +323,7 @@ void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 
 void FireScreen::initEvents()
 {
-    /***  SIGNAUX MENUS   ***/
+    /***  SIGNAUX BARRE DE MENUS   ***/
     // Quitter
     connect(exit, 	SIGNAL(triggered()), SLOT(close()) );
     // Saves
@@ -360,6 +336,30 @@ void FireScreen::initEvents()
     connect(setLangDEAction, 	SIGNAL(triggered()), SLOT(setLangDE()) );
     // A propos
     connect(about, SIGNAL(triggered()), SLOT(popAbout()) );
+
+    /***   SIGNAUX MENUS DE DROITE  ***/
+    // Vent
+    connect(windWidget,	SIGNAL(wind_changed(int, int)),	fWidget, SLOT(setWind(int, int)) );
+
+    /* Déroulement*/
+    connect(next_btn,	SIGNAL(clicked()), 	this,	SLOT( nextStep()) );
+    connect(play_btn,	SIGNAL(clicked()), 	this,	SLOT( start_timer()) );
+    connect(pause_btn,	SIGNAL(clicked()),	this,	SLOT( stop_timer()) );
+
+    /* Slider */
+    connect(slider,	SIGNAL(valueChanged(int)),		this, SLOT( set_delai(int)) );
+
+    // Autres signaux déroulement
+    connect(timer,	SIGNAL(timeout()), this,	SLOT( nextStep()) );
+
+    // Coupure et retardateur
+    connect(fWidget,	SIGNAL(releaseSignal()),	this, SLOT(releaseOrdered()));
+    connect(this,	SIGNAL(actionSender(int)),		fWidget, SLOT(actionReceived(int)));
+    /* Gestion foret */
+    connect(reset_btn,	SIGNAL(clicked()), 	this,	SLOT( reset()) );
+    connect(saveStateBtn,	SIGNAL(clicked()),	this, SLOT( saveData()) );
+    connect(saveSeedBtn, SIGNAL(clicked()), this, SLOT( saveSeed()) );
+    connect(saveImageBtn, SIGNAL (clicked()), this,  SLOT(saveImage()));
 }
 
 bool FireScreen::tryInitForest()
@@ -536,8 +536,12 @@ void FireScreen::saveData()
 
     string s;
     if(fileSaveDialog->exec() == QDialog::Accepted){
-        s= fileSaveDialog->selectedFiles().at(0).toStdString();
+        QFileInfo fileInfo(fileSaveDialog->selectedFiles().at(0));
         cout <<"taille de "<< s<< " : "<< s.length() << endl;
+        if (fileInfo.suffix()== ".dat" ||fileInfo.suffix()==  ".data" || fileInfo.suffix()==  ".frt" || fileInfo.suffix()==  ".sav" || fileInfo.suffix()==  ".save"){
+            s= fileInfo.bundleName().toStdString();
+        }
+        else  s= fileInfo.completeBaseName().toStdString() + ".dat";
 
         // Sauvegarde de la foret dans FireWidget qui effectue la procédure de Foret
         fWidget->trySaveForest(s);

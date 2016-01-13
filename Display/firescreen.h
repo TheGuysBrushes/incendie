@@ -51,14 +51,17 @@ private:
         QAction* setLangENAction;
         QAction* setLangDEAction;
 
-
-    QPushButton* pause_btn;	// pour pouvoir le griser
-    QPushButton* play_btn;	// pour pouvoir le griser
-    QPushButton* next_btn;	// pour pouvoir le griser
-    QPushButton* cut_btn;	// pour pouvoir le griser
-    QPushButton* delay_btn;	// pour pouvoir le griser
+    // Boutons gestion incendie
+    QPushButton* pause_btn;
+    QPushButton* play_btn;
+    QPushButton* next_btn;
+    QSlider* slider;
     QComboBox* actionBox;
-    QTimer* timer;
+    // Boutons gestion sauvegardes et forêt
+    QPushButton* reset_btn;
+    QPushButton* saveStateBtn;
+    QPushButton* saveSeedBtn;
+    QPushButton* saveImageBtn;
 
     Fwelcome* fwel;
     QWidget* mainWidget;
