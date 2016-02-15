@@ -57,7 +57,7 @@ void WindWidget::initComponents()
 
 		// QWidget conteneur des éléments d'informations sur la vitesse du vent
 		QWidget* speed_label_container = new QWidget();
-			QLabel* unit_vitesse = new QLabel("km/h");
+            QLabel* unit_vitesse = new QLabel(tr("kph"));
 
 			// Layout contenant les labels sur la vitesse du vent
 			QHBoxLayout* h_lay2 = new QHBoxLayout(speed_label_container);
