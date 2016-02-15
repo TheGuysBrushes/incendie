@@ -8,6 +8,7 @@ VERSION= 1.4.1
 message()
 message(Qt version: $$[QT_VERSION])
 
+
 DESTDIR = $$PWD
 message(The project will be installed in $$DESTDIR)
 
@@ -16,19 +17,26 @@ CONFIG += create_prl
 #The second step in this process is to enable reading of this meta information in the applications that use the static library:
 CONFIG += link_prl
 
-
 # Instructions for debug or release mode
 CONFIG(debug, debug|release) {
-    TARGET = ../incendie/build/debug-Windows/Incendie_debug
+    TARGET = ../incendie/build/Debug/Incendie_debug
 #    DLLDESTDIR += $$quote(rbuild/release-Windows)
     message("Compiling Debug mode")
 } else {
-    TARGET = ../incendie/build/last_release/bin/Incendie_"$$VERSION"
+    win32 { TARGET = ../incendie/build/last_release/bin/Incendie_"$$VERSION" }
+    unix {  TARGET = ../last_release/bin/Incendie_"$$VERSION" }
     #DLLDESTDIR += $$quote(build/last_release)
     message("Compiling to $$TARGET then copy executable to Release Directories")
 
     # Copy executable in another directory
-    QMAKE_POST_LINK +=  $$QMAKE_COPY $$system_path($$TARGET).exe ..\incendie\build\last_release_dev_very_light\bin\Incendie_"$$VERSION".exe
+    win32   { QMAKE_POST_LINK +=  $$QMAKE_COPY $$system_path($$TARGET).exe  ..\incendie\build\last_release_dev_very_light\bin\Incendie_"$$VERSION".exe }
+    unix  { QMAKE_POST_LINK +=  $$QMAKE_COPY $$system_path($$TARGET)      ../last_release_dev_very_light/bin/Incendie_"$$VERSION"
+        # Create directory where executable is copy
+        foldersTarget.target = create_folders
+        foldersTarget.commands =  mkdir -p ../last_release_dev_very_light/bin
+        QMAKE_EXTRA_TARGETS +=  foldersTarget
+        PRE_TARGETDEPS +=   $$foldersTarget.target
+    }
 #    QMAKE_POST_LINK += copy /y system_path($$TARGET).exe ..\incendie\build\last_release_light\bin\Incendie_"$$VERSION".exe
 
 #    lightTarget.target = lightExeCopy
@@ -55,7 +63,11 @@ QT += core gui widgets
 # edit the file Path-To-Qt-SDK\qt_static\mkspecs\win32-g+.conf and add the bold (with * ) marked stuff
 CONFIG += c++11
 QMAKE_CFLAGS_RELEASE = -Os -momit-leaf-frame-pointer
-QMAKE_LFLAGS = -static -static-libgcc
+QMAKE_LFLAGS = -static-libgcc
+win32{
+    QMAKE_LFLAGS += -static
+}
+
 DEFINES= QT_STATIC_BUILD
 #edit Path-To-Qt-SDK\qt_static\qmake\Makefile.win32-g++
 LFLAGS = -static -static-libgcc

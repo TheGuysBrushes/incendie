@@ -60,7 +60,7 @@ FireScreen::~FireScreen()
     delete fWidget;
 
     delete menus;
-    delete aboutWidget;
+    if (aboutWidget != NULL) delete aboutWidget;
 
     delete cpt_lbl;
     delete delai_lbl;
@@ -95,7 +95,7 @@ FireScreen::~FireScreen()
     delete mainWidget;
     delete mainLay;
 
-    delete fileSaveDialog;
+    if (fileSaveDialog != NULL) delete fileSaveDialog;
 }
 
 
