@@ -2,10 +2,10 @@
 *.o
 *.Debug
 *.exe
-build/release-Windows/*
-build/windows-QtCreator/*
-build/last_release*
-release/moc*.cpp
-object_script.Incendie
-object_script.incendie.Debug
-*.user*
+build/Debug/*
+build/last_release_dev_very_light/*
+build/last_release/*
+build/Desktop_Qt_5_5_1_GCC_64bit-Debug/*
+build/Desktop_Qt_5_5_1_GCC_64bit-Release/*
+*.user
+.kdev4/*
