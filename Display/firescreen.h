@@ -1,4 +1,4 @@
-#ifndef FIRESCREEN_H
+﻿#ifndef FIRESCREEN_H
 #define FIRESCREEN_H
 
 #include <QtCore/QTimer>
@@ -23,10 +23,11 @@ class FireScreen : public QMainWindow
 {
     Q_OBJECT
 private:
+// Composants graphiques
     WindWidget* windWidget;
     FireWidget* fWidget;
 
-    QWidget* menus; // utile pour connaitre sa largeur
+    QWidget* menus;
     QWidget* aboutWidget;
 
     QLabel* cpt_lbl;
@@ -57,7 +58,7 @@ private:
     QPushButton* next_btn;
     QSlider* slider;
     QComboBox* actionBox;
-    // Boutons gestion sauvegardes et for�t
+    // Boutons gestion sauvegardes et forêt
     QPushButton* reset_btn;
     QPushButton* saveStateBtn;
     QPushButton* saveSeedBtn;
@@ -67,6 +68,9 @@ private:
     QWidget* mainWidget;
     QHBoxLayout* mainLay;
     QFileDialog* fileSaveDialog;
+
+// Autres
+    QTimer* timer;
 
     int nb_tour;
     long delai;
