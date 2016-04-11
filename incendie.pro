@@ -5,9 +5,10 @@
 TEMPLATE = app
 VERSION= 1.4.1
 
+RC_FILE = incendie.rc
+
 message()
 message(Qt version: $$[QT_VERSION])
-
 
 DESTDIR = $$PWD
 message(The project will be installed in $$DESTDIR)
@@ -93,7 +94,7 @@ HEADERS += debug.h \
            Moteur/loadprogress.h \
            Moteur/vent.h \
            TinyXML/tinystr.h \
-           TinyXML/tinyxml.h \
+           TinyXML/tinyxml.h
 
 SOURCES += main.cpp \
            Display/firescreen.cpp \
@@ -112,4 +113,4 @@ SOURCES += main.cpp \
            TinyXML/tinystr.cpp \
            TinyXML/tinyxml.cpp \
            TinyXML/tinyxmlerror.cpp \
-           TinyXML/tinyxmlparser.cpp \
+           TinyXML/tinyxmlparser.cpp

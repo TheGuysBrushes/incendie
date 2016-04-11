@@ -1,7 +1,3 @@
-//Langues
-#define ENGLISH     0
-#define FRENCH      0
-
 // All
 #define DEBUG_CURRENT		0
 #define DEBUG_DELETE		0	// dans les destructeurs, ne marche pas

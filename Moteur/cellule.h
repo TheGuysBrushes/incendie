@@ -3,7 +3,7 @@
 
 class Cellule
 {
-	
+
 public:
 
 // Constructors
@@ -15,9 +15,9 @@ virtual ~Cellule() =0;
 
 	// Getters and setters
 	virtual int getState() const =0;
-	
+
 	// Other methods
-	
+
 };
 
 #endif // CELLULE_H
