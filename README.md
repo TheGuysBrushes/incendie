@@ -1,4 +1,6 @@
-# Voir : http://flodavid.github.io/incendie
+#Voir la [Page de présentation](http://flodavid.github.io/incendie "Page de présentation")
+![Image incendie](http://www.geoengineeringwatch.org/wp-content/uploads/2014/07/Forest-Fire-300x225.jpg)
+
 <h1>Automate de simulation d'incendie</h1>
 <h1>Suivi du projet :</h1>
 <h2>Fonctionnalités à ajouter :</h2>
