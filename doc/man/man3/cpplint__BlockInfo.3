@@ -1,0 +1,110 @@
+.TH "cpplint._BlockInfo" 3 "Wed Apr 20 2016" "Incendie" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cpplint._BlockInfo \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits object\&.
+.PP
+Inherited by \fBcpplint\&._ClassInfo\fP, \fBcpplint\&._ExternCInfo\fP, and \fBcpplint\&._NamespaceInfo\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "def \fB__init__\fP (self, seen_open_brace)"
+.br
+.ti -1c
+.RI "def \fBCheckBegin\fP (self, filename, clean_lines, linenum, error)"
+.br
+.ti -1c
+.RI "def \fBCheckEnd\fP (self, filename, clean_lines, linenum, error)"
+.br
+.ti -1c
+.RI "def \fBIsBlockInfo\fP (self)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBseen_open_brace\fP"
+.br
+.ti -1c
+.RI "\fBopen_parentheses\fP"
+.br
+.ti -1c
+.RI "\fBinline_asm\fP"
+.br
+.ti -1c
+.RI "\fBcheck_namespace_indentation\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.PP
+.nf
+Stores information about a generic block of code.
+.fi
+.PP
+ 
+.SH "Member Function Documentation"
+.PP 
+.SS "def cpplint\&._BlockInfo\&.CheckBegin ( self,  filename,  clean_lines,  linenum,  error)"
+
+.PP
+.nf
+Run checks that applies to text up to the opening brace.
+
+This is mostly for checking the text after the class identifier
+and the "{", usually where the base class is specified.  For other
+blocks, there isn't much to check, so we always pass.
+
+Args:
+  filename: The name of the current file.
+  clean_lines: A CleansedLines instance containing the file.
+  linenum: The number of the line to check.
+  error: The function to call with any errors found.
+
+.fi
+.PP
+ 
+.SS "def cpplint\&._BlockInfo\&.CheckEnd ( self,  filename,  clean_lines,  linenum,  error)"
+
+.PP
+.nf
+Run checks that applies to text after the closing brace.
+
+This is mostly used for checking end of namespace comments.
+
+Args:
+  filename: The name of the current file.
+  clean_lines: A CleansedLines instance containing the file.
+  linenum: The number of the line to check.
+  error: The function to call with any errors found.
+
+.fi
+.PP
+ 
+.SS "def cpplint\&._BlockInfo\&.IsBlockInfo ( self)"
+
+.PP
+.nf
+Returns true if this block is a _BlockInfo.
+
+This is convenient for verifying that an object is an instance of
+a _BlockInfo, but not an instance of any of the derived classes.
+
+Returns:
+  True for this class, False for derived classes.
+
+.fi
+.PP
+ 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Incendie from the source code\&.

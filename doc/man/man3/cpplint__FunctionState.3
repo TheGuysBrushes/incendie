@@ -1,0 +1,99 @@
+.TH "cpplint._FunctionState" 3 "Wed Apr 20 2016" "Incendie" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cpplint._FunctionState \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits object\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "def \fB__init__\fP (self)"
+.br
+.ti -1c
+.RI "def \fBBegin\fP (self, function_name)"
+.br
+.ti -1c
+.RI "def \fBCount\fP (self)"
+.br
+.ti -1c
+.RI "def \fBCheck\fP (self, error, filename, linenum)"
+.br
+.ti -1c
+.RI "def \fBEnd\fP (self)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBin_a_function\fP"
+.br
+.ti -1c
+.RI "\fBlines_in_function\fP"
+.br
+.ti -1c
+.RI "\fBcurrent_function\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.PP
+.nf
+Tracks current function name and the number of lines in its body.
+.fi
+.PP
+ 
+.SH "Member Function Documentation"
+.PP 
+.SS "def cpplint\&._FunctionState\&.Begin ( self,  function_name)"
+
+.PP
+.nf
+Start analyzing function body.
+
+Args:
+  function_name: The name of the function being tracked.
+
+.fi
+.PP
+ 
+.SS "def cpplint\&._FunctionState\&.Check ( self,  error,  filename,  linenum)"
+
+.PP
+.nf
+Report if too many lines in function body.
+
+Args:
+  error: The function to call with any errors found.
+  filename: The name of the current file.
+  linenum: The number of the line to check.
+
+.fi
+.PP
+ 
+.SS "def cpplint\&._FunctionState\&.Count ( self)"
+
+.PP
+.nf
+Count line in current function body.
+.fi
+.PP
+ 
+.SS "def cpplint\&._FunctionState\&.End ( self)"
+
+.PP
+.nf
+Stop analyzing function body.
+.fi
+.PP
+ 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Incendie from the source code\&.

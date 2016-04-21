@@ -1,0 +1,128 @@
+.TH "cpplint.FileInfo" 3 "Wed Apr 20 2016" "Incendie" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cpplint.FileInfo \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits object\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "def \fB__init__\fP (self, filename)"
+.br
+.ti -1c
+.RI "def \fBFullName\fP (self)"
+.br
+.ti -1c
+.RI "def \fBRepositoryName\fP (self)"
+.br
+.ti -1c
+.RI "def \fBSplit\fP (self)"
+.br
+.ti -1c
+.RI "def \fBBaseName\fP (self)"
+.br
+.ti -1c
+.RI "def \fBExtension\fP (self)"
+.br
+.ti -1c
+.RI "def \fBNoExtension\fP (self)"
+.br
+.ti -1c
+.RI "def \fBIsSource\fP (self)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.PP
+.nf
+Provides utility functions for filenames.
+
+FileInfo provides easy access to the components of a file's path
+relative to the project root.
+
+.fi
+.PP
+ 
+.SH "Member Function Documentation"
+.PP 
+.SS "def cpplint\&.FileInfo\&.BaseName ( self)"
+
+.PP
+.nf
+File base name - text after the final slash, before the final period.
+.fi
+.PP
+ 
+.SS "def cpplint\&.FileInfo\&.Extension ( self)"
+
+.PP
+.nf
+File extension - text following the final period.
+.fi
+.PP
+ 
+.SS "def cpplint\&.FileInfo\&.FullName ( self)"
+
+.PP
+.nf
+Make Windows paths like Unix.
+.fi
+.PP
+ 
+.SS "def cpplint\&.FileInfo\&.IsSource ( self)"
+
+.PP
+.nf
+File has a source file extension.
+.fi
+.PP
+ 
+.SS "def cpplint\&.FileInfo\&.NoExtension ( self)"
+
+.PP
+.nf
+File has no source file extension.
+.fi
+.PP
+ 
+.SS "def cpplint\&.FileInfo\&.RepositoryName ( self)"
+
+.PP
+.nf
+FullName after removing the local path to the repository.
+
+If we have a real absolute path name here we can try to do something smart:
+detecting the root of the checkout and truncating /path/to/checkout from
+the name so that we get header guards that don't include things like
+"C:\Documents and Settings\..." or "/home/username/..." in them and thus
+people on different computers who have checked the source out to different
+locations won't see bogus errors.
+
+.fi
+.PP
+ 
+.SS "def cpplint\&.FileInfo\&.Split ( self)"
+
+.PP
+.nf
+Splits the file into the directory, basename, and extension.
+
+For 'chrome/browser/browser.cc', Split() would
+return ('chrome/browser', 'browser', '.cc')
+
+Returns:
+  A tuple of (directory, basename, extension).
+
+.fi
+.PP
+ 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Incendie from the source code\&.

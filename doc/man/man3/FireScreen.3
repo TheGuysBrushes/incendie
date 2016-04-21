@@ -1,0 +1,259 @@
+.TH "FireScreen" 3 "Wed Apr 20 2016" "Incendie" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+FireScreen \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits QMainWindow\&.
+.SS "Public Slots"
+
+.in +1c
+.ti -1c
+.RI "void \fBstart_timer\fP ()"
+.br
+.ti -1c
+.RI "void \fBstop_timer\fP ()"
+.br
+.ti -1c
+.RI "void \fBset_delai\fP (int x)"
+.br
+.ti -1c
+.RI "void \fBnextStep\fP ()"
+.br
+.ti -1c
+.RI "void \fBreset\fP ()"
+.br
+.ti -1c
+.RI "void \fBsaveData\fP ()"
+.br
+.ti -1c
+.RI "void \fBsaveImage\fP ()"
+.br
+.ti -1c
+.RI "void \fBsaveSeed\fP ()"
+.br
+.ti -1c
+.RI "void \fBsetLangEN\fP ()"
+.br
+.ti -1c
+.RI "void \fBsetLangFR\fP ()"
+.br
+.ti -1c
+.RI "void \fBsetLangDE\fP ()"
+.br
+.ti -1c
+.RI "void \fBreleaseOrdered\fP ()"
+.br
+.ti -1c
+.RI "void \fBpopAbout\fP ()"
+.br
+.in -1c
+.SS "Signals"
+
+.in +1c
+.ti -1c
+.RI "void \fBactionSender\fP (int x)"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBFireScreen\fP ()"
+.br
+.ti -1c
+.RI "bool \fBtryInitialisation\fP ()"
+.br
+.ti -1c
+.RI "bool \fBtryInitialisation\fP (int argc, char *argv[])"
+.br
+.RI "\fIA CORRIGER (pop est show(), mais jamais hide()) \fP"
+.ti -1c
+.RI "void \fBinitSizes\fP (int largeur, int hauteur)"
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBresizeEvent\fP (QResizeEvent *Qevent)"
+.br
+.in -1c
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "FireScreen::FireScreen ()"
+On initialise les composant graphiques de la classe (foret et menus, boutons), la barre des menus 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo et Florian 
+.RE
+.PP
+
+.SH "Member Function Documentation"
+.PP 
+.SS "void FireScreen::actionSender (int x)\fC [signal]\fP"
+Vers firewidget pour effectuer l'action du clic droit
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP TODO Ugo : comment 
+.RE
+.PP
+
+.SS "void FireScreen::initSizes (int largeur, int hauteur)"
+Definit les tailles maximales de la fenetre 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian et Ugo 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlargeur\fP nombre de cases de la matrice en largeur 
+.br
+\fIhauteur\fP nombre de cases en hauteur 
+.RE
+.PP
+ATTENTION les valeurs max sont redéfinies dans ce debug, il faut transposer les valeurs correctes au dessus (pour 'performances') 
+.SS "void FireScreen::nextStep ()\fC [slot]\fP"
+Avance la progression de l'incendie d'un tour (t+1) 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+
+.SS "void FireScreen::popAbout ()\fC [slot]\fP"
+Slot mis en place afin de faire pop la fenetre d'information sur les développeurs de l'application 
+.SS "void FireScreen::releaseOrdered ()\fC [slot]\fP"
+Slot mis en place afin de transmettre l'action sélectionnée à appliquer après une selection sur la matrice\&. Est connecté au signal émis lors du releaseMouseEvent de fwidget lorsque le clic droit était enfoncé\&. Voir commentaire Slack pour mise en #define\&. Pour le moment, le signal 0 correspond à une coupure, le 1 à un retardateur\&. 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo 
+.RE
+.PP
+
+.SS "void FireScreen::reset ()\fC [slot]\fP"
+Une nouvelle fenêtre de création de forêt est ouverte\&. Si l'utilisateur valide, alors une nouvelle forêt est crée, sinon, l'ancienne forêt est conservée 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian et Ugo 
+.RE
+.PP
+
+.SS "void FireScreen::resizeEvent (QResizeEvent * Qevent)\fC [protected]\fP"
+Redéfinition de resizeEvent, utilisée seulement pour le debuggage, pour connaitre la taille de la fenetre et des menus 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+
+.SS "void FireScreen::saveData ()\fC [slot]\fP"
+Appelle la sauvegarde de la foret dans fWidget 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo et Florian 
+.RE
+.PP
+
+.SS "void FireScreen::saveImage ()\fC [slot]\fP"
+Appelle la sauvegarde d'une image de foret dans fWidget 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo et Florian 
+.RE
+.PP
+
+.SS "void FireScreen::saveSeed ()\fC [slot]\fP"
+Appelle la sauvegarde d'une graine de foret dans fWidget 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo et Florian 
+.RE
+.PP
+
+.SS "void FireScreen::set_delai (int x)\fC [slot]\fP"
+Définit le nouveau pas utilisée lors de l'avancement continue 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo 
+.RE
+.PP
+
+.SS "void FireScreen::setLangDE ()\fC [slot]\fP"
+Configure la langue du prochain redémarrage en allemand 
+.SS "void FireScreen::setLangEN ()\fC [slot]\fP"
+Configure la langue du prochain redémarrage en anglais 
+.SS "void FireScreen::setLangFR ()\fC [slot]\fP"
+Configure la langue du prochain redémarrage en français 
+.SS "void FireScreen::start_timer ()\fC [slot]\fP"
+Démarre le déroulement continue de l'incendie 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo 
+.RE
+.PP
+
+.SS "void FireScreen::stop_timer ()\fC [slot]\fP"
+Arrête le déroulement continue de l'incendie 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo 
+.RE
+.PP
+
+.SS "bool FireScreen::tryInitialisation ()"
+Initialise l'application et crée une nouvelle forêt, en utilisant une fenêtre dédiée (\fBFwelcome\fP) 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian et Ugo 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+vrai si l'initialisation a réussi 
+.RE
+.PP
+
+.SS "bool FireScreen::tryInitialisation (int argc, char * argv[])"
+
+.PP
+A CORRIGER (pop est show(), mais jamais hide()) Initialise l'application et crée une nouvelle forêt, a partir d'une image 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+vrai si l'initialisation a réussi 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Incendie from the source code\&.

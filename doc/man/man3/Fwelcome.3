@@ -1,0 +1,277 @@
+.TH "Fwelcome" 3 "Wed Apr 20 2016" "Incendie" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Fwelcome \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <fwelcome\&.h>\fP
+.PP
+Inherits QDialog\&.
+.SS "Public Slots"
+
+.in +1c
+.ti -1c
+.RI "void \fBsetProba\fP (int x)"
+.br
+.ti -1c
+.RI "void \fBsetCoef\fP (int x)"
+.br
+.ti -1c
+.RI "void \fBpopImageDIalog\fP ()"
+.br
+.ti -1c
+.RI "void \fBpopSaveDialog\fP ()"
+.br
+.ti -1c
+.RI "void \fBpopSeedDialog\fP ()"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBFwelcome\fP (QWidget *parent)"
+.br
+.ti -1c
+.RI "\fBFwelcome\fP (QWidget *parent, int _largeur, int _hauteur)"
+.br
+.ti -1c
+.RI "void \fBcreateComponents\fP ()"
+.br
+.ti -1c
+.RI "void \fBinitComponents\fP ()"
+.br
+.ti -1c
+.RI "void \fBinitEvents\fP ()"
+.br
+.ti -1c
+.RI "void \fBaddCancel\fP () const "
+.br
+.ti -1c
+.RI "virtual void \fBcloseEvent\fP (QCloseEvent *e)"
+.br
+.ti -1c
+.RI "int \fBgetHaut\fP () const "
+.br
+.ti -1c
+.RI "int \fBgetLarg\fP () const "
+.br
+.ti -1c
+.RI "float \fBgetProba\fP () const "
+.br
+.ti -1c
+.RI "float \fBgetCoef\fP () const "
+.br
+.ti -1c
+.RI "float \fBgetSeed\fP () const "
+.br
+.ti -1c
+.RI "std::ifstream * \fBgetFile\fP ()"
+.br
+.ti -1c
+.RI "QImage * \fBgetImage\fP ()"
+.br
+.ti -1c
+.RI "void \fBopenFile\fP (QString filename)"
+.br
+.ti -1c
+.RI "void \fBloadSizes\fP ()"
+.br
+.ti -1c
+.RI "void \fBcheckInitFileDialog\fP (QString windows_name)"
+.br
+.ti -1c
+.RI "void \fBrestore\fP (QString filename)"
+.br
+.ti -1c
+.RI "void \fBloadFromImg\fP (QString filename)"
+.br
+.ti -1c
+.RI "void \fBloadSeed\fP (QString filename)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Classe représentant le panneau de dialogue pour la sélection des paramètres de l'automate 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo 
+.RE
+.PP
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Fwelcome::Fwelcome (QWidget * parent)"
+Instancie les attributs, dont ceux graphiques 
+.SS "Fwelcome::Fwelcome (QWidget * parent, int _largeur, int _hauteur)"
+Instancie les attributs, dont ceux graphiques et les valeurs initiales de taille 
+.SH "Member Function Documentation"
+.PP 
+.SS "void Fwelcome::addCancel () const"
+Ajoute le bouton cancel à l'interface de création de forêt 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian et Ugo 
+.RE
+.PP
+
+.SS "void Fwelcome::checkInitFileDialog (QString windows_name)"
+Vérifie que la fenêtre de sauvegarde est initialisée, si ce n'est pas le cas, elle est initialisée 
+.SS "void Fwelcome::closeEvent (QCloseEvent * e)\fC [virtual]\fP"
+Redéfinition de la fermeture, afin de fermer le parent s'il n'est pas visible 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP 
+.RE
+.PP
+
+.SS "void Fwelcome::createComponents ()"
+Instancie les composants graphiques de la classe 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo et Florian 
+.RE
+.PP
+
+.SS "void Fwelcome::initComponents ()"
+Initialise tous les composants graphiques 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo et Florian 
+.RE
+.PP
+
+.SS "void Fwelcome::initEvents ()"
+Crée les connections entre signaux et slots 
+.SS "void Fwelcome::loadFromImg (QString filename)"
+Crée un forêt à partir d'une image 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfilename\fP chemin de l'image 
+.RE
+.PP
+
+.SS "void Fwelcome::loadSeed (QString filename)"
+Utilise une graine aléatoire stockée dans un fichier pour créer une forêt 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfilename\fP chemin du fichier contenant la graine 
+.RE
+.PP
+
+.SS "void Fwelcome::loadSizes ()"
+Lit les tailles d'une forêt dans et les assigne aux spinboxs 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+
+.SS "void Fwelcome::openFile (QString filename)"
+Ouvre un fichier à partir de son chemin, enregistré dans fwelcome 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfilename\fP chemin du fichier à ouvrir 
+.RE
+.PP
+
+.SS "void Fwelcome::popImageDIalog ()\fC [slot]\fP"
+Slot déclenché lors du clic sur le bouton d'importation d'image\&. Ouvre une fenetre de selection d'un fichier image et appelle la fonction de chargement d'image\&. 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo 
+.RE
+.PP
+
+.SS "void Fwelcome::popSaveDialog ()\fC [slot]\fP"
+Slot déclenché lors du clic sur le bouton de chargement d'une sauvegarde\&. Ouvre une fenetre de sélection d'un fichier charge la forêt de ce fichier\&. 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo 
+.RE
+.PP
+
+.SS "void Fwelcome::popSeedDialog ()\fC [slot]\fP"
+Slot déclenché lors du clic sur le bouton de chargement d'une graine\&. Ouvre une fenetre de sélection d'un fichier et crée une forêt grâce à ce fichier\&. 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo et Florian 
+.RE
+.PP
+
+.SS "void Fwelcome::restore (QString filename)"
+Restaure une forêt stockée dans un fichier 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfilename\fP chemin du fichier de sauvegarde 
+.RE
+.PP
+
+.SS "void Fwelcome::setCoef (int x)\fC [slot]\fP"
+Met à jour la valeur du coefficient de combustion de l'incendie et affiche la valeur courante 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIint\fP Coefficient de combustion 
+.RE
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo 
+.RE
+.PP
+
+.SS "void Fwelcome::setProba (int x)\fC [slot]\fP"
+Met à jour la valeur de la probabilité qu'une cellule soit un arbre et affiche la valeur courante\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIint\fP Probabilité qu'une cellule devienne un arbre\&. 
+.RE
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Incendie from the source code\&.

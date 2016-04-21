@@ -1,0 +1,535 @@
+.TH "FireWidget" 3 "Wed Apr 20 2016" "Incendie" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+FireWidget \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <firewidget\&.h>\fP
+.PP
+Inherits QWidget\&.
+.SS "Public Slots"
+
+.in +1c
+.ti -1c
+.RI "void \fBsetWind\fP (int angle, int vitesse)"
+.br
+.ti -1c
+.RI "bool \fBnext\fP ()"
+.br
+.ti -1c
+.RI "void \fBactionReceived\fP (int x)"
+.br
+.in -1c
+.SS "Signals"
+
+.in +1c
+.ti -1c
+.RI "void \fBreleaseSignal\fP ()"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBFireWidget\fP ()"
+.br
+.ti -1c
+.RI "void \fBinitialise\fP (int largeur, int hauteur, float proba=0\&.60, float coef_brulure=1\&.0, std::time_t graine=std::time(0))"
+.br
+.ti -1c
+.RI "bool \fBtryInitialise\fP (int largeur, int hauteur, std::ifstream *file)"
+.br
+.ti -1c
+.RI "bool \fBtryInitialise\fP (int largeur, int hauteur, QImage *imageForet, float coef_brulure)"
+.br
+.ti -1c
+.RI "void \fBrazRubber\fP ()"
+.br
+.ti -1c
+.RI "void \fBdelForest\fP ()"
+.br
+.ti -1c
+.RI "void \fBdelPicture\fP ()"
+.br
+.ti -1c
+.RI "int \fBgetTailleCell\fP () const "
+.br
+.ti -1c
+.RI "\fBForet\fP * \fBgetForet\fP () const "
+.br
+.ti -1c
+.RI "void \fBloadFromPicture\fP (int largeurImage, int hauteurImage, QImage *imageForet, float coef_brulure)"
+.br
+.ti -1c
+.RI "bool \fBtrySaveForest\fP (std::string &filePath) const "
+.br
+.ti -1c
+.RI "bool \fBtrySaveSeed\fP (std::string &filePath) const "
+.br
+.ti -1c
+.RI "bool \fBtrySaveImage\fP (QString filename) const "
+.br
+.ti -1c
+.RI "bool \fBtryAllumerFeu\fP (int colonne, int ligne)"
+.br
+.ti -1c
+.RI "bool \fBtryFinirFeu\fP (int colonne, int ligne)"
+.br
+.ti -1c
+.RI "void \fBdrawCell\fP (int colonne, int ligne)"
+.br
+.ti -1c
+.RI "void \fBdrawTree\fP (const \fBArbre\fP *ab)"
+.br
+.ti -1c
+.RI "void \fBdrawList\fP (std::list< \fBArbre\fP * > *arbres)"
+.br
+.ti -1c
+.RI "void \fBdrawForest\fP ()"
+.br
+.ti -1c
+.RI "bool \fBtryDrawPicture\fP ()"
+.br
+.ti -1c
+.RI "bool \fBtryDrawPictureForest\fP ()"
+.br
+.ti -1c
+.RI "void \fBdrawChanged\fP ()"
+.br
+.ti -1c
+.RI "void \fBredraw\fP ()"
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBmousePressEvent\fP (QMouseEvent *event)"
+.br
+.ti -1c
+.RI "void \fBmouseMoveEvent\fP (QMouseEvent *event)"
+.br
+.ti -1c
+.RI "void \fBmouseReleaseEvent\fP (QMouseEvent *event)"
+.br
+.ti -1c
+.RI "void \fBresizeEvent\fP (QResizeEvent *event)"
+.br
+.ti -1c
+.RI "void \fBpaintEvent\fP (QPaintEvent *event)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Widget d'affichage de l'automate cellulaire\&. Ce composant permet de suivre graphiquement l'évolution de l'automate\&. Il utilise un système de buffering et s'appuie sur la classe \fBForet\fP du moteur\&. 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo et Florian 
+.RE
+.PP
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "FireWidget::FireWidget ()"
+Initialise les différents pointeurs et fixe la taille minimale du widget 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo et Florian
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIint\fP _largeur : nombre de colonnes de la matrice 
+.br
+\fIint\fP _hauteur : nombre de lignes de la matrice 
+.br
+\fIfloat\fP _proba : probabilité qu'une cellule deviennent un arbre 
+.br
+\fIfloat\fP _coef : coefficient de combustion de l'incendie 
+.RE
+.PP
+
+.SH "Member Function Documentation"
+.PP 
+.SS "void FireWidget::actionReceived (int x)\fC [slot]\fP"
+Execute l'action choisie sur une zone, suite à releaseMouseEvent\&. 0 correspond à une coupure, 1 à un retardateur 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo
+.RE
+.PP
+reinitialise la foret 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian et un petit peu Ugo :p 
+.RE
+.PP
+\fBDeprecated\fP
+.RS 4
+.RE
+.PP
+
+.SS "void FireWidget::delForest ()"
+Méthodes de destruction de la forêt pour gérer la ré-initialisation de la matrice 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+
+.SS "void FireWidget::delPicture ()"
+Crée une nouvelle image de fond vierge 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+
+.SS "void FireWidget::drawCell (int colonne, int ligne)"
+Imprime une cellule à une position donnée, utilise la couleur courante 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIint\fP col,row indices de la colonne et de la ligne de la cellules 
+.RE
+.PP
+
+.SS "void FireWidget::drawChanged ()"
+Redessine les arbres qui ont changés d'état, sur l'ancienne matrice On réutilise les cellules non susceptibles d'avoir été modifiées 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian and Ugo 
+.RE
+.PP
+
+.SS "void FireWidget::drawForest ()"
+Dessine les arbres et cellules vides dans le buffer 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo et Florian 
+.RE
+.PP
+
+.SS "void FireWidget::drawList (std::list< \fBArbre\fP * > * arbres)"
+Dessine l'ensemble des arbres de la liste passée en paramètre 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIarbres\fP liste des arbres à dessiner 
+.RE
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian et Ugo (commentaires :p ) 
+.RE
+.PP
+
+.SS "void FireWidget::drawTree (const \fBArbre\fP * ab)"
+Imprime un arbre selon sa position, utilise la couleur courante\&. 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIab\fP arbre à dessiner 
+.RE
+.PP
+\fBDeprecated\fP
+.RS 4
+.RE
+.PP
+
+.SS "void FireWidget::initialise (int largeur, int hauteur, float proba = \fC0\&.60\fP, float coef_brulure = \fC1\&.0\fP, std::time_t graine = \fCstd::time(0)\fP)"
+Fonction de création d'une foret ALEATOIRE lors de la (ré)initialisation, aléatoirement 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian et Ugo 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIall\fP identiques au constructeur de \fBForet\fP aléatoire 
+.RE
+.PP
+
+.SS "void FireWidget::loadFromPicture (int largeurImage, int hauteurImage, QImage * imageForet, float coef_brulure)"
+Fonction à commenter par son auteur :p 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIimageForet\fP image de la forêt à charger 
+.br
+\fIcoef_brulure\fP coefficient de brulure de la nouvelle forêt 
+.br
+\fIothers\fP taille de l'image/forêt 
+.RE
+.PP
+
+.SS "void FireWidget::mousePressEvent (QMouseEvent * event)\fC [protected]\fP"
+
+.PP
+\fBDeprecated\fP
+.RS 4
+
+.RE
+.PP
+
+.SS "bool FireWidget::next ()\fC [slot]\fP"
+Passe de l'etat t à t+1 la foret 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+vrai si la foret a ete modifiée 
+.RE
+.PP
+
+.SS "void FireWidget::redraw ()"
+Vide le buffer et rafraichit l'affichage 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian et Ugo 
+.RE
+.PP
+
+.SS "void FireWidget::releaseSignal ()\fC [signal]\fP"
+Récupere l'action sélectionnée dans les menus
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo TODO Ugo comment 
+.RE
+.PP
+
+.SS "void FireWidget::resizeEvent (QResizeEvent * event)\fC [protected]\fP"
+
+.PP
+\fBAuthor:\fP
+.RS 4
+
+.RE
+.PP
+
+.SS "void FireWidget::setWind (int angle, int vitesse)\fC [inline]\fP, \fC [slot]\fP"
+Met à jour les valeurs du vent dans la forêt 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIangle\fP nouvel angle du vent 
+.br
+\fIvitesse\fP nouvelle vitesse du vent 
+.RE
+.PP
+
+.SS "bool FireWidget::tryAllumerFeu (int colonne, int ligne)"
+Eteint un arbre à une position donnée 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIint/int\fP indices de la colonne et de la ligne de l'arbre à éteindre 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+vrai si il y avait un arbre en feu Allume un feu sur un arbre 'vivant' 
+.RE
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIcolonne\fP de l'arbre à enflammer 
+.br
+\fIligne\fP de l'arbre à enflammer 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+vrai si il y avait un arbre enflammable 
+.RE
+.PP
+
+.SS "bool FireWidget::tryDrawPicture ()"
+Tente de dessiner la photo de foret dans le buffer 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+faux si il n'y a pas d'image de forêt de chargée 
+.RE
+.PP
+
+.SS "bool FireWidget::tryDrawPictureForest ()"
+Dessine la forêt avec une image en dessous Les arbres ne sont donc pas dessinés 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+
+.SS "bool FireWidget::tryFinirFeu (int colonne, int ligne)"
+Opere une combustion complete sur un arbre en feu (IMPROVEIT faire sur les arbres non en feu ?) 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIligne\fP 
+.br
+\fIcolonne\fP ligne et colonne de l'arbre à bruler totalement 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+vrai si il y avait un arbre en feu 
+.RE
+.PP
+
+.SS "bool FireWidget::tryInitialise (int largeur, int hauteur, std::ifstream * file)"
+Fonction de création d'une foret, à partir d'un fichier de sauvegarde OUVERT 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian et Ugo
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlargeur\fP de la nouvelle forêt 
+.br
+\fIhauteur\fP de la nouvelle forêt 
+.br
+\fIfile\fP fichier binaire, ouvert, contenant la sauvegarde de la forêt (essences-arbres), dont les tailles ont déjà été lues lors de la (ré)initialisation 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+vrai si le fichier est ouvert 
+.RE
+.PP
+
+.SS "bool FireWidget::tryInitialise (int largeur, int hauteur, QImage * imageForet, float coef_brulure)"
+Fonction de création d'une foret ALEATOIRE lors de la (ré)initialisation, à partir d'une image 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian et Ugo
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlargeur\fP de la nouvelle forêt 
+.br
+\fIhauteur\fP de la nouvelle forêt 
+.br
+\fIimageForet\fP image d'une foret, pour l'instant une image converie du jpg au tif 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+vrai si l'image est chargée 
+.RE
+.PP
+
+.SS "bool FireWidget::trySaveForest (std::string & filePath) const"
+Sauvegarde la foret dans un fichier de sauvegarde 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfilePath\fP chemin du nouveau fichier de sauvegarde 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+vrai si la sauvegarde réussie 
+.RE
+.PP
+
+.SS "bool FireWidget::trySaveImage (QString filename) const"
+Sauvegarde la forêt sous forme d'image 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfilePath\fP chemin du nouveau fichier de sauvegarde 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+vrai si la sauvegarde réussi 
+.RE
+.PP
+
+.SS "bool FireWidget::trySaveSeed (std::string & filePath) const"
+Sauvegarde la graine aléatoire et les caractéristiques de la forêt dans un fichier de sauvegarde 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfilePath\fP chemin du nouveau fichier de sauvegarde 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Incendie from the source code\&.

@@ -1,0 +1,193 @@
+.TH "TiXmlDocument" 3 "Wed Apr 20 2016" "Incendie" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+TiXmlDocument \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <tinyxml\&.h>\fP
+.PP
+Inherits \fBTiXmlNode\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBTiXmlDocument\fP ()"
+.br
+.RI "\fICreate an empty document, that has no name\&. \fP"
+.ti -1c
+.RI "\fBTiXmlDocument\fP (const char *documentName)"
+.br
+.RI "\fICreate a document with a name\&. The name of the document is also the filename of the xml\&. \fP"
+.ti -1c
+.RI "\fBTiXmlDocument\fP (const \fBTiXmlDocument\fP &copy)"
+.br
+.ti -1c
+.RI "\fBTiXmlDocument\fP & \fBoperator=\fP (const \fBTiXmlDocument\fP &copy)"
+.br
+.ti -1c
+.RI "bool \fBLoadFile\fP (TiXmlEncoding encoding=TIXML_DEFAULT_ENCODING)"
+.br
+.ti -1c
+.RI "bool \fBSaveFile\fP () const "
+.br
+.RI "\fISave a file using the current document value\&. Returns true if successful\&. \fP"
+.ti -1c
+.RI "bool \fBLoadFile\fP (const char *filename, TiXmlEncoding encoding=TIXML_DEFAULT_ENCODING)"
+.br
+.RI "\fILoad a file using the given filename\&. Returns true if successful\&. \fP"
+.ti -1c
+.RI "bool \fBSaveFile\fP (const char *filename) const "
+.br
+.RI "\fISave a file using the given filename\&. Returns true if successful\&. \fP"
+.ti -1c
+.RI "bool \fBLoadFile\fP (FILE *, TiXmlEncoding encoding=TIXML_DEFAULT_ENCODING)"
+.br
+.ti -1c
+.RI "bool \fBSaveFile\fP (FILE *) const "
+.br
+.RI "\fISave a file using the given FILE*\&. Returns true if successful\&. \fP"
+.ti -1c
+.RI "virtual const char * \fBParse\fP (const char *p, \fBTiXmlParsingData\fP *data=0, TiXmlEncoding encoding=TIXML_DEFAULT_ENCODING)"
+.br
+.ti -1c
+.RI "const \fBTiXmlElement\fP * \fBRootElement\fP () const "
+.br
+.ti -1c
+.RI "\fBTiXmlElement\fP * \fBRootElement\fP ()"
+.br
+.ti -1c
+.RI "bool \fBError\fP () const "
+.br
+.ti -1c
+.RI "const char * \fBErrorDesc\fP () const "
+.br
+.RI "\fIContains a textual (english) description of the error if one occurs\&. \fP"
+.ti -1c
+.RI "int \fBErrorId\fP () const "
+.br
+.ti -1c
+.RI "int \fBErrorRow\fP () const "
+.br
+.ti -1c
+.RI "int \fBErrorCol\fP () const "
+.br
+.RI "\fIThe column where the error occured\&. See \fBErrorRow()\fP \fP"
+.ti -1c
+.RI "void \fBSetTabSize\fP (int _tabsize)"
+.br
+.ti -1c
+.RI "int \fBTabSize\fP () const "
+.br
+.ti -1c
+.RI "void \fBClearError\fP ()"
+.br
+.ti -1c
+.RI "void \fBPrint\fP () const "
+.br
+.ti -1c
+.RI "virtual void \fBPrint\fP (FILE *cfile, int depth=0) const "
+.br
+.RI "\fIPrint this Document to a FILE stream\&. \fP"
+.ti -1c
+.RI "void \fBSetError\fP (int err, const char *errorLocation, \fBTiXmlParsingData\fP *prevData, TiXmlEncoding encoding)"
+.br
+.ti -1c
+.RI "virtual const \fBTiXmlDocument\fP * \fBToDocument\fP () const "
+.br
+.RI "\fICast to a more defined type\&. Will return null not of the requested type\&. \fP"
+.ti -1c
+.RI "virtual \fBTiXmlDocument\fP * \fBToDocument\fP ()"
+.br
+.RI "\fICast to a more defined type\&. Will return null not of the requested type\&. \fP"
+.ti -1c
+.RI "virtual bool \fBAccept\fP (\fBTiXmlVisitor\fP *content) const "
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "virtual \fBTiXmlNode\fP * \fBClone\fP () const "
+.br
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+Always the top level node\&. A document binds together all the XML pieces\&. It can be saved, loaded, and printed to the screen\&. The 'value' of a document node is the xml file name\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "bool TiXmlDocument::Accept (\fBTiXmlVisitor\fP * content) const\fC [virtual]\fP"
+Walk the XML tree visiting this node and all of its children\&. 
+.PP
+Implements \fBTiXmlNode\fP\&.
+.SS "void TiXmlDocument::ClearError ()\fC [inline]\fP"
+If you have handled the error, it can be reset with this call\&. The error state is automatically cleared if you Parse a new XML block\&. 
+.SS "\fBTiXmlNode\fP * TiXmlDocument::Clone () const\fC [protected]\fP, \fC [virtual]\fP"
+Create an exact duplicate of this node and return it\&. The memory must be deleted by the caller\&. 
+.PP
+Implements \fBTiXmlNode\fP\&.
+.SS "bool TiXmlDocument::Error () const\fC [inline]\fP"
+If an error occurs, Error will be set to true\&. Also,
+.IP "\(bu" 2
+The \fBErrorId()\fP will contain the integer identifier of the error (not generally useful)
+.IP "\(bu" 2
+The \fBErrorDesc()\fP method will return the name of the error\&. (very useful)
+.IP "\(bu" 2
+The \fBErrorRow()\fP and \fBErrorCol()\fP will return the location of the error (if known) 
+.PP
+
+.SS "int TiXmlDocument::ErrorId () const\fC [inline]\fP"
+Generally, you probably want the error string ( \fBErrorDesc()\fP )\&. But if you prefer the ErrorId, this function will fetch it\&. 
+.SS "int TiXmlDocument::ErrorRow () const\fC [inline]\fP"
+Returns the location (if known) of the error\&. The first column is column 1, and the first row is row 1\&. A value of 0 means the row and column wasn't applicable (memory errors, for example, have no row/column) or the parser lost the error\&. (An error in the error reporting, in that case\&.)
+.PP
+\fBSee also:\fP
+.RS 4
+\fBSetTabSize\fP, \fBRow\fP, \fBColumn\fP 
+.RE
+.PP
+
+.SS "bool TiXmlDocument::LoadFile (TiXmlEncoding encoding = \fCTIXML_DEFAULT_ENCODING\fP)"
+Load a file using the current document value\&. Returns true if successful\&. Will delete any existing document data before loading\&. 
+.SS "bool TiXmlDocument::LoadFile (FILE * file, TiXmlEncoding encoding = \fCTIXML_DEFAULT_ENCODING\fP)"
+Load a file using the given FILE*\&. Returns true if successful\&. Note that this method doesn't stream - the entire object pointed at by the FILE* will be interpreted as an XML file\&. TinyXML doesn't stream in XML from the current file location\&. Streaming may be added in the future\&. 
+.SS "const char * TiXmlDocument::Parse (const char * p, \fBTiXmlParsingData\fP * data = \fC0\fP, TiXmlEncoding encoding = \fCTIXML_DEFAULT_ENCODING\fP)\fC [virtual]\fP"
+Parse the given null terminated block of xml data\&. Passing in an encoding to this method (either TIXML_ENCODING_LEGACY or TIXML_ENCODING_UTF8 will force TinyXml to use that encoding, regardless of what TinyXml might otherwise try to detect\&. 
+.PP
+Implements \fBTiXmlBase\fP\&.
+.SS "void TiXmlDocument::Print () const\fC [inline]\fP"
+Write the document to standard out using formatted printing ('pretty print')\&. 
+.SS "const \fBTiXmlElement\fP* TiXmlDocument::RootElement () const\fC [inline]\fP"
+Get the root element -- the only top level element -- of the document\&. In well formed XML, there should only be one\&. TinyXml is tolerant of multiple elements at the document level\&. 
+.SS "void TiXmlDocument::SetTabSize (int _tabsize)\fC [inline]\fP"
+\fBSetTabSize()\fP allows the error reporting functions (\fBErrorRow()\fP and \fBErrorCol()\fP) to report the correct values for row and column\&. It does not change the output or input in any way\&.
+.PP
+By calling this method, with a tab size greater than 0, the row and column of each node and attribute is stored when the file is loaded\&. Very useful for tracking the DOM back in to the source file\&.
+.PP
+The tab size is required for calculating the location of nodes\&. If not set, the default of 4 is used\&. The tabsize is set per document\&. Setting the tabsize to 0 disables row/column tracking\&.
+.PP
+Note that row and column tracking is not supported when using operator>>\&.
+.PP
+The tab size needs to be enabled before the parse or load\&. Correct usage: 
+.PP
+.nf
+TiXmlDocument doc;
+doc.SetTabSize( 8 );
+doc.Load( "myfile.xml" );
+
+.fi
+.PP
+.PP
+\fBSee also:\fP
+.RS 4
+\fBRow\fP, \fBColumn\fP 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Incendie from the source code\&.

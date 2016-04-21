@@ -1,0 +1,77 @@
+.TH "Coordonnee" 3 "Wed Apr 20 2016" "Incendie" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Coordonnee \- Normalement inutile, permet de ne pas utilise -lm lors compilation  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <coordonnee\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBCoordonnee\fP (int _x, int _y)"
+.br
+.ti -1c
+.RI "\fBCoordonnee\fP (const \fBCoordonnee\fP &other)"
+.br
+.ti -1c
+.RI "virtual bool \fBoperator==\fP (const \fBCoordonnee\fP &other) const "
+.br
+.ti -1c
+.RI "std::ostream & \fBprint\fP (std::ostream &out) const "
+.br
+.ti -1c
+.RI "unsigned \fBmanhattanDistance\fP (const \fBCoordonnee\fP &other) const "
+.br
+.ti -1c
+.RI "float \fBeuclideanDistance\fP (const \fBCoordonnee\fP &other) const "
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "int \fBcol\fP"
+.br
+.ti -1c
+.RI "int \fBrow\fP"
+.br
+.in -1c
+.SS "Friends"
+
+.in +1c
+.ti -1c
+.RI "std::ostream & \fBoperator<<\fP (std::ostream &out, const \fBCoordonnee\fP &coord)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Normalement inutile, permet de ne pas utilise -lm lors compilation 
+.SH "Member Function Documentation"
+.PP 
+.SS "float Coordonnee::euclideanDistance (const \fBCoordonnee\fP & other) const"
+Calcul de la distance euclidienne entre deux points 
+.PP
+\fBReturns:\fP
+.RS 4
+distance euclidienne : flottant non signé 
+.RE
+.PP
+
+.SS "unsigned Coordonnee::manhattanDistance (const \fBCoordonnee\fP & other) const"
+Calcul de la distance Manhattan entre deux points 
+.PP
+\fBReturns:\fP
+.RS 4
+distance manhattan : entier non signé 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Incendie from the source code\&.

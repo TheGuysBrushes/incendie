@@ -1,0 +1,80 @@
+.TH "TiXmlComment" 3 "Wed Apr 20 2016" "Incendie" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+TiXmlComment \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <tinyxml\&.h>\fP
+.PP
+Inherits \fBTiXmlNode\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBTiXmlComment\fP ()"
+.br
+.RI "\fIConstructs an empty comment\&. \fP"
+.ti -1c
+.RI "\fBTiXmlComment\fP (const char *_value)"
+.br
+.RI "\fIConstruct a comment from text\&. \fP"
+.ti -1c
+.RI "\fBTiXmlComment\fP (const \fBTiXmlComment\fP &)"
+.br
+.ti -1c
+.RI "\fBTiXmlComment\fP & \fBoperator=\fP (const \fBTiXmlComment\fP &base)"
+.br
+.ti -1c
+.RI "virtual \fBTiXmlNode\fP * \fBClone\fP () const "
+.br
+.RI "\fIReturns a copy of this Comment\&. \fP"
+.ti -1c
+.RI "virtual void \fBPrint\fP (FILE *cfile, int depth) const "
+.br
+.ti -1c
+.RI "virtual const char * \fBParse\fP (const char *p, \fBTiXmlParsingData\fP *data, TiXmlEncoding encoding)"
+.br
+.ti -1c
+.RI "virtual const \fBTiXmlComment\fP * \fBToComment\fP () const "
+.br
+.RI "\fICast to a more defined type\&. Will return null not of the requested type\&. \fP"
+.ti -1c
+.RI "virtual \fBTiXmlComment\fP * \fBToComment\fP ()"
+.br
+.RI "\fICast to a more defined type\&. Will return null not of the requested type\&. \fP"
+.ti -1c
+.RI "virtual bool \fBAccept\fP (\fBTiXmlVisitor\fP *visitor) const "
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBCopyTo\fP (\fBTiXmlComment\fP *target) const "
+.br
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+An XML comment\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "bool TiXmlComment::Accept (\fBTiXmlVisitor\fP * visitor) const\fC [virtual]\fP"
+Walk the XML tree visiting this node and all of its children\&. 
+.PP
+Implements \fBTiXmlNode\fP\&.
+.SS "void TiXmlComment::Print (FILE * cfile, int depth) const\fC [virtual]\fP"
+All TinyXml classes can print themselves to a filestream or the string class (\fBTiXmlString\fP in non-STL mode, std::string in STL mode\&.) Either or both cfile and str can be null\&.
+.PP
+This is a formatted print, and will insert tabs and newlines\&.
+.PP
+(For an unformatted stream, use the << operator\&.) 
+.PP
+Implements \fBTiXmlBase\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Incendie from the source code\&.

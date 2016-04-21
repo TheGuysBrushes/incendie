@@ -1,0 +1,394 @@
+.TH "TiXmlNode" 3 "Wed Apr 20 2016" "Incendie" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+TiXmlNode \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <tinyxml\&.h>\fP
+.PP
+Inherits \fBTiXmlBase\fP\&.
+.PP
+Inherited by \fBTiXmlComment\fP, \fBTiXmlDeclaration\fP, \fBTiXmlDocument\fP, \fBTiXmlElement\fP, \fBTiXmlText\fP, and \fBTiXmlUnknown\fP\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum \fBNodeType\fP { \fBTINYXML_DOCUMENT\fP, \fBTINYXML_ELEMENT\fP, \fBTINYXML_COMMENT\fP, \fBTINYXML_UNKNOWN\fP, \fBTINYXML_TEXT\fP, \fBTINYXML_DECLARATION\fP, \fBTINYXML_TYPECOUNT\fP }"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "const char * \fBValue\fP () const "
+.br
+.ti -1c
+.RI "const TIXML_STRING & \fBValueTStr\fP () const "
+.br
+.ti -1c
+.RI "void \fBSetValue\fP (const char *_value)"
+.br
+.ti -1c
+.RI "void \fBClear\fP ()"
+.br
+.RI "\fIDelete all the children of this node\&. Does not affect 'this'\&. \fP"
+.ti -1c
+.RI "\fBTiXmlNode\fP * \fBParent\fP ()"
+.br
+.RI "\fIOne step up the DOM\&. \fP"
+.ti -1c
+.RI "const \fBTiXmlNode\fP * \fBParent\fP () const "
+.br
+.ti -1c
+.RI "const \fBTiXmlNode\fP * \fBFirstChild\fP () const "
+.br
+.RI "\fIThe first child of this node\&. Will be null if there are no children\&. \fP"
+.ti -1c
+.RI "\fBTiXmlNode\fP * \fBFirstChild\fP ()"
+.br
+.ti -1c
+.RI "const \fBTiXmlNode\fP * \fBFirstChild\fP (const char *value) const "
+.br
+.ti -1c
+.RI "\fBTiXmlNode\fP * \fBFirstChild\fP (const char *_value)"
+.br
+.RI "\fIThe first child of this node with the matching 'value'\&. Will be null if none found\&. \fP"
+.ti -1c
+.RI "const \fBTiXmlNode\fP * \fBLastChild\fP () const "
+.br
+.ti -1c
+.RI "\fBTiXmlNode\fP * \fBLastChild\fP ()"
+.br
+.RI "\fIThe last child of this node\&. Will be null if there are no children\&. \fP"
+.ti -1c
+.RI "const \fBTiXmlNode\fP * \fBLastChild\fP (const char *value) const "
+.br
+.ti -1c
+.RI "\fBTiXmlNode\fP * \fBLastChild\fP (const char *_value)"
+.br
+.RI "\fIThe last child of this node matching 'value'\&. Will be null if there are no children\&. \fP"
+.ti -1c
+.RI "const \fBTiXmlNode\fP * \fBIterateChildren\fP (const \fBTiXmlNode\fP *previous) const "
+.br
+.ti -1c
+.RI "\fBTiXmlNode\fP * \fBIterateChildren\fP (const \fBTiXmlNode\fP *previous)"
+.br
+.ti -1c
+.RI "const \fBTiXmlNode\fP * \fBIterateChildren\fP (const char *value, const \fBTiXmlNode\fP *previous) const "
+.br
+.RI "\fIThis flavor of IterateChildren searches for children with a particular 'value'\&. \fP"
+.ti -1c
+.RI "\fBTiXmlNode\fP * \fBIterateChildren\fP (const char *_value, const \fBTiXmlNode\fP *previous)"
+.br
+.ti -1c
+.RI "\fBTiXmlNode\fP * \fBInsertEndChild\fP (const \fBTiXmlNode\fP &addThis)"
+.br
+.ti -1c
+.RI "\fBTiXmlNode\fP * \fBLinkEndChild\fP (\fBTiXmlNode\fP *addThis)"
+.br
+.ti -1c
+.RI "\fBTiXmlNode\fP * \fBInsertBeforeChild\fP (\fBTiXmlNode\fP *beforeThis, const \fBTiXmlNode\fP &addThis)"
+.br
+.ti -1c
+.RI "\fBTiXmlNode\fP * \fBInsertAfterChild\fP (\fBTiXmlNode\fP *afterThis, const \fBTiXmlNode\fP &addThis)"
+.br
+.ti -1c
+.RI "\fBTiXmlNode\fP * \fBReplaceChild\fP (\fBTiXmlNode\fP *replaceThis, const \fBTiXmlNode\fP &withThis)"
+.br
+.ti -1c
+.RI "bool \fBRemoveChild\fP (\fBTiXmlNode\fP *removeThis)"
+.br
+.RI "\fIDelete a child of this node\&. \fP"
+.ti -1c
+.RI "const \fBTiXmlNode\fP * \fBPreviousSibling\fP () const "
+.br
+.RI "\fINavigate to a sibling node\&. \fP"
+.ti -1c
+.RI "\fBTiXmlNode\fP * \fBPreviousSibling\fP ()"
+.br
+.ti -1c
+.RI "const \fBTiXmlNode\fP * \fBPreviousSibling\fP (const char *) const "
+.br
+.RI "\fINavigate to a sibling node\&. \fP"
+.ti -1c
+.RI "\fBTiXmlNode\fP * \fBPreviousSibling\fP (const char *_prev)"
+.br
+.ti -1c
+.RI "const \fBTiXmlNode\fP * \fBNextSibling\fP () const "
+.br
+.RI "\fINavigate to a sibling node\&. \fP"
+.ti -1c
+.RI "\fBTiXmlNode\fP * \fBNextSibling\fP ()"
+.br
+.ti -1c
+.RI "const \fBTiXmlNode\fP * \fBNextSibling\fP (const char *) const "
+.br
+.RI "\fINavigate to a sibling node with the given 'value'\&. \fP"
+.ti -1c
+.RI "\fBTiXmlNode\fP * \fBNextSibling\fP (const char *_next)"
+.br
+.ti -1c
+.RI "const \fBTiXmlElement\fP * \fBNextSiblingElement\fP () const "
+.br
+.ti -1c
+.RI "\fBTiXmlElement\fP * \fBNextSiblingElement\fP ()"
+.br
+.ti -1c
+.RI "const \fBTiXmlElement\fP * \fBNextSiblingElement\fP (const char *) const "
+.br
+.ti -1c
+.RI "\fBTiXmlElement\fP * \fBNextSiblingElement\fP (const char *_next)"
+.br
+.ti -1c
+.RI "const \fBTiXmlElement\fP * \fBFirstChildElement\fP () const "
+.br
+.RI "\fIConvenience function to get through elements\&. \fP"
+.ti -1c
+.RI "\fBTiXmlElement\fP * \fBFirstChildElement\fP ()"
+.br
+.ti -1c
+.RI "const \fBTiXmlElement\fP * \fBFirstChildElement\fP (const char *_value) const "
+.br
+.RI "\fIConvenience function to get through elements\&. \fP"
+.ti -1c
+.RI "\fBTiXmlElement\fP * \fBFirstChildElement\fP (const char *_value)"
+.br
+.ti -1c
+.RI "int \fBType\fP () const "
+.br
+.ti -1c
+.RI "const \fBTiXmlDocument\fP * \fBGetDocument\fP () const "
+.br
+.ti -1c
+.RI "\fBTiXmlDocument\fP * \fBGetDocument\fP ()"
+.br
+.ti -1c
+.RI "bool \fBNoChildren\fP () const "
+.br
+.RI "\fIReturns true if this node has no children\&. \fP"
+.ti -1c
+.RI "virtual const \fBTiXmlDocument\fP * \fBToDocument\fP () const "
+.br
+.RI "\fICast to a more defined type\&. Will return null if not of the requested type\&. \fP"
+.ti -1c
+.RI "virtual const \fBTiXmlElement\fP * \fBToElement\fP () const "
+.br
+.RI "\fICast to a more defined type\&. Will return null if not of the requested type\&. \fP"
+.ti -1c
+.RI "virtual const \fBTiXmlComment\fP * \fBToComment\fP () const "
+.br
+.RI "\fICast to a more defined type\&. Will return null if not of the requested type\&. \fP"
+.ti -1c
+.RI "virtual const \fBTiXmlUnknown\fP * \fBToUnknown\fP () const "
+.br
+.RI "\fICast to a more defined type\&. Will return null if not of the requested type\&. \fP"
+.ti -1c
+.RI "virtual const \fBTiXmlText\fP * \fBToText\fP () const "
+.br
+.RI "\fICast to a more defined type\&. Will return null if not of the requested type\&. \fP"
+.ti -1c
+.RI "virtual const \fBTiXmlDeclaration\fP * \fBToDeclaration\fP () const "
+.br
+.RI "\fICast to a more defined type\&. Will return null if not of the requested type\&. \fP"
+.ti -1c
+.RI "virtual \fBTiXmlDocument\fP * \fBToDocument\fP ()"
+.br
+.RI "\fICast to a more defined type\&. Will return null if not of the requested type\&. \fP"
+.ti -1c
+.RI "virtual \fBTiXmlElement\fP * \fBToElement\fP ()"
+.br
+.RI "\fICast to a more defined type\&. Will return null if not of the requested type\&. \fP"
+.ti -1c
+.RI "virtual \fBTiXmlComment\fP * \fBToComment\fP ()"
+.br
+.RI "\fICast to a more defined type\&. Will return null if not of the requested type\&. \fP"
+.ti -1c
+.RI "virtual \fBTiXmlUnknown\fP * \fBToUnknown\fP ()"
+.br
+.RI "\fICast to a more defined type\&. Will return null if not of the requested type\&. \fP"
+.ti -1c
+.RI "virtual \fBTiXmlText\fP * \fBToText\fP ()"
+.br
+.RI "\fICast to a more defined type\&. Will return null if not of the requested type\&. \fP"
+.ti -1c
+.RI "virtual \fBTiXmlDeclaration\fP * \fBToDeclaration\fP ()"
+.br
+.RI "\fICast to a more defined type\&. Will return null if not of the requested type\&. \fP"
+.ti -1c
+.RI "virtual \fBTiXmlNode\fP * \fBClone\fP () const  =0"
+.br
+.ti -1c
+.RI "virtual bool \fBAccept\fP (\fBTiXmlVisitor\fP *visitor) const  =0"
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBTiXmlNode\fP (\fBNodeType\fP _type)"
+.br
+.ti -1c
+.RI "void \fBCopyTo\fP (\fBTiXmlNode\fP *target) const "
+.br
+.ti -1c
+.RI "\fBTiXmlNode\fP * \fBIdentify\fP (const char *start, TiXmlEncoding encoding)"
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBTiXmlNode\fP * \fBparent\fP"
+.br
+.ti -1c
+.RI "\fBNodeType\fP \fBtype\fP"
+.br
+.ti -1c
+.RI "\fBTiXmlNode\fP * \fBfirstChild\fP"
+.br
+.ti -1c
+.RI "\fBTiXmlNode\fP * \fBlastChild\fP"
+.br
+.ti -1c
+.RI "TIXML_STRING \fBvalue\fP"
+.br
+.ti -1c
+.RI "\fBTiXmlNode\fP * \fBprev\fP"
+.br
+.ti -1c
+.RI "\fBTiXmlNode\fP * \fBnext\fP"
+.br
+.in -1c
+.SS "Friends"
+
+.in +1c
+.ti -1c
+.RI "class \fBTiXmlDocument\fP"
+.br
+.ti -1c
+.RI "class \fBTiXmlElement\fP"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+The parent class for everything in the Document Object Model\&. (Except for attributes)\&. Nodes have siblings, a parent, and children\&. A node can be in a document, or stand on its own\&. The type of a \fBTiXmlNode\fP can be queried, and it can be cast to its more defined type\&. 
+.SH "Member Enumeration Documentation"
+.PP 
+.SS "enum \fBTiXmlNode::NodeType\fP"
+The types of XML nodes supported by TinyXml\&. (All the unsupported types are picked up by UNKNOWN\&.) 
+.SH "Member Function Documentation"
+.PP 
+.SS "virtual bool TiXmlNode::Accept (\fBTiXmlVisitor\fP * visitor) const\fC [pure virtual]\fP"
+Accept a hierchical visit the nodes in the TinyXML DOM\&. Every node in the XML tree will be conditionally visited and the host will be called back via the \fBTiXmlVisitor\fP interface\&.
+.PP
+This is essentially a SAX interface for TinyXML\&. (Note however it doesn't re-parse the XML for the callbacks, so the performance of TinyXML is unchanged by using this interface versus any other\&.)
+.PP
+The interface has been based on ideas from:
+.PP
+.IP "\(bu" 2
+http://www.saxproject.org/
+.IP "\(bu" 2
+http://c2.com/cgi/wiki?HierarchicalVisitorPattern
+.PP
+.PP
+Which are both good references for 'visiting'\&.
+.PP
+An example of using \fBAccept()\fP: 
+.PP
+.nf
+TiXmlPrinter printer;
+tinyxmlDoc.Accept( &printer );
+const char* xmlcstr = printer.CStr();
+
+.fi
+.PP
+ 
+.PP
+Implemented in \fBTiXmlDocument\fP, \fBTiXmlUnknown\fP, \fBTiXmlDeclaration\fP, \fBTiXmlText\fP, \fBTiXmlComment\fP, and \fBTiXmlElement\fP\&.
+.SS "virtual \fBTiXmlNode\fP* TiXmlNode::Clone () const\fC [pure virtual]\fP"
+Create an exact duplicate of this node and return it\&. The memory must be deleted by the caller\&. 
+.PP
+Implemented in \fBTiXmlDocument\fP, \fBTiXmlUnknown\fP, \fBTiXmlDeclaration\fP, \fBTiXmlText\fP, \fBTiXmlComment\fP, and \fBTiXmlElement\fP\&.
+.SS "const \fBTiXmlNode\fP * TiXmlNode::FirstChild (const char * value) const"
+The first child of this node with the matching 'value'\&. Will be null if none found\&. 
+.SS "const \fBTiXmlDocument\fP * TiXmlNode::GetDocument () const"
+Return a pointer to the Document this node lives in\&. Returns null if not in a document\&. 
+.SS "\fBTiXmlNode\fP * TiXmlNode::InsertAfterChild (\fBTiXmlNode\fP * afterThis, const \fBTiXmlNode\fP & addThis)"
+Add a new node related to this\&. Adds a child after the specified child\&. Returns a pointer to the new object or NULL if an error occured\&. 
+.SS "\fBTiXmlNode\fP * TiXmlNode::InsertBeforeChild (\fBTiXmlNode\fP * beforeThis, const \fBTiXmlNode\fP & addThis)"
+Add a new node related to this\&. Adds a child before the specified child\&. Returns a pointer to the new object or NULL if an error occured\&. 
+.SS "\fBTiXmlNode\fP * TiXmlNode::InsertEndChild (const \fBTiXmlNode\fP & addThis)"
+Add a new node related to this\&. Adds a child past the LastChild\&. Returns a pointer to the new object or NULL if an error occured\&. 
+.SS "const \fBTiXmlNode\fP * TiXmlNode::IterateChildren (const \fBTiXmlNode\fP * previous) const"
+An alternate way to walk the children of a node\&. One way to iterate over nodes is: 
+.PP
+.nf
+    for( child = parent->FirstChild(); child; child = child->NextSibling() )
+
+.fi
+.PP
+.PP
+IterateChildren does the same thing with the syntax: 
+.PP
+.nf
+    child = 0;
+    while( child = parent->IterateChildren( child ) )
+
+.fi
+.PP
+.PP
+IterateChildren takes the previous child as input and finds the next one\&. If the previous child is null, it returns the first\&. IterateChildren will return null when done\&. 
+.SS "\fBTiXmlNode\fP * TiXmlNode::LinkEndChild (\fBTiXmlNode\fP * addThis)"
+Add a new node related to this\&. Adds a child past the LastChild\&.
+.PP
+NOTE: the node to be added is passed by pointer, and will be henceforth owned (and deleted) by tinyXml\&. This method is efficient and avoids an extra copy, but should be used with care as it uses a different memory model than the other insert functions\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBInsertEndChild\fP 
+.RE
+.PP
+
+.SS "const \fBTiXmlElement\fP * TiXmlNode::NextSiblingElement () const"
+Convenience function to get through elements\&. Calls NextSibling and ToElement\&. Will skip all non-Element nodes\&. Returns 0 if there is not another element\&. 
+.SS "const \fBTiXmlElement\fP * TiXmlNode::NextSiblingElement (const char * _value) const"
+Convenience function to get through elements\&. Calls NextSibling and ToElement\&. Will skip all non-Element nodes\&. Returns 0 if there is not another element\&. 
+.SS "\fBTiXmlNode\fP * TiXmlNode::ReplaceChild (\fBTiXmlNode\fP * replaceThis, const \fBTiXmlNode\fP & withThis)"
+Replace a child of this node\&. Returns a pointer to the new object or NULL if an error occured\&. 
+.SS "void TiXmlNode::SetValue (const char * _value)\fC [inline]\fP"
+Changes the value of the node\&. Defined as: 
+.PP
+.nf
+Document:   filename of the xml file
+Element:    name of the element
+Comment:    the comment text
+Unknown:    the tag contents
+Text:       the text string
+
+.fi
+.PP
+ 
+.SS "int TiXmlNode::Type () const\fC [inline]\fP"
+Query the type (as an enumerated value, above) of this node\&. The possible types are: TINYXML_DOCUMENT, TINYXML_ELEMENT, TINYXML_COMMENT, TINYXML_UNKNOWN, TINYXML_TEXT, and TINYXML_DECLARATION\&. 
+.SS "const char* TiXmlNode::Value () const\fC [inline]\fP"
+The meaning of 'value' changes for the specific type of \fBTiXmlNode\fP\&. 
+.PP
+.nf
+Document:   filename of the xml file
+Element:    name of the element
+Comment:    the comment text
+Unknown:    the tag contents
+Text:       the text string
+
+.fi
+.PP
+.PP
+The subclasses will wrap this function\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Incendie from the source code\&.

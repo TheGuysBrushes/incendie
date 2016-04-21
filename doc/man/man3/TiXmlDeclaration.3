@@ -1,0 +1,105 @@
+.TH "TiXmlDeclaration" 3 "Wed Apr 20 2016" "Incendie" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+TiXmlDeclaration \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <tinyxml\&.h>\fP
+.PP
+Inherits \fBTiXmlNode\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBTiXmlDeclaration\fP ()"
+.br
+.RI "\fIConstruct an empty declaration\&. \fP"
+.ti -1c
+.RI "\fBTiXmlDeclaration\fP (const char *_version, const char *_encoding, const char *_standalone)"
+.br
+.RI "\fIConstruct\&. \fP"
+.ti -1c
+.RI "\fBTiXmlDeclaration\fP (const \fBTiXmlDeclaration\fP &copy)"
+.br
+.ti -1c
+.RI "\fBTiXmlDeclaration\fP & \fBoperator=\fP (const \fBTiXmlDeclaration\fP &copy)"
+.br
+.ti -1c
+.RI "const char * \fBVersion\fP () const "
+.br
+.RI "\fIVersion\&. Will return an empty string if none was found\&. \fP"
+.ti -1c
+.RI "const char * \fBEncoding\fP () const "
+.br
+.RI "\fIEncoding\&. Will return an empty string if none was found\&. \fP"
+.ti -1c
+.RI "const char * \fBStandalone\fP () const "
+.br
+.RI "\fIIs this a standalone document? \fP"
+.ti -1c
+.RI "virtual \fBTiXmlNode\fP * \fBClone\fP () const "
+.br
+.RI "\fICreates a copy of this Declaration and returns it\&. \fP"
+.ti -1c
+.RI "virtual void \fBPrint\fP (FILE *cfile, int depth, TIXML_STRING *str) const "
+.br
+.ti -1c
+.RI "virtual void \fBPrint\fP (FILE *cfile, int depth) const "
+.br
+.ti -1c
+.RI "virtual const char * \fBParse\fP (const char *p, \fBTiXmlParsingData\fP *data, TiXmlEncoding encoding)"
+.br
+.ti -1c
+.RI "virtual const \fBTiXmlDeclaration\fP * \fBToDeclaration\fP () const "
+.br
+.RI "\fICast to a more defined type\&. Will return null not of the requested type\&. \fP"
+.ti -1c
+.RI "virtual \fBTiXmlDeclaration\fP * \fBToDeclaration\fP ()"
+.br
+.RI "\fICast to a more defined type\&. Will return null not of the requested type\&. \fP"
+.ti -1c
+.RI "virtual bool \fBAccept\fP (\fBTiXmlVisitor\fP *visitor) const "
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBCopyTo\fP (\fBTiXmlDeclaration\fP *target) const "
+.br
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+In correct XML the declaration is the first entry in the file\&. 
+.PP
+.nf
+    <?xml version="1.0" standalone="yes"?>
+
+.fi
+.PP
+.PP
+TinyXml will happily read or write files without a declaration, however\&. There are 3 possible attributes to the declaration: version, encoding, and standalone\&.
+.PP
+Note: In this version of the code, the attributes are handled as special cases, not generic attributes, simply because there can only be at most 3 and they are always the same\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "bool TiXmlDeclaration::Accept (\fBTiXmlVisitor\fP * visitor) const\fC [virtual]\fP"
+Walk the XML tree visiting this node and all of its children\&. 
+.PP
+Implements \fBTiXmlNode\fP\&.
+.SS "virtual void TiXmlDeclaration::Print (FILE * cfile, int depth) const\fC [inline]\fP, \fC [virtual]\fP"
+All TinyXml classes can print themselves to a filestream or the string class (\fBTiXmlString\fP in non-STL mode, std::string in STL mode\&.) Either or both cfile and str can be null\&.
+.PP
+This is a formatted print, and will insert tabs and newlines\&.
+.PP
+(For an unformatted stream, use the << operator\&.) 
+.PP
+Implements \fBTiXmlBase\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Incendie from the source code\&.

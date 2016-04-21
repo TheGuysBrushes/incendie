@@ -1,0 +1,74 @@
+.TH "TiXmlUnknown" 3 "Wed Apr 20 2016" "Incendie" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+TiXmlUnknown \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <tinyxml\&.h>\fP
+.PP
+Inherits \fBTiXmlNode\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBTiXmlUnknown\fP (const \fBTiXmlUnknown\fP &copy)"
+.br
+.ti -1c
+.RI "\fBTiXmlUnknown\fP & \fBoperator=\fP (const \fBTiXmlUnknown\fP &copy)"
+.br
+.ti -1c
+.RI "virtual \fBTiXmlNode\fP * \fBClone\fP () const "
+.br
+.RI "\fICreates a copy of this Unknown and returns it\&. \fP"
+.ti -1c
+.RI "virtual void \fBPrint\fP (FILE *cfile, int depth) const "
+.br
+.ti -1c
+.RI "virtual const char * \fBParse\fP (const char *p, \fBTiXmlParsingData\fP *data, TiXmlEncoding encoding)"
+.br
+.ti -1c
+.RI "virtual const \fBTiXmlUnknown\fP * \fBToUnknown\fP () const "
+.br
+.RI "\fICast to a more defined type\&. Will return null not of the requested type\&. \fP"
+.ti -1c
+.RI "virtual \fBTiXmlUnknown\fP * \fBToUnknown\fP ()"
+.br
+.RI "\fICast to a more defined type\&. Will return null not of the requested type\&. \fP"
+.ti -1c
+.RI "virtual bool \fBAccept\fP (\fBTiXmlVisitor\fP *content) const "
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBCopyTo\fP (\fBTiXmlUnknown\fP *target) const "
+.br
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+Any tag that tinyXml doesn't recognize is saved as an unknown\&. It is a tag of text, but should not be modified\&. It will be written back to the XML, unchanged, when the file is saved\&.
+.PP
+DTD tags get thrown into TiXmlUnknowns\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "bool TiXmlUnknown::Accept (\fBTiXmlVisitor\fP * content) const\fC [virtual]\fP"
+Walk the XML tree visiting this node and all of its children\&. 
+.PP
+Implements \fBTiXmlNode\fP\&.
+.SS "void TiXmlUnknown::Print (FILE * cfile, int depth) const\fC [virtual]\fP"
+All TinyXml classes can print themselves to a filestream or the string class (\fBTiXmlString\fP in non-STL mode, std::string in STL mode\&.) Either or both cfile and str can be null\&.
+.PP
+This is a formatted print, and will insert tabs and newlines\&.
+.PP
+(For an unformatted stream, use the << operator\&.) 
+.PP
+Implements \fBTiXmlBase\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Incendie from the source code\&.

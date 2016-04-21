@@ -1,0 +1,123 @@
+.TH "WindCircle" 3 "Wed Apr 20 2016" "Incendie" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+WindCircle \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <windcircle\&.h>\fP
+.PP
+Inherits QWidget\&.
+.SS "Signals"
+
+.in +1c
+.ti -1c
+.RI "void \fBmodifAngle\fP ()"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBWindCircle\fP ()"
+.br
+.ti -1c
+.RI "void \fBinitAngle\fP (int x)"
+.br
+.ti -1c
+.RI "int \fBgetAngle\fP () const "
+.br
+.ti -1c
+.RI "void \fBvaryAngle\fP ()"
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBresizeEvent\fP (QResizeEvent *event)"
+.br
+.ti -1c
+.RI "void \fBpaintEvent\fP (QPaintEvent *event)"
+.br
+.ti -1c
+.RI "void \fBmousePressEvent\fP (QMouseEvent *event)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Cette classe correspond au widget d'affichage de la direction du vent\&. Elle fonctionne comme une boussole et utilise un double buffering pour l'affichage 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo 
+.RE
+.PP
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "WindCircle::WindCircle ()"
+Constructeur de classe 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIint\fP Valeur de l'angle initial 
+.RE
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo 
+.RE
+.PP
+
+.SH "Member Function Documentation"
+.PP 
+.SS "void WindCircle::initAngle (int x)\fC [inline]\fP"
+Définit la valeur de l'angle, ne met pas à jour la ligne 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIint\fP Valeur de l'angle 
+.RE
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo 
+.RE
+.PP
+
+.SS "void WindCircle::mousePressEvent (QMouseEvent * event)\fC [protected]\fP"
+Nous avons redéfini cet Event dans le but de pouvoir faire varier la valeur de l'angle dynamiquement à l'aide du clic sur le widget Signale à windwidget que l'angle est modifié 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo 
+.RE
+.PP
+
+.SS "void WindCircle::paintEvent (QPaintEvent * event)\fC [protected]\fP"
+Replace le centre du cercle et redessine la ligne de l'angle 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo 
+.RE
+.PP
+
+.SS "void WindCircle::resizeEvent (QResizeEvent * event)\fC [protected]\fP"
+Copie le buffer sur le widget 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo 
+.RE
+.PP
+
+.SS "void WindCircle::varyAngle ()"
+Change la direction du vent, avec de l'aléatoire 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Incendie from the source code\&.

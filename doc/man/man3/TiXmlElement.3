@@ -1,0 +1,190 @@
+.TH "TiXmlElement" 3 "Wed Apr 20 2016" "Incendie" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+TiXmlElement \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <tinyxml\&.h>\fP
+.PP
+Inherits \fBTiXmlNode\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBTiXmlElement\fP (const char *in_value)"
+.br
+.RI "\fIConstruct an element\&. \fP"
+.ti -1c
+.RI "\fBTiXmlElement\fP (const \fBTiXmlElement\fP &)"
+.br
+.ti -1c
+.RI "\fBTiXmlElement\fP & \fBoperator=\fP (const \fBTiXmlElement\fP &base)"
+.br
+.ti -1c
+.RI "const char * \fBAttribute\fP (const char *name) const "
+.br
+.ti -1c
+.RI "const char * \fBAttribute\fP (const char *name, int *i) const "
+.br
+.ti -1c
+.RI "const char * \fBAttribute\fP (const char *name, double *d) const "
+.br
+.ti -1c
+.RI "int \fBQueryIntAttribute\fP (const char *name, int *_value) const "
+.br
+.ti -1c
+.RI "int \fBQueryUnsignedAttribute\fP (const char *name, unsigned *_value) const "
+.br
+.RI "\fIQueryUnsignedAttribute examines the attribute - see \fBQueryIntAttribute()\fP\&. \fP"
+.ti -1c
+.RI "int \fBQueryBoolAttribute\fP (const char *name, bool *_value) const "
+.br
+.ti -1c
+.RI "int \fBQueryDoubleAttribute\fP (const char *name, double *_value) const "
+.br
+.RI "\fIQueryDoubleAttribute examines the attribute - see \fBQueryIntAttribute()\fP\&. \fP"
+.ti -1c
+.RI "int \fBQueryFloatAttribute\fP (const char *name, float *_value) const "
+.br
+.RI "\fIQueryFloatAttribute examines the attribute - see \fBQueryIntAttribute()\fP\&. \fP"
+.ti -1c
+.RI "void \fBSetAttribute\fP (const char *name, const char *_value)"
+.br
+.ti -1c
+.RI "void \fBSetAttribute\fP (const char *name, int value)"
+.br
+.ti -1c
+.RI "void \fBSetDoubleAttribute\fP (const char *name, double value)"
+.br
+.ti -1c
+.RI "void \fBRemoveAttribute\fP (const char *name)"
+.br
+.ti -1c
+.RI "const \fBTiXmlAttribute\fP * \fBFirstAttribute\fP () const "
+.br
+.RI "\fIAccess the first attribute in this element\&. \fP"
+.ti -1c
+.RI "\fBTiXmlAttribute\fP * \fBFirstAttribute\fP ()"
+.br
+.ti -1c
+.RI "const \fBTiXmlAttribute\fP * \fBLastAttribute\fP () const "
+.br
+.RI "\fIAccess the last attribute in this element\&. \fP"
+.ti -1c
+.RI "\fBTiXmlAttribute\fP * \fBLastAttribute\fP ()"
+.br
+.ti -1c
+.RI "const char * \fBGetText\fP () const "
+.br
+.ti -1c
+.RI "virtual \fBTiXmlNode\fP * \fBClone\fP () const "
+.br
+.RI "\fICreates a new Element and returns it - the returned element is a copy\&. \fP"
+.ti -1c
+.RI "virtual void \fBPrint\fP (FILE *cfile, int depth) const "
+.br
+.ti -1c
+.RI "virtual const char * \fBParse\fP (const char *p, \fBTiXmlParsingData\fP *data, TiXmlEncoding encoding)"
+.br
+.ti -1c
+.RI "virtual const \fBTiXmlElement\fP * \fBToElement\fP () const "
+.br
+.RI "\fICast to a more defined type\&. Will return null not of the requested type\&. \fP"
+.ti -1c
+.RI "virtual \fBTiXmlElement\fP * \fBToElement\fP ()"
+.br
+.RI "\fICast to a more defined type\&. Will return null not of the requested type\&. \fP"
+.ti -1c
+.RI "virtual bool \fBAccept\fP (\fBTiXmlVisitor\fP *visitor) const "
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBCopyTo\fP (\fBTiXmlElement\fP *target) const "
+.br
+.ti -1c
+.RI "void \fBClearThis\fP ()"
+.br
+.ti -1c
+.RI "const char * \fBReadValue\fP (const char *in, \fBTiXmlParsingData\fP *prevData, TiXmlEncoding encoding)"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+The element is a container class\&. It has a value, the element name, and can contain other elements, text, comments, and unknowns\&. Elements also contain an arbitrary number of attributes\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "bool TiXmlElement::Accept (\fBTiXmlVisitor\fP * visitor) const\fC [virtual]\fP"
+Walk the XML tree visiting this node and all of its children\&. 
+.PP
+Implements \fBTiXmlNode\fP\&.
+.SS "const char * TiXmlElement::Attribute (const char * name) const"
+Given an attribute name, \fBAttribute()\fP returns the value for the attribute of that name, or null if none exists\&. 
+.SS "const char * TiXmlElement::Attribute (const char * name, int * i) const"
+Given an attribute name, \fBAttribute()\fP returns the value for the attribute of that name, or null if none exists\&. If the attribute exists and can be converted to an integer, the integer value will be put in the return 'i', if 'i' is non-null\&. 
+.SS "const char * TiXmlElement::Attribute (const char * name, double * d) const"
+Given an attribute name, \fBAttribute()\fP returns the value for the attribute of that name, or null if none exists\&. If the attribute exists and can be converted to an double, the double value will be put in the return 'd', if 'd' is non-null\&. 
+.SS "const char * TiXmlElement::GetText () const"
+Convenience function for easy access to the text inside an element\&. Although easy and concise, \fBGetText()\fP is limited compared to getting the \fBTiXmlText\fP child and accessing it directly\&.
+.PP
+If the first child of 'this' is a \fBTiXmlText\fP, the \fBGetText()\fP returns the character string of the Text node, else null is returned\&.
+.PP
+This is a convenient method for getting the text of simple contained text: 
+.PP
+.nf
+<foo>This is text</foo>
+const char* str = fooElement->GetText();
+
+.fi
+.PP
+.PP
+'str' will be a pointer to 'This is text'\&.
+.PP
+Note that this function can be misleading\&. If the element foo was created from this XML: 
+.PP
+.nf
+<foo><b>This is text</b></foo> 
+
+.fi
+.PP
+.PP
+then the value of str would be null\&. The first child node isn't a text node, it is another element\&. From this XML: 
+.PP
+.nf
+<foo>This is <b>text</b></foo> 
+
+.fi
+.PP
+ \fBGetText()\fP will return 'This is '\&.
+.PP
+WARNING: \fBGetText()\fP accesses a child node - don't become confused with the similarly named \fBTiXmlHandle::Text()\fP and \fBTiXmlNode::ToText()\fP which are safe type casts on the referenced node\&. 
+.SS "void TiXmlElement::Print (FILE * cfile, int depth) const\fC [virtual]\fP"
+All TinyXml classes can print themselves to a filestream or the string class (\fBTiXmlString\fP in non-STL mode, std::string in STL mode\&.) Either or both cfile and str can be null\&.
+.PP
+This is a formatted print, and will insert tabs and newlines\&.
+.PP
+(For an unformatted stream, use the << operator\&.) 
+.PP
+Implements \fBTiXmlBase\fP\&.
+.SS "int TiXmlElement::QueryBoolAttribute (const char * name, bool * _value) const"
+QueryBoolAttribute examines the attribute - see \fBQueryIntAttribute()\fP\&. Note that '1', 'true', or 'yes' are considered true, while '0', 'false' and 'no' are considered false\&. 
+.SS "int TiXmlElement::QueryIntAttribute (const char * name, int * _value) const"
+QueryIntAttribute examines the attribute - it is an alternative to the \fBAttribute()\fP method with richer error checking\&. If the attribute is an integer, it is stored in 'value' and the call returns TIXML_SUCCESS\&. If it is not an integer, it returns TIXML_WRONG_TYPE\&. If the attribute does not exist, then TIXML_NO_ATTRIBUTE is returned\&. 
+.SS "void TiXmlElement::RemoveAttribute (const char * name)"
+Deletes an attribute with the given name\&. 
+.SS "void TiXmlElement::SetAttribute (const char * name, const char * _value)"
+Sets an attribute of name to a given value\&. The attribute will be created if it does not exist, or changed if it does\&. 
+.SS "void TiXmlElement::SetAttribute (const char * name, int value)"
+Sets an attribute of name to a given value\&. The attribute will be created if it does not exist, or changed if it does\&. 
+.SS "void TiXmlElement::SetDoubleAttribute (const char * name, double value)"
+Sets an attribute of name to a given value\&. The attribute will be created if it does not exist, or changed if it does\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Incendie from the source code\&.

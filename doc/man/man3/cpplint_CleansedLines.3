@@ -1,0 +1,70 @@
+.TH "cpplint.CleansedLines" 3 "Wed Apr 20 2016" "Incendie" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cpplint.CleansedLines \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits object\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "def \fB__init__\fP (self, lines)"
+.br
+.ti -1c
+.RI "def \fBNumLines\fP (self)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBelided\fP"
+.br
+.ti -1c
+.RI "\fBlines\fP"
+.br
+.ti -1c
+.RI "\fBraw_lines\fP"
+.br
+.ti -1c
+.RI "\fBnum_lines\fP"
+.br
+.ti -1c
+.RI "\fBlines_without_raw_strings\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.PP
+.nf
+Holds 4 copies of all lines with different preprocessing applied to them.
+
+1) elided member contains lines without strings and comments.
+2) lines member contains lines without comments.
+3) raw_lines member contains all the lines without processing.
+4) lines_without_raw_strings member is same as raw_lines, but with C++11 raw
+   strings removed.
+All these members are of <type 'list'>, and of the same length.
+
+.fi
+.PP
+ 
+.SH "Member Function Documentation"
+.PP 
+.SS "def cpplint\&.CleansedLines\&.NumLines ( self)"
+
+.PP
+.nf
+Returns the number of lines represented.
+.fi
+.PP
+ 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Incendie from the source code\&.

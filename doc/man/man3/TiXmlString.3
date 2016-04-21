@@ -1,0 +1,101 @@
+.TH "TiXmlString" 3 "Wed Apr 20 2016" "Incendie" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+TiXmlString \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherited by \fBTiXmlOutStream\fP\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef size_t \fBsize_type\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBTiXmlString\fP (const \fBTiXmlString\fP &copy)"
+.br
+.ti -1c
+.RI "TIXML_EXPLICIT \fBTiXmlString\fP (const char *copy)"
+.br
+.ti -1c
+.RI "TIXML_EXPLICIT \fBTiXmlString\fP (const char *str, size_type len)"
+.br
+.ti -1c
+.RI "\fBTiXmlString\fP & \fBoperator=\fP (const char *copy)"
+.br
+.ti -1c
+.RI "\fBTiXmlString\fP & \fBoperator=\fP (const \fBTiXmlString\fP &copy)"
+.br
+.ti -1c
+.RI "\fBTiXmlString\fP & \fBoperator+=\fP (const char *suffix)"
+.br
+.ti -1c
+.RI "\fBTiXmlString\fP & \fBoperator+=\fP (char single)"
+.br
+.ti -1c
+.RI "\fBTiXmlString\fP & \fBoperator+=\fP (const \fBTiXmlString\fP &suffix)"
+.br
+.ti -1c
+.RI "const char * \fBc_str\fP () const "
+.br
+.ti -1c
+.RI "const char * \fBdata\fP () const "
+.br
+.ti -1c
+.RI "size_type \fBlength\fP () const "
+.br
+.ti -1c
+.RI "size_type \fBsize\fP () const "
+.br
+.ti -1c
+.RI "bool \fBempty\fP () const "
+.br
+.ti -1c
+.RI "size_type \fBcapacity\fP () const "
+.br
+.ti -1c
+.RI "const char & \fBat\fP (size_type index) const "
+.br
+.ti -1c
+.RI "char & \fBoperator[]\fP (size_type index) const "
+.br
+.ti -1c
+.RI "size_type \fBfind\fP (char lookup) const "
+.br
+.ti -1c
+.RI "size_type \fBfind\fP (char tofind, size_type offset) const "
+.br
+.ti -1c
+.RI "void \fBclear\fP ()"
+.br
+.ti -1c
+.RI "void \fBreserve\fP (size_type cap)"
+.br
+.ti -1c
+.RI "\fBTiXmlString\fP & \fBassign\fP (const char *str, size_type len)"
+.br
+.ti -1c
+.RI "\fBTiXmlString\fP & \fBappend\fP (const char *str, size_type len)"
+.br
+.ti -1c
+.RI "void \fBswap\fP (\fBTiXmlString\fP &other)"
+.br
+.in -1c
+.SS "Static Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "static const size_type \fBnpos\fP = static_cast< TiXmlString::size_type >(\-1)"
+.br
+.in -1c
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Incendie from the source code\&.

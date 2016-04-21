@@ -1,0 +1,70 @@
+.TH "TiXmlVisitor" 3 "Wed Apr 20 2016" "Incendie" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+TiXmlVisitor \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <tinyxml\&.h>\fP
+.PP
+Inherited by \fBTiXmlPrinter\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "virtual bool \fBVisitEnter\fP (const \fBTiXmlDocument\fP &)"
+.br
+.RI "\fIVisit a document\&. \fP"
+.ti -1c
+.RI "virtual bool \fBVisitExit\fP (const \fBTiXmlDocument\fP &)"
+.br
+.RI "\fIVisit a document\&. \fP"
+.ti -1c
+.RI "virtual bool \fBVisitEnter\fP (const \fBTiXmlElement\fP &, const \fBTiXmlAttribute\fP *)"
+.br
+.RI "\fIVisit an element\&. \fP"
+.ti -1c
+.RI "virtual bool \fBVisitExit\fP (const \fBTiXmlElement\fP &)"
+.br
+.RI "\fIVisit an element\&. \fP"
+.ti -1c
+.RI "virtual bool \fBVisit\fP (const \fBTiXmlDeclaration\fP &)"
+.br
+.RI "\fIVisit a declaration\&. \fP"
+.ti -1c
+.RI "virtual bool \fBVisit\fP (const \fBTiXmlText\fP &)"
+.br
+.RI "\fIVisit a text node\&. \fP"
+.ti -1c
+.RI "virtual bool \fBVisit\fP (const \fBTiXmlComment\fP &)"
+.br
+.RI "\fIVisit a comment node\&. \fP"
+.ti -1c
+.RI "virtual bool \fBVisit\fP (const \fBTiXmlUnknown\fP &)"
+.br
+.RI "\fIVisit an unknown node\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Implements the interface to the 'Visitor pattern' (see the Accept() method\&.) If you call the Accept() method, it requires being passed a \fBTiXmlVisitor\fP class to handle callbacks\&. For nodes that contain other nodes (Document, Element) you will get called with a VisitEnter/VisitExit pair\&. Nodes that are always leaves are simply called with \fBVisit()\fP\&.
+.PP
+If you return 'true' from a Visit method, recursive parsing will continue\&. If you return false, \fBno children of this node or its sibilings\fP will be Visited\&.
+.PP
+All flavors of Visit methods have a default implementation that returns 'true' (continue visiting)\&. You need to only override methods that are interesting to you\&.
+.PP
+Generally Accept() is called on the \fBTiXmlDocument\fP, although all nodes suppert Visiting\&.
+.PP
+You should never change the document from a callback\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBTiXmlNode::Accept()\fP 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Incendie from the source code\&.

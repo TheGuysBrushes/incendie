@@ -1,0 +1,146 @@
+.TH "cpplint._IncludeState" 3 "Wed Apr 20 2016" "Incendie" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cpplint._IncludeState \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits object\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "def \fB__init__\fP (self)"
+.br
+.ti -1c
+.RI "def \fBFindHeader\fP (self, header)"
+.br
+.ti -1c
+.RI "def \fBResetSection\fP (self, directive)"
+.br
+.ti -1c
+.RI "def \fBSetLastHeader\fP (self, header_path)"
+.br
+.ti -1c
+.RI "def \fBCanonicalizeAlphabeticalOrder\fP (self, header_path)"
+.br
+.ti -1c
+.RI "def \fBIsInAlphabeticalOrder\fP (self, clean_lines, linenum, header_path)"
+.br
+.ti -1c
+.RI "def \fBCheckNextIncludeOrder\fP (self, header_type)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBinclude_list\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.PP
+.nf
+Tracks line numbers for includes, and the order in which includes appear.
+
+include_list contains list of lists of (header, line number) pairs.
+It's a lists of lists rather than just one flat list to make it
+easier to update across preprocessor boundaries.
+
+Call CheckNextIncludeOrder() once for each header in the file, passing
+in the type constants defined above. Calls in an illegal order will
+raise an _IncludeError with an appropriate error message.
+.fi
+.PP
+ 
+.SH "Member Function Documentation"
+.PP 
+.SS "def cpplint\&._IncludeState\&.CanonicalizeAlphabeticalOrder ( self,  header_path)"
+
+.PP
+.nf
+Returns a path canonicalized for alphabetical comparison.
+
+- replaces "-" with "_" so they both cmp the same.
+- removes '-inl' since we don't require them to be after the main header.
+- lowercase everything, just in case.
+
+Args:
+  header_path: Path to be canonicalized.
+
+Returns:
+  Canonicalized path.
+
+.fi
+.PP
+ 
+.SS "def cpplint\&._IncludeState\&.CheckNextIncludeOrder ( self,  header_type)"
+
+.PP
+.nf
+Returns a non-empty error message if the next header is out of order.
+
+This function also updates the internal state to be ready to check
+the next include.
+
+Args:
+  header_type: One of the _XXX_HEADER constants defined above.
+
+Returns:
+  The empty string if the header is in the right order, or an
+  error message describing what's wrong.
+.fi
+.PP
+ 
+.SS "def cpplint\&._IncludeState\&.FindHeader ( self,  header)"
+
+.PP
+.nf
+Check if a header has already been included.
+
+Args:
+  header: header to check.
+Returns:
+  Line number of previous occurrence, or -1 if the header has not
+  been seen before.
+
+.fi
+.PP
+ 
+.SS "def cpplint\&._IncludeState\&.IsInAlphabeticalOrder ( self,  clean_lines,  linenum,  header_path)"
+
+.PP
+.nf
+Check if a header is in alphabetical order with the previous header.
+
+Args:
+  clean_lines: A CleansedLines instance containing the file.
+  linenum: The number of the line to check.
+  header_path: Canonicalized header to be checked.
+
+Returns:
+  Returns true if the header is in alphabetical order.
+
+.fi
+.PP
+ 
+.SS "def cpplint\&._IncludeState\&.ResetSection ( self,  directive)"
+
+.PP
+.nf
+Reset section checking for preprocessor directive.
+
+Args:
+  directive: preprocessor directive (e.g. "if", "else").
+
+.fi
+.PP
+ 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Incendie from the source code\&.

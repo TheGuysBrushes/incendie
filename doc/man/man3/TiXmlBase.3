@@ -1,0 +1,248 @@
+.TH "TiXmlBase" 3 "Wed Apr 20 2016" "Incendie" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+TiXmlBase \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <tinyxml\&.h>\fP
+.PP
+Inherited by \fBTiXmlAttribute\fP, and \fBTiXmlNode\fP\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum { \fBTIXML_NO_ERROR\fP = 0, \fBTIXML_ERROR\fP, \fBTIXML_ERROR_OPENING_FILE\fP, \fBTIXML_ERROR_PARSING_ELEMENT\fP, \fBTIXML_ERROR_FAILED_TO_READ_ELEMENT_NAME\fP, \fBTIXML_ERROR_READING_ELEMENT_VALUE\fP, \fBTIXML_ERROR_READING_ATTRIBUTES\fP, \fBTIXML_ERROR_PARSING_EMPTY\fP, \fBTIXML_ERROR_READING_END_TAG\fP, \fBTIXML_ERROR_PARSING_UNKNOWN\fP, \fBTIXML_ERROR_PARSING_COMMENT\fP, \fBTIXML_ERROR_PARSING_DECLARATION\fP, \fBTIXML_ERROR_DOCUMENT_EMPTY\fP, \fBTIXML_ERROR_EMBEDDED_NULL\fP, \fBTIXML_ERROR_PARSING_CDATA\fP, \fBTIXML_ERROR_DOCUMENT_TOP_ONLY\fP, \fBTIXML_ERROR_STRING_COUNT\fP }"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "virtual void \fBPrint\fP (FILE *cfile, int depth) const  =0"
+.br
+.ti -1c
+.RI "int \fBRow\fP () const "
+.br
+.ti -1c
+.RI "int \fBColumn\fP () const "
+.br
+.RI "\fISee \fBRow()\fP \fP"
+.ti -1c
+.RI "void \fBSetUserData\fP (void *user)"
+.br
+.RI "\fISet a pointer to arbitrary user data\&. \fP"
+.ti -1c
+.RI "void * \fBGetUserData\fP ()"
+.br
+.RI "\fIGet a pointer to arbitrary user data\&. \fP"
+.ti -1c
+.RI "const void * \fBGetUserData\fP () const "
+.br
+.RI "\fIGet a pointer to arbitrary user data\&. \fP"
+.ti -1c
+.RI "virtual const char * \fBParse\fP (const char *p, \fBTiXmlParsingData\fP *data, TiXmlEncoding encoding)=0"
+.br
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static void \fBSetCondenseWhiteSpace\fP (bool condense)"
+.br
+.ti -1c
+.RI "static bool \fBIsWhiteSpaceCondensed\fP ()"
+.br
+.RI "\fIReturn the current white space setting\&. \fP"
+.ti -1c
+.RI "static void \fBEncodeString\fP (const TIXML_STRING &str, TIXML_STRING *out)"
+.br
+.in -1c
+.SS "Static Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "static const int \fButf8ByteTable\fP [256]"
+.br
+.in -1c
+.SS "Static Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static const char * \fBSkipWhiteSpace\fP (const char *, TiXmlEncoding encoding)"
+.br
+.ti -1c
+.RI "static bool \fBIsWhiteSpace\fP (char c)"
+.br
+.ti -1c
+.RI "static bool \fBIsWhiteSpace\fP (int c)"
+.br
+.ti -1c
+.RI "static const char * \fBReadName\fP (const char *p, TIXML_STRING *name, TiXmlEncoding encoding)"
+.br
+.ti -1c
+.RI "static const char * \fBReadText\fP (const char *in, TIXML_STRING *text, bool ignoreWhiteSpace, const char *endTag, bool ignoreCase, TiXmlEncoding encoding)"
+.br
+.ti -1c
+.RI "static const char * \fBGetEntity\fP (const char *in, char *value, int *length, TiXmlEncoding encoding)"
+.br
+.ti -1c
+.RI "static const char * \fBGetChar\fP (const char *p, char *_value, int *length, TiXmlEncoding encoding)"
+.br
+.ti -1c
+.RI "static bool \fBStringEqual\fP (const char *p, const char *endTag, bool ignoreCase, TiXmlEncoding encoding)"
+.br
+.ti -1c
+.RI "static int \fBIsAlpha\fP (unsigned char anyByte, TiXmlEncoding encoding)"
+.br
+.ti -1c
+.RI "static int \fBIsAlphaNum\fP (unsigned char anyByte, TiXmlEncoding encoding)"
+.br
+.ti -1c
+.RI "static int \fBToLower\fP (int v, TiXmlEncoding encoding)"
+.br
+.ti -1c
+.RI "static void \fBConvertUTF32ToUTF8\fP (unsigned long input, char *output, int *length)"
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBTiXmlCursor\fP \fBlocation\fP"
+.br
+.ti -1c
+.RI "void * \fBuserData\fP"
+.br
+.RI "\fIField containing a generic user pointer\&. \fP"
+.in -1c
+.SS "Static Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "static const char * \fBerrorString\fP [TIXML_ERROR_STRING_COUNT]"
+.br
+.in -1c
+.SS "Friends"
+
+.in +1c
+.ti -1c
+.RI "class \fBTiXmlNode\fP"
+.br
+.ti -1c
+.RI "class \fBTiXmlElement\fP"
+.br
+.ti -1c
+.RI "class \fBTiXmlDocument\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fBTiXmlBase\fP is a base class for every class in TinyXml\&. It does little except to establish that TinyXml classes can be printed and provide some utility functions\&.
+.PP
+In XML, the document and elements can contain other elements and other types of nodes\&.
+.PP
+.PP
+.nf
+A Document can contain: Element (container or leaf)
+                        Comment (leaf)
+                        Unknown (leaf)
+                        Declaration( leaf )
+
+An Element can contain: Element (container or leaf)
+                        Text    (leaf)
+                        Attributes (not on tree)
+                        Comment (leaf)
+                        Unknown (leaf)
+
+A Decleration contains: Attributes (not on tree)
+.fi
+.PP
+ 
+.SH "Member Function Documentation"
+.PP 
+.SS "void TiXmlBase::EncodeString (const TIXML_STRING & str, TIXML_STRING * out)\fC [static]\fP"
+Expands entities in a string\&. Note this should not contian the tag's '<', '>', etc, or they will be transformed into entities! 
+.SS "virtual void TiXmlBase::Print (FILE * cfile, int depth) const\fC [pure virtual]\fP"
+All TinyXml classes can print themselves to a filestream or the string class (\fBTiXmlString\fP in non-STL mode, std::string in STL mode\&.) Either or both cfile and str can be null\&.
+.PP
+This is a formatted print, and will insert tabs and newlines\&.
+.PP
+(For an unformatted stream, use the << operator\&.) 
+.PP
+Implemented in \fBTiXmlDocument\fP, \fBTiXmlUnknown\fP, \fBTiXmlDeclaration\fP, \fBTiXmlText\fP, \fBTiXmlComment\fP, \fBTiXmlElement\fP, and \fBTiXmlAttribute\fP\&.
+.SS "int TiXmlBase::Row () const\fC [inline]\fP"
+Return the position, in the original source file, of this node or attribute\&. The row and column are 1-based\&. (That is the first row and first column is 1,1)\&. If the returns values are 0 or less, then the parser does not have a row and column value\&.
+.PP
+Generally, the row and column value will be set when the TiXmlDocument::Load(), \fBTiXmlDocument::LoadFile()\fP, or any TiXmlNode::Parse() is called\&. It will NOT be set when the DOM was created from operator>>\&.
+.PP
+The values reflect the initial load\&. Once the DOM is modified programmatically (by adding or changing nodes and attributes) the new values will NOT update to reflect changes in the document\&.
+.PP
+There is a minor performance cost to computing the row and column\&. Computation can be disabled if \fBTiXmlDocument::SetTabSize()\fP is called with 0 as the value\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBTiXmlDocument::SetTabSize()\fP 
+.RE
+.PP
+
+.SS "static void TiXmlBase::SetCondenseWhiteSpace (bool condense)\fC [inline]\fP, \fC [static]\fP"
+The world does not agree on whether white space should be kept or not\&. In order to make everyone happy, these global, static functions are provided to set whether or not TinyXml will condense all white space into a single space or not\&. The default is to condense\&. Note changing this value is not thread safe\&. 
+.SH "Member Data Documentation"
+.PP 
+.SS "const char * TiXmlBase::errorString\fC [static]\fP, \fC [protected]\fP"
+\fBInitial value:\fP
+.PP
+.nf
+=
+{
+    "No error",
+    "Error",
+    "Failed to open file",
+    "Error parsing Element\&.",
+    "Failed to read Element name",
+    "Error reading Element value\&.",
+    "Error reading Attributes\&.",
+    "Error: empty tag\&.",
+    "Error reading end tag\&.",
+    "Error parsing Unknown\&.",
+    "Error parsing Comment\&.",
+    "Error parsing Declaration\&.",
+    "Error document empty\&.",
+    "Error null (0) or unexpected EOF found in input stream\&.",
+    "Error parsing CDATA\&.",
+    "Error when TiXmlDocument added to document, because TiXmlDocument can only be at the root\&.",
+}
+.fi
+.SS "const int TiXmlBase::utf8ByteTable\fC [static]\fP"
+\fBInitial value:\fP
+.PP
+.nf
+= 
+{
+    
+        1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  
+        1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  
+        1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  
+        1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  
+        1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  
+        1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  
+        1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  
+        1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  
+        1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  
+        1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  
+        1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  
+        1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  
+        1,  1,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  
+        2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  
+        3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  
+        4,  4,  4,  4,  4,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1   
+}
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Incendie from the source code\&.

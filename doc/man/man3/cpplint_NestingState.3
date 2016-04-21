@@ -1,0 +1,220 @@
+.TH "cpplint.NestingState" 3 "Wed Apr 20 2016" "Incendie" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cpplint.NestingState \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits object\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "def \fB__init__\fP (self)"
+.br
+.ti -1c
+.RI "def \fBSeenOpenBrace\fP (self)"
+.br
+.ti -1c
+.RI "def \fBInNamespaceBody\fP (self)"
+.br
+.ti -1c
+.RI "def \fBInExternC\fP (self)"
+.br
+.ti -1c
+.RI "def \fBInClassDeclaration\fP (self)"
+.br
+.ti -1c
+.RI "def \fBInAsmBlock\fP (self)"
+.br
+.ti -1c
+.RI "def \fBInTemplateArgumentList\fP (self, clean_lines, linenum, pos)"
+.br
+.ti -1c
+.RI "def \fBUpdatePreprocessor\fP (self, line)"
+.br
+.ti -1c
+.RI "def \fBUpdate\fP (self, filename, clean_lines, linenum, error)"
+.br
+.ti -1c
+.RI "def \fBInnermostClass\fP (self)"
+.br
+.ti -1c
+.RI "def \fBCheckCompletedBlocks\fP (self, filename, error)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBstack\fP"
+.br
+.ti -1c
+.RI "\fBprevious_stack_top\fP"
+.br
+.ti -1c
+.RI "\fBpp_stack\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.PP
+.nf
+Holds states related to parsing braces.
+.fi
+.PP
+ 
+.SH "Member Function Documentation"
+.PP 
+.SS "def cpplint\&.NestingState\&.CheckCompletedBlocks ( self,  filename,  error)"
+
+.PP
+.nf
+Checks that all classes and namespaces have been completely parsed.
+
+Call this when all lines in a file have been processed.
+Args:
+  filename: The name of the current file.
+  error: The function to call with any errors found.
+
+.fi
+.PP
+ 
+.SS "def cpplint\&.NestingState\&.InAsmBlock ( self)"
+
+.PP
+.nf
+Check if we are currently one level inside an inline ASM block.
+
+Returns:
+  True if the top of the stack is a block containing inline ASM.
+
+.fi
+.PP
+ 
+.SS "def cpplint\&.NestingState\&.InClassDeclaration ( self)"
+
+.PP
+.nf
+Check if we are currently one level inside a class or struct declaration.
+
+Returns:
+  True if top of the stack is a class/struct, False otherwise.
+
+.fi
+.PP
+ 
+.SS "def cpplint\&.NestingState\&.InExternC ( self)"
+
+.PP
+.nf
+Check if we are currently one level inside an 'extern "C"' block.
+
+Returns:
+  True if top of the stack is an extern block, False otherwise.
+
+.fi
+.PP
+ 
+.SS "def cpplint\&.NestingState\&.InNamespaceBody ( self)"
+
+.PP
+.nf
+Check if we are currently one level inside a namespace body.
+
+Returns:
+  True if top of the stack is a namespace block, False otherwise.
+
+.fi
+.PP
+ 
+.SS "def cpplint\&.NestingState\&.InnermostClass ( self)"
+
+.PP
+.nf
+Get class info on the top of the stack.
+
+Returns:
+  A _ClassInfo object if we are inside a class, or None otherwise.
+
+.fi
+.PP
+ 
+.SS "def cpplint\&.NestingState\&.InTemplateArgumentList ( self,  clean_lines,  linenum,  pos)"
+
+.PP
+.nf
+Check if current position is inside template argument list.
+
+Args:
+  clean_lines: A CleansedLines instance containing the file.
+  linenum: The number of the line to check.
+  pos: position just after the suspected template argument.
+Returns:
+  True if (linenum, pos) is inside template arguments.
+
+.fi
+.PP
+ 
+.SS "def cpplint\&.NestingState\&.SeenOpenBrace ( self)"
+
+.PP
+.nf
+Check if we have seen the opening brace for the innermost block.
+
+Returns:
+  True if we have seen the opening brace, False if the innermost
+  block is still expecting an opening brace.
+
+.fi
+.PP
+ 
+.SS "def cpplint\&.NestingState\&.Update ( self,  filename,  clean_lines,  linenum,  error)"
+
+.PP
+.nf
+Update nesting state with current line.
+
+Args:
+  filename: The name of the current file.
+  clean_lines: A CleansedLines instance containing the file.
+  linenum: The number of the line to check.
+  error: The function to call with any errors found.
+
+.fi
+.PP
+ 
+.SS "def cpplint\&.NestingState\&.UpdatePreprocessor ( self,  line)"
+
+.PP
+.nf
+Update preprocessor stack.
+
+We need to handle preprocessors due to classes like this:
+  #ifdef SWIG
+  struct ResultDetailsPageElementExtensionPoint {
+  #else
+  struct ResultDetailsPageElementExtensionPoint : public Extension {
+  #endif
+
+We make the following assumptions (good enough for most files):
+- Preprocessor condition evaluates to true from #if up to first
+  #else/#elif/#endif.
+
+- Preprocessor condition evaluates to false from #else/#elif up
+  to #endif.  We still perform lint checks on these lines, but
+  these do not affect nesting stack.
+
+Args:
+  line: current line to check.
+
+.fi
+.PP
+ 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Incendie from the source code\&.

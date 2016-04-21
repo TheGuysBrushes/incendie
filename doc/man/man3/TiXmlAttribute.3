@@ -1,0 +1,137 @@
+.TH "TiXmlAttribute" 3 "Wed Apr 20 2016" "Incendie" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+TiXmlAttribute \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <tinyxml\&.h>\fP
+.PP
+Inherits \fBTiXmlBase\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBTiXmlAttribute\fP ()"
+.br
+.RI "\fIConstruct an empty attribute\&. \fP"
+.ti -1c
+.RI "\fBTiXmlAttribute\fP (const char *_name, const char *_value)"
+.br
+.RI "\fIConstruct an attribute with a name and value\&. \fP"
+.ti -1c
+.RI "const char * \fBName\fP () const "
+.br
+.RI "\fIReturn the name of this attribute\&. \fP"
+.ti -1c
+.RI "const char * \fBValue\fP () const "
+.br
+.RI "\fIReturn the value of this attribute\&. \fP"
+.ti -1c
+.RI "int \fBIntValue\fP () const "
+.br
+.RI "\fIReturn the value of this attribute, converted to an integer\&. \fP"
+.ti -1c
+.RI "double \fBDoubleValue\fP () const "
+.br
+.RI "\fIReturn the value of this attribute, converted to a double\&. \fP"
+.ti -1c
+.RI "const TIXML_STRING & \fBNameTStr\fP () const "
+.br
+.ti -1c
+.RI "int \fBQueryIntValue\fP (int *_value) const "
+.br
+.ti -1c
+.RI "int \fBQueryDoubleValue\fP (double *_value) const "
+.br
+.RI "\fIQueryDoubleValue examines the value string\&. See \fBQueryIntValue()\fP\&. \fP"
+.ti -1c
+.RI "void \fBSetName\fP (const char *_name)"
+.br
+.RI "\fISet the name of this attribute\&. \fP"
+.ti -1c
+.RI "void \fBSetValue\fP (const char *_value)"
+.br
+.RI "\fISet the value\&. \fP"
+.ti -1c
+.RI "void \fBSetIntValue\fP (int _value)"
+.br
+.RI "\fISet the value from an integer\&. \fP"
+.ti -1c
+.RI "void \fBSetDoubleValue\fP (double _value)"
+.br
+.RI "\fISet the value from a double\&. \fP"
+.ti -1c
+.RI "const \fBTiXmlAttribute\fP * \fBNext\fP () const "
+.br
+.RI "\fIGet the next sibling attribute in the DOM\&. Returns null at end\&. \fP"
+.ti -1c
+.RI "\fBTiXmlAttribute\fP * \fBNext\fP ()"
+.br
+.ti -1c
+.RI "const \fBTiXmlAttribute\fP * \fBPrevious\fP () const "
+.br
+.RI "\fIGet the previous sibling attribute in the DOM\&. Returns null at beginning\&. \fP"
+.ti -1c
+.RI "\fBTiXmlAttribute\fP * \fBPrevious\fP ()"
+.br
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBTiXmlAttribute\fP &rhs) const "
+.br
+.ti -1c
+.RI "bool \fBoperator<\fP (const \fBTiXmlAttribute\fP &rhs) const "
+.br
+.ti -1c
+.RI "bool \fBoperator>\fP (const \fBTiXmlAttribute\fP &rhs) const "
+.br
+.ti -1c
+.RI "virtual const char * \fBParse\fP (const char *p, \fBTiXmlParsingData\fP *data, TiXmlEncoding encoding)"
+.br
+.ti -1c
+.RI "virtual void \fBPrint\fP (FILE *cfile, int depth) const "
+.br
+.ti -1c
+.RI "void \fBPrint\fP (FILE *cfile, int depth, TIXML_STRING *str) const "
+.br
+.ti -1c
+.RI "void \fBSetDocument\fP (\fBTiXmlDocument\fP *doc)"
+.br
+.in -1c
+.SS "Friends"
+
+.in +1c
+.ti -1c
+.RI "class \fBTiXmlAttributeSet\fP"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+An attribute is a name-value pair\&. Elements have an arbitrary number of attributes, each with a unique name\&.
+.PP
+\fBNote:\fP
+.RS 4
+The attributes are not TiXmlNodes, since they are not part of the tinyXML document object model\&. There are other suggested ways to look at this problem\&. 
+.RE
+.PP
+
+.SH "Member Function Documentation"
+.PP 
+.SS "virtual void TiXmlAttribute::Print (FILE * cfile, int depth) const\fC [inline]\fP, \fC [virtual]\fP"
+All TinyXml classes can print themselves to a filestream or the string class (\fBTiXmlString\fP in non-STL mode, std::string in STL mode\&.) Either or both cfile and str can be null\&.
+.PP
+This is a formatted print, and will insert tabs and newlines\&.
+.PP
+(For an unformatted stream, use the << operator\&.) 
+.PP
+Implements \fBTiXmlBase\fP\&.
+.SS "int TiXmlAttribute::QueryIntValue (int * _value) const"
+QueryIntValue examines the value string\&. It is an alternative to the \fBIntValue()\fP method with richer error checking\&. If the value is an integer, it is stored in 'value' and the call returns TIXML_SUCCESS\&. If it is not an integer, it returns TIXML_WRONG_TYPE\&.
+.PP
+A specialized but useful call\&. Note that for success it returns 0, which is the opposite of almost all other TinyXml calls\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Incendie from the source code\&.

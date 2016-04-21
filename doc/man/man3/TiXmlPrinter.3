@@ -1,0 +1,111 @@
+.TH "TiXmlPrinter" 3 "Wed Apr 20 2016" "Incendie" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+TiXmlPrinter \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <tinyxml\&.h>\fP
+.PP
+Inherits \fBTiXmlVisitor\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "virtual bool \fBVisitEnter\fP (const \fBTiXmlDocument\fP &doc)"
+.br
+.RI "\fIVisit a document\&. \fP"
+.ti -1c
+.RI "virtual bool \fBVisitExit\fP (const \fBTiXmlDocument\fP &doc)"
+.br
+.RI "\fIVisit a document\&. \fP"
+.ti -1c
+.RI "virtual bool \fBVisitEnter\fP (const \fBTiXmlElement\fP &element, const \fBTiXmlAttribute\fP *firstAttribute)"
+.br
+.RI "\fIVisit an element\&. \fP"
+.ti -1c
+.RI "virtual bool \fBVisitExit\fP (const \fBTiXmlElement\fP &element)"
+.br
+.RI "\fIVisit an element\&. \fP"
+.ti -1c
+.RI "virtual bool \fBVisit\fP (const \fBTiXmlDeclaration\fP &declaration)"
+.br
+.RI "\fIVisit a declaration\&. \fP"
+.ti -1c
+.RI "virtual bool \fBVisit\fP (const \fBTiXmlText\fP &text)"
+.br
+.RI "\fIVisit a text node\&. \fP"
+.ti -1c
+.RI "virtual bool \fBVisit\fP (const \fBTiXmlComment\fP &comment)"
+.br
+.RI "\fIVisit a comment node\&. \fP"
+.ti -1c
+.RI "virtual bool \fBVisit\fP (const \fBTiXmlUnknown\fP &unknown)"
+.br
+.RI "\fIVisit an unknown node\&. \fP"
+.ti -1c
+.RI "void \fBSetIndent\fP (const char *_indent)"
+.br
+.ti -1c
+.RI "const char * \fBIndent\fP ()"
+.br
+.RI "\fIQuery the indention string\&. \fP"
+.ti -1c
+.RI "void \fBSetLineBreak\fP (const char *_lineBreak)"
+.br
+.ti -1c
+.RI "const char * \fBLineBreak\fP ()"
+.br
+.RI "\fIQuery the current line breaking string\&. \fP"
+.ti -1c
+.RI "void \fBSetStreamPrinting\fP ()"
+.br
+.ti -1c
+.RI "const char * \fBCStr\fP ()"
+.br
+.RI "\fIReturn the result\&. \fP"
+.ti -1c
+.RI "size_t \fBSize\fP ()"
+.br
+.RI "\fIReturn the length of the result string\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Print to memory functionality\&. The \fBTiXmlPrinter\fP is useful when you need to:
+.PP
+.IP "1." 4
+Print to memory (especially in non-STL mode)
+.IP "2." 4
+Control formatting (line endings, etc\&.)
+.PP
+.PP
+When constructed, the \fBTiXmlPrinter\fP is in its default 'pretty printing' mode\&. Before calling Accept() you can call methods to control the printing of the XML document\&. After \fBTiXmlNode::Accept()\fP is called, the printed document can be accessed via the \fBCStr()\fP, Str(), and \fBSize()\fP methods\&.
+.PP
+\fBTiXmlPrinter\fP uses the Visitor API\&. 
+.PP
+.nf
+TiXmlPrinter printer;
+printer.SetIndent( "\t" );
+
+doc.Accept( &printer );
+fprintf( stdout, "%s", printer.CStr() );
+
+.fi
+.PP
+ 
+.SH "Member Function Documentation"
+.PP 
+.SS "void TiXmlPrinter::SetIndent (const char * _indent)\fC [inline]\fP"
+Set the indent characters for printing\&. By default 4 spaces but tab () is also useful, or null/empty string for no indentation\&. 
+.SS "void TiXmlPrinter::SetLineBreak (const char * _lineBreak)\fC [inline]\fP"
+Set the line breaking string\&. By default set to newline (
+.br
+)\&. Some operating systems prefer other characters, or can be set to the null/empty string for no indenation\&. 
+.SS "void TiXmlPrinter::SetStreamPrinting ()\fC [inline]\fP"
+Switch over to 'stream printing' which is the most dense formatting without linebreaks\&. Common when the XML is needed for network transmission\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Incendie from the source code\&.

@@ -1,0 +1,863 @@
+.TH "Foret" 3 "Wed Apr 20 2016" "Incendie" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Foret \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBForet\fP (int _largeur, int _hauteur, float proba=0\&.60, float _coefFeu=0\&.5, std::time_t graine=std::time(0))"
+.br
+.ti -1c
+.RI "\fBForet\fP (int _largeur, int _hauteur, std::ifstream *file, \fBLoadProgress\fP *PB)"
+.br
+.ti -1c
+.RI "\fBForet\fP (int _largeur, int _hauteur, std::vector< std::vector< int > > *matrice, float coef_brulure)"
+.br
+.ti -1c
+.RI "virtual \fB~Foret\fP ()"
+.br
+.ti -1c
+.RI "void \fBinitEmpty\fP ()"
+.br
+.ti -1c
+.RI "void \fBsetValues\fP (int largeur, int hauteur, float coef)"
+.br
+.ti -1c
+.RI "void \fBsetWind\fP (int angle, int vitesse)"
+.br
+.ti -1c
+.RI "int \fBwidth\fP () const "
+.br
+.ti -1c
+.RI "int \fBheight\fP () const "
+.br
+.ti -1c
+.RI "int \fBnbEssences\fP ()"
+.br
+.ti -1c
+.RI "const \fBVent\fP * \fBgetVent\fP () const "
+.br
+.ti -1c
+.RI "std::vector< \fBCellule\fP * > * \fBoperator[]\fP (int ligne)"
+.br
+.ti -1c
+.RI "bool \fBtryLoadEssences\fP (const std::string &fileName)"
+.br
+.ti -1c
+.RI "void \fBcreate\fP (int largeur, int hauteur, std::vector< std::vector< int > > *matrice)"
+.br
+.ti -1c
+.RI "void \fBrandomMatrix\fP (float probabilite)"
+.br
+.ti -1c
+.RI "void \fBclean\fP ()"
+.br
+.ti -1c
+.RI "const std::list< \fBArbre\fP * > * \fBgetOnFire\fP () const "
+.br
+.ti -1c
+.RI "std::list< \fBArbre\fP * > * \fBgetUprooted\fP ()"
+.br
+.ti -1c
+.RI "std::list< \fBArbre\fP * > * \fBgetDelayed\fP ()"
+.br
+.ti -1c
+.RI "std::list< \fBArbre\fP * > * \fBgetDelayBurned\fP ()"
+.br
+.ti -1c
+.RI "std::list< \fBArbre\fP * > * \fBgetCarbonized\fP ()"
+.br
+.ti -1c
+.RI "std::list< \fBArbre\fP * > * \fBgetBurned\fP ()"
+.br
+.ti -1c
+.RI "std::list< std::list< \fBArbre\fP * > > * \fBgetChanged\fP ()"
+.br
+.ti -1c
+.RI "void \fBclearUprooted\fP ()"
+.br
+.ti -1c
+.RI "void \fBclearDelayed\fP ()"
+.br
+.ti -1c
+.RI "void \fBclearDelayBurned\fP ()"
+.br
+.ti -1c
+.RI "void \fBclearCarbonized\fP ()"
+.br
+.ti -1c
+.RI "void \fBclearBurned\fP ()"
+.br
+.ti -1c
+.RI "void \fBclearChanged\fP ()"
+.br
+.ti -1c
+.RI "void \fBplantTree\fP (int col, int row)"
+.br
+.ti -1c
+.RI "void \fBplantTree\fP (int col, int row, unsigned int numEss, int PdV, float humidite, float coef, int etat)"
+.br
+.ti -1c
+.RI "void \fBuproot\fP (\fBArbre\fP *ab)"
+.br
+.ti -1c
+.RI "void \fBuproot\fP (int col, int row)"
+.br
+.ti -1c
+.RI "void \fBdelay\fP (\fBArbre\fP *ab, float coef=0\&.5)"
+.br
+.ti -1c
+.RI "void \fBkindle\fP (\fBArbre\fP *ab)"
+.br
+.ti -1c
+.RI "void \fBkindle\fP (int col, int row)"
+.br
+.ti -1c
+.RI "void \fBblast\fP (\fBArbre\fP *ab)"
+.br
+.ti -1c
+.RI "void \fBspark\fP (\fBArbre\fP *ab, int intensite)"
+.br
+.ti -1c
+.RI "void \fBspark\fP (int col, int row, int intensite)"
+.br
+.ti -1c
+.RI "void \fBcut\fP (int xDep, int yDep, int xArr, int yArr)"
+.br
+.ti -1c
+.RI "void \fBdelay\fP (int xDep, int yDep, int xArr, int yArr)"
+.br
+.ti -1c
+.RI "std::list< \fBArbre\fP * > \fBadjacents\fP (int col, int row, int distance) const "
+.br
+.ti -1c
+.RI "std::list< \fBArbre\fP * > \fBadjacents\fP (const \fBArbre\fP *ab, int distance) const "
+.br
+.ti -1c
+.RI "void \fBsparkAdjacentsWind\fP (int posCol, int posRow, int hor, int vert)"
+.br
+.ti -1c
+.RI "void \fBsparkAdjacentsWind\fP (\fBArbre\fP *a, const \fBVent\fP *vent)"
+.br
+.ti -1c
+.RI "void \fBtransition\fP (\fBArbre\fP *ab)"
+.br
+.ti -1c
+.RI "void \fBtransitionWind\fP (\fBArbre\fP *a, const \fBVent\fP *vent)"
+.br
+.ti -1c
+.RI "bool \fBNextMove\fP ()"
+.br
+.ti -1c
+.RI "void \fBloadSizes\fP (std::ifstream *file)"
+.br
+.ti -1c
+.RI "void \fBloadBurningCoef\fP (std::ifstream *file)"
+.br
+.ti -1c
+.RI "void \fBloadEssences\fP (std::ifstream *file)"
+.br
+.ti -1c
+.RI "void \fBloadMatrix\fP (std::ifstream *file, \fBLoadProgress\fP *progress)"
+.br
+.ti -1c
+.RI "bool \fBtryLoad\fP (std::ifstream *file, \fBLoadProgress\fP *progress)"
+.br
+.ti -1c
+.RI "void \fBsaveProperties\fP (std::ofstream *file)"
+.br
+.ti -1c
+.RI "void \fBsaveEssences\fP (std::ofstream *file)"
+.br
+.ti -1c
+.RI "void \fBsaveMatrix\fP (std::ofstream *file)"
+.br
+.ti -1c
+.RI "bool \fBtrySave\fP (std::string filePath='save_forest')"
+.br
+.ti -1c
+.RI "bool \fBtrySaveSeed\fP (std::string filePath='save_forest')"
+.br
+.ti -1c
+.RI "void \fBshowEssences\fP () const "
+.br
+.in -1c
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Foret::Foret (int _largeur, int _hauteur, float proba = \fC0\&.60\fP, float _coefFeu = \fC0\&.5\fP, std::time_t graine = \fCstd::time(0)\fP)"
+Constructeurs de forêt aléatoirement, à partir de paramètres 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fI_largeur\fP nombre de colonnes de la matrice représentant la forêt, sa largeur 
+.br
+\fI_hauteur\fP nombre de lignes de la matrice, la hauteur 
+.br
+\fIproba,probabilite\fP qu'il y ait un arbre, pour chaque case de la matrice\&. C'est environ le pourcentage d'arbres 
+.br
+\fI_coefFeu\fP coefficient de propagation du feu : 1 forêt 'classique'; <1 progression plus lente (humidité\&.\&.\&.); >1 progression plus rapide (sécheresse ?) 
+.RE
+.PP
+
+.SS "Foret::Foret (int _largeur, int _hauteur, std::ifstream * file, \fBLoadProgress\fP * PB)"
+Constructeurs de forêt aléatoirement, à partir d'un fichier de sauvegarde 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fI_largeur\fP nombre de colonnes de la matrice représentant la forêt, sa largeur 
+.br
+\fI_hauteur\fP nombre de lignes de la matrice, la hauteur 
+.br
+\fIfile\fP fichier de sauvegarde d'une foret précédente, contenant les essences et l'emplacement des arbres et leur indice d'essence 
+.br
+\fIPB\fP barre de progression Qt, pour afficher l'avancement du chargement 
+.RE
+.PP
+
+.SS "Foret::Foret (int _largeur, int _hauteur, std::vector< std::vector< int > > * matrice, float coef_brulure)"
+Constructeurs de forêt aléatoirement, à partir d'une image 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fI_largeur\fP nombre de colonnes de la matrice représentant la forêt, sa largeur 
+.br
+\fI_hauteur\fP nombre de lignes de la matrice, la hauteur 
+.br
+\fImatrice\fP matrice d'intensités de couleur verte selon l'emplacement dans l'image 
+.RE
+.PP
+
+.SS "Foret::~Foret ()\fC [virtual]\fP"
+On vide également les listes  utile ?
+.IP "\(bu" 2
+* 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+
+.PP
+
+.SH "Member Function Documentation"
+.PP 
+.SS "std::list< \fBArbre\fP * > Foret::adjacents (int col, int row, int distance) const"
+Retourne les arbres qui sont proches d'une cellule donnée 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian and Ugo 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIcol\fP indice de la colonne de la cellule 
+.br
+\fIrow\fP indice de la ligne de la cellule 
+.br
+\fIdistance\fP distance sur laquelle s'effectue la recherche de voisins 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+list de pointeurs sur arbres proches 
+.RE
+.PP
+
+.SS "std::list< \fBArbre\fP * > Foret::adjacents (const \fBArbre\fP * ab, int distance) const"
+Retourne les arbres qui sont proches d'une cellule donnée, appelle adjacents(int, int) 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIab\fP arbre dont on veut connaître les voisins 
+.br
+\fIdistance\fP distance sur laquelle s'effectue la recherche de voisins 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+list de pointeurs sur arbres 
+.RE
+.PP
+
+.SS "void Foret::blast (\fBArbre\fP * ab)"
+Definit un arbre comme étant en cendres 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIab\fP arbre à mettre en cendres 
+.RE
+.PP
+
+.SS "void Foret::clean ()"
+Met la foret à l'état vierge : aucun arbre 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+
+.SS "void Foret::clearChanged ()"
+Vide les listes d'éléments modifiés 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+
+.SS "void Foret::create (int largeur, int hauteur, std::vector< std::vector< int > > * matrice)"
+Crée une foret à partir d'une matrice de niveau de couleur de vert 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlargeur\fP largeur de la foret à créer 
+.br
+\fIhauteur\fP hauteur de la foret à créer 
+.br
+\fImatrice\fP de taille largeur x hauteur, d'intensités de vert dans l'image 
+.RE
+.PP
+
+.SS "void Foret::cut (int xDep, int yDep, int xArr, int yArr)"
+Coupe les arbres se trouvant dans un rectangle 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIall\fP positions de 2 points diagonaux du rectangle 
+.RE
+.PP
+
+.SS "void Foret::delay (\fBArbre\fP * ab, float coef = \fC0\&.5\fP)"
+Eteint un arbre en conservant ses points de vie courant 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIab\fP arbre à éteindre 
+.RE
+.PP
+
+.SS "void Foret::delay (int xDep, int yDep, int xArr, int yArr)"
+Applique un retardateur sur les arbres se trouvant dans un rectangle 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIall\fP positions de 2 points diagonaux du rectangle 
+.RE
+.PP
+
+.SS "std::list< list< \fBArbre\fP * > > * Foret::getChanged ()"
+Retourne les listes d'éléments modfiés 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian IMPROVEIT ? Inutilisé, car il faudrait regarder pour chaque élément avec quelle couleur l'afficher au lieu d'une couleur par liste 
+.RE
+.PP
+
+.SS "void Foret::initEmpty ()"
+Initialise une matrice avec des cellules (vierge) 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo and Florian 
+.RE
+.PP
+
+.SS "void Foret::kindle (\fBArbre\fP * ab)"
+Definit un arbre comme étant en feu 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIab\fP arbre à allumer 
+.RE
+.PP
+
+.SS "void Foret::kindle (int col, int row)"
+Definit une position comme étant en feu, si c'est un arbre 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIall\fP position de l'arbre à allumer 
+.RE
+.PP
+
+.SS "void Foret::loadBurningCoef (std::ifstream * file)"
+Lit le coefficient de brulure d'une foret dans un fichier de sauvegarde 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfile\fP fichier de sauvegarde de foret 
+.RE
+.PP
+
+.SS "void Foret::loadEssences (std::ifstream * file)"
+Lit les essences d'une foret dans un fichier de sauvegarde 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfile\fP fichier de sauvegarde de foret 
+.RE
+.PP
+
+.SS "void Foret::loadMatrix (std::ifstream * file, \fBLoadProgress\fP * progress)"
+Charge une foret à partir d'un fichier de sauvegarde 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfile\fP fichier de sauvegarde d'une foret 
+.br
+\fIPB\fP barre de progression pour suivre le chargement de la foret IMPROVEIT 
+.RE
+.PP
+
+.SS "void Foret::loadSizes (std::ifstream * file)"
+Lit les tailles d'une foret dans un fichier de sauvegarde 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfile\fP fichier de sauvegarde de foret 
+.RE
+.PP
+\fBDeprecated\fP
+.RS 4
+taille lues dans fwelcome, pour initialiser les tailles des fenetres 
+.RE
+.PP
+
+.SS "bool Foret::NextMove ()"
+Passe de t à t+1 tous les arbres à l'aide de la liste d'arbres en feu 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian et Ugo 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+vrai si il y eu des changements, faux sinon 
+.RE
+.PP
+
+.SS "void Foret::plantTree (int col, int row)"
+'Plante' un arbre à la position donnée dans la matrice 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian et Ugo 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIall\fP position de l'arbre dans la matrice 
+.RE
+.PP
+
+.SS "void Foret::plantTree (int col, int row, unsigned int numEss, int PdV, float humidite, float coef, int etat)"
+'Plante' un arbre à la position donnée dans la matrice 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian et Ugo 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIcol\fP abscisse de l'arbre 
+.br
+\fIrow\fP ordonnée de l'arbre 
+.br
+\fInumEss\fP indice de l'essence de l'arbre à utiliser 
+.RE
+.PP
+
+.SS "void Foret::randomMatrix (float probabilite)"
+Initialise une matrice vide puis ajoute des arbre dans la \fBForet\fP 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian and Ugo 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIprobabilite\fP chance qu'a un arbre d'être placé sur chaque case 
+.RE
+.PP
+
+.SS "void Foret::saveEssences (std::ofstream * file)"
+Sauvegarde les essences de la foret et leur nombre dans un fichier de sauvegarde 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfile\fP fichier où sauvegarder les données de la forêt 
+.RE
+.PP
+
+.SS "void Foret::saveMatrix (std::ofstream * file)"
+Sauvegarde les arbres de la foret dans un fichier de sauvegarde 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfile\fP fichier où sauvegarder les données de la forêt 
+.RE
+.PP
+
+.SS "void Foret::saveProperties (std::ofstream * file)"
+Sauvegarde les tailles et le coefficient de brulure de la foret dans un fichier de sauvegarde 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfile\fP fichier où sauvegarder les données de la forêt 
+.RE
+.PP
+
+.SS "void Foret::setValues (int largeur, int hauteur, float coef)"
+Définit/redéfinit la taille et le coefficient de brulure d'une foret 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIall\fP définit les paramètres particuliers de la forêt (en dehors du vent) 
+.RE
+.PP
+\fBDeprecated\fP
+.RS 4
+.RE
+.PP
+
+.SS "void Foret::setWind (int angle, int vitesse)"
+Définit la direction du vent 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIangle\fP angle du nouveau vent 
+.br
+\fIvitesse\fP force du nouveau 
+.RE
+.PP
+
+.SS "void Foret::showEssences () const"
+Affiche les essences de la foret sur la sortie standard (debuggage) 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+
+.SS "void Foret::spark (\fBArbre\fP * ab, int intensite)"
+Enflamme un arbre : un autre arbre lui 'transmet' du feu 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIab\fP arbre à enflammer 
+.br
+\fIintensite\fP force de transmission du feu 
+.RE
+.PP
+
+.SS "void Foret::spark (int col, int row, int intensite)"
+Enflamme une cellule si elle existe, selon sa position dans la matrice 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrow\fP ligne où est la cellule 
+.br
+\fIcol\fP colonne où est la cellule 
+.br
+\fIintensite\fP force de transmission du feu 
+.RE
+.PP
+\fBDeprecated\fP
+.RS 4
+.RE
+.PP
+
+.SS "void Foret::sparkAdjacentsWind (int posCol, int posRow, int hor, int vert)"
+Transmet le feu d'un arbre à ses voisins, selon la position de l'arbre 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo et Florian
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIposCol\fP abscisse de l'arbre qui est en feu 
+.br
+\fIposRow\fP ordonnée de l'arbre qui est en feu 
+.br
+\fIhor\fP force du vent horizontalement 
+.br
+\fIvert\fP force du vent verticalement 
+.RE
+.PP
+
+.SS "void Foret::sparkAdjacentsWind (\fBArbre\fP * a, const \fBVent\fP * vent)"
+Transmet le feu d'un arbre à ses voisins, selon la position de l'arbre 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo et Florian
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIa\fP arbre qui transmet le feu 
+.br
+\fIvent\fP qui influe la transmission 
+.RE
+.PP
+
+.SS "void Foret::transition (\fBArbre\fP * ab)"
+Applique une transition de l'état t à l'état t+1 d'un arbre 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian et Ugo 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIab\fP arbre en feu qui doit le transmettre 
+.RE
+.PP
+\fBDeprecated\fP
+.RS 4
+transmission sans vent 
+.RE
+.PP
+
+.SS "void Foret::transitionWind (\fBArbre\fP * a, const \fBVent\fP * vent)"
+Un arbre brule pendant une unité de temps : il enflamme les voisins en tenant compte de la direction du vent et perd des PV 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIa\fP arbre qui brule 
+.br
+\fIvent\fP qui influe la transmission 
+.RE
+.PP
+
+.SS "bool Foret::tryLoad (std::ifstream * file, \fBLoadProgress\fP * progress)"
+Initialise la foret et rempli la matrice d'arbres à partir d"un fichier de sauvegarde 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfile\fP fichier de sauvegarde de foret 
+.br
+\fIPB\fP barre de progression pour suivre le chargement de la foret IMPROVEIT 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+vrai si le chargement a reussi ? TODO vérifier 
+.RE
+.PP
+
+.SS "bool Foret::tryLoadEssences (const std::string & fileName)"
+Charge des essences dans le tableau d'essences à partir d'un fichier texte Format des lignes : 'Nom' 'masse volumique (kg/m³)' 'diametre moyen dans R' 'hauteur moyenne' 'type (0/1)' 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfileName\fP nom du fichier qui contient les essences 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+vrai si le fichier a été ouvert, faux sinon 
+.RE
+.PP
+
+.SS "bool Foret::trySave (std::string filePath = \fC'save_forest'\fP)"
+Sauvegarde une forêt dans un fichier (tailles-essences-arbres) 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfilename\fP chemin où sauvegarder le fichier de sauvegarde 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+vrai si la sauvegarde a réussi ? TODO vérifier 
+.RE
+.PP
+
+.SS "bool Foret::trySaveSeed (std::string filePath = \fC'save_forest'\fP)"
+Sauvegarde la taille et la graine aléatoire d'une forêt 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfile\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+vrai si la sauvegarde a réussi ? TODO vérifier 
+.RE
+.PP
+
+.SS "void Foret::uproot (\fBArbre\fP * ab)"
+Coupe ou déracine un arbre 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIab\fP arbre à supprimer 
+.RE
+.PP
+
+.SS "void Foret::uproot (int col, int row)"
+Coupe ou déracine l'arbre à la position donnée 
+.PP
+\fBAuthor:\fP
+.RS 4
+Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIall\fP position de l'arbre à supprimer 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Incendie from the source code\&.

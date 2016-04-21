@@ -1,0 +1,142 @@
+.TH "WindWidget" 3 "Wed Apr 20 2016" "Incendie" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+WindWidget \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <windwidget\&.h>\fP
+.PP
+Inherits QWidget\&.
+.SS "Public Slots"
+
+.in +1c
+.ti -1c
+.RI "void \fBmajAngle\fP ()"
+.br
+.ti -1c
+.RI "void \fBmajSpeed\fP (int vitesse)"
+.br
+.ti -1c
+.RI "void \fBchangeWindDir\fP ()"
+.br
+.in -1c
+.SS "Signals"
+
+.in +1c
+.ti -1c
+.RI "void \fBwind_changed\fP (int angle, int vitesse)"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBWindWidget\fP ()"
+.br
+.ti -1c
+.RI "void \fBinitComponents\fP ()"
+.br
+.ti -1c
+.RI "void \fBinitValues\fP (int angle, int vitesse)"
+.br
+.ti -1c
+.RI "int \fBgetAngle\fP () const "
+.br
+.ti -1c
+.RI "int \fBgetSpeed\fP () const "
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBresizeEvent\fP (QResizeEvent *Qevent)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Classe représentant le widget complet pour gérer orientation et vitesse du vent de manière dynamique 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo 
+.RE
+.PP
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "WindWidget::WindWidget ()"
+Initialise les attributs graphiques de la classe 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo 
+.RE
+.PP
+
+.SH "Member Function Documentation"
+.PP 
+.SS "void WindWidget::changeWindDir ()\fC [slot]\fP"
+Slot exécuté à chaque timeout du timer pour faire varier la valeur de l'angle de facon aléatoire 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo 
+.RE
+.PP
+
+.SS "void WindWidget::initComponents ()"
+Initialise les composants graĥiques statiques et organise la hiérarchie des différents composants 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo 
+.RE
+.PP
+
+.SS "void WindWidget::majAngle ()\fC [slot]\fP"
+Signale à firescreen que le vent a été modifié 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo 
+.RE
+.PP
+
+.SS "void WindWidget::majSpeed (int vitesse)\fC [slot]\fP"
+Met à jour la valeur de la vitesse choisie et l'affiche signale à firescreen que le vent a été modifié 
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIvitesse\fP nouvelle vitesse 
+.RE
+.PP
+
+.SS "void WindWidget::wind_changed (int angle, int vitesse)\fC [signal]\fP"
+TODO Ugo comment
+.PP
+\fBAuthor:\fP
+.RS 4
+Ugo et Florian 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIangle\fP 
+.br
+\fIvitesse\fP 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Incendie from the source code\&.
