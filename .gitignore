@@ -1,0 +1,25 @@
+# Exectuables
+*.Release
+*.Debug
+*.exe
+
+# Build files
+*.o
+build/Debug/*
+build/last_release_dev_very_light/*
+build/last_release/*
+build/Desktop_Qt_5_5_1_GCC_64bit-Debug/*
+build/Desktop_Qt_5_5_1_GCC_64bit-Release/*
+
+# IDE files
+*.user
+.kdev4/*
+incendie.pro.user.PC1812
+*.db
+
+# Archives
+*.zip
+
+# Doc
+doc/man/
+doc/xml/
