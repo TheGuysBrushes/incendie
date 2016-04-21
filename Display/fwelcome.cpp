@@ -94,6 +94,12 @@ void Fwelcome::createComponents()
 
 void Fwelcome::initComponents()
 {
+	Max_larg = (QApplication::desktop()->screenGeometry().width()
+                    -LargeurMaximaleMenusDroite -20)*COEF_TAILLE_MAX_FORET;
+	// 45 pixel à cause des marges et menu (observé 43)				
+	Max_haut = (QApplication::desktop()->screenGeometry().height()
+                    -HauteurMaximaleBarresFenetre -25)*COEF_TAILLE_MAX_FORET;
+										
 	cancel_btn->setVisible(false);
 
 	/* Conteneurs */

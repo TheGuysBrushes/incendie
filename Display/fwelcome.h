@@ -35,11 +35,8 @@ class Fwelcome : public QDialog
 {
 Q_OBJECT
 private:
-    int Max_larg = (QApplication::desktop()->screenGeometry().width()
-                    -LargeurMaximaleMenusDroite -20)*COEF_TAILLE_MAX_FORET;
-    // 45 pixel à cause des marges et menu (observé 43)
-    int Max_haut = (QApplication::desktop()->screenGeometry().height()
-                    -HauteurMaximaleBarresFenetre -25)*COEF_TAILLE_MAX_FORET;
+    int Max_larg;
+    int Max_haut;
 
 	QGridLayout* gridLayButtons;
 
