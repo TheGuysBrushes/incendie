@@ -10,8 +10,10 @@
 
 using namespace std;
 
-FireScreen::FireScreen(): QMainWindow()
+FireScreen::FireScreen(const QString& title, QWidget* parent): QMainWindow(parent)
 {
+    setWindowTitle(title);
+
     // Elements de la barre de menus
     exit= menuBar()->addAction(tr("Quit"));
 

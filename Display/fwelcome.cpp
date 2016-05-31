@@ -12,52 +12,56 @@
  * TODO Commenter les fonctions de fwelcome
  */
 #define FORESTPICTURESLOCATION "../Resources/Pictures"
- 
+
 using namespace std;
 
 Fwelcome::Fwelcome(QWidget* parent): QDialog(parent), picturesBrowserLocation(QDir::toNativeSeparators(FORESTPICTURESLOCATION))
 {
-	createComponents();
-	
-	initComponents();
+    setWindowTitle(tr("Welcome"));
+
+    createComponents();
+
+    initComponents();
     initEvents();
 }
 
 Fwelcome::Fwelcome(QWidget* parent, int _largeur, int _hauteur): QDialog(parent), picturesBrowserLocation("../Resources/Pictures")
 {
-	createComponents();
-	
-	initComponents();
+    setWindowTitle(tr("Welcome"));
+
+    createComponents();
+
+    initComponents();
     initEvents();
-	
-	larg_spin->setValue(_largeur);
-	haut_spin->setValue(_hauteur);
+
+    larg_spin->setValue(_largeur);
+    haut_spin->setValue(_hauteur);
 }
 
 
 Fwelcome::~Fwelcome(){
-	delete gridLayButtons;
+    delete gridLayButtons;
 
-	delete(haut_spin);
-	delete(larg_spin);
-	delete(p_value);
-	delete(c_value);
+    delete(haut_spin);
+    delete(larg_spin);
+    delete(p_value);
+    delete(c_value);
 
     delete max_width_btn ;
     delete min_width_btn ;
     delete max_height_btn ;
     delete min_height_btn ;
 
-	delete(restoreBtn);
-	delete(cancel_btn);
-	delete valid_btn;
-	delete seedBtn;
-	delete loadFromImgBtn;
-	
-	delete(fileDialog);
-	
+    delete(restoreBtn);
+    delete(cancel_btn);
+    delete valid_btn;
+    delete seedBtn;
+    delete loadFromImgBtn;
+
+    delete(fileDialog);
+
 // 	delete pictureForest; WARNING fait planter
-	delete file;
+    delete file;
 }
 
 /*#####################*/
@@ -65,16 +69,16 @@ Fwelcome::~Fwelcome(){
 /*#####################*/
 void Fwelcome::createComponents()
 {
-	haut_spin= NULL;
-	larg_spin= NULL;
+    haut_spin= NULL;
+    larg_spin= NULL;
 
-	// Initialisation des composants dynamiques (SpinBox exceptées)
-	p_value = new QLabel;
-	c_value = new QLabel;
-	
-	pictureForest= new QImage;
-	
-	gridLayButtons = NULL;
+    // Initialisation des composants dynamiques (SpinBox exceptées)
+    p_value = new QLabel;
+    c_value = new QLabel;
+
+    pictureForest= new QImage;
+
+    gridLayButtons = NULL;
 
     valid_btn = 	new QPushButton(tr("Confirm"));
     cancel_btn = 	new QPushButton(tr("Cancel"));
@@ -87,75 +91,75 @@ void Fwelcome::createComponents()
 
     max_height_btn = 	new QPushButton(tr("max"));
     min_height_btn = 	new QPushButton(tr("min"));
-	
-	fileDialog = NULL;
-	file= new ifstream;
+
+    fileDialog = NULL;
+    file= new ifstream;
 }
 
 void Fwelcome::initComponents()
 {
-	Max_larg = (QApplication::desktop()->screenGeometry().width()
+    Max_larg = (QApplication::desktop()->screenGeometry().width()
                     -LargeurMaximaleMenusDroite -20)*COEF_TAILLE_MAX_FORET;
-	// 45 pixel à cause des marges et menu (observé 43)				
-	Max_haut = (QApplication::desktop()->screenGeometry().height()
+    // 45 pixel à cause des marges et menu (observé 43)
+    Max_haut = (QApplication::desktop()->screenGeometry().height()
                     -HauteurMaximaleBarresFenetre -25)*COEF_TAILLE_MAX_FORET;
-										
-	cancel_btn->setVisible(false);
 
-	/* Conteneurs */
-	QVBoxLayout* lay = new QVBoxLayout(this);
-	
-	/* Initialisation des composants statiques (hors SpinBox ) */
-	
-	// TEXTE
+    cancel_btn->setVisible(false);
+
+    /* Conteneurs */
+    QVBoxLayout* lay = new QVBoxLayout(this);
+
+    /* Initialisation des composants statiques (hors SpinBox ) */
+
+    // TEXTE
     QString s = tr("Welcome on the automaton of forest fire simulation. Please, enter parameters, then confirm");
-	
+
     QLabel* present = new QLabel(s + "\n");
-	present->setWordWrap(true);
-	present->setAlignment(Qt::AlignCenter);
-	present->setMinimumSize(400, 60);
-	
+    present->setWordWrap(true);
+    present->setAlignment(Qt::AlignCenter);
+    present->setMinimumSize(400, 60);
+
 // REGLAGES
-	QWidget* WSettings = new QWidget;
-	
-	QGridLayout* grid_lay_settings = new QGridLayout(WSettings);
-	
-	// SPINBOXS
-		// SpinBox largeur
+    QWidget* WSettings = new QWidget;
+
+    QGridLayout* grid_lay_settings = new QGridLayout(WSettings);
+
+    // SPINBOXS
+        // SpinBox largeur
         QLabel* l_lbl = new QLabel(tr("Width : "));
-		
-		larg_spin = new QSpinBox(WSettings);
-			larg_spin->setMinimum(100);
+
+        larg_spin = new QSpinBox(WSettings);
+            larg_spin->setMinimum(100);
             larg_spin->setMaximum( Max_larg );
-			larg_spin->setValue(450);
-			larg_spin->setSingleStep(25);
-			larg_spin->setAccelerated(1);
-		
-		// SpinBox Hauteur
+            larg_spin->setValue(450);
+            larg_spin->setSingleStep(25);
+            larg_spin->setAccelerated(1);
+
+        // SpinBox Hauteur
         QLabel* h_lbl = new QLabel(tr("Height : "));
-		
-		haut_spin = new QSpinBox(WSettings);
-			haut_spin->setMinimum(100);
+
+        haut_spin = new QSpinBox(WSettings);
+            haut_spin->setMinimum(100);
             haut_spin->setMaximum( Max_haut );
-			haut_spin->setValue(300);
-			haut_spin->setSingleStep(25);
-			haut_spin->setAccelerated(1);
-	
-	// SLIDERS
-		// Probabilite
+            haut_spin->setValue(300);
+            haut_spin->setSingleStep(25);
+            haut_spin->setAccelerated(1);
+
+    // SLIDERS
+        // Probabilite
         QLabel* p_lbl = new QLabel(tr("Probability : "));
 
-		QSlider * slide_p = new QSlider(Qt::Horizontal, 0);
-		slide_p->setMaximum(100);
-		slide_p->setMinimum(1);
+        QSlider * slide_p = new QSlider(Qt::Horizontal, 0);
+        slide_p->setMaximum(100);
+        slide_p->setMinimum(1);
 
-		// Coefficient
+        // Coefficient
         QLabel* c_lbl = new QLabel( tr("Coefficient : ") );
-		
-		QSlider* slide_c = new QSlider(Qt::Horizontal, 0);
-		slide_c->setMaximum(100);
-		slide_c->setMinimum(1);
-				
+
+        QSlider* slide_c = new QSlider(Qt::Horizontal, 0);
+        slide_c->setMaximum(100);
+        slide_c->setMinimum(1);
+
     /* Emboitements */
     grid_lay_settings->setSpacing(1);
         p_value->setAlignment(Qt::AlignCenter);
@@ -175,38 +179,38 @@ void Fwelcome::initComponents()
     grid_lay_settings->addWidget(max_height_btn, 1,4);
 //    grid_lay_settings->addLayout(height_btn_box, 1,3);
 
-	grid_lay_settings->addWidget(p_lbl,2,0);
+    grid_lay_settings->addWidget(p_lbl,2,0);
     grid_lay_settings->addWidget(slide_p,2,1, 1,3);
     grid_lay_settings->addWidget(p_value,2,4);
-	
-	grid_lay_settings->addWidget(c_lbl,3,0);
+
+    grid_lay_settings->addWidget(c_lbl,3,0);
     grid_lay_settings->addWidget(slide_c,3,1, 1,3);
     grid_lay_settings->addWidget(c_value,3,4);
 //    grid_lay_settings->setAlignment(p_value);
-	
-	// BOUTONS
-	QWidget* WButtons= new QWidget;
-		// TODO remettre dans le constructeur les création ?
-		// Placement des boutons de la fenetre d'accueil, situés en bas de celle-ci
-			// après avoir cliqué sur un des boutons, si une création de forêt est validé, la fenêtre se ferme
-		gridLayButtons = new QGridLayout(WButtons);
-		gridLayButtons->addWidget(valid_btn, 0,0, 1,0);
-		gridLayButtons->addWidget(restoreBtn, 1,0);
-		gridLayButtons->addWidget(loadFromImgBtn, 1,1);
-		gridLayButtons->addWidget(seedBtn, 1, 2);
 
-	lay->addWidget(present);
-	lay->addWidget(WSettings);
-	lay->addWidget(WButtons);
+    // BOUTONS
+    QWidget* WButtons= new QWidget;
+        // TODO remettre dans le constructeur les création ?
+        // Placement des boutons de la fenetre d'accueil, situés en bas de celle-ci
+            // après avoir cliqué sur un des boutons, si une création de forêt est validé, la fenêtre se ferme
+        gridLayButtons = new QGridLayout(WButtons);
+        gridLayButtons->addWidget(valid_btn, 0,0, 1,0);
+        gridLayButtons->addWidget(restoreBtn, 1,0);
+        gridLayButtons->addWidget(loadFromImgBtn, 1,1);
+        gridLayButtons->addWidget(seedBtn, 1, 2);
 
-	/* Connexion entre les différents éléments */
-	connect(slide_p,	SIGNAL(valueChanged(int)), this, SLOT(setProba(int)) );
-	connect(slide_c,	SIGNAL(valueChanged(int)), this, SLOT(setCoef(int)) );
+    lay->addWidget(present);
+    lay->addWidget(WSettings);
+    lay->addWidget(WButtons);
+
+    /* Connexion entre les différents éléments */
+    connect(slide_p,	SIGNAL(valueChanged(int)), this, SLOT(setProba(int)) );
+    connect(slide_c,	SIGNAL(valueChanged(int)), this, SLOT(setCoef(int)) );
 
 
-	// Appel à setValue pour déclencer l'affichage de la valeur à la construction du widget
-	slide_c->setValue(50);
-	slide_p->setValue(50);
+    // Appel à setValue pour déclencer l'affichage de la valeur à la construction du widget
+    slide_c->setValue(50);
+    slide_p->setValue(50);
 }
 
 void Fwelcome::initEvents()
@@ -225,10 +229,10 @@ void Fwelcome::initEvents()
 /*######################*/
 void Fwelcome::addCancel() const
 {
-	gridLayButtons->removeWidget(valid_btn);
-	gridLayButtons->addWidget(valid_btn, 0,0);
-	gridLayButtons->addWidget(cancel_btn, 0,1);
-	cancel_btn->setVisible(true);
+    gridLayButtons->removeWidget(valid_btn);
+    gridLayButtons->addWidget(valid_btn, 0,0);
+    gridLayButtons->addWidget(cancel_btn, 0,1);
+    cancel_btn->setVisible(true);
 }
 
 void Fwelcome::closeEvent(QCloseEvent *e)
@@ -244,14 +248,14 @@ void Fwelcome::closeEvent(QCloseEvent *e)
 
 void Fwelcome::setProba(int x)
 {
-	proba = (float) x/100;
-	p_value->setText(QString::number(proba, 'f', 2));
+    proba = (float) x/100;
+    p_value->setText(QString::number(proba, 'f', 2));
 }
 
 void Fwelcome::setCoef(int x)
 {
-	burningCoef = (float) x/100;
-	c_value->setText(QString::number(burningCoef, 'f', 2));
+    burningCoef = (float) x/100;
+    c_value->setText(QString::number(burningCoef, 'f', 2));
 }
 
 
@@ -260,25 +264,25 @@ void Fwelcome::setCoef(int x)
 /*######################*/
 void Fwelcome::openFile(QString filename)
 {
-	std::string filePath= filename.toStdString();
-	file->open(filePath.c_str(), ios::in|ios::binary);
+    std::string filePath= filename.toStdString();
+    file->open(filePath.c_str(), ios::in|ios::binary);
 }
 
 void Fwelcome::loadSizes()
 {
-	int x; // x est utilisé pour la largeur ET la hauteur
-	
-	file->read( (char *)&(x), sizeof(int));
-	larg_spin->setValue(x);
-	#if DEBUG_LOAD
-	cout<< "Taille : " << x<< " en largeur ";
-	#endif
-	
-	file->read( (char *)&(x), sizeof(int));
-	haut_spin->setValue(x);
-	#if DEBUG_LOAD
-	cout<<x<< " en hauteur" <<endl;
-	#endif
+    int x; // x est utilisé pour la largeur ET la hauteur
+
+    file->read( (char *)&(x), sizeof(int));
+    larg_spin->setValue(x);
+    #if DEBUG_LOAD
+    cout<< "Taille : " << x<< " en largeur ";
+    #endif
+
+    file->read( (char *)&(x), sizeof(int));
+    haut_spin->setValue(x);
+    #if DEBUG_LOAD
+    cout<<x<< " en hauteur" <<endl;
+    #endif
 }
 
 /*######################*/
@@ -349,17 +353,17 @@ void Fwelcome::loadSeed(QString filename)
 void Fwelcome::popImageDIalog()
 {
     checkInitFileDialog(tr("Chargement d'une Image"));
-	fileDialog->setDirectory(picturesBrowserLocation);
-	QList<QUrl> urls= fileDialog->sidebarUrls();
+    fileDialog->setDirectory(picturesBrowserLocation);
+    QList<QUrl> urls= fileDialog->sidebarUrls();
         urls << QUrl::fromLocalFile(QDir::toNativeSeparators(FORESTPICTURESLOCATION));
     fileDialog->setSidebarUrls(urls);
 
     fileDialog->setNameFilter( tr("Images") +" (*.png *.jpg *.jpeg *.tif *.tiff *.bmp)");
 
-	// Si l'utilisateur choisit un fichier
-	if(fileDialog->exec()) {
-		loadFromImg( fileDialog->selectedFiles()[0] );
-		picturesBrowserLocation= fileDialog->directory();
+    // Si l'utilisateur choisit un fichier
+    if(fileDialog->exec()) {
+        loadFromImg( fileDialog->selectedFiles()[0] );
+        picturesBrowserLocation= fileDialog->directory();
     }
 }
 
@@ -368,22 +372,22 @@ void Fwelcome::popSaveDialog()
     checkInitFileDialog(tr("Chargement d'une Sauvegarde"));
 
     fileDialog->setNameFilter(tr("Sauvegarde de foret") +" (*.data *.dat *.frt *.sav *.save)");
-	
-	QString fileName;
-	// Si l'utilisateur choisit un fichier
-	if(fileDialog->exec()) {
-		restore( fileDialog->selectedFiles()[0] );
-	}
-	
+
+    QString fileName;
+    // Si l'utilisateur choisit un fichier
+    if(fileDialog->exec()) {
+        restore( fileDialog->selectedFiles()[0] );
+    }
+
 }
 
 void Fwelcome::popSeedDialog()
 {
     checkInitFileDialog(tr("Chargement d'une Graine"));
     fileDialog->setNameFilter(tr("Sauvegarde de graine") + " (*.seed)");
-	
-	// Si l'utilisateur choisit un fichier
-	if(fileDialog->exec()) {
-		loadSeed( fileDialog->selectedFiles()[0] );
-	}
+
+    // Si l'utilisateur choisit un fichier
+    if(fileDialog->exec()) {
+        loadSeed( fileDialog->selectedFiles()[0] );
+    }
 }

@@ -80,7 +80,7 @@ public:
      * On initialise les composant graphiques de la classe (foret et menus, boutons), la barre des menus
      * @author Ugo et Florian
      */
-    FireScreen();
+    FireScreen(const QString& title, QWidget* parent = 0);
     // 	FireScreen(int hauteur, int largeur, float proba, long nTemps, float coef_brulure=1.0/*, QWidget* parent = 0, Qt::WindowFlags flags = 0*/);
     // 	/*explicit */FireScreen(int hauteur, int largeur, float proba, long int nTemps = 0.60, float coef_brulure=1.0, bool t = 0,
     // 									QWidget* parent = 0, Qt::WindowFlags flags = 0);

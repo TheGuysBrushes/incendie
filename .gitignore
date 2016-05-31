@@ -4,16 +4,18 @@
 *.exe
 
 # Build files
+build/Android*
+build/Last_release_dev_light/
+build/Debug/
+build/Profile/
+build/Last_release/
+
 *.o
-build/Debug/*
-build/last_release_dev_very_light/*
-build/last_release/*
-build/Desktop_Qt_5_5_1_GCC_64bit-Debug/*
-build/Desktop_Qt_5_5_1_GCC_64bit-Release/*
+build/release/
 
 # IDE files
 *.user
-.kdev4/*
+.kdev4/
 incendie.pro.user.PC1812
 
 # Archives
