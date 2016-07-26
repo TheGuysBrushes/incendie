@@ -1,29 +1,43 @@
 language: cpp
+sudo: required
+dist: trusty
+cache: apt
 
+env:
+  - QT_BASE=57
+
+os:
+  - linux
+ 
 addons:
- apt:
-   sources:
-   # gcc/g++ repository
-   - ubuntu-toolchain-r-test
-   packages:
-   - g++-4.8
-   #cmake
-   - cmake
+  apt:
+    sources:
+      # gcc/g++ repository
+      - ubuntu-toolchain-r-test
+      #- george-edison55-precise-backports # cmake 3.2.3 / doxygen 1.8.3
+    packages:
+      - g++-4.9
+      #cmake
+      - cmake
+      - cmake-data
 
 before_install:
-  # Qt repository   
-  - sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
-  # g++ repository
-  #- sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  - sudo apt-get update -qq
+  - export QT_VER=${QT_BASE:0:2}
+  # Qt repository
+  #- sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
+  - sudo apt-add-repository -y ppa:beineri/opt-qt${QT_BASE}-trusty
+  - sudo apt-get update -qy
 
 install:
-  # Qt install
-  - sudo apt-get install qtbase5-dev qtdeclarative5-dev
-  - sudo apt-get install qt5-default qttools5-dev-tools
-  # g++ install
-  #- if [ "$CXX" = "g++" ]; then sudo apt-get install -qq g++-4.8; fi
-  #- if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
+# Qt install
+  #- sudo apt-get install -qy qt57base
+  - sudo apt-get install -qq qt${QT_VER}base qt${QT_VER}tools qt${QT_VER}declarative
+  #- source /opt/qt${QT_VER}/bin/qt${QT_VER}-env.sh
+  - source /opt/qt57/bin/qt57-env.sh
+# g++ install
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
+  # CPP Unit install
+  - sudo apt-get install libcppunit-dev -y
 
 script:
   - qmake
