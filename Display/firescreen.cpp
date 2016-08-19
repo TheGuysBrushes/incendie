@@ -8,8 +8,6 @@
 #include <QtWidgets/QMenuBar>
 #include <QtGui/QImage>
 
-#include <QtWin>
-
 using namespace std;
 
 FireScreen::FireScreen(const QString& title, QWidget* parent): QMainWindow(parent)
@@ -369,7 +367,6 @@ void FireScreen::initEvents()
 bool FireScreen::tryInitForest()
 {
     fwel->show();
-    QtWin::taskbarAddTab(fwel);
 
     int resExec= fwel->exec();
     fwel->hide();

@@ -65,7 +65,7 @@ void Arbre::initialise(unsigned age)
 #endif
 
     float rayon = essence->getDiametre() / 2.0;
-    float	hauteur = essence->getHauteur();
+    float hauteur = essence->getHeight();
     float masseV= essence->getMasse()/1000.0;
 
 
