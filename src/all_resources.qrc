@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/essences">
+        <file>builds/Resources/essence_data.xml</file>
+    </qresource>
+    <qresource prefix="/translations">
+        <file>fire_de.qm</file>
+        <file>fire_en.qm</file>
+        <file>fire_fr.qm</file>
+    </qresource>
+</RCC>

@@ -4,14 +4,12 @@
 *.exe
 
 # Build files
-build/Android*
-build/Last_release_dev_light/
-build/Debug/
-build/Profile/
-build/Last_release/
+src/builds/Android*
+src/builds/build*
+src/builds/Releases/
 
 *.o
-build/release/
+*.autosave
 
 # IDE files
 *.user
@@ -24,3 +22,6 @@ incendie.pro.user.PC1812
 # Doc
 doc/html/
 doc/xml/
+incendie.vcxproj.filters
+*.suo
+*.qm
