@@ -41,5 +41,6 @@ install:
 
 script:
   - cd src/
+  - lrelease .\incendie.pro
   - qmake
   - make --file Makefile -j2
