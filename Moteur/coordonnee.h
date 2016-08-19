@@ -11,8 +11,8 @@ class Coordonnee
 {
 
 public:
-	int col;
-	int row;
+    int col;
+    int row;
 
 public:
     Coordonnee(int _x, int _y);
@@ -20,22 +20,22 @@ public:
     virtual bool operator==(const Coordonnee& other) const;
 
     // Affichage
-	std::ostream& print(std::ostream& out) const;
+    std::ostream& print(std::ostream& out) const;
     friend std::ostream& operator<<(std::ostream& out, const Coordonnee& coord)
-	    { return coord.print(out); }
-	
+    { return coord.print(out); }
+
     // Calculs
-	/**
-	 * Calcul de la distance Manhattan entre deux points
-	 * @return distance manhattan : entier non signé
-	 */
+    /**
+     * Calcul de la distance Manhattan entre deux points
+     * @return distance manhattan : entier non signé
+     */
     unsigned manhattanDistance(const Coordonnee& other) const;
-	/**
-	 * Calcul de la distance euclidienne entre deux points
-	 * @return distance euclidienne : flottant non signé
-	 */
+    /**
+     * Calcul de la distance euclidienne entre deux points
+     * @return distance euclidienne : flottant non signé
+     */
     float euclideanDistance(const Coordonnee& other) const;
-	
+
 };
 
 #endif // COORDINATES_H

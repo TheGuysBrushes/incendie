@@ -8,6 +8,8 @@
 #include <QtWidgets/QMenuBar>
 #include <QtGui/QImage>
 
+#include <QtWin>
+
 using namespace std;
 
 FireScreen::FireScreen(const QString& title, QWidget* parent): QMainWindow(parent)
@@ -367,6 +369,8 @@ void FireScreen::initEvents()
 bool FireScreen::tryInitForest()
 {
     fwel->show();
+    QtWin::taskbarAddTab(fwel);
+
     int resExec= fwel->exec();
     fwel->hide();
     if (resExec>0){
@@ -377,23 +381,23 @@ bool FireScreen::tryInitForest()
         int hauteur= fwel->getHaut();
 
         if(  resExec==Load ){
-            // 		  Crée une forêt à partir de l'analyse d'une photo (de forêt de préférence, btw)
+            //  Crée une forêt à partir de l'analyse d'une photo (de forêt de préférence, btw)
             fWidget->tryInitialise(largeur,hauteur, fwel->getImage(), fwel->getCoef());
             windWidget->initValues(30, 80);
         }
         else if(  resExec==Restore ){
-            // 		  Restaure une forêt à partir d'une fichier
+            //  Restaure une forêt à partir d'une fichier
             fWidget->tryInitialise(largeur,hauteur, fwel->getFile());
             windWidget->initValues(30, 80);
         }
         else if( resExec==RestoreSeed ){
-            // 		  réutilise la graine aléatoire déjà existante
+            //  réutilise la graine aléatoire déjà existante
             fWidget->initialise(largeur,hauteur,
                                 fwel->getProba(), fwel->getCoef(), fwel->getSeed() );
             windWidget->initValues(30, 80);
         }
         else if( resExec==Accepted ){
-            // 		  Crée une nouvelle forêt aléatoirement, a partr d'une graine aléatoire
+            //  Crée une nouvelle forêt aléatoirement, a partr d'une graine aléatoire
             fWidget->initialise(largeur,hauteur,
                                 fwel->getProba(), fwel->getCoef()	);
             windWidget->initValues(30, 80);

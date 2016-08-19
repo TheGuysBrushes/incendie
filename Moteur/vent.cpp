@@ -1,30 +1,29 @@
 #include "vent.h"
+#include <sstream>
+#include <cmath>
 
 using namespace std;
-Vent::Vent(){
-
-}
+Vent::Vent()
+{}
 
 Vent::Vent(float _power_h, float _power_v)
-	:power_h(_power_h),power_v(_power_v)
-{
-}
+    :power_h(_power_h),power_v(_power_v)
+{}
 
 Vent::Vent(const Vent& other)
-	: power_h(other.power_h), power_v(other.power_v)
-{
-}
+    : power_h(other.power_h), power_v(other.power_v)
+{}
 
 Vent::~Vent(){}
 
 void Vent::setPower_h(float val)
 {
-	power_h = val;
+    power_h = val;
 }
 
 void Vent::setPower_v(float val)
 {
-	power_v = val;
+    power_v = val;
 }
 
 
@@ -34,22 +33,22 @@ void Vent::setPower_v(float val)
 
 Vent& Vent::operator+(const Vent& other)
 {
-	return *(new Vent(power_v + other.power_v, power_h + other.power_h));
+    return *(new Vent(power_v + other.power_v, power_h + other.power_h));
 }
 
 Vent& Vent::operator-(const Vent& other)
 {
-	return *(new Vent(power_v - other.power_v, power_h - other.power_h));
+    return *(new Vent(power_v - other.power_v, power_h - other.power_h));
 }
 
 Vent& Vent::operator*(float coefficient)
 {
-	return *(new Vent(power_v*coefficient, power_h*coefficient));
+    return *(new Vent(power_v*coefficient, power_h*coefficient));
 }
 
 Vent& Vent::operator/(float coefficient)
 {
-	return *(new Vent(power_v/coefficient, power_h/coefficient));
+    return *(new Vent(power_v/coefficient, power_h/coefficient));
 }
 
 
@@ -62,29 +61,29 @@ Vent& Vent::operator=(const Vent& other)
 {
     power_h= other.getPower_h();
     power_v= other.getPower_v();
-	return *this;
+    return *this;
 }
 
 
 Vent& Vent::operator+=(const Vent& other)
 {
-		power_v += other.power_v;
-		power_h += other.power_h;
-		
-		return *this;
+    power_v += other.power_v;
+    power_h += other.power_h;
+
+    return *this;
 }
 
 std::string Vent::toString() const
 {
-	ostringstream os;
+    ostringstream os;
 
-	os << "(Force Nord : "<< power_v<< " Force Est : "<< power_h << ")";
-	return os.str();
+    os << "(Force Nord : "<< power_v<< " Force Est : "<< power_h << ")";
+    return os.str();
 }
 
 int Vent::getSpeed() const
 {
-	return sqrt( (power_v*power_v) + (power_h*power_h) ) *50.0;
+    return sqrt( (power_v*power_v) + (power_h*power_h) ) *50.0;
 }
 
 
@@ -93,6 +92,6 @@ int Vent::getSpeed() const
 // ####################
 ostream& operator<<(ostream& os, const Vent& vent)
 {
-	os<< vent.toString();
-	return os;
+    os<< vent.toString();
+    return os;
 }

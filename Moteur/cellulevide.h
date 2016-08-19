@@ -7,7 +7,7 @@
 class CelluleVide : public Cellule
 {
 public:
-  int getState() const { return 0; }
+    int getState() const { return 0; }
 };
 
 #endif // CELLULEVIDE_H
