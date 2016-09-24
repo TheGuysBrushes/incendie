@@ -89,7 +89,7 @@ TRANSLATIONS =  fire_fr.ts \
 RC_FILE = fire.rc
 
 RESOURCES += \
-    all_resources.qrc
+#    all_resources.qrc
 
 ##  Compilation statique #
 # edit the file Path-To-Qt-SDK\qt_static\mkspecs\win32-g+.conf and add the bold (with * ) marked stuff

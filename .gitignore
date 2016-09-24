@@ -4,9 +4,9 @@
 *.exe
 
 # Build files
-src/builds/Android*
-src/builds/build*
-src/builds/Releases/
+builds/*
+#!builds/Resources/
+#!builds/incendie.exe
 
 *.o
 *.autosave
@@ -14,7 +14,6 @@ src/builds/Releases/
 # IDE files
 *.user
 .kdev4/
-incendie.pro.user.PC1812
 
 # Archives
 *.zip
@@ -22,6 +21,10 @@ incendie.pro.user.PC1812
 # Doc
 doc/html/
 doc/xml/
+
+# Others
 incendie.vcxproj.filters
 *.suo
 *.qm
+*.sln
+src/incendie.vcxproj

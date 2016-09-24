@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/essences">
-        <file>builds/Resources/essence_data.xml</file>
+        <file>essence_data.xml</file>
     </qresource>
     <qresource prefix="/translations">
         <file>fire_de.qm</file>
