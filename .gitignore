@@ -4,16 +4,21 @@
 *.exe
 
 # Build files
-builds/*
+build*
 #!builds/Resources/
 #!builds/incendie.exe
-
 *.o
-*.autosave
+*.obj
+*.so
 
 # IDE files
 *.user
 .kdev4/
+*.tlog
+*.sln
+incendie.vcxproj.filters
+src/incendie.vcxproj
+
 
 # Archives
 *.zip
@@ -23,8 +28,6 @@ doc/html/
 doc/xml/
 
 # Others
-incendie.vcxproj.filters
 *.suo
 *.qm
-*.sln
-src/incendie.vcxproj
+*~

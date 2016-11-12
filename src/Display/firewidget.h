@@ -16,10 +16,10 @@
 #include <fstream>
 
 // Macros
-#include "../Moteur/actions.h"
+#include "../Engine/actions.h"
 #include "../debug.h"
 
-#include "../Moteur/foret.h"
+#include "../Engine/foret.h"
 #include "fwelcome.h"
 #include "loadwindow.h"
 

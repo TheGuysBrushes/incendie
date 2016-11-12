@@ -4,7 +4,7 @@
 #include <QtWidgets/QProgressBar>
 #include <QtWidgets/QWidget>
 
-#include "../Moteur/loadprogress.h"
+#include "../Engine/loadprogress.h"
 
 /**
  * Permet d'afficher une fenêtre avec une barre de progression pour les chargements

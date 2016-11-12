@@ -13,10 +13,10 @@ include_directories(${Qt5Widgets_INCLUDE_DIRS } ${Qt5Core_INCLUDE_DIRS } ${Qt5Gu
 # Use the compile definitions defined in the Qt 5 Widgets module
 add_definitions(-Wall ${Qt5Widgets_DEFINITIONS})
 
-add_subdirectory(Moteur) # must set ${Moteur_SRCS}
+add_subdirectory(Engine) # must set ${Engine_SRCS}
 add_subdirectory(Display)# must set ${Display_SRCS}
 
-set(Automate_SRCS ${Moteur_SRCS} ${Display_SRCS} main.cpp)
+set(Automate_SRCS ${Engine_SRCS} ${Display_SRCS} main.cpp)
 
 #Version normale
 add_executable(Automate ${Automate_SRCS})

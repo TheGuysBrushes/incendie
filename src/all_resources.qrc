@@ -1,10 +1,6 @@
-<RCC>
-    <qresource prefix="/essences">
-        <file>essence_data.xml</file>
-    </qresource>
-    <qresource prefix="/translations">
-        <file>fire_de.qm</file>
-        <file>fire_en.qm</file>
-        <file>fire_fr.qm</file>
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/species/">
+        <file alias="essences.xml">../Resources/essence_data.xml</file>
     </qresource>
 </RCC>

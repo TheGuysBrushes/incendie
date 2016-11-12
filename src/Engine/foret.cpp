@@ -1,9 +1,9 @@
 #include "foret.h"
-#include "../TinyXML/tinyxml.h"
+#include "TinyXML/tinyxml.h"
 
 // Valeur du nombre pi, utilisée pour les calcul de trigonométrie
 #define PI 3.14159265
-#define ESSENCE_PATH "../Resources/essence_data.xml"
+#define ESSENCE_PATH "Resources/essences_data.xml"
 
 // ages et humidité min et max
 int hMin= 20;
@@ -26,7 +26,14 @@ Foret::Foret(int _largeur, int _hauteur, float proba, float _coefFeu, time_t gra
     else {
         cerr << "Impossible de charger le fichier d'essences"<< endl
              << "FIN DU PROGRAMME"<< endl;
-        exit(0);
+//        exit(0);
+        // Je "bypass" la sortie, pour ajouter une essence arbitrairement et tout de même lancer l'application
+        essences.push_back(Essence("DUMMY", 2000, 1.5, 4.3, 30, true, 0));
+        essences.push_back(Essence("DUMMY2", 800, 0.5, 1.2, 10, false, 1));
+
+        randomMatrix(proba);
+
+        wind = new Vent();
     }
 
     // 	else throw (exception); // TODO redefinir l'exception
@@ -180,7 +187,7 @@ bool Foret::tryLoadEssences(const string& fileName)
 {
     // Initialisation du vecteur d'essence
 #if DEBUG_FILE
-    cout << endl<< "--Tentative de lecture de "<< "../Resources/essence_data.xml"<< " : "<< endl;
+    cout << endl<< "--Tentative de lecture de "<< ESSENCE_PATH<< " : "<< endl;
 #endif
 
     TiXmlDocument doc(fileName.c_str());
@@ -188,7 +195,7 @@ bool Foret::tryLoadEssences(const string& fileName)
     if (loadOkay)
     {
 #if DEBUG_FILE
-        cout << "Ouverture réussie de : " << "../Resources/essence_data.xml"<< endl;
+        cout << "Ouverture réussie de : " << ESSENCE_PATH<< endl;
 #endif
 
         TiXmlElement* xml_racine= doc.FirstChildElement();

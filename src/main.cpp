@@ -20,6 +20,7 @@ using namespace std;
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
+
     cout << "test main" << endl;
 
 //    Creates a QTranslator object without a parent.
@@ -68,6 +69,10 @@ int main(int argc, char* argv[])
     clog<< "Locale : "<< locale.toStdString()<< endl;
 
     FireScreen* screen = new FireScreen(app.tr("Fire") + "_" VERSION);
+
+//    screen->initDefault();
+//    screen->show();
+
     if (screen->tryInitialisation(argc, argv) ) {
         screen->show();
     }else {

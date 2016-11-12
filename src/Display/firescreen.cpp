@@ -101,6 +101,20 @@ FireScreen::~FireScreen()
 }
 
 
+void FireScreen::initDefault()
+{
+    initComponents();
+    initEvents();
+
+    //  Crée une nouvelle forêt aléatoirement, a partr d'une graine aléatoire
+    fWidget->initialise(100,100,
+                       0.5, 0.50);
+    windWidget->initValues(30, 80);
+
+    majCompteur();
+    initSizes(100, 100);
+}
+
 bool FireScreen::tryInitialisation()
 {
     initComponents();
@@ -298,7 +312,6 @@ void FireScreen::initMenus(QHBoxLayout* HLayout)
     actionLabel->setStyleSheet("QLabel { color : darkblue; }");
 }
 
-
 void FireScreen::initComponents(/*, QWidget* parent, Qt::WindowFlags flags*/)
 {
     /*** 	BOUTONS ET INTERFACE		***/
@@ -363,6 +376,10 @@ void FireScreen::initEvents()
     connect(saveSeedBtn, SIGNAL(clicked()), this, SLOT( saveSeed()) );
     connect(saveImageBtn, SIGNAL (clicked()), this,  SLOT(saveImage()));
 }
+
+// ###########################
+/*** Création de la forêt ***/
+// ###########################
 
 bool FireScreen::tryInitForest()
 {

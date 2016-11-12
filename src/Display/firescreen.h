@@ -14,7 +14,7 @@
 
 #include <cmath>
 
-#include "../Moteur/actions.h"
+#include "../Engine/actions.h"
 #include "fwelcome.h"
 #include "firewidget.h"
 #include "windwidget.h"
@@ -87,6 +87,12 @@ public:
     virtual ~FireScreen();
 
     /* Initialisations */
+    /**
+     * Crée une forêt avec des valeurs par défaut
+     * @author Florian
+     */
+    void initDefault();
+
     /**
      * Initialise l'application et crée une nouvelle forêt, en utilisant une fenêtre dédiée (Fwelcome)
      * @author Florian et Ugo

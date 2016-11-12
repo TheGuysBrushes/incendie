@@ -1,6 +1,11 @@
 TEMPLATE = app
 VERSION= 1.4.3.2
 
+android {
+    message("* Using settings for Android.")
+    VERSION= 1
+}
+
 QT += core gui widgets
 CONFIG += c++11
 
@@ -20,19 +25,15 @@ message(Qt version: $$[QT_VERSION])
 #}
 
 build_pass:CONFIG(debug, debug|release) {
-#    DLLDESTDIR += $$quote(rbuild/release-Windows)
-#    DESTDIR = src/build/
     win32:  TARGET = ..\Fire_debug_"$$VERSION"
     unix:   TARGET = ..\Fire_debug_"$$VERSION"
 
     message("Compiling Debug mode")
 } else {
     message("I am at $$PWD")
-#    DESTDIR = $$PWD\build
 
     win32:  TARGET = ..\..\Releases\Fire_"$$VERSION"
     unix:   TARGET = ../Releases/Fire_"$$VERSION"
-#    #DLLDESTDIR += $$quote(Releases)
 
 ### Copie de l'exécutable dans un second dossier ###
 #    message("Compiling to $$TARGET then copy executable to Release Directories")
@@ -54,17 +55,23 @@ build_pass:CONFIG(debug, debug|release) {
 
 message(The project will be installed in $$DESTDIR)
 
-
-# Input
+### Input files ###
 DEPENDPATH += . Display
 INCLUDEPATH += ./Display
 
-DISTFILES += README.md \
-            .gitignore \
+DISTFILES += ../README.md \
+            ../.gitignore \
             fire.rc \
-            .travis.yml
+            ../.travis.yml \
+    android/AndroidManifest.xml \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradlew \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew.bat
 
-include(fire_moteur.pri)
+include(Engine/fire_engine.pri)
 
 HEADERS += ./debug.h \
     ./Display/loadwindow.h \
@@ -88,10 +95,9 @@ TRANSLATIONS =  fire_fr.ts \
 
 RC_FILE = fire.rc
 
-RESOURCES += \
-#    all_resources.qrc
+RESOURCES = all_resources.qrc
 
-##  Compilation statique #
+###  Compilation statique ###
 # edit the file Path-To-Qt-SDK\qt_static\mkspecs\win32-g+.conf and add the bold (with * ) marked stuff
 #QMAKE_CFLAGS_RELEASE = -Os -momit-leaf-frame-pointer
 #QMAKE_LFLAGS = -static-libgcc
@@ -108,7 +114,6 @@ RESOURCES += \
 
 ## Crée par VS add-in
 #DESTDIR = ./Release
-#CONFIG += release
 #DEFINES += _WINDOWS WIN64 QT_WIDGETS_LIB
 #LIBS += -L"../../../../../utils/postgresql/pgsql/lib" \
 #    -L"../../../../../utils/my_sql/my_sql/lib" \
@@ -121,3 +126,5 @@ RESOURCES += \
 #OBJECTS_DIR += release
 #UI_DIR += ./GeneratedFiles
 #RCC_DIR += ./GeneratedFiles
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
