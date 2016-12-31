@@ -1,5 +1,4 @@
 #include "foret.h"
-#include "TinyXML/tinyxml.h"
 
 // Valeur du nombre pi, utilisée pour les calcul de trigonométrie
 #define PI 3.14159265
