@@ -6,11 +6,57 @@ android {
     VERSION= 1
 }
 
+#set(CMAKE_PREFIX_PATH "D:\\Apps\\Qt\\5.7\\msvc2015_64\\")
+
 QT += core gui widgets
 CONFIG += c++11
+win32:  QMAKE_CXXFLAGS += -openmp
+unix:   QMAKE_CXXFLAGS += -fopenmp
+LIBS += -fopenmp
 
 message()
 message(Qt version: $$[QT_VERSION])
+
+### Input files ###
+
+include(Engine/fire_engine.pri)
+
+HEADERS += ./debug.h \
+    ./Display/loadwindow.h \
+    ./Display/firescreen.h \
+    ./Display/firewidget.h \
+    ./Display/fwelcome.h \
+    ./Display/windcircle.h \
+    ./Display/windwidget.h
+
+SOURCES += ./main.cpp \
+    ./Display/firescreen.cpp \
+    ./Display/firewidget.cpp \
+    ./Display/fwelcome.cpp \
+    ./Display/loadwindow.cpp \
+    ./Display/windcircle.cpp \
+    ./Display/windwidget.cpp
+
+TRANSLATIONS =  fire_fr.ts \
+                fire_de.ts \
+                fire_en.ts
+
+RC_FILE = fire.rc
+
+RESOURCES = all_resources.qrc
+
+
+DISTFILES += ../README.md \
+            ../.gitignore \
+            fire.rc \
+            ../.travis.yml \
+    android/AndroidManifest.xml \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradlew \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew.bat
 
 
 #The first step is to enable dependency tracking in the library itself. To do this you must tell qmake to save information about the library:
@@ -18,15 +64,9 @@ message(Qt version: $$[QT_VERSION])
 #The second step in this process is to enable reading of this meta information in the applications that use the static library:
 #CONFIG += link_prl
 
-# Instructions for debug or release mode
-#build_pass:CONFIG(debug, debug|release) {
-#    unix: TARGET = $$join(TARGET,,,_debug)
-#    else: TARGET = $$join(TARGET,,,d)
-#}
-
 build_pass:CONFIG(debug, debug|release) {
     win32:  TARGET = ..\Fire_debug_"$$VERSION"
-    unix:   TARGET = ..\Fire_debug_"$$VERSION"
+    unix:   TARGET = ../Fire_debug_"$$VERSION"
 
     message("Compiling Debug mode")
 } else {
@@ -54,48 +94,6 @@ build_pass:CONFIG(debug, debug|release) {
 }
 
 message(The project will be installed in $$DESTDIR)
-
-### Input files ###
-DEPENDPATH += . Display
-INCLUDEPATH += ./Display
-
-DISTFILES += ../README.md \
-            ../.gitignore \
-            fire.rc \
-            ../.travis.yml \
-    android/AndroidManifest.xml \
-    android/gradle/wrapper/gradle-wrapper.jar \
-    android/gradlew \
-    android/res/values/libs.xml \
-    android/build.gradle \
-    android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew.bat
-
-include(Engine/fire_engine.pri)
-
-HEADERS += ./debug.h \
-    ./Display/loadwindow.h \
-    ./Display/firescreen.h \
-    ./Display/firewidget.h \
-    ./Display/fwelcome.h \
-    ./Display/windcircle.h \
-    ./Display/windwidget.h
-
-SOURCES += ./main.cpp \
-    ./Display/firescreen.cpp \
-    ./Display/firewidget.cpp \
-    ./Display/fwelcome.cpp \
-    ./Display/loadwindow.cpp \
-    ./Display/windcircle.cpp \
-    ./Display/windwidget.cpp
-
-TRANSLATIONS =  fire_fr.ts \
-                fire_de.ts \
-                fire_en.ts
-
-RC_FILE = fire.rc
-
-RESOURCES = all_resources.qrc
 
 ###  Compilation statique ###
 # edit the file Path-To-Qt-SDK\qt_static\mkspecs\win32-g+.conf and add the bold (with * ) marked stuff
@@ -126,5 +124,3 @@ RESOURCES = all_resources.qrc
 #OBJECTS_DIR += release
 #UI_DIR += ./GeneratedFiles
 #RCC_DIR += ./GeneratedFiles
-
-ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android

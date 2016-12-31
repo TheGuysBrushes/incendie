@@ -3,7 +3,7 @@
 
 #include <string>
 #include <fstream>
-#include "TinyXML/tinyxml.h"
+#include <tinyxml.h>
 
 class Essence
 {

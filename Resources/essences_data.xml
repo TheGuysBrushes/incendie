@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<essences xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="essence_data.xsd">
+<essences xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="essences_data.xsd">
 	<essence>
 		<nom>Epicea</nom>
 		<masse-vol>1000</masse-vol>
