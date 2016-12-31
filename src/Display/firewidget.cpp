@@ -1,6 +1,8 @@
 #include "firewidget.h"
 #include <QtWidgets/QVBoxLayout> // fenetre chargement
 
+#include <omp.h>
+
 using namespace std;
 
 // ##################################
@@ -469,28 +471,45 @@ bool FireWidget::tryDrawPictureForest()
 void FireWidget::drawChanged()
 {
     bufferPainter->begin(buffer);
+    #pragma omp parallel sections
+    {
+        #pragma omp section
+        {
+            setColor(Red);
+            drawList(forest->getBurned());
+            forest->clearBurned();
+        }
 
-    setColor(Red);
-    drawList(forest->getBurned());
-    forest->clearBurned();
+        #pragma omp section
+        {
+            setColor(Gray);
+            drawList(forest->getCarbonized());
+            forest->clearCarbonized();
+        }
 
-    setColor(Gray);
-    drawList(forest->getCarbonized());
-    forest->clearCarbonized();
+        #pragma omp section
+        {
+            setColor(BlueTrans);
+            drawList(forest->getDelayed());
+            forest->clearDelayed();
+        }
 
-    setColor(BlueTrans);
-    drawList(forest->getDelayed());
-    forest->clearDelayed();
+        #pragma omp section
+        {
+            setColor(Orange);
+            drawList(forest->getDelayBurned());
+            forest->clearDelayBurned();
+        }
 
-    setColor(Orange);
-    drawList(forest->getDelayBurned());
-    forest->clearDelayBurned();
+        #pragma omp section
+        {
+            setColor(BrownCut);
+            drawList(forest->getUprooted());
+            forest->clearUprooted();
 
-    setColor(BrownCut);
-    drawList(forest->getUprooted());
-    forest->clearUprooted();
-
-    bufferPainter->end();
+            bufferPainter->end();
+        }
+    }
 }
 
 // Test perf

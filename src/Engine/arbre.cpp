@@ -13,13 +13,13 @@
 
 using namespace std;
 
-Arbre::Arbre(int col, int row, const Essence* const _essence, unsigned age, unsigned _humidite, int _coefficient)
+Arbre::Arbre(int col, int row, const Essence* const _essence, unsigned age, float _humidite, float _coefficient)
     : Cellule(), state(1), pos(col, row), essence(_essence), humidity(_humidite), coefficient(_coefficient)
 {
     initialise(age);
 }
 
-Arbre::Arbre(Cellule* cell, int col, int row, const Essence*const _essence, unsigned age, unsigned int _humidite, int _coefficient)
+Arbre::Arbre(Cellule* cell, int col, int row, const Essence*const _essence, unsigned age, float _humidite, float _coefficient)
     : Cellule(), state(1), pos(col, row), essence(_essence), humidity(_humidite), coefficient(_coefficient)
 {
     initialise(age);
@@ -27,7 +27,7 @@ Arbre::Arbre(Cellule* cell, int col, int row, const Essence*const _essence, unsi
     delete(cell);
 }
 
-Arbre::Arbre(int col, int row, Cellule* cell, const Essence* const _essence, unsigned int _humidite, int _hp, int _coefficient)
+Arbre::Arbre(int col, int row, Cellule* cell, const Essence* const _essence, float _humidite, int _hp, float _coefficient)
     : Cellule(), state(1), pos(col, row), essence(_essence), humidity(_humidite), coefficient(_coefficient), hp(_hp)
 {
 
@@ -64,17 +64,17 @@ void Arbre::initialise(unsigned age)
     cout << "Essence :  "<< essence->toString()<< endl ;
 #endif
 
-    float rayon = essence->getDiametre() / 2.0;
+    float rayon = essence->getDiametre() / 2.0f;
     float hauteur = essence->getHeight();
-    float masseV= essence->getMasse()/1000.0;
+    float masseV= essence->getMasse()/1000.0f;
 
 
     unsigned points = (unsigned) ( (M_PI* (rayon*rayon)*hauteur) * masseV );
 
     // Les données des essences sont décrites pour un arbre de 50 ans à 20% d'humidité
 
-    hp = points *(1 +( 50 + (age/*-ageMatur*/ ) )/50.0);
-    hp *= 1  + (humidity-12)/100.0;
+    hp = points * (unsigned)(1 +( 50 + (age/*-ageMatur*/ ) )/50.0f);
+    hp *= 1  + (unsigned)((humidity-12)/100.0f);
 
 #if DEBUG_PV==1
     cout << " => hp : "<< hp << endl;
@@ -102,7 +102,7 @@ void Arbre::delay(float coefRalentissement)
 // ###############
 void Arbre::spark(float coefTransmission)
 {
-    int taux= (coefTransmission*coefficient)/humidity *100;
+    float taux= (coefTransmission*coefficient)/humidity *100;
 
     int aleatoire= rand()%101;
 
@@ -128,9 +128,10 @@ void Arbre::spark(float coefTransmission)
 bool Arbre::burn(float coefBrulure)
 {
     // On va déterminer le nombre de points de vie à enlever.
-    int decrementation = 100.0*coefBrulure*coefficient;
+    float decrementation = 100.0f*coefBrulure*coefficient;
 
-    decrementation *= 1.0/( (float)humidity );
+    // Diminution de la brulure selon l'humidité
+    decrementation *= 1.0f / ( (float)humidity );
 #if DEBUG_DECRE
     cout << coef<< ",decre init: "<< decrementation << "|";
     cout << "type  : " << essence->getType();
@@ -138,7 +139,7 @@ bool Arbre::burn(float coefBrulure)
 
     if(essence->getType() == 0){
         // On considère qu'un épineux brule plus vite qu'un feuillu
-        decrementation *= 1.20;
+        decrementation *= 1.20f;
 #if DEBUG_DECRE
         cout << "epin: "<< decrementation << "-"<< endl;
 #endif
@@ -147,8 +148,8 @@ bool Arbre::burn(float coefBrulure)
     cout << ",fin: "<< decrementation << "||";
 #endif
 
-    hp-= decrementation;
-    humidity *= 0.9;
+    hp-= (unsigned)decrementation;
+    humidity *= 0.9f;
     // Si l'arbre n'a plus de points de vie, il passe à l'état cendre
     if (hp<=0){
         blast();

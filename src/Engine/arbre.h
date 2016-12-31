@@ -35,20 +35,20 @@ public:
      * @param age age de l'arbre, permet de calculer ses PV
      * @param all paramètres d'initialisation des attributs de l'arbre
      */
-    Arbre(int col, int row, const Essence*const _essence, unsigned int _age = 0, unsigned int _humidite = 20, int _coefficient = 1);
+    Arbre(int col, int row, const Essence*const _essence, unsigned int _age = 0, float _humidite = 20, float _coefficient = 1);
     /**
      * Construit un arbre non enflammé "à partir" d'une cellule
      * @param cell cellule à remplacer, elle est désallouée
      * @param age age de l'arbre, permet de calculer ses PV
      * @param all paramètres d'initialisation des attributs de l'arbre
      */
-    Arbre(Cellule* cell, int col, int row, const Essence* const _essence, unsigned int age = 0, unsigned int _humidite = 20, int _coefficient = 1);
+    Arbre(Cellule* cell, int col, int row, const Essence* const _essence, unsigned int age = 0, float _humidite = 20, float _coefficient = 1);
     /**
      * Construit un arbre non enflammé par dessus une cellule, en donnant des PV plutot que de les calculer avec l'age
      * @param cell cellule à remplacer, elle est désallouée
      * @param all paramètres d'initialisation des attributs de l'arbre
      */
-    Arbre(int col, int row, Cellule* cell, const Essence* const _essence, unsigned int _humidite, int _hp, int _coefficient = 1);
+    Arbre(int col, int row, Cellule* cell, const Essence* const _essence, float _humidite, int _hp, float _coefficient = 1);
 
 
 
@@ -60,12 +60,12 @@ public:
     void initialise(unsigned age);
 
     // Getters
-    virtual int getState()	const	{ return state; };
-    int getPv()	const					{ return hp;};
-    float	getCoeff()	const			{ return coefficient; };
-    float getHumidity()	const		{ return humidity; };
-    const Coordonnee& getPos()		const	{ return pos; };
-    const Essence* getEssence()	const	{ return essence; };
+    virtual int getState()	const	{ return state; }
+    int getPv()	const					{ return hp;}
+    float	getCoeff()	const			{ return coefficient; }
+    float getHumidity()	const		{ return humidity; }
+    const Coordonnee& getPos()		const	{ return pos; }
+    const Essence* getEssence()	const	{ return essence; }
 
     // Setters
     void setCoefficient(float x);

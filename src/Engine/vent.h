@@ -23,8 +23,8 @@ public:
     void setPower_h(float val);
     void setPower_v(float val);
 
-    int getPower_h() const { return (int)power_h; }
-    int getPower_v() const { return (int)power_v; }
+    float getPower_h() const { return power_h; }
+    float getPower_v() const { return power_v; }
 
 
     virtual Vent& operator+(const Vent& other);
@@ -37,7 +37,7 @@ public:
 
     std::string toString() const;
 
-    int getSpeed() const;
+    float getSpeed() const;
     // 	std::ostringstream os;
 
 };

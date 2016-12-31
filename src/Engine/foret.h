@@ -163,6 +163,7 @@ public:
      */
     void clean();
 
+    // 	Arbres ayant changé d'états
     const std::list< Arbre* >* getOnFire() const	{ return &onFire; }
     std::list< Arbre* >* getUprooted()		{ return &uprooted; }
     std::list< Arbre* >* getDelayed()		{ return &delayed; }
@@ -189,8 +190,28 @@ public:
      */
     void clearChanged();
 
+private:
+    // Méthodes générales
+    /**
+     * Retourne les arbres qui sont proches d'une cellule donnée
+     * @author Florian and Ugo
+     * @param col indice de la colonne de la cellule
+     * @param row indice de la ligne de la cellule
+     * @param distance distance sur laquelle s'effectue la recherche de voisins
+     * @return list de pointeurs sur arbres proches
+     */
+    std::list< Arbre* > adjacents(int col, int row, int distance) const;
+    /**
+     * Retourne les arbres qui sont proches d'une cellule donnée, appelle adjacents(int, int)
+     * @author Florian
+     * @param ab arbre dont on veut connaître les voisins
+     * @param distance distance sur laquelle s'effectue la recherche de voisins
+     * @return list de pointeurs sur arbres
+     */
+    std::list< Arbre* > adjacents(const Arbre * ab, int distance) const;
 
-    // Manipulations d'arbre
+public:
+    // Manipulations d'arbres
     /**
      * "Plante" un arbre à la position donnée dans la matrice
      * @author Florian et Ugo
@@ -204,7 +225,7 @@ public:
      * @param row ordonnée de l'arbre
      * @param numEss indice de l'essence de l'arbre à utiliser
      */
-    void plantTree(int col, int row, unsigned int numEss, int PdV, unsigned humidite, float coef, int etat);
+    void plantTree(int col, int row, unsigned int numEss, int PdV, float humidite, float coef, int etat);
 
     /**
      * Coupe ou déracine un arbre
@@ -253,7 +274,7 @@ public:
      * @param ab arbre à enflammer
      * @param intensite force de transmission du feu
      */
-    void spark(Arbre* ab, int intensite);
+    void spark(Arbre* ab, float intensite);
     /**
      * Enflamme une cellule si elle existe, selon sa position dans la matrice
      * @author Florian
@@ -262,10 +283,9 @@ public:
      * @param intensite force de transmission du feu
      * @deprecated
      */
-    void spark(int col, int row, int intensite);
+    void spark(int col, int row, float intensite);
 
-
-    // Autres méthodes
+    // Altérations en zone
     /**
      * Coupe les arbres se trouvant dans un rectangle
      * @param all positions de 2 points diagonaux du rectangle
@@ -276,24 +296,6 @@ public:
      * @param all positions de 2 points diagonaux du rectangle
      */
     void delay(int xDep, int yDep, int xArr, int yArr);
-    /**
-     * Retourne les arbres qui sont proches d'une cellule donnée
-     * @author Florian and Ugo
-     * @param col indice de la colonne de la cellule
-     * @param row indice de la ligne de la cellule
-     * @param distance distance sur laquelle s'effectue la recherche de voisins
-     * @return list de pointeurs sur arbres proches
-     */
-    std::list< Arbre* > adjacents(int col, int row, int distance) const;
-    /**
-     * Retourne les arbres qui sont proches d'une cellule donnée, appelle adjacents(int, int)
-     * @author Florian
-     * @param ab arbre dont on veut connaître les voisins
-     * @param distance distance sur laquelle s'effectue la recherche de voisins
-     * @return list de pointeurs sur arbres
-     */
-    std::list< Arbre* > adjacents(const Arbre * ab, int distance) const;
-
 
     /**
      * Transmet le feu d'un arbre à ses voisins, selon la position de l'arbre
@@ -304,7 +306,7 @@ public:
      * @param hor force du vent horizontalement
      * @param vert force du vent verticalement
      */
-    void sparkAdjacentsWind(int posCol, int posRow, int hor, int vert);
+    void sparkAdjacentsWind(int posCol, int posRow, float hor, float vert);
     /**
      * Transmet le feu d'un arbre à ses voisins, selon la position de l'arbre
      * @author Ugo et Florian

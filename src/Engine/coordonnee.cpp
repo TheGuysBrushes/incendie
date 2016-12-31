@@ -29,6 +29,6 @@ float Coordonnee::euclideanDistance(const Coordonnee& other) const
 {
     assert(sqrt( pow((col - other.col), 2)  + pow((row - other.row), 2)) >= 0.0);
     // square-root(square(x1 - x2) + square(y1 - y2))
-    return sqrt( pow((col - other.col), 2)  + pow((row - other.row), 2));
+    return (float)sqrt( pow((col - other.col), 2)  + pow((row - other.row), 2));
 }
 

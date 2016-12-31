@@ -81,9 +81,9 @@ std::string Vent::toString() const
     return os.str();
 }
 
-int Vent::getSpeed() const
+float Vent::getSpeed() const
 {
-    return sqrt( (power_v*power_v) + (power_h*power_h) ) *50.0;
+    return (float)sqrt( (power_v*power_v) + (power_h*power_h) ) *50.0f;
 }
 
 

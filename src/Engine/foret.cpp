@@ -1,5 +1,6 @@
 #include "foret.h"
-#include "TinyXML/tinyxml.h"
+
+#include <omp.h>
 
 // Valeur du nombre pi, utilisée pour les calcul de trigonométrie
 #define PI 3.14159265
@@ -25,11 +26,11 @@ Foret::Foret(int _largeur, int _hauteur, float proba, float _coefFeu, time_t gra
     }
     else {
         cerr << "Impossible de charger le fichier d'essences"<< endl
-             << "FIN DU PROGRAMME"<< endl;
+             << "AJOUT D'ESSENCES PAR DEFAUT"<< endl;
 //        exit(0);
         // Je "bypass" la sortie, pour ajouter une essence arbitrairement et tout de même lancer l'application
-        essences.push_back(Essence("DUMMY", 2000, 1.5, 4.3, 30, true, 0));
-        essences.push_back(Essence("DUMMY2", 800, 0.5, 1.2, 10, false, 1));
+        essences.push_back(Essence("DUMMY", 2000, 1.5f, 4.3f, 30, true, 0));
+        essences.push_back(Essence("DUMMY2", 800, 0.5f, 1.2f, 10, false, 1));
 
         randomMatrix(proba);
 
@@ -229,72 +230,6 @@ bool Foret::tryLoadEssences(const string& fileName)
 }
 
 
-// #############################
-// 	Actions sur les arbres
-// #############################
-std::list< list< Arbre* > >* Foret::getChanged()
-{
-    list< list< Arbre* > >* listes= new list< list< Arbre* > >();
-    listes->push_back(uprooted);
-    listes->push_back(delayed);
-    listes->push_back(delayBurned);
-    listes->push_back(burned);
-    listes->push_back(carbonized);
-    return listes;
-}
-
-
-void Foret::plantTree(int col, int row)
-{
-#if DEBUG_ARBRE_PLANTE
-    cout<< "\t"<< col<< endl;
-#endif
-
-    // on choisit une essence aléatoirement pour cet arbre
-    unsigned distVoisins= 2;
-    unsigned ess = essenceRandom(col,row, distVoisins);
-
-#if DEBUG_ESSENCE==1
-    cout << ess << " ; ";
-#endif
-
-    /*
-     * On choisit aléatoirement l'âge et l'humidité de l'arbre qui va être créé
-     * Age [maturite;100[
-     * Humidité [20;70[
-     */
-
-    const Essence* pEss= &(essences[ess]);
-    // pour l'instant, on considere que tous les arbres ont atteint leur maturite
-    Arbre* ab= new Arbre(matrix[row][col], col,row, pEss,
-                         rand()%ecartAgeMax +pEss->getAgeMaturite(),
-                         rand()%ecartHMax +hMin );
-    matrix[row][col]= ab;
-}
-
-void Foret::plantTree(int col, int row, unsigned int numEss, int PdV, unsigned humidite, float coef, int etat)
-{
-#if DEBUG_ARBRE_PLANTE
-    cout<< "arbre planté en "<< col << ";"<< row<< endl;
-#endif
-
-    const Essence* pEss= &(essences[numEss]);
-    // pour l'instant, on considere que tous les arbres ont atteint leur maturite
-    Arbre* ab= new Arbre(col,row, matrix[row][col], pEss, humidite, PdV);
-
-    if (coef < 1.0)
-        delay(ab, coef);
-
-    if (etat==-1)
-        blast(ab);
-    else if (etat==-2)
-        delay(ab);
-    else if (etat==2)
-        kindle(ab);
-
-    matrix[row][col]= ab;
-}
-
 // IMPROVEIT Il faudrait pouvoir choisir une sensibilité au vert ou à la luminosité,
 //  ou bien calculer la luminosité moyenne de l'image pour la prendre en compte
 // @SEE On peut avoir des résultat étranges en changeant la luminosité ou l'etalonnage d'une même image
@@ -323,7 +258,7 @@ void Foret::randomMatrix(float probabilite)
     srand(randomSeed);
 
     if (probabilite > 1){
-        probabilite= 0.6;
+        probabilite= 0.6f;
         std::cout << "MIS A DEFAUT"<< endl;
     }
 
@@ -391,6 +326,21 @@ void Foret::clean()
 }
 
 
+// #############################
+// 	Arbres ayant changé d'états
+// #############################
+
+std::list< list< Arbre* > >* Foret::getChanged()
+{
+    list< list< Arbre* > >* listes= new list< list< Arbre* > >();
+    listes->push_back(uprooted);
+    listes->push_back(delayed);
+    listes->push_back(delayBurned);
+    listes->push_back(burned);
+    listes->push_back(carbonized);
+    return listes;
+}
+
 void Foret::clearChanged()
 {
     uprooted.clear();
@@ -400,127 +350,9 @@ void Foret::clearChanged()
     carbonized.clear();
 }
 
-
-// ##################################
-// 	Modification des éléments
-// ##################################
-
-// @SEE couper un arbre : supprimer arbre puis créer cellule ?
-// (pour l'instant l'arbre est laissé)
-void Foret::uproot(Arbre* ab)
-{
-    ab->uproot();
-    onFire.remove(ab);
-    uprooted.push_back(ab);
-}
-
-void Foret::uproot(int col, int row)
-{
-    Cellule* tmp= matrix[row][col];
-
-    if (tmp->getState()>0){	// si il s'agit un arbre
-        Arbre * ab = dynamic_cast<Arbre *>(tmp);
-        uproot(ab);
-    }
-}
-
-void Foret::delay(Arbre* ab, float coef)
-{
-    ab->delay(coef);
-    delayed.push_back(ab);
-}
-
-// EMBRASEMENT
-void Foret::kindle(Arbre* ab)
-{
-    ab->kindle();
-    onFire.push_back(ab);
-
-    if (ab->getCoeff() < 1)
-        delayBurned.push_back(ab);
-    else
-        burned.push_back(ab);
-}
-
-void Foret::kindle(int col, int row)
-{
-    if (matrix[row][col]->getState() ==1){
-        Arbre * ab = dynamic_cast<Arbre *>(matrix[row][col]);
-        kindle(ab);
-    }
-}
-
-// EXTINCTION
-void Foret::blast(Arbre* ab)
-{
-    ab->blast();
-    carbonized.push_back(ab);
-}
-
-
-// BURNING
-void Foret::spark(Arbre* ab, int intensite)
-{
-    // NOTE : on pourrait augmenter la brulure de l'arbre quand un de ses voisins lui transmet du feu,
-    //    voire un concept de chaleur.
-    // 	On pourrait egalement aller plus loin et introduire une antité feu,
-    //    une humidite de zone qui évolue selon la quantité de feu..
-    // 	Dans ce cas, il faudrait prendre en compte différentes tailles d'arbres pour être précis ...
-    // 	On a décidé de se restreindre sur ce point afin de se concentrer sur d'autre points.
-    // 	if (ab->getState==2){
-    // // 		ab->brule();
-    // 	}
-    // 	else {
-    ab->spark(burningCoef*intensite);
-    if (ab->isOnFire()){
-        onFire.push_back(ab);
-
-        if (ab->getCoeff() < 1)
-            delayBurned.push_back(ab);
-        else
-            burned.push_back(ab);
-    }
-}
-
-void Foret::spark(int col, int row, int intensite)
-{
-    if (matrix[row][col]->getState()==1){
-        Arbre * ab = dynamic_cast<Arbre *>(matrix[row][col]);
-        spark(ab, intensite);
-    }
-}
-
-
-//###########################
-// 	Altération en zone
-//###########################
-void Foret::cut(int xDep, int yDep, int xArr, int yArr)
-{
-    for(int i= xDep; i < xArr; ++i){
-
-        for(int j= yDep; j < yArr; ++j){
-            // 			matrix[j][i]->setState(-2);
-            Cellule* cell= matrix[j][i];
-            if (cell->getState()>0)
-                uproot(  dynamic_cast<Arbre *>(matrix[j][i]) );
-        }
-    }
-}
-
-void Foret::delay(int xDep, int yDep, int xArr, int yArr)
-{
-    for(int i= xDep; i < xArr; ++i){
-
-        for(int j= yDep; j < yArr; ++j){
-            // Le retardateur ne s'applique que sur les arbres
-            Cellule* cell= matrix[j][i];
-            if (cell->getState()>0)
-                // Réduit le coefficient de combustion personnel de l'arbre à 0.5
-                delay(  dynamic_cast<Arbre *>(cell) );
-        }
-    }
-}
-
+// #############################
+//      Méthodes générales
+// #############################
 
 std::list< Arbre* > Foret::adjacents(int col, int row, int distance) const
 {
@@ -590,27 +422,198 @@ std::list< Arbre* > Foret::adjacents(const Arbre * ab, int distance) const
 }
 
 
-void Foret::sparkAdjacentsWind(int posCol, int posRow, int hor, int vert)
+
+
+// #############################
+//  Manipulations d'arbres
+// #############################
+
+void Foret::plantTree(int col, int row)
 {
-    int x= 1, y= 1;
+#if DEBUG_ARBRE_PLANTE
+    cout<< "\t"<< col<< endl;
+#endif
+
+    // on choisit une essence aléatoirement pour cet arbre
+    unsigned distVoisins= 2;
+    unsigned ess = essenceRandom(col,row, distVoisins);
+
+#if DEBUG_ESSENCE==1
+    cout << ess << " ; ";
+#endif
+
+    /*
+     * On choisit aléatoirement l'âge et l'humidité de l'arbre qui va être créé
+     * Age [maturite;100[
+     * Humidité [20;70[
+     */
+
+    const Essence* pEss= &(essences[ess]);
+    // pour l'instant, on considere que tous les arbres ont atteint leur maturite
+    Arbre* ab= new Arbre(matrix[row][col], col,row, pEss,
+                         rand()%ecartAgeMax +pEss->getAgeMaturite(),
+                         (float)(rand()%ecartHMax +hMin) );
+    matrix[row][col]= ab;
+}
+
+void Foret::plantTree(int col, int row, unsigned int numEss, int PdV, float humidite, float coef, int etat)
+{
+#if DEBUG_ARBRE_PLANTE
+    cout<< "arbre planté en "<< col << ";"<< row<< endl;
+#endif
+
+    const Essence* pEss= &(essences[numEss]);
+    // pour l'instant, on considere que tous les arbres ont atteint leur maturite
+    Arbre* ab= new Arbre(col,row, matrix[row][col], pEss, humidite, PdV);
+
+    if (coef < 1.0)
+        delay(ab, coef);
+
+    if (etat==-1)
+        blast(ab);
+    else if (etat==-2)
+        delay(ab);
+    else if (etat==2)
+        kindle(ab);
+
+    matrix[row][col]= ab;
+}
+
+// @SEE couper un arbre : supprimer arbre puis créer cellule ?
+// (pour l'instant l'arbre est laissé)
+void Foret::uproot(Arbre* ab)
+{
+    ab->uproot();
+    onFire.remove(ab);
+    uprooted.push_back(ab);
+}
+
+void Foret::uproot(int col, int row)
+{
+    Cellule* tmp= matrix[row][col];
+
+    if (tmp->getState()>0){	// si il s'agit un arbre
+        Arbre * ab = dynamic_cast<Arbre *>(tmp);
+        uproot(ab);
+    }
+}
+
+void Foret::delay(Arbre* ab, float coef)
+{
+    ab->delay(coef);
+    delayed.push_back(ab);
+}
+
+// EMBRASEMENT
+void Foret::kindle(Arbre* ab)
+{
+    ab->kindle();
+    onFire.push_back(ab);
+
+    if (ab->getCoeff() < 1)
+        delayBurned.push_back(ab);
+    else
+        burned.push_back(ab);
+}
+
+void Foret::kindle(int col, int row)
+{
+    if (matrix[row][col]->getState() ==1){
+        Arbre * ab = dynamic_cast<Arbre *>(matrix[row][col]);
+        kindle(ab);
+    }
+}
+
+// EXTINCTION
+void Foret::blast(Arbre* ab)
+{
+    ab->blast();
+    carbonized.push_back(ab);
+}
+
+
+// BURNING
+void Foret::spark(Arbre* ab, float intensite)
+{
+    // NOTE : on pourrait augmenter la brulure de l'arbre quand un de ses voisins lui transmet du feu,
+    //    voire un concept de chaleur.
+    // 	On pourrait egalement aller plus loin et introduire une antité feu,
+    //    une humidite de zone qui évolue selon la quantité de feu..
+    // 	Dans ce cas, il faudrait prendre en compte différentes tailles d'arbres pour être précis ...
+    // 	On a décidé de se restreindre sur ce point afin de se concentrer sur d'autre points.
+    // 	if (ab->getState==2){
+    // // 		ab->brule();
+    // 	}
+    // 	else {
+    ab->spark(burningCoef*intensite);
+    if (ab->isOnFire()){
+        onFire.push_back(ab);
+
+        if (ab->getCoeff() < 1)
+            delayBurned.push_back(ab);
+        else
+            burned.push_back(ab);
+    }
+}
+
+void Foret::spark(int col, int row, float intensite)
+{
+    if (matrix[row][col]->getState()==1){
+        Arbre * ab = dynamic_cast<Arbre *>(matrix[row][col]);
+        spark(ab, intensite);
+    }
+}
+
+
+//###########################
+// 	Altérations en zone
+//###########################
+void Foret::cut(int xDep, int yDep, int xArr, int yArr)
+{
+    for(int i= xDep; i < xArr; ++i){
+
+        for(int j= yDep; j < yArr; ++j){
+            // 			matrix[j][i]->setState(-2);
+            Cellule* cell= matrix[j][i];
+            if (cell->getState()>0)
+                uproot(  dynamic_cast<Arbre *>(matrix[j][i]) );
+        }
+    }
+}
+
+void Foret::delay(int xDep, int yDep, int xArr, int yArr)
+{
+    for(int i= xDep; i < xArr; ++i){
+
+        for(int j= yDep; j < yArr; ++j){
+            // Le retardateur ne s'applique que sur les arbres
+            Cellule* cell= matrix[j][i];
+            if (cell->getState()>0)
+                // Réduit le coefficient de combustion personnel de l'arbre à 0.5
+                delay(  dynamic_cast<Arbre *>(cell) );
+        }
+    }
+}
+
+void Foret::sparkAdjacentsWind(int posCol, int posRow, float hor, float vert)
+{
+    int x_delta, y_delta;
 
     // définition du signe de l'incrémentation/décrémentation
-    if(hor<0)
-        x= -1;
-    if(vert<0)
-        y= -1;
+    hor > 0 ? x_delta= 1 : x_delta= -1;
+    vert > 0 ? y_delta= 1 : y_delta= -1;
 
     // Definition de la distance à laquelle les arbres qui sont dos au vent sont enflammés
     // Si le vent est supérieur à "2 cases", seuls les arbres faces au vent sont enflammés
-    int inverseHor= x;
-    int inverseVert= y;
-    unsigned forceHor= abs(hor);
+    int inverseHor= x_delta;
+    int inverseVert= y_delta;
+    float forceHor= abs(hor);
     if(forceHor < 2)
         inverseHor*= 2;
     else if (forceHor>2)
         inverseHor= 0;
 
-    unsigned forceVert= abs(vert);
+    float forceVert= abs(vert);
     if(forceVert < 2)
         inverseVert*= 2;
     else if (forceVert>2)
@@ -618,19 +621,24 @@ void Foret::sparkAdjacentsWind(int posCol, int posRow, int hor, int vert)
 
     // On parcourt les cellules dans les sens du vent et 1 cellule de distance,
     //  à l'opposé du vent (tranmission "arrière")
-    for(int i = hor+x; i != -inverseHor; i-=x) {
-        for(int j = vert+y; j != -inverseVert; j-=y) {
+    /// @see On pourrait ajouter une opération après la boucle, pour enflammer de façon moindre
+    /// les cellules aux extrémités, selon la valeur de la partie fractionnelle de la force du vent.
+    /// Actuellement, il n'y a pas de changement entre les cellules affectées par un vent à 2 et
+    /// un vent à 2.95 par exemple, la différence se trouve seulement sur l'intensité de la brulure
+    for(int i = (unsigned)hor+x_delta; i != -inverseHor; i-=x_delta) {
+        for(int j = (unsigned)vert+y_delta; j != -inverseVert; j-=y_delta) {
 
             // Test d'appartenance des coordonnées à la matrice
             if( ( (posCol+i) >= 0 )&& ( (posCol+i) < colonnes )
                     && ( (posRow+j) >= 0 ) && ( (posRow+j) < lignes ) ){
 #if DEBUG_VENT2
-                cout << "transmission à cellule en "<< posRow + (hor -i)<< " ; "<< posCol + (vert -j)<< endl;
+                cout << "transmission à cellule en "<< posRow + (hor -i)<< " ; "
+                     << posCol + (vert -j)<< endl;
 #endif
                 // transmission du feu à la cellule voisine si c'est un arbre
                 Cellule* cell= matrix[posRow+j][posCol+i];
                 if(cell->getState() == 1)
-                    // voir si on met abs(i) et abs(j)
+                    /// @see on met abs(i) et abs(j) ?
                     spark(dynamic_cast < Arbre* >(cell), (abs(hor-i)+1)*(abs(vert-j)+1) );
             }
         }
@@ -648,9 +656,9 @@ void Foret::sparkAdjacentsWind(Arbre* a, const Vent* vent)
 }
 
 
-// #############################
-// #		Avancée du temps		  #
-// #############################
+// ##############################
+// #	Avancée du temps        #
+// ##############################
 void Foret::transition(Arbre* ab)
 {
     unsigned distAdj= 1; // distance à laquelle les voisins seront enflammes VOIR adjacents
@@ -690,10 +698,19 @@ bool Foret::NextMove()
         cout<< endl<< "TOUR DE TRANSMISSION"<< endl;
 #endif
         // TODO utiliser mapping ?
-        for (list< Arbre* >::iterator ab(old.begin()); ab!=old.end(); ++ab){
-            // 			transition(*ab); // sans prendre en compte le vent
-            transitionWind(*ab, wind);
-        }
+//        #pragma omp parallel
+//        {
+//            list< Arbre* >::iterator ab= old.begin();
+//            #pragma omp for
+//            for (int i= 0; i < old.size(); ++i){
+            for (list< Arbre* >::iterator ab=old.begin(); ab!=old.end(); ++ab){
+                // 			transition(*ab); // sans prendre en compte le vent
+                transitionWind(*ab, wind);
+
+                ++ab;
+                printf ("id = %d, \n", omp_get_thread_num());
+            }
+//        }
     }
 
     return modif;
@@ -762,7 +779,7 @@ void Foret::loadMatrix(ifstream* file, LoadProgress* progress)
 
         // PV et Humidité
         int PV;
-        unsigned humidite;
+        float humidite;
         file->read((char*)&(PV), sizeof(int));
         file->read((char*)&(humidite), sizeof(unsigned));
 
