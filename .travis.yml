@@ -35,6 +35,7 @@ install:
   #- source /opt/qt${QT_VER}/bin/qt${QT_VER}-env.sh
   - source /opt/qt57/bin/qt57-env.sh
 # g++ install
+  #- sudo apt-get install g++-5
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
   # CPP Unit install
   - sudo apt-get install libcppunit-dev -y
