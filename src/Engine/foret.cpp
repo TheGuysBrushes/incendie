@@ -707,8 +707,8 @@ bool Foret::NextMove()
                 // 			transition(*ab); // sans prendre en compte le vent
                 transitionWind(*ab, wind);
 
-                ++ab;
-                printf ("id = %d, \n", omp_get_thread_num());
+//                ++ab;
+//                printf ("id = %d, \n", omp_get_thread_num());
             }
 //        }
     }

@@ -145,8 +145,8 @@ public:
     void delPicture();
 
     /* Getters */
-    int getTailleCell() const { return tailleCell; };
-    Foret* getForet() const { return forest; };
+    int getTailleCell() const { return tailleCell; }
+    Foret* getForet() const { return forest; }
 
     /* Gestion Sauvegardes */
     /**
@@ -225,6 +225,12 @@ public:
      * @author Florian et Ugo (commentaires :p )
      */
     void drawList(std::list< Arbre* >* arbres);
+    /**
+     * Dessine l'ensemble des arbres de la liste passée en paramètre de façon parallélisée
+     * @param arbres liste des arbres à dessiner
+     * @author Florian
+     */
+    void drawListParallel(std::list< Arbre* >* arbres);
     /**
      * Dessine les arbres et cellules vides dans le buffer
      * @author Ugo et Florian

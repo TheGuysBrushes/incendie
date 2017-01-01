@@ -4,6 +4,7 @@
 
 #define PERF_REDRAW		0
 #define PERF_RESIZE		0
+#define DEBUG_PARALLEL  0
 
 //firewidget
 #define DEBUG_IMAGE		0
@@ -13,7 +14,7 @@
 #define DEBUG_SELECT 		0
 #define DEBUG_RETARD 		0
 
-// firescreen 
+// firescreen
 #define DEBUG_RETARD		0
 
 // foret
@@ -49,5 +50,5 @@
 
 /*
  * IMPROVEIT voir si il faut mettre FR_ et même EN_ ou INTER_ pour qqch de plus formel
- * 
+ *
  */

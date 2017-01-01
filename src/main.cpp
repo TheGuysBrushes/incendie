@@ -10,7 +10,7 @@
 #include <QLocale>
 
 #define STRINGIFY(x) #x
-#define VERSION STRINGIFY(1.4.3.1)
+#define VERSION STRINGIFY(1.5)
 
 using namespace std;
 

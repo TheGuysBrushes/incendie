@@ -1,5 +1,5 @@
 TEMPLATE = app
-VERSION= 1.4.3.2
+VERSION= 1.5
 
 android {
     message("* Using settings for Android.")
@@ -15,7 +15,7 @@ CONFIG += c++11
     QMAKE_CXXFLAGS += -openmp
     QMAKE_LFLAGS +=  -openmp
     LIBS += -openmp
-    LIBS += -lgomp -lpthread
+    #LIBS += -lpthread -lgomp
 #}
 
 message()

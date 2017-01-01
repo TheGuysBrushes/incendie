@@ -327,6 +327,34 @@ void FireWidget::drawList( list< Arbre* > * arbres){
     arbres->clear();
 }
 
+
+void FireWidget::drawListParallel(list< Arbre* > * arbres)
+{
+
+    int cores= omp_get_max_threads();
+
+//    list< Arbre * >::const_iterator j( arbres->begin() );
+//    for( int j= 0; j < arbres->size(); j+=cores){
+    for( list< Arbre * >::const_iterator j( arbres->begin() ); j != arbres->end(); ){
+
+        #pragma omp parallel for
+        for (int i= 0; i < cores; ++i) {
+
+        #if DEBUG_PARALLEL
+            #pragma omp critical
+            {
+                cout << "ind sous liste : "<< i << "; id : " <<omp_get_thread_num()<< ", "<< endl;
+            }
+        #endif
+            if (j != arbres->end()) {
+                drawTree(*j);
+                ++j;
+            }
+        }
+    }
+    arbres->clear();
+}
+
 void FireWidget::drawForest()
 {
     // essai de dessin de l'image de fond, et de la foret, si présente
@@ -471,45 +499,61 @@ bool FireWidget::tryDrawPictureForest()
 void FireWidget::drawChanged()
 {
     bufferPainter->begin(buffer);
-    #pragma omp parallel sections
-    {
-        #pragma omp section
-        {
-            setColor(Red);
-            drawList(forest->getBurned());
-            forest->clearBurned();
-        }
 
-        #pragma omp section
-        {
+    // Le rouge (feu) doit être parallélisé séparément, car c'est l'opération la plus courante
+    setColor(Red);
+    drawListParallel(forest->getBurned());
+    forest->clearBurned();
+
+    // On parallélise par couleur les autres changement
+//    #pragma omp parallel sections
+//    {
+//        #pragma omp section
+//        {
+//            #pragma omp critical
+//            {
+//            cout << "Gray - id = " <<omp_get_thread_num()<< ", "<< endl;
+//            }
             setColor(Gray);
             drawList(forest->getCarbonized());
             forest->clearCarbonized();
-        }
+//        }
 
-        #pragma omp section
-        {
+//        #pragma omp section
+//        {
+//            #pragma omp critical
+//            {
+//            cout << "BlueTrans - id = " <<omp_get_thread_num()<< ", "<< endl;
+//            }
             setColor(BlueTrans);
             drawList(forest->getDelayed());
             forest->clearDelayed();
-        }
+//        }
 
-        #pragma omp section
-        {
+//        #pragma omp section
+//        {
+//            #pragma omp critical
+//            {
+//            cout << "Orange - id = " <<omp_get_thread_num()<< ", "<< endl;
+//            }
             setColor(Orange);
             drawList(forest->getDelayBurned());
             forest->clearDelayBurned();
-        }
+//        }
 
-        #pragma omp section
-        {
+//        #pragma omp section
+//        {
+//            #pragma omp critical
+//            {
+//                cout << "BrownCut - id = " <<omp_get_thread_num()<< ", "<< endl;
+//            }
             setColor(BrownCut);
             drawList(forest->getUprooted());
             forest->clearUprooted();
 
             bufferPainter->end();
-        }
-    }
+//        }
+//    }
 }
 
 // Test perf
