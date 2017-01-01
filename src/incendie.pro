@@ -8,15 +8,16 @@ android {
 
 QT += core gui widgets
 CONFIG += c++11
-#win32: {
-#    QMAKE_CXXFLAGS += -openmp
-#    LIBS += -openmp
-#} else {
+win32: {
     QMAKE_CXXFLAGS += -openmp
-    QMAKE_LFLAGS +=  -openmp
+    QMAKE_LFLAGS += -openmp
     LIBS += -openmp
-    #LIBS += -lpthread -lgomp
-#}
+} else {
+    QMAKE_CXXFLAGS += -fopenmp
+    QMAKE_LFLAGS += -fopenmp
+    LIBS += -fopenmp
+}
+#LIBS += -lpthread -lgomp
 
 message()
 message(Qt version: $$[QT_VERSION])
