@@ -330,29 +330,27 @@ void FireWidget::drawList( list< Arbre* > * arbres){
 
 void FireWidget::drawListParallel(list< Arbre* > * arbres)
 {
-
-    int cores= omp_get_max_threads();
-
 //    list< Arbre * >::const_iterator j( arbres->begin() );
 //    for( int j= 0; j < arbres->size(); j+=cores){
-    for( list< Arbre * >::const_iterator j( arbres->begin() ); j != arbres->end(); ){
-
-        #pragma omp parallel for
-        for (int i= 0; i < cores; ++i) {
-
-        #if DEBUG_PARALLEL
-            #pragma omp critical
-            {
-                cout << "ind sous liste : "<< i << "; id : " <<omp_get_thread_num()<< ", "<< endl;
-            }
-        #endif
+    #pragma omp parallel
+    #pragma omp single
+    {
+        for( list< Arbre * >::const_iterator j( arbres->begin() ); j != arbres->end(); ++j)
+        {
+            #if DEBUG_PARALLEL
+                #pragma omp critical
+                {
+                    cout << "ind sous liste : "<< i << "; id : " <<omp_get_thread_num()<< ", "<< endl;
+                }
+            #endif
+            #pragma omp task firstprivate(j)
             if (j != arbres->end()) {
                 drawTree(*j);
-                ++j;
             }
         }
+        #pragma omp taskwait
+        arbres->clear();
     }
-    arbres->clear();
 }
 
 void FireWidget::drawForest()
