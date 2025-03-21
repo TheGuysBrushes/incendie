@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
 
         //    Tries to load a translation file corresponding to the system language.
         //    No error will occur if the file is not found.
-        translator.load(QLatin1String("incendie_") + locale, incendieTrPath);
+        translator.load(QLatin1String("fire_") + locale, incendieTrPath);
     } else {
         QStringList uiLanguages;
         uiLanguages = QLocale::system().uiLanguages();

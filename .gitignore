@@ -31,3 +31,5 @@ doc/xml/
 *.suo
 *.qm
 *~
+src/Deleted/
+Releases/

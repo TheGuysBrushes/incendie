@@ -6,6 +6,8 @@
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QGridLayout>
 #include <QtGui/QDesktopServices>
+#include <QImageReader>
+#include <QDebug>
 
 #include <QtCore/QUrl>
 /*
@@ -299,7 +301,7 @@ void Fwelcome::restore(QString filename)
     openFile(filename);
 
     if (!file->is_open()){
-        std::cout<< "Echec ouverture fichier de sauvegarde"<< std::endl;
+        std::cout<< "Echec ouverture fichier de sauvegarde pour récupérer la taille"<< std::endl;
     }
     else {
         loadSizes();
@@ -312,10 +314,14 @@ void Fwelcome::loadFromImg(QString filename)
 {
     delete pictureForest;
     pictureForest= new QImage();
-    pictureForest->load(filename);
+    bool isPictureLoaded = pictureForest->load(filename);
 
+    if(!isPictureLoaded ) {
+        std::cerr<< "Qt could not load image: "<< filename.toStdString()<< std::endl;
+        qDebug()<< "It can only load:"<< QImageReader::supportedImageFormats()<< "on this machine";
+    }
     if (pictureForest->isNull()){
-        std::cout<< "Echec ouverture fichier de sauvegarde"<< std::endl;
+        std::cerr<< "Echec d'ouverture à partir d'une image"<< std::endl;
     }
     else {
         larg_spin->setValue(pictureForest->width());

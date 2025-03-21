@@ -201,8 +201,8 @@ bool Foret::tryLoadEssences(const string& fileName)
         TiXmlElement* xml_racine= doc.FirstChildElement();
         TiXmlElement* xml_essence= xml_racine->FirstChildElement();
 #if DEBUG_FILE
-        cout << "Racine : "<< racine->Value()<< endl;
-        cout << " 1er fils : "<< essence->Value()<< endl;
+        cout << "Racine : "<< xml_racine->Value()<< endl;
+        cout << " 1er fils : "<< xml_essence->Value()<< endl;
 #endif
 
         int indice = 0;
@@ -909,7 +909,7 @@ bool Foret::trySave(string fileName)
     ofstream* file= new ofstream(chemin.c_str(), std::ios::out|std::ios::binary);
 
     if (!file->is_open()){
-        cout<< "Echec ouverture fichier de sauvegarde "<< fileName<< endl;
+        cout<< "Echec ouverture du fichier lors de la sauvegarde "<< fileName<< endl;
         return false;
     }
     else {
@@ -930,7 +930,7 @@ bool Foret::trySaveSeed(string filePath)
 
     if (!file->is_open()){
         // TODO émettre une alerte à l'utilisateur
-        cout<< "Echec ouverture fichier de sauvegarde : " << filePath<< endl;
+        cout<< "Echec ouverture du fichier lors de sauvegarde de graine : " << filePath<< endl;
         return false;
     }
     else {
